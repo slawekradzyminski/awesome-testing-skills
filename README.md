@@ -9,6 +9,10 @@ Two reusable agent skills for code-informed exploratory testing, adapted from SÅ
 
 Both skills encourage users to supply the code being tested, then use that code to choose meaningful runtime experiments. They also work without source access and clearly distinguish a source-only assessment from live testing.
 
+The experiment guides add practical techniques for selecting useful probes: challenge the first hypothesis, compare related results against business rules, investigate state transitions, distinguish uncertain writes from failed writes, and preserve the original failure while minimizing a reproduction. UI guidance also separates ordinary user interactions from diagnostic interventions that bypass normal controls.
+
+Detailed guidance loads through references at the point of use. Each skill remains independently copyable, supports available tools, and avoids fixed test counts, mandatory full matrices, and extra approval steps for routine authorized work.
+
 ## Use
 
 Clone this private repository using an account with access:

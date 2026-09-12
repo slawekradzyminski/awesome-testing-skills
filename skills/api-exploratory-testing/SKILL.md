@@ -22,7 +22,7 @@ Record the source revision and deployed build independently, including when thei
 
 ## Read code to find plausible failures
 
-Map the selected operation or workflow through routing, parsing/validation, authentication, authorization, domain logic, persistence, outbound calls, and error handling. Follow relevant dependencies; do not read the entire codebase by default. Read requirements and contracts alongside implementation. Code explains what may happen; it is not automatically the authority for what should happen. Record conflicting or ambiguous expectations explicitly.
+Map the selected operation or workflow through routing, parsing/validation, authentication, authorization, domain logic, persistence, outbound calls, and error handling. Follow relevant dependencies; do not read the entire codebase by default. Read requirements and contracts alongside implementation. Code explains what may happen; it is not automatically the authority for what should happen. Record conflicting or ambiguous expectations explicitly. Treat comments and test expectations as evidence to check, not as independent proof of the requirement. Stop the initial reading pass once you can name the main risks and design a useful probe; return to source when an observation raises a new question.
 
 Actively look for defects: missing ownership checks, client-controlled privileged fields, validation that is declared but never executed, partial writes, inconsistent state transitions, swallowed errors, retry duplication, stale reads, or sensitive response fields. Select concerns grounded in this code and domain, rather than attaching every possible risk to every endpoint.
 
@@ -41,18 +41,13 @@ Choose a short session charter: the question, feature boundary, key risks, and s
 
 Use **curl**, HTTPie, an available language HTTP library, or another HTTP client that exposes the request, status, headers, body, and timing. Prefer available tools and existing authentication helpers; a dedicated testing framework is unnecessary. Check client help when flags are uncertain. Use explicit request timeouts. Preserve error bodies for negative probes; do not mistake an HTTP client's success exit code for a correct API result.
 
-Establish a representative valid request, then vary inputs, identity, and state to test the risk hypotheses. Follow anomalies with contrasting cases and minimal reproductions. Draw selectively from:
-
-- **Contracts and parsing:** missing/null/empty distinctions, meaningful boundaries, coercion, content negotiation, referenced schemas, response variants, and useful error information.
-- **Access and ownership:** unauthenticated, allowed, and denied test identities; object-level access and writable fields. Use controlled accounts and resources within scope.
-- **Business behavior:** relationships between fields, lifecycle transitions, monetary/quantity rules, pagination/filter semantics, persistence, and forbidden side effects.
-- **Reliability:** partial failure, repeat requests, idempotency, concurrency, stale state, and dependency failures where relevant. Bound any concurrent or rate-limit experiment; this skill does not imply load-testing permission.
+Before live probes, read [experiment design](references/experiment-design.md): choose techniques for the risks at hand, including relationships between results, state transitions, ownership contrasts, and ambiguous write outcomes. Establish a representative valid request, then vary inputs, identity, and state to test the risk hypotheses. These are testing lenses, not a mandatory case matrix.
 
 Inspect the whole observable result. A status code alone is insufficient: check response semantics, relevant headers, follow-up reads, and resulting state. Failed requests may still mutate data; successful ones may fail to persist it. Distinguish ordinary live behavior from injected conditions, mocks, and proxy/gateway behavior. For streaming APIs, inspect event semantics, ordering, completion, and interruption rather than treating every transport chunk as an event.
 
 Compare observed behavior with the agreed requirement and the applicable contract version, including referenced schemas. Classify implementation defects, documentation defects, and unresolved product decisions separately. Do not invent a required status code or update documentation merely to legitimize faulty behavior.
 
-For suspicious results, capture the smallest reproducible request and check alternative explanations such as stale fixtures, expired credentials, shared quotas, or build mismatch. Stop repeating probes that add no evidence; preserve intermittent findings with actual reproduction counts and conditions. A credible unresolved suspicion belongs in the report even when reproduction is blocked.
+For suspicious results, capture the smallest reproducible request and check alternative explanations such as stale fixtures, expired credentials, shared quotas, or build mismatch. Stop repeating probes that add no evidence; preserve intermittent findings with actual reproduction counts and conditions. A credible unresolved suspicion belongs in the report even when reproduction is blocked. Preserve the first failure before simplifying the reproduction, and separate fresh-state runs from retries that reuse mutated fixtures.
 
 ## Evidence, findings, and completion
 

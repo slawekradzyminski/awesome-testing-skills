@@ -65,3 +65,19 @@ The skill instructions were manually reviewed against these routing cases:
 - A UI/API action would affect unrelated users or create real external effects: reuse existing authorization where it applies; clarify only the missing boundary and continue independent work.
 
 These are instruction reviews, not independently executed model trials. Real-project evaluation, alternate browser-agent execution, intermittent network behavior, responsive testing, screen-reader testing, and production-scale risk prioritization remain untested by this smoke test.
+
+## Expertise and skill-design refinement
+
+The follow-up revision adds experiment-selection references and shortens the UI entrypoint by moving detailed browser evidence guidance into its live-exploration reference. Both entrypoints now bound the initial source-reading pass and explicitly preserve the first failure before minimizing it. Existing tool preferences, partial-access modes, evidence requirements, and authorization boundaries are retained.
+
+The added guidance was manually walked through against these decision cases:
+
+| Situation | Decision supported by the revised guidance |
+| --- | --- |
+| A mutation times out after submission | Investigate whether it took effect before deciding to replay it |
+| An API returns 202 with a pending operation | Observe the documented completion mechanism within bounds; do not label acceptance as completion |
+| Code, comments, and tests agree on an outcome that conflicts with requirements | Investigate the conflict; do not count their agreement as independent evidence of correctness |
+| A forced click triggers behavior unavailable through normal controls | Label the diagnostic intervention and establish ordinary-user reachability before making that claim |
+| A failing sequence passes only after reusing changed test data | Preserve the first evidence and compare fresh-state reproduction instead of treating the retry as a clean pass |
+
+HTTP retry/idempotency and acceptance guidance was checked against the linked RFC 9110 sections; workflow guidance links to OWASP WSTG. These additions have not been independently tested with another agent. The original live smoke evidence remains valid for the unchanged fixture and should not be read as validation of the new asynchronous or concurrency techniques.
