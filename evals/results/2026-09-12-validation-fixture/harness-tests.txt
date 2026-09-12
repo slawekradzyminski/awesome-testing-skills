@@ -1,0 +1,170 @@
+test_check_outcomes_distinguish_access_and_unexecuted_work (test_harness.HarnessTests.test_check_outcomes_distinguish_access_and_unexecuted_work) ... ok
+test_course_mutations_have_matching_working_controls (test_harness.HarnessTests.test_course_mutations_have_matching_working_controls) ... ok
+test_documentation_exclusion_is_shared_by_both_conditions_and_live_tasks (test_harness.HarnessTests.test_documentation_exclusion_is_shared_by_both_conditions_and_live_tasks) ... ok
+test_evidence_cannot_escape_candidate (test_harness.HarnessTests.test_evidence_cannot_escape_candidate) ... ok
+test_frozen_quantity_mutation_changes_runtime_contract (test_harness.HarnessTests.test_frozen_quantity_mutation_changes_runtime_contract) ... ok
+test_grader_rejects_fabricated_source_only_runtime (test_harness.HarnessTests.test_grader_rejects_fabricated_source_only_runtime) ... ok
+test_live_source_snapshot_excludes_local_edits_and_configuration (test_harness.HarnessTests.test_live_source_snapshot_excludes_local_edits_and_configuration) ... ok
+test_mutation_fails_closed_if_source_anchor_changes (test_harness.HarnessTests.test_mutation_fails_closed_if_source_anchor_changes) ... ok
+test_preflight_identifies_client_and_uses_only_public_gets (test_harness.HarnessTests.test_preflight_identifies_client_and_uses_only_public_gets) ... ok
+test_query_observation_matches_parsed_audit_path_without_weakening_status_check (test_harness.HarnessTests.test_query_observation_matches_parsed_audit_path_without_weakening_status_check) ... ok
+test_run_creation_never_overwrites (test_harness.HarnessTests.test_run_creation_never_overwrites) ... ok
+test_runtime_only_clean_case_does_not_supply_source_or_answer (test_harness.HarnessTests.test_runtime_only_clean_case_does_not_supply_source_or_answer) ... ok
+test_source_assessment_integrity_passes_then_detects_modified_source (test_harness.HarnessTests.test_source_assessment_integrity_passes_then_detects_modified_source) ... ok
+test_source_only_without_skill_has_no_runtime_or_skill_copy (test_harness.HarnessTests.test_source_only_without_skill_has_no_runtime_or_skill_copy) ... ok
+test_unavailable_runtime_requires_honest_blocked_outcome (test_harness.HarnessTests.test_unavailable_runtime_requires_honest_blocked_outcome) ... ok
+test_order_defect_and_control_keep_identity_and_not_found_contrasts (test_validation_app.ValidationAppTests.test_order_defect_and_control_keep_identity_and_not_found_contrasts) ... ok
+test_profile_writes_validate_input_and_reset_between_runs (test_validation_app.ValidationAppTests.test_profile_writes_validate_input_and_reset_between_runs) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 1.510s
+
+OK
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88917
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88920
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88924
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88927
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{"run": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{"run": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{"run": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{"run": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88932
+Stopped owned fixture 88934
+{
+  "case": "source-only",
+  "with_skill": false,
+  "artifact_checks_passed": false,
+  "errors": [
+    "Missing cleanup statement",
+    "Runtime execution claimed in source-only case",
+    "Observation has no matching server record: /api/v1/cart"
+  ],
+  "expected_requirements_reported": [],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 0,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."
+}
+{"run": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88946
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{
+  "case": "api-03",
+  "with_skill": true,
+  "artifact_checks_passed": true,
+  "errors": [],
+  "expected_requirements_reported": [
+    "CART-2"
+  ],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 0,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass. Apply the recorded benchmark scope: exclude documentation-only claims from discovery credit; review scope adherence separately.",
+  "benchmark_scope": {
+    "version": 1,
+    "included": [
+      "application-behavior",
+      "practical-testing-outcomes"
+    ],
+    "excluded": [
+      "documentation-only-defects"
+    ]
+  }
+}
+{
+  "case": "api-03",
+  "with_skill": true,
+  "artifact_checks_passed": false,
+  "errors": [
+    "Application or requirements were modified"
+  ],
+  "expected_requirements_reported": [
+    "CART-2"
+  ],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 0,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass. Apply the recorded benchmark scope: exclude documentation-only claims from discovery credit; review scope adherence separately.",
+  "benchmark_scope": {
+    "version": 1,
+    "included": [
+      "application-behavior",
+      "practical-testing-outcomes"
+    ],
+    "excluded": [
+      "documentation-only-defects"
+    ]
+  }
+}
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+{
+  "case": "api-05",
+  "with_skill": true,
+  "artifact_checks_passed": true,
+  "errors": [],
+  "expected_requirements_reported": [],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 1,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass. Apply the recorded benchmark scope: exclude documentation-only claims from discovery credit; review scope adherence separately.",
+  "benchmark_scope": {
+    "version": 1,
+    "included": [
+      "application-behavior",
+      "practical-testing-outcomes"
+    ],
+    "excluded": [
+      "documentation-only-defects"
+    ]
+  }
+}
+{
+  "case": "api-05",
+  "with_skill": true,
+  "artifact_checks_passed": false,
+  "errors": [
+    "Unavailable runtime must be reported as blocked, not functionally tested"
+  ],
+  "expected_requirements_reported": [],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 1,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass. Apply the recorded benchmark scope: exclude documentation-only claims from discovery credit; review scope adherence separately.",
+  "benchmark_scope": {
+    "version": 1,
+    "included": [
+      "application-behavior",
+      "practical-testing-outcomes"
+    ],
+    "excluded": [
+      "documentation-only-defects"
+    ]
+  }
+}
+Stopped owned fixture 88951
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88954
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88957
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88960
+{"run": "<TEMP_PATH>", "candidate": "<TEMP_PATH>", "task": "<TEMP_PATH>"}
+Stopped owned fixture 88963

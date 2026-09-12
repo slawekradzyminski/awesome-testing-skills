@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profile test fixture</title>
+<style>
+body { font: 18px system-ui; max-width: 480px; margin: 40px auto; padding: 20px; }
+input, button { font: inherit; padding: 10px; margin: 8px 0; }
+input { box-sizing: border-box; max-width: 100%; }
+label { display: block; }
+</style>
+<h1>Profile settings</h1>
+<form id="profile">
+  <label for="name">Display name</label>
+  <input id="name" name="name" required disabled>
+  <div><button type="submit" disabled>Save</button> <button id="cancel" type="button" disabled>Cancel</button></div>
+</form>
+<p id="status" role="status">Loading</p>
+<script src="/app.js"></script>
+</html>

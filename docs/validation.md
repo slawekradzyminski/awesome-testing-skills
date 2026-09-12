@@ -97,3 +97,11 @@ The dependency-free Node installer supports Claude Code, Codex, Cursor and Copil
 The private GitHub route was verified after pushing installer commit `1201c4f`: the README command installed both skills in a temporary project and all installed files matched repository bytes. npm 12 initially rejected Git fetching with `EALLOWGIT`; the command now includes the invocation-local `--allow-git=root` option. No persistent npm configuration was changed, and no npm-registry publication was performed.
 
 New evaluation tasks exclude documentation-only defects in their common reporting contract. New manifests and grade output retain the scope; human review decides functional versus documentation claims. Fifteen harness tests pass, including equal scope instructions for skill/baseline, fixture/live, and API/UI preparation. Course DOC-08 remains historical evidence and receives no discovery credit under the current scope. Historical reports, scores and submissions are unchanged. No new agent-performance result is claimed for these packaging and scope edits.
+
+## Orders/profile benchmark integration — September 12, 2026
+
+The original validation demo now has a maintained [benchmark fixture](../evals/validation-app/) and four defect/control cases: order ownership (`api-10` / `api-11`) and profile Cancel (`ui-06` / `ui-07`). The original smoke-test source and evidence remain unchanged. The suite contains 18 cases.
+
+Seventeen harness tests pass. Real browser checks verify Save, valid-input Cancel, the empty-input contrast, persisted state after reload, and restoration for both profile variants. [Retained validation evidence](../evals/results/2026-09-12-validation-fixture/README.md) includes command/audit logs, results and reviewed screenshots. These checks validate the new fixtures; no new agent-performance score is claimed. The two public hosts passed availability preflight; the documented Docker setup was source-reviewed but not launched here.
+
+The [benchmark user guide](../evals/GETTING_STARTED.md) now covers the included apps, public deployments, full local stack, source links, candidate handoff, grading and cleanup. The main README presents a standalone project and no longer includes workshop attribution or branch lineage.

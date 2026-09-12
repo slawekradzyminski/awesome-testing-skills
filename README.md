@@ -1,6 +1,6 @@
 # Exploratory Testing Skills
 
-Two reusable agent skills for code-informed exploratory testing, adapted from Sławomir Radzymiński's September 2026 Playwright workshops.
+Two reusable agent skills for code-informed exploratory testing, with a reproducible benchmark for evaluating their findings, evidence and handling of limited access.
 
 | Skill | Purpose | Preferred runtime tool |
 | --- | --- | --- |
@@ -98,22 +98,11 @@ Report findings, supporting evidence, and meaningful coverage gaps.
 
 Exploration does not automatically include product fixes, a new regression suite, external issue filing, or publication. Those actions can be included in the user's task explicitly. Routine authorized testing continues without repeated approval requests.
 
-## Workshop lineage
-
-Reviewed against the latest remote branch tips on September 12, 2026:
-
-- [`hyr21` at `94dccc853d421746956ea2691ed5c4fcaa81bf95`](https://github.com/slawekradzyminski/playwright-2026/tree/94dccc853d421746956ea2691ed5c4fcaa81bf95/.codex/skills): API/UI exploration, evidence, impact assessment, visual and network review.
-- [`obi25` at `db0d9393bd11816f59c44f153c56b5474a71acdf`](https://github.com/slawekradzyminski/playwright-2026/tree/db0d9393bd11816f59c44f153c56b5474a71acdf/.claude/skills): backend assessment, actual test-assertion inspection, and test-level selection.
-
-These are generic derivatives. They remove workshop-specific hosts, credentials, directory conventions, fixed viewport policies, automation rules, and duplicate Codex/Claude copies. They retain adaptive exploration and evidence standards, add explicit source intake and risk maps, and support alternative tools and partial access.
-
-See [validation notes](docs/validation.md) for checks and their limits.
-
 ## Skill evaluations
 
-The suite contains **14 runnable cases** with known defects, matching corrected controls, and useful non-bug outcomes. The aim is to assess exploration and reporting, including the ability to say that sampled checks passed, the environment was unavailable, or source access limited the assessment.
+The suite contains **18 runnable cases** with known defects, matching corrected controls, and useful non-bug outcomes. The aim is to assess exploration and reporting, including the ability to say that sampled checks passed, the environment was unavailable, or source access limited the assessment.
 
-**Documentation-only defects are outside the benchmark.** New runs do not audit README text or OpenAPI documentation. They use requirements as context and assess application behavior, including misleading runtime validation feedback and rejection of valid input. Course documentation can be corrected independently of these frozen cases. The skills remain usable for broader exploration when requested.
+**Documentation-only defects are outside the benchmark.** New runs do not audit README text or OpenAPI documentation. They use requirements as context and assess application behavior, including misleading runtime validation feedback and rejection of valid input. Application documentation can be corrected independently of these frozen cases. The skills remain usable for broader exploration when requested.
 
 | Group | Cases | What it assesses |
 | --- | --- | --- |
@@ -121,9 +110,20 @@ The suite contains **14 runnable cases** with known defects, matching corrected 
 | Deliberately limited access | api-03, ui-03 | Source-only reasoning and runtime-only bug investigation without invented access |
 | Runtime works, source unavailable | api-04, ui-04 | Productive API/browser testing, passing evidence, and a useful source handoff |
 | Unavailable environment | api-05, ui-05 | Bounded availability probes, honest blocked status, and actionable follow-up |
-| Course-derived validation | api-06 through api-09 | Misleading length feedback and password character/byte mismatch, each with a corrected control |
+| Input validation | api-06 through api-09 | Misleading length feedback and password character/byte mismatch, each with a corrected control |
+| Orders/profile validation app | api-10, api-11, ui-06, ui-07 | Order ownership, profile Save/Cancel behavior, and corrected controls |
 
-The sample apps remain in this repo. Optional local/hosted Awesome LocalStack profiles provide public read-only exploration of a real deployment, with committed backend/frontend/stack sources when supplied. Their findings have no complete bug oracle and are kept separate from seeded-case recall. [Workshop provenance](evals/workshop-benchmarks.md) identifies the course reports used and future candidates such as QR decoding and unresolved policy questions.
+All three local apps are included with source: the [cart app](evals/sample-app/), [input-validation app](evals/course-app/), and [orders/profile app](evals/validation-app/). The original validation demo is now integrated through four additional cases; its historical smoke-test source remains archived separately. Optional local/hosted Awesome LocalStack profiles provide public read-only exploration of a real deployment, with committed backend/frontend/stack sources when supplied. Their findings have no complete bug oracle and are kept separate from seeded-case recall. The [case catalog](evals/README.md#run-a-case) describes each runnable scenario.
+
+### Local and public runs
+
+| Where | What runs there | Setup |
+| --- | --- | --- |
+| Local, included fixtures | 18 deterministic cases across the cart, input-validation and orders/profile apps | Python 3.10+ and the agent’s HTTP/browser tools; no Docker or cloud account |
+| Public Awesome LocalStack | API/UI exploration at [awesome.byst.re](https://awesome.byst.re/login) or [aitesters.byst.re](https://aitesters.byst.re/login) | Internet access; source snapshots when available; all supplied profiles are public read-only |
+| Local Awesome LocalStack | The full application using its lightweight Docker profile | Docker Compose and the [upstream setup instructions](https://github.com/slawekradzyminski/awesome-localstack#lightweight-profile) |
+
+The **[benchmark user guide](evals/GETTING_STARTED.md)** provides source links, copyable commands, a fresh-agent prompt, grading steps and cleanup for each mode. Public runs use the deployed application; the benchmark harness still runs locally. Live findings are dated observations and are scored separately from frozen-case recall.
 
 ### What we observed
 
@@ -131,8 +131,10 @@ The sample apps remain in this repo. Optional local/hosted Awesome LocalStack pr
 | --- | --- | --- |
 | [16-run paired pilot](evals/results/2026-09-12-retry.md) | Primary source-backed artifact scores: **11.75/12 with skills, 10.0/12 without**; both groups found both seeded defects | Stronger evidence in this small sample; no established discovery-rate advantage |
 | [Ten practical trials](evals/results/2026-09-12-usability.md) | Six of eight initial cases met the desired useful outcome; two weaknesses were corrected and passed targeted reruns | Tests exposed excessive outage probing and an incomplete missing-source handoff; unsuccessful runs remain archived |
-| Course defect/control pairs | Both defect cases identified; corrected controls produced evidence-backed passing reports | Finding a bug is not the only successful outcome |
-| Historical hosted API comparison | Both conditions reproduced the same documentation mismatch, course DOC-08 | Preserved historical evidence; excluded from the current benchmark scope and discovery claims |
+| Input-validation defect/control pairs | Both defect cases identified; corrected controls produced evidence-backed passing reports | Finding a bug is not the only successful outcome |
+| Historical hosted API comparison | Both conditions reproduced the same documentation mismatch, DOC-08 | Preserved historical evidence; excluded from the current benchmark scope and discovery claims |
+
+The four newly integrated orders/profile cases have fixture/API/browser validation; they have not yet received fresh agent trials and are not included in the historical scores above.
 
 The unavailable-API correction reduced observed requests from **35 to 2** in its targeted rerun. The source-handoff correction made the report explain which frontend/backend code and deployed revision could improve a later assessment. Neither one-off rerun establishes a reliability rate.
 

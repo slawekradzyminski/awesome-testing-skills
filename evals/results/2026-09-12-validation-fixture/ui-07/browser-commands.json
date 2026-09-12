@@ -1,0 +1,196 @@
+[
+  {
+    "args": [
+      "open",
+      "http://127.0.0.1:53070"
+    ],
+    "stdout": "### Browser `fixture-035c44d5d052` opened with pid 89835.\n### Ran Playwright code\n```js\nawait page.goto('http://127.0.0.1:53070');\n```\n### Page\n- Page URL: http://127.0.0.1:53070/\n- Page Title: Profile test fixture\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T09-53-50-498Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "resize",
+      "1280",
+      "720"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.setViewportSize({ width: 1280, height: 720 });\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.getByRole('status').filter({hasText: \"Ready\"}).waitFor(); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.getByRole('status').filter({hasText: \"Ready\"}).waitFor(); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "fill",
+      "getByRole('textbox', {name: 'Display name', exact: true})",
+      "Saved baseline"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.getByRole('textbox', { name: 'Display name', exact: true }).fill('Saved baseline');\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "click",
+      "getByRole('button', {name: 'Save', exact: true})"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.getByRole('button', { name: 'Save', exact: true }).click();\n```\n### Page\n- Page URL: http://127.0.0.1:53070/\n- Page Title: Profile test fixture\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T09-53-52-723Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.getByRole('status').filter({hasText: \"Saved\"}).waitFor(); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.getByRole('status').filter({hasText: \"Saved\"}).waitFor(); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "fill",
+      "getByRole('textbox', {name: 'Display name', exact: true})",
+      "Unsaved edit"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.getByRole('textbox', { name: 'Display name', exact: true }).fill('Unsaved edit');\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "click",
+      "getByRole('button', {name: 'Cancel', exact: true})"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.getByRole('button', { name: 'Cancel', exact: true }).click();\n```\n### Page\n- Page URL: http://127.0.0.1:53070/\n- Page Title: Profile test fixture\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T09-53-54-215Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.getByRole('status').filter({hasText: \"Cancelled\"}).waitFor(); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.getByRole('status').filter({hasText: \"Cancelled\"}).waitFor(); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "screenshot",
+      "--filename=cancel.png"
+    ],
+    "stdout": "### Result\n- [Screenshot of viewport](./cancel.png)\n### Ran Playwright code\n```js\n// Screenshot viewport and save it as ./cancel.png\nawait page.screenshot({\n  path: './cancel.png',\n  scale: 'css',\n  type: 'png'\n});\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "reload"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.reload();\n```\n### Page\n- Page URL: http://127.0.0.1:53070/\n- Page Title: Profile test fixture\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T09-53-55-237Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.getByRole('status').filter({hasText: \"Ready\"}).waitFor(); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.getByRole('status').filter({hasText: \"Ready\"}).waitFor(); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { const value = await page.getByRole('textbox', {name: 'Display name'}).inputValue(); if (value !== \"Saved baseline\") throw new Error(value); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { const value = await page.getByRole('textbox', {name: 'Display name'}).inputValue(); if (value !== \"Saved baseline\") throw new Error(value); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "fill",
+      "getByRole('textbox', {name: 'Display name', exact: true})",
+      ""
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.getByRole('textbox', { name: 'Display name', exact: true }).fill('');\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "click",
+      "getByRole('button', {name: 'Cancel', exact: true})"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.getByRole('button', { name: 'Cancel', exact: true }).click();\n```\n### Page\n- Page URL: http://127.0.0.1:53070/\n- Page Title: Profile test fixture\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T09-53-57-382Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.getByRole('status').filter({hasText: \"Cancelled\"}).waitFor(); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.getByRole('status').filter({hasText: \"Cancelled\"}).waitFor(); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "fill",
+      "getByRole('textbox', {name: 'Display name', exact: true})",
+      "Original"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.getByRole('textbox', { name: 'Display name', exact: true }).fill('Original');\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "click",
+      "getByRole('button', {name: 'Save', exact: true})"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.getByRole('button', { name: 'Save', exact: true }).click();\n```\n### Page\n- Page URL: http://127.0.0.1:53070/\n- Page Title: Profile test fixture\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T09-53-59-367Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.getByRole('status').filter({hasText: \"Saved\"}).waitFor(); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.getByRole('status').filter({hasText: \"Saved\"}).waitFor(); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "reload"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.reload();\n```\n### Page\n- Page URL: http://127.0.0.1:53070/\n- Page Title: Profile test fixture\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T09-54-00-251Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.getByRole('status').filter({hasText: \"Ready\"}).waitFor(); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.getByRole('status').filter({hasText: \"Ready\"}).waitFor(); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { if (await page.getByRole('textbox', {name: 'Display name'}).inputValue() !== 'Original') throw new Error('Restore not persisted'); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { if (await page.getByRole('textbox', {name: 'Display name'}).inputValue() !== 'Original') throw new Error('Restore not persisted'); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "screenshot",
+      "--filename=restored.png"
+    ],
+    "stdout": "### Result\n- [Screenshot of viewport](./restored.png)\n### Ran Playwright code\n```js\n// Screenshot viewport and save it as ./restored.png\nawait page.screenshot({\n  path: './restored.png',\n  scale: 'css',\n  type: 'png'\n});\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "close"
+    ],
+    "stdout": "Browser 'fixture-035c44d5d052' closed\n\n",
+    "stderr": ""
+  }
+]

@@ -152,6 +152,54 @@
       "fixture": "course-app",
       "feature": "signup",
       "workshop_finding": "BUG-06"
+    },
+    {
+      "id": "api-10",
+      "skill": "api-exploratory-testing",
+      "variant": "order-ownership",
+      "access": "source-runtime",
+      "group": "validation-source-runtime",
+      "expected_outcome": "evidence-backed-finding",
+      "expected_requirements": [
+        "ORDER-1"
+      ],
+      "fixture": "validation-app",
+      "feature": "orders"
+    },
+    {
+      "id": "api-11",
+      "skill": "api-exploratory-testing",
+      "variant": "control",
+      "access": "source-runtime",
+      "group": "validation-source-runtime",
+      "expected_outcome": "no-confirmed-defects",
+      "expected_requirements": [],
+      "fixture": "validation-app",
+      "feature": "orders"
+    },
+    {
+      "id": "ui-06",
+      "skill": "ui-exploratory-testing",
+      "variant": "profile-cancel",
+      "access": "source-runtime",
+      "group": "validation-source-runtime",
+      "expected_outcome": "evidence-backed-finding",
+      "expected_requirements": [
+        "PROFILE-1"
+      ],
+      "fixture": "validation-app",
+      "feature": "profile"
+    },
+    {
+      "id": "ui-07",
+      "skill": "ui-exploratory-testing",
+      "variant": "control",
+      "access": "source-runtime",
+      "group": "validation-source-runtime",
+      "expected_outcome": "no-confirmed-defects",
+      "expected_requirements": [],
+      "fixture": "validation-app",
+      "feature": "profile"
     }
   ]
 }

@@ -46,6 +46,8 @@ def mutate(directory, variant):
                            'f"Minimum {field} length: 4 characters"'),
         "password-bytes": ("domain.py", "MAX_ENCODED_PASSWORD_BYTES = 1020", "MAX_ENCODED_PASSWORD_BYTES = 72"),
         "cancel": ("static/index.html", '<button id="cancel" type="button">', '<button id="cancel">'),
+        "order-ownership": ("app.py", 'if order["owner"] != actor:', 'if False:'),
+        "profile-cancel": ("static/index.html", '<button id="cancel" type="button" disabled>', '<button id="cancel" disabled>'),
     }
     if variant == "control":
         return
@@ -176,6 +178,13 @@ def prepare(case_id, out, without_skill=False):
         scope = ("Explore sign-in request validation and corrective feedback." if case["feature"] == "signin"
                  else "Explore registration input validation, persistence and cleanup.")
         permissions = "Use only synthetic URL-safe usernames, .test emails and invented passwords. You may create, inspect and delete your own disposable registrations. Production authentication is outside this fixture's scope."
+    if case.get("fixture") == "validation-app":
+        scope = ("Explore order retrieval and access boundaries using the documented disposable identities."
+                 if case["feature"] == "orders" else
+                 "Explore the profile editor, Save/Cancel interaction, and persisted display name. Use Playwright CLI or an available browser agent.")
+        permissions = ("Read only the two fixture orders with its synthetic identities; no order mutations are supported."
+                       if case["feature"] == "orders" else
+                       "You may edit this isolated fixture's scratch profile. Restore the display name where possible and report the remaining save count.")
     prompt = f"""{invocation}
 
 {scope}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-12",
+  "kind": "infrastructure-validation",
+  "agent_trials": 0,
+  "harness_tests_passed": 17,
+  "fixture_hashes": {
+    "app.py": "9881c8fe904f3a1ed26a4afb12dd84f76ad759d7d2449a4c81b406678f7aab7c",
+    "requirements.md": "9d3347dd6142f672f7787abb58a52d087d1622ad0efc9e07614d8b896c855c92",
+    "static/app.js": "597bdd1364adda279c6f8a0806282cfe4ca05d53f95c70e84bf309ca8ce70bf6",
+    "static/index.html": "6d1f74ee27cf563875abe7b2923f273e386dd2b7249b08f9d3c8b54e7f6b6409"
+  },
+  "public_preflight": {
+    "awesome.byst.re": {
+      "/login": 200,
+      "/v3/api-docs": 200
+    },
+    "aitesters.byst.re": {
+      "/login": 200,
+      "/v3/api-docs": 200
+    }
+  },
+  "docker_deployment_started": false
+}

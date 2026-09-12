@@ -1,5 +1,7 @@
 # Exploratory skill evaluations
 
+Start with the [user guide](GETTING_STARTED.md) for local fixtures, public targets, source links and a complete prepare → agent → grade → cleanup walkthrough.
+
 This suite evaluates an agent using the API/UI skills. It keeps three kinds of evidence separate:
 
 1. **Infrastructure checks:** does the fixture, mutation application, isolation, and artifact validator work?
@@ -16,7 +18,7 @@ The **primary comparison uses source plus runtime**. Supply the actual backend, 
 
 [sample-app](sample-app/) is a small self-contained application that stays in this repository. It requires Python 3.10+ and an available browser agent for UI work. It uses Awesome LocalStack's product/cart route conventions and quantity rules, but has its own implementation, disposable identities, and in-memory state. It is not a copy of Spring, React, SSO, or the production stack. See [requirements](sample-app/requirements.md).
 
-The baseline application is the control. The evaluator-only harness applies one frozen change to an isolated copy: accepting a negative quantity, or allowing Cancel to submit an edit. The agent sees the resulting code when source is available, never a variant flag or the expected finding. The sample's existing tests intentionally cover only a narrow slice of behavior. [Workshop-derived benchmarks](workshop-benchmarks.md) add a separate retained validation fixture and practical reporting cases; the suite now contains 14 cases.
+The baseline application is the control. The evaluator-only harness applies one frozen change to an isolated copy: accepting a negative quantity, or allowing Cancel to submit an edit. The agent sees the resulting code when source is available, never a variant flag or the expected finding. The sample's existing tests intentionally cover only a narrow slice of behavior. [Input-validation case provenance](workshop-benchmarks.md) add a separate retained validation fixture and practical reporting cases; the suite now contains 18 cases, including the [orders/profile validation app](validation-app/).
 
 ## Run a case
 
@@ -51,8 +53,10 @@ For a baseline comparison, prepare the same case with `--without-skill` and use 
 | ui-03 | UI | Supplementary: runtime only | Explore without repeatedly blocking on missing source |
 | api-04 / ui-04 | API / UI | Usability: runtime only | Clean control; test productively and explain what source could add |
 | api-05 / ui-05 | API / UI | Usability: source + unavailable gateway | Recognize blocked functional testing and provide useful handoff |
-| api-06 / api-07 | API | Course: source + runtime | Misleading maximum-length guidance and matching corrected control |
-| api-08 / api-09 | API | Course: source + runtime | Password character/byte contract mismatch and matching corrected control |
+| api-06 / api-07 | API | Input validation: source + runtime | Misleading maximum-length guidance and matching corrected control |
+| api-08 / api-09 | API | Input validation: source + runtime | Password character/byte contract mismatch and matching corrected control |
+| api-10 / api-11 | API | Orders/profile: source + runtime | Order ownership defect and corrected control |
+| ui-06 / ui-07 | UI | Orders/profile: source + runtime | Profile Cancel submitting a save and corrected control |
 
 Candidates receive neutral application tasks with a five-minute budget, up to 60 API requests or 45 browser actions. The fixture's server audit corroborates requests; a reviewer checks browser actions, opened screenshots, meaning of findings, and untested claims. Audit route paths omit query strings: the grader matches the parsed route and flags query-bearing observations for manual evidence review. It does not independently prove query/header/body-specific claims. The harness currently reports request counts but does not automatically measure browser-action counts or token usage. Record those from the runner transcript when available.
 
@@ -65,6 +69,12 @@ python3 evals/check_browser_fixture.py --out /tmp/browser-fixture-check-001
 ```
 
 This script clicks Cancel and Save in fresh mutation/control instances, checks persisted state and HTTP writes, saves screenshots/command evidence, and closes its owned sessions and servers. It already knows the expected result, so its success is **infrastructure validation, not a skill score**.
+
+## Orders/profile validation app
+
+[validation-app](validation-app/) integrates the original [smoke-test demo](../docs/validation-fixture/server.py) as four reproducible cases. Its corrected base enforces order ownership and prevents Cancel submitting a profile edit. The harness applies one defect at a time to a fresh copy; source, lifecycle and HTTP audit records use the same contract as the other fixtures. The original demo and its historical evidence remain unchanged.
+
+Run it directly with `python3 evals/validation-app/app.py --port 8090`, or use `prepare api-10` / `prepare ui-06` for isolated benchmark cases. Validate the browser pair with `python3 evals/check_browser_fixture.py --suite validation --out /tmp/profile-fixture-check-001`. These new cases have infrastructure checks, not fresh agent-effectiveness measurements.
 
 ## Actual Awesome LocalStack profiles
 

@@ -1,0 +1,40 @@
+[
+  {
+    "case": "ui-06",
+    "kind": "fixture-validation",
+    "passed": true,
+    "profile_after_cancel": {
+      "displayName": "Unsaved edit",
+      "saveCount": 2
+    },
+    "cancel_post_requests": 1,
+    "empty_input_cancel_changed_state": false,
+    "restored_profile": {
+      "displayName": "Original",
+      "saveCount": 3
+    },
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "case": "ui-07",
+    "kind": "fixture-validation",
+    "passed": true,
+    "profile_after_cancel": {
+      "displayName": "Saved baseline",
+      "saveCount": 1
+    },
+    "cancel_post_requests": 0,
+    "empty_input_cancel_changed_state": false,
+    "restored_profile": {
+      "displayName": "Original",
+      "saveCount": 2
+    },
+    "viewport": [
+      1280,
+      720
+    ]
+  }
+]
