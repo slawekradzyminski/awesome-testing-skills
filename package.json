@@ -1,12 +1,12 @@
 {
-  "name": "@slawekradzyminski/exploratory-testing-skills",
+  "name": "@slawekradzyminski/awesome-testing-skills",
   "version": "0.1.0",
   "private": true,
   "description": "Install portable API and UI exploratory testing skills for Claude Code, Codex, Cursor and Copilot",
   "type": "module",
-  "bin": { "exploratory-skills": "bin/install.mjs" },
+  "bin": { "awesome-testing-skills": "bin/install.mjs", "exploratory-skills": "bin/install.mjs" },
   "files": ["bin/", "skills/"],
   "engines": { "node": ">=20" },
   "scripts": { "test": "node --test test/*.test.mjs" },
-  "repository": { "type": "git", "url": "git+https://github.com/slawekradzyminski/exploratory-testing-skills.git" }
+  "repository": { "type": "git", "url": "git+https://github.com/slawekradzyminski/awesome-testing-skills.git" }
 }

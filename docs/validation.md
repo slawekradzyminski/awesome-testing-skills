@@ -109,3 +109,5 @@ The [benchmark user guide](../evals/GETTING_STARTED.md) now covers the included 
 ## Public repository access — September 12, 2026
 
 Repository visibility was changed to public and verified through an unauthenticated GitHub API request. Current installation and cloning instructions use HTTPS. The public `npx` command passed with a fresh npm cache, Git credential prompts disabled and global Git configuration excluded; both installed skill directories matched the repository files. Earlier private-SSH validation above records the previous setup. This change did not publish a package to the npm registry.
+
+The project was subsequently renamed to **Awesome Testing Skills**, at `slawekradzyminski/awesome-testing-skills`. Current package metadata, clone commands and the installer command use that name. The previous `exploratory-skills` command remains an alias; installed skill names and backup directories retain their existing names. All ten installer tests pass after the rename.

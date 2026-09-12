@@ -15,8 +15,8 @@ The local fixtures need no Docker, AWS account, cloud credentials or external se
 The skill installer distributes skill files only. Clone this repository to obtain the benchmark apps and harness. The public repository can be cloned without GitHub authentication:
 
 ```sh
-git clone https://github.com/slawekradzyminski/exploratory-testing-skills.git
-cd exploratory-testing-skills
+git clone https://github.com/slawekradzyminski/awesome-testing-skills.git
+cd awesome-testing-skills
 ```
 
 The following examples use a POSIX shell and start from this repository root. A preparation command creates a candidate directory and prints its task path; it does not launch an AI agent.

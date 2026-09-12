@@ -1,6 +1,6 @@
-# Exploratory Testing Skills
+# Awesome Testing Skills
 
-Two reusable agent skills for code-informed exploratory testing, with a reproducible benchmark for evaluating their findings, evidence and handling of limited access.
+Two reusable agent skills for code-informed exploratory testing, with a reproducible benchmark for evaluating their findings, evidence and handling of limited access. A project by [Awesome Testing](https://www.awesome-testing.com/).
 
 | Skill | Purpose | Preferred runtime tool |
 | --- | --- | --- |
@@ -18,7 +18,7 @@ Detailed guidance loads through references at the point of use. Each skill remai
 Requires **Node.js 20+**, npm/npx and Git. From the project where you want to use the skills:
 
 ```sh
-npx --yes --allow-git=root --package='git+https://github.com/slawekradzyminski/exploratory-testing-skills.git#main' exploratory-skills --agent claude
+npx --yes --allow-git=root --package='git+https://github.com/slawekradzyminski/awesome-testing-skills.git#main' awesome-testing-skills --agent claude
 ```
 
 Replace `claude` with **`codex`**, **`cursor`** or **`copilot`**. Both skills and their references are installed in the current project. The repository is public; this HTTPS command requires no GitHub login or SSH setup. It runs the package directly from Git; no npm-registry release or npm account is required. See [npm's execution documentation](https://docs.npmjs.com/cli/npm-exec/).
@@ -42,8 +42,8 @@ Identical copies are skipped. If either selected skill differs, installation sto
 If you prefer a clone, the same installer works locally without npm installation:
 
 ```sh
-git clone https://github.com/slawekradzyminski/exploratory-testing-skills.git
-cd exploratory-testing-skills
+git clone https://github.com/slawekradzyminski/awesome-testing-skills.git
+cd awesome-testing-skills
 node bin/install.mjs --agent codex --project /path/to/your/project
 ```
 

@@ -14,7 +14,7 @@ const agents = {
 const skills = {api: 'api-exploratory-testing', ui: 'ui-exploratory-testing'};
 const help = `Install exploratory testing skills (Node.js 20+).
 
-Usage: exploratory-skills --agent <claude|codex|cursor|copilot> [options]
+Usage: awesome-testing-skills --agent <claude|codex|cursor|copilot> [options]
 
   --project <path>   Project directory (default: current directory)
   --global           Install for your user instead of one project
@@ -24,10 +24,10 @@ Usage: exploratory-skills --agent <claude|codex|cursor|copilot> [options]
   --help             Show this help
 
 Examples:
-  exploratory-skills --agent claude
-  exploratory-skills --agent codex --project /path/to/project --skill api
-  exploratory-skills --agent cursor --global --dry-run
-  exploratory-skills --agent copilot --force
+  awesome-testing-skills --agent claude
+  awesome-testing-skills --agent codex --project /path/to/project --skill api
+  awesome-testing-skills --agent cursor --global --dry-run
+  awesome-testing-skills --agent copilot --force
 
 Existing identical copies are left alone. Conflicts stop the entire plan before
 writes unless --force is set. Backups stay under .exploratory-skills-backups/
@@ -155,7 +155,7 @@ export async function install(args, {cwd = process.cwd(), home = os.homedir(), l
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === await fs.realpath(process.argv[1]).catch(() => '')) {
   install(process.argv.slice(2)).catch(error => {
-    console.error(`exploratory-skills: ${error.message}`);
+    console.error(`awesome-testing-skills: ${error.message}`);
     process.exitCode = 1;
   });
 }
