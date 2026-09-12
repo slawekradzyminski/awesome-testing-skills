@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Workshop cart</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>Your cart</h1>
+    <label for="identity">Demo account</label>
+    <select id="identity"><option value="alice">Alice</option><option value="bob">Bob</option></select>
+    <section aria-labelledby="product-title">
+      <h2 id="product-title">Workshop notebook</h2>
+      <p>Price: 12 · Available stock: 5</p>
+      <p id="summary" aria-live="polite">Loading cart…</p>
+      <button id="edit" type="button">Edit quantity</button>
+      <form id="quantity-form" hidden>
+        <label for="quantity">Quantity</label>
+        <input id="quantity" name="quantity" type="number" min="0" max="5" step="1" required>
+        <div class="actions">
+          <button id="save" type="submit">Save</button>
+          <button id="cancel" type="button">Cancel</button>
+        </div>
+      </form>
+      <p id="feedback" role="status"></p>
+    </section>
+  </main>
+</body>
+</html>

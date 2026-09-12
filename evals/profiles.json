@@ -1,0 +1,8 @@
+{
+  "localstack-local-api": {"skill": "api-exploratory-testing", "base_url": "http://localhost:8081", "surface": "api", "mode": "public-read-only"},
+  "localstack-local-ui": {"skill": "ui-exploratory-testing", "base_url": "http://localhost:8081", "surface": "ui", "mode": "public-read-only"},
+  "localstack-hosted-api": {"skill": "api-exploratory-testing", "base_url": "https://awesome.byst.re", "surface": "api", "mode": "public-read-only"},
+  "localstack-hosted-ui": {"skill": "ui-exploratory-testing", "base_url": "https://awesome.byst.re", "surface": "ui", "mode": "public-read-only"},
+  "localstack-sandbox-api": {"skill": "api-exploratory-testing", "base_url": "https://aitesters.byst.re", "surface": "api", "mode": "public-read-only"},
+  "localstack-sandbox-ui": {"skill": "ui-exploratory-testing", "base_url": "https://aitesters.byst.re", "surface": "ui", "mode": "public-read-only"}
+}

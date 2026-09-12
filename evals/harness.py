@@ -1,0 +1,381 @@
+#!/usr/bin/env python3
+"""Prepare isolated agent tasks and validate evidence; semantic grading stays explicit."""
+
+import argparse
+import hashlib
+import io
+import json
+import os
+import shutil
+import signal
+import subprocess
+import sys
+import tarfile
+import time
+from pathlib import Path
+from urllib.error import HTTPError
+from urllib.request import urlopen
+
+ROOT = Path(__file__).resolve().parents[1]
+EVALS = ROOT / "evals"
+CHILDREN = {}
+
+
+def read_json(path):
+    return json.loads(Path(path).read_text())
+
+
+def write_json(path, value):
+    Path(path).write_text(json.dumps(value, indent=2) + "\n")
+
+
+def hashes(directory):
+    return {str(p.relative_to(directory)): hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in sorted(directory.rglob("*")) if p.is_file()
+            and "__pycache__" not in p.parts and not p.name.endswith(".pyc")}
+
+
+def mutate(directory, variant):
+    edits = {
+        "quantity": ("domain.py", "if type(quantity) is not int or quantity < 0:",
+                     "if type(quantity) is not int:"),
+        "cancel": ("static/index.html", '<button id="cancel" type="button">', '<button id="cancel">'),
+    }
+    if variant == "control":
+        return
+    filename, old, new = edits[variant]
+    path = directory / filename
+    original = path.read_text()
+    if original.count(old) != 1:
+        raise ValueError(f"Mutation anchor changed: {filename}")
+    path.write_text(original.replace(old, new))
+
+
+REPORTING = """# Evaluation output contract
+
+Write your normal exploration report to `report.md`, evidence under `evidence/`,
+and a compact `submission.json` with this shape (fill actual values):
+
+```json
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [{"requirement_id": "use the applicable requirement ID, or UNMAPPED",
+    "title": "observable problem", "status": "confirmed or code-evidenced or suspected",
+    "expected": "requirement and basis", "actual": "observed behavior",
+    "impact": "demonstrated consequence", "evidence": ["evidence/reproduction.txt"]}],
+  "risks": [{"area": "behavior", "reason": "evidence", "priority": "high/medium/low", "next_probe": "next useful experiment"}],
+  "observations": [{"method": "GET", "path": "/api/v1/cart", "status": 200,
+    "action": "what prompted the request", "evidence": "evidence/http.txt"}],
+  "limitations": ["meaningful untested scope or constraints"],
+  "cleanup": "what was restored or remains"
+}
+```
+
+Empty findings/observations are valid when justified. Distinguish code evidence
+from runtime confirmation. Evidence paths must be relative to this directory.
+Include screenshots you actually opened when reporting UI observations.
+Do not change the application, requirements, skills, or existing tests.
+Use only this candidate directory and the assigned runtime; do not look for
+grader files, other runs, the parent repository, or external copies of this app.
+The fixture/process owner will stop the server after you finish. Close only
+your own browser session. The assessment is of exploration, not bug fixing.
+"""
+
+
+def create_run(out):
+    run = Path(out).resolve()
+    # Never overwrite a prior evaluation, source checkout, or a caller's files.
+    run.mkdir(parents=True, exist_ok=False)
+    (run / "candidate").mkdir()
+    (run / "controller").mkdir()
+    (run / "candidate/evidence").mkdir()
+    return run
+
+
+def copy_skill(candidate, name, enabled):
+    if not enabled:
+        return "Perform exploratory testing using your normal approach."
+    destination = candidate / "skills" / name
+    shutil.copytree(ROOT / "skills" / name, destination)
+    return f"Use ${name} from {destination / 'SKILL.md'}."
+
+
+def start_fixture(run):
+    run = Path(run).resolve()
+    control = run / "controller"
+    app = run / "candidate/app"
+    if not app.exists():
+        app = control / "runtime-app"
+    with (control / "server.log").open("w") as log:
+        process = subprocess.Popen(
+            [sys.executable, str(app / "app.py"), "--ready", str(control / "ready.json"),
+             "--audit", str(control / "audit.jsonl")], cwd=app, stdout=log,
+            stderr=subprocess.STDOUT, start_new_session=True)
+    CHILDREN[process.pid] = process
+    for _ in range(100):
+        if (control / "ready.json").exists():
+            return read_json(control / "ready.json")["base_url"]
+        if process.poll() is not None:
+            raise RuntimeError(f"Fixture failed; inspect {control / 'server.log'}")
+        time.sleep(0.05)
+    process.terminate()
+    process.wait(timeout=5)
+    raise RuntimeError("Fixture startup timed out")
+
+
+def prepare(case_id, out, without_skill=False):
+    case = next(c for c in read_json(EVALS / "cases.json")["cases"] if c["id"] == case_id)
+    run = create_run(out)
+    candidate, control = run / "candidate", run / "controller"
+    app = control / "runtime-app" if case["access"] == "runtime-only" else candidate / "app"
+    shutil.copytree(EVALS / "sample-app", app, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    mutate(app, case["variant"])
+    shutil.copy2(app / "requirements.md", candidate / "requirements.md")
+    invocation = copy_skill(candidate, case["skill"], not without_skill)
+    base_url = None if case["access"] == "source-only" else start_fixture(run)
+    source = "Application source is app/. Inspect its relevant code and existing tests." if case["access"] != "runtime-only" else "Source code cannot be shared for this session. Continue with runtime exploration."
+    runtime = f"Runtime: {base_url}." if base_url else "The runtime is unavailable. Do not start it; perform a source-only assessment and propose reproductions."
+    scope = "Explore the existing cart quantity-update API and its product data." if case["skill"].startswith("api") else "Explore the cart editor, its visible totals, and the Save/Cancel interaction. Use Playwright CLI or an available browser agent."
+    prompt = f"""{invocation}
+
+{scope}
+{source}
+{runtime}
+Read requirements.md and REPORTING.md. Identify risky areas and investigate actual bugs.
+Use Alice/Bob's disposable fixture identities documented in the requirements.
+You may update only this isolated fixture's carts and restore your changes where possible.
+Spend at most five minutes and 60 API requests (UI work: at most 45 browser actions).
+Stay within the described feature scope; report limitations and do not invent defects.
+All work and deliverables belong in {candidate}.
+"""
+    (candidate / "TASK.md").write_text(prompt)
+    (candidate / "REPORTING.md").write_text(REPORTING)
+    write_json(control / "manifest.json", {"case": case, "with_skill": not without_skill,
+               "base_url": base_url, "app_path": str(app), "app_hashes": hashes(app),
+               "skill_hashes": hashes(candidate / "skills") if not without_skill else {},
+               "revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()})
+    print(json.dumps({"run": str(run), "candidate": str(candidate), "task": str(candidate / "TASK.md")}))
+
+
+def snapshot_repo(source, destination):
+    """Copy tracked committed files, never local modifications or .git history."""
+    source = Path(source).resolve()
+    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip()
+    data = subprocess.check_output(["git", "archive", "--format=tar", revision], cwd=source)
+    destination.mkdir()
+    with tarfile.open(fileobj=io.BytesIO(data)) as archive:
+        for member in archive.getmembers():
+            path = Path(member.name)
+            if member.isfile() and not path.is_absolute() and ".." not in path.parts:
+                # Runtime configuration and datasets are not needed for code inspection.
+                if path.name.startswith(".env") or path.suffix.lower() in (".pem", ".key", ".p12"):
+                    continue
+                if any(part in (".git", "node_modules", "artifacts", "reports") for part in path.parts):
+                    continue
+                target = destination / path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(archive.extractfile(member).read())
+    return {"revision": revision, "working_tree_changes_excluded": True, "hashes": hashes(destination)}
+
+
+def prepare_live(profile_id, out, sources=None, without_skill=False):
+    profiles = read_json(EVALS / "profiles.json")
+    profile = profiles[profile_id]
+    run = create_run(out)
+    candidate, control = run / "candidate", run / "controller"
+    invocation = copy_skill(candidate, profile["skill"], not without_skill)
+    provenance = {}
+    for name, source in (sources or {}).items():
+        if source:
+            (candidate / "source").mkdir(exist_ok=True)
+            provenance[name] = snapshot_repo(source, candidate / "source" / name)
+    has_source = bool(provenance)
+    allowed = ["/login", "/v3/api-docs", "/api/v1/products", "/api/v1/cart"]
+    prompt = f"""{invocation}
+
+Explore Awesome LocalStack's public {'API contract and authentication boundary' if profile['surface'] == 'api' else 'login interface and its public navigation'} at {profile['base_url']}.
+This is an optional real-stack evaluation, with no known bug list. No findings is a valid outcome.
+{'Source snapshots are under source/. They are committed revisions, not verified deployed revisions.' if has_source else 'Source cannot be shared in this run. Proceed with black-box observations and identify limits.'}
+Use available requirements/contracts; distinguish inferred expectations from documented facts.
+
+The run is PUBLIC READ-ONLY. Do not sign in, submit forms (including login/reset), create accounts,
+send email, change data, inject faults, or enumerate private records. Do not use stored credentials.
+For direct HTTP probes, only GET requests to {', '.join(allowed)} are in scope, at most 12 requests.
+For browser work, use a fresh session and public pages/assets only; passive scripts may fetch public data.
+You may inspect labels, focus, responsive layout, validation attributes and network observations,
+but do not press submit or interact with actions that send mutations. At most 30 browser actions.
+Spend at most five minutes. Report important gaps that would require an authorized disposable session.
+Keep all deliverables in {candidate}. Read REPORTING.md. No product/source changes or external issues.
+"""
+    (candidate / "TASK.md").write_text(prompt)
+    (candidate / "REPORTING.md").write_text(REPORTING)
+    write_json(control / "manifest.json", {"type": "live", "profile": profile_id,
+               "case": {"id": profile_id, "access": "source-runtime" if has_source else "runtime-only", "expected_requirements": []},
+               "with_skill": not without_skill, "base_url": profile["base_url"], "source_provenance": provenance,
+               "skill_hashes": hashes(candidate / "skills") if not without_skill else {}})
+    print(json.dumps({"run": str(run), "task": str(candidate / "TASK.md")}))
+
+
+def preflight(profile_id):
+    profile = read_json(EVALS / "profiles.json")[profile_id]
+    results = []
+    for path in ("/login", "/v3/api-docs"):
+        try:
+            with urlopen(profile["base_url"] + path, timeout=10) as response:
+                data = response.read(2_000_001)
+                results.append({"path": path, "status": response.status,
+                                "content_type": response.headers.get("Content-Type"),
+                                "body_bytes_sampled": len(data), "complete": len(data) <= 2_000_000})
+        except HTTPError as error:
+            with error:
+                results.append({"path": path, "status": error.code,
+                                "content_type": error.headers.get("Content-Type")})
+        except Exception as error:
+            results.append({"path": path, "error": str(error)})
+    print(json.dumps({"profile": profile_id, "public_get_only": True, "results": results}, indent=2))
+
+
+def stop(run):
+    control = Path(run).resolve() / "controller"
+    ready_file = control / "ready.json"
+    if not ready_file.exists():
+        return
+    pid = read_json(ready_file)["pid"]
+    command = subprocess.run(["ps", "-p", str(pid), "-o", "command="], capture_output=True, text=True)
+    if command.returncode == 0 and str(control / "ready.json") in command.stdout:
+        os.kill(pid, signal.SIGTERM)
+        child = CHILDREN.pop(pid, None)
+        if child:
+            child.wait(timeout=5)
+        print(f"Stopped owned fixture {pid}")
+    else:
+        print("Fixture is no longer running; no unrelated process was stopped")
+
+
+def valid_evidence(candidate, value):
+    candidate = Path(candidate).resolve()
+    if not isinstance(value, str) or not value:
+        return False
+    p = (candidate / value).resolve()
+    return not Path(value).is_absolute() and p.is_relative_to(candidate) and p.is_file() and p.stat().st_size > 0
+
+
+def grade(run):
+    run = Path(run).resolve()
+    candidate, control = run / "candidate", run / "controller"
+    manifest = read_json(control / "manifest.json")
+    report = read_json(candidate / "submission.json")
+    errors = []
+    for field in ("findings", "risks", "observations", "limitations"):
+        if not isinstance(report.get(field), list):
+            errors.append(f"{field} must be an array")
+    if errors:
+        raise ValueError("; ".join(errors))
+    for field in ("findings", "risks", "observations"):
+        if any(not isinstance(item, dict) for item in report[field]):
+            raise ValueError(f"{field} entries must be objects")
+    if any(not isinstance(item.get("evidence"), list) for item in report["findings"]):
+        raise ValueError("Finding evidence must be an array of relative paths")
+    for field in ("source_access", "runtime_exercised"):
+        if type(report.get(field)) is not bool:
+            errors.append(f"{field} must be a boolean")
+    if not isinstance(report.get("cleanup"), str) or not report["cleanup"].strip():
+        errors.append("Missing cleanup statement")
+    if not (candidate / "report.md").is_file():
+        errors.append("Missing narrative report")
+    if not report["risks"]:
+        errors.append("No risk assessment supplied")
+    for item in report["findings"]:
+        for field in ("requirement_id", "title", "status", "expected", "actual", "impact", "evidence"):
+            if not item.get(field):
+                errors.append(f"Finding missing {field}")
+        if item.get("status") not in ("confirmed", "code-evidenced", "suspected"):
+            errors.append("Unknown finding evidence state")
+        for evidence in item.get("evidence", []):
+            if not valid_evidence(candidate, evidence):
+                errors.append(f"Missing or out-of-scope finding evidence: {evidence}")
+    for item in report["observations"]:
+        if not valid_evidence(candidate, item.get("evidence")):
+            errors.append("Missing or out-of-scope observation evidence")
+    for risk in report["risks"]:
+        if not all(risk.get(k) for k in ("area", "reason", "priority", "next_probe")):
+            errors.append("Incomplete risk assessment entry")
+    case = manifest["case"]
+    if report.get("source_access") != (case["access"] != "runtime-only"):
+        errors.append("Source-access claim contradicts prepared access")
+    audit_path = control / "audit.jsonl"
+    audit = [json.loads(line) for line in audit_path.read_text().splitlines()] if audit_path.exists() else []
+    api_records = [row for row in audit if row["path"].startswith("/api/")]
+    if case["access"] == "source-only" and (report.get("runtime_exercised") or report["observations"]):
+        errors.append("Runtime execution claimed in source-only case")
+    live = manifest.get("type") == "live"
+    if not live and case["access"] != "source-only" and (not report.get("runtime_exercised") or not api_records):
+        errors.append("Missing runtime exploration")
+    if len(api_records) > 60:
+        errors.append("API request budget exceeded")
+    for observation in ([] if live else report["observations"]):
+        if not any(all(observation.get(key) == row[key] for key in ("method", "path", "status")) for row in audit):
+            errors.append(f"Observation has no matching server record: {observation.get('path')}")
+    if not live and hashes(Path(manifest["app_path"])) != manifest["app_hashes"]:
+        errors.append("Application or requirements were modified")
+    for name, source in manifest.get("source_provenance", {}).items():
+        if hashes(candidate / "source" / name) != source["hashes"]:
+            errors.append(f"Source snapshot changed: {name}")
+    if manifest["with_skill"] and hashes(candidate / "skills") != manifest["skill_hashes"]:
+        errors.append("Skill snapshot was modified")
+    expected = set(case["expected_requirements"])
+    claimed = {f["requirement_id"] for f in report["findings"] if isinstance(f.get("requirement_id"), str)
+               and f.get("status") in ("confirmed", "code-evidenced")}
+    # This signature establishes API behavior, not whether the report explains it correctly.
+    negative_write = any(r["method"] == "PUT" and r["status"] == 200 and
+                         isinstance(r.get("request"), dict) and type(r["request"].get("quantity")) is int and
+                         r["request"]["quantity"] < 0 for r in audit)
+    negative_read = any(r["method"] == "GET" and r["path"] == "/api/v1/cart" and
+                        isinstance(r.get("response"), dict) and r["response"].get("totalItems", 0) < 0 for r in audit)
+    result = {"case": case["id"], "with_skill": manifest["with_skill"],
+              "artifact_checks_passed": not errors, "errors": errors,
+              "expected_requirements_reported": sorted(expected & claimed),
+              "expected_requirements_missing": sorted(expected - claimed),
+              "additional_claims_for_review": sorted(claimed - expected),
+              "api_requests": None if live else len(api_records), "negative_quantity_write_and_read_observed": negative_write and negative_read,
+              "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."}
+    write_json(control / "grade.json", result)
+    print(json.dumps(result, indent=2))
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest="command", required=True)
+    prepare_parser = sub.add_parser("prepare")
+    prepare_parser.add_argument("case")
+    prepare_parser.add_argument("--out", required=True)
+    prepare_parser.add_argument("--without-skill", action="store_true")
+    live_parser = sub.add_parser("prepare-live")
+    live_parser.add_argument("profile", choices=read_json(EVALS / "profiles.json"))
+    live_parser.add_argument("--out", required=True)
+    live_parser.add_argument("--backend")
+    live_parser.add_argument("--frontend")
+    live_parser.add_argument("--stack")
+    live_parser.add_argument("--without-skill", action="store_true")
+    sub.add_parser("preflight").add_argument("profile", choices=read_json(EVALS / "profiles.json"))
+    for command in ("stop", "grade"):
+        sub.add_parser(command).add_argument("run")
+    args = parser.parse_args()
+    if args.command == "prepare":
+        prepare(args.case, args.out, args.without_skill)
+    elif args.command == "prepare-live":
+        prepare_live(args.profile, args.out, {k: getattr(args, k) for k in ("backend", "frontend", "stack")}, args.without_skill)
+    elif args.command == "preflight":
+        preflight(args.profile)
+    elif args.command == "stop":
+        stop(args.run)
+    else:
+        result = grade(args.run)
+        if not result["artifact_checks_passed"]:
+            sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

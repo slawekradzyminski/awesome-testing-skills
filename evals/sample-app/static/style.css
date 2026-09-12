@@ -1,0 +1,9 @@
+body { font: 18px system-ui, sans-serif; margin: 0; color: #17212b; background: #f4f6f8; }
+main { max-width: 660px; margin: 40px auto; padding: 24px; }
+section { margin-top: 24px; padding: 24px; background: white; border: 1px solid #cbd2d9; border-radius: 12px; }
+label { display: block; margin: 12px 0 6px; }
+button, input, select { font: inherit; padding: 10px; }
+button { cursor: pointer; }
+.actions { display: flex; gap: 12px; margin-top: 12px; }
+:focus-visible { outline: 3px solid #175ac8; outline-offset: 3px; }
+@media (max-width: 500px) { main { margin: 0; padding: 16px; } section { padding: 16px; } }

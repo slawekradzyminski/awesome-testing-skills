@@ -1,0 +1,158 @@
+{
+  "date": "2026-09-12",
+  "skill_quality_status": "not_scored",
+  "reason": "Fresh evaluator agents were blocked by account usage limits before producing reports.",
+  "runner": {
+    "python": "3.14.7",
+    "playwright_cli": "0.1.19",
+    "browser_engine": "Chromium",
+    "browser_version": null,
+    "model_reported_by_completed_evaluator": null
+  },
+  "infrastructure": {
+    "harness_tests": {
+      "passed": 8,
+      "failed": 0
+    },
+    "sample_domain_tests": {
+      "passed": 2,
+      "failed": 0
+    },
+    "browser_checks": [
+      {
+        "case": "ui-01",
+        "kind": "fixture-validation",
+        "passed": true,
+        "quantity_after_cancel": 3,
+        "cancel_put_requests": 1,
+        "quantity_after_save_and_reload": 2,
+        "viewport": [
+          1280,
+          720
+        ]
+      },
+      {
+        "case": "ui-02",
+        "kind": "fixture-validation",
+        "passed": true,
+        "quantity_after_cancel": 1,
+        "cancel_put_requests": 0,
+        "quantity_after_save_and_reload": 2,
+        "viewport": [
+          1280,
+          720
+        ]
+      }
+    ],
+    "live_source_snapshot_preparation": "passed"
+  },
+  "agent_runs": [
+    {
+      "case": "api-01",
+      "with_skill": true,
+      "status": "blocked_usage_limit",
+      "score": null,
+      "submitted_report": false
+    },
+    {
+      "case": "api-02",
+      "with_skill": true,
+      "status": "blocked_usage_limit",
+      "score": null,
+      "submitted_report": false
+    },
+    {
+      "case": "ui-01",
+      "with_skill": true,
+      "status": "blocked_usage_limit",
+      "score": null,
+      "submitted_report": false
+    },
+    {
+      "case": "ui-02",
+      "with_skill": true,
+      "status": "not_run",
+      "score": null,
+      "submitted_report": false
+    },
+    {
+      "case": "api-03",
+      "with_skill": true,
+      "status": "not_run",
+      "score": null,
+      "submitted_report": false
+    },
+    {
+      "case": "ui-03",
+      "with_skill": true,
+      "status": "not_run",
+      "score": null,
+      "submitted_report": false
+    }
+  ],
+  "without_skill_baselines": {
+    "status": "not_run",
+    "score": null
+  },
+  "live_preflight": [
+    {
+      "profile": "localstack-local-api",
+      "scope": "GET /login and /v3/api-docs",
+      "results": {
+        "/login": "connection_refused",
+        "/v3/api-docs": "connection_refused"
+      }
+    },
+    {
+      "profile": "localstack-hosted-api",
+      "scope": "GET /login and /v3/api-docs",
+      "results": {
+        "/login": 403,
+        "/v3/api-docs": 403
+      }
+    },
+    {
+      "profile": "localstack-sandbox-api",
+      "scope": "GET /login and /v3/api-docs",
+      "results": {
+        "/login": 403,
+        "/v3/api-docs": 403
+      }
+    }
+  ],
+  "hashes": {
+    "skills": {
+      "api-exploratory-testing/SKILL.md": "47421f52d3b5b9b0fd93d92888c44c755d1772a3d43ba975b1bafd70161c06a8",
+      "api-exploratory-testing/agents/openai.yaml": "1fcf632e64937e3f398cf5a6a1bf79c405bf3e44381fc34e7770836bb76f7f11",
+      "api-exploratory-testing/references/experiment-design.md": "e2dba068da5b803d35a665d922ffe9cdb317c54ad9733dd16392856acf702010",
+      "api-exploratory-testing/references/reporting.md": "c4f3f4b881ab7e5176e4df7daaca86ed7382343b6a076850e4197eb9bd1e1095",
+      "ui-exploratory-testing/SKILL.md": "9fb07eda69eaf4ae2cc9e22b3357615a098356b8340c560bb640d1e0aaaf63b8",
+      "ui-exploratory-testing/agents/openai.yaml": "53f4b5eea65275c594172a727ca05d70b47a0f176dbb839ef888e1a44a2b603b",
+      "ui-exploratory-testing/references/browser-experiments.md": "6e3613c0784e17e6238142fbe7bb817e52e76fc839d75730203330019fdfba0b",
+      "ui-exploratory-testing/references/reporting.md": "26d9af0d5619355bf766353f3b39ba40eea6d2fe1cc1a050e924f860e8a8a197"
+    },
+    "sample_app": {
+      "app.py": "3cd1941d80e007428cfe9ac3469e93af0dfbfc24325ac29efebcc1d84313a2b7",
+      "domain.py": "29f6253b888664112d06fc9fbef9eb996ce04b89ce5d045184aa7c77a42527ec",
+      "requirements.md": "e1a2c940c23976129e1e4fb26d1c3132b15b56e21b4ed98be20593325d4861aa",
+      "static/app.js": "d52179889abfabc42377e0e0fba9585fd8c7b9f0f4e190919b5b46b7b959a38c",
+      "static/index.html": "e90ab91ba5220ee2cf2540132ba2f14b20fb4adc9d860ae6d0e12f5d0e34af37",
+      "static/style.css": "93cf3e1e892f7f0aadd2ae916beba747cd00a3c8d6b088b5ea8be3e94db43b7f",
+      "test_domain.py": "dfda44c0719a4ea5a3a0332af38274ee707f74f9e9c0ab3a627f183dd7e7cca1"
+    },
+    "harness": {
+      "harness.py": "8381428cdb79002bda48a5ce076e3f6b9eb0432b361328bca976cbc5b2caf03a",
+      "check_browser_fixture.py": "28cbb8278806cbabed2a1521166ac4ef5c1ca5bb64a16869fb8eb9571688a367",
+      "cases.json": "09a843cf943740caa0717b12c50928090ea49d652bd88a7242f8d4ea79c11b8b",
+      "profiles.json": "ba871a1eb15e06f58ff4ac5f63b723c11a4f876a0cdfec0d186aced4ed900d08",
+      "rubric.md": "25a89453f1ef48110a18ac01ea30122331b1d9b8fc7ca282ab4add4af237535b"
+    }
+  },
+  "limitations": [
+    "No independent skill score or skill-versus-baseline comparison.",
+    "Browser checks are author-written and know the seeded outcomes.",
+    "No authenticated or mutable hosted testing.",
+    "Prepared source revisions are not verified deployed builds.",
+    "Token and browser-action usage are not automatically metered by the grader."
+  ]
+}

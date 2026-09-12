@@ -75,3 +75,7 @@ Reviewed against the latest remote branch tips on September 12, 2026:
 These are generic derivatives. They remove workshop-specific hosts, credentials, directory conventions, fixed viewport policies, automation rules, and duplicate Codex/Claude copies. They retain adaptive exploration and evidence standards, add explicit source intake and risk maps, and support alternative tools and partial access.
 
 See [validation notes](docs/validation.md) for checks and their limits.
+
+## Skill evaluations
+
+The [evaluation suite](evals/README.md) includes a kept sample application, frozen seeded defects and matching controls, source-only/runtime-only cases, evidence checks, and a reviewer rubric. Optional profiles connect to local or hosted Awesome LocalStack using public read-only tasks. Fresh agent runs and real testing evidence are evaluated separately from fixture unit tests.
