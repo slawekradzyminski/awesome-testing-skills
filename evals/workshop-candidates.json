@@ -77,15 +77,19 @@
     },
     {
       "workshop_id": "DOC-08",
-      "status": "covered-by-live-pilot",
-      "cases": [
-        "localstack-hosted-api"
-      ],
-      "purpose": "Compare error schema to actual runtime representation.",
+      "status": "historical-only-excluded-documentation",
+      "cases": [],
+      "purpose": "Retain provenance for the historical hosted pilot; excluded from current benchmark discovery credit.",
       "oracle_design": "Array/object mismatch is decisive; a permissive object schema with optional fields needs more careful reasoning.",
       "source_report": "docs/bugs/api/[L][D] DOC-08 - Product error schemas misdescribe responses.md",
       "source_url": "https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BL%5D%5BD%5D%20DOC-08%20-%20Product%20error%20schemas%20misdescribe%20responses.md",
-      "source_report_sha256": "3412698cad592cf33d07470c29d23c1e113e2ac577061a21964ec99741fdbfa1"
+      "source_report_sha256": "3412698cad592cf33d07470c29d23c1e113e2ac577061a21964ec99741fdbfa1",
+      "historical_profiles": [
+        "localstack-hosted-api"
+      ]
     }
+  ],
+  "excluded_finding_categories": [
+    "documentation-only-defects"
   ]
 }

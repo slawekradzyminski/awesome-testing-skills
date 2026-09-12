@@ -33,6 +33,25 @@ def request(base, method="GET", quantity=None):
 
 
 class HarnessTests(unittest.TestCase):
+    def test_documentation_exclusion_is_shared_by_both_conditions_and_live_tasks(self):
+        with tempfile.TemporaryDirectory() as folder:
+            for profile in (None, "localstack-hosted-api", "localstack-hosted-ui"):
+                contracts = []
+                for baseline in (False, True):
+                    run = Path(folder) / f"{profile}-{baseline}"
+                    if profile:
+                        harness.prepare_live(profile, run, without_skill=baseline)
+                    else:
+                        harness.prepare("api-03", run, without_skill=baseline)
+                    manifest = harness.read_json(run / "controller/manifest.json")
+                    self.assertEqual(manifest["benchmark_scope"]["excluded"], ["documentation-only-defects"])
+                    contract = (run / "candidate/REPORTING.md").read_text()
+                    self.assertIn("Do not count documentation-only observations as findings", contract)
+                    self.assertIn("Incorrect runtime validation feedback", contract)
+                    self.assertIn("REPORTING.md", (run / "candidate/TASK.md").read_text())
+                    contracts.append(contract)
+                self.assertEqual(contracts[0], contracts[1])
+
     def test_unavailable_runtime_requires_honest_blocked_outcome(self):
         with tempfile.TemporaryDirectory() as folder:
             run = Path(folder) / "run"
@@ -51,7 +70,9 @@ class HarnessTests(unittest.TestCase):
                     "observations": [{"method": "GET", "path": "/api/v1/cart", "status": 503, "action": "Availability check", "evidence": "evidence/http.txt"}],
                     "limitations": ["Functional runtime untested"], "cleanup": "No state changed"}
                 harness.write_json(candidate / "submission.json", report)
-                self.assertTrue(harness.grade(run)["artifact_checks_passed"])
+                graded = harness.grade(run)
+                self.assertTrue(graded["artifact_checks_passed"])
+                self.assertEqual(graded["benchmark_scope"], manifest["benchmark_scope"])
                 report["runtime_exercised"] = True
                 report["runtime_status"] = "tested"
                 report["checks"][0]["status"] = "passed"

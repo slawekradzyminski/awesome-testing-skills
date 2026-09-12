@@ -1,4 +1,0 @@
-interface:
-  display_name: "UI Exploratory Testing"
-  short_description: "Find UI bugs through code and browser exploration"
-  default_prompt: "Use $ui-exploratory-testing to inspect the target code, identify risky user journeys, and investigate them with Playwright CLI or an available browser agent."

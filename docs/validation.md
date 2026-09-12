@@ -85,3 +85,13 @@ HTTP retry/idempotency and acceptance guidance was checked against the linked RF
 ## Practical benchmark follow-up — September 12, 2026
 
 The [usability extension](../evals/results/2026-09-12-usability.md) added explicit passing/blocked/missing-source outcomes and course-derived validation cases. Observed failures led to two narrow skill changes: stop unavailable-service probe batches, and explain what relevant source could add to a completed runtime-only assessment. Fresh targeted reruns met those outcomes; initial failures remain preserved. These development cases are not held-out effectiveness evidence.
+
+## Portable installation and benchmark scope — September 12, 2026
+
+Removed optional per-skill `agents/openai.yaml` display metadata; the portable skill entrypoints and references are unchanged. Earlier metadata checks and archived skill hashes describe their original snapshots. Both remaining skill directories pass `quick_validate.py`.
+
+The dependency-free Node installer supports Claude Code, Codex, Cursor and Copilot, project or personal destinations, single-skill selection, dry runs, unchanged-copy detection, and explicit replacement with backups outside discovery directories. Ten automated tests pass, including file integrity, conflict prevention, symlink refusal, rollback, and execution through an npm-style bin symlink. Project and personal paths are checked with temporary directories, not by altering actual user installations.
+
+`npm pack` contains nine files: README, package metadata, installer, and six skill/reference files. It excludes eval fixtures, reports, tests and `agents/` metadata. Packed installation through `npx --yes --package=<archive> exploratory-skills --agent <client>` passed for all four client destinations. A first shorthand archive invocation failed because npm tried to execute the archive as a command; explicit package/bin selection resolves this and is used in the README. Tested runtime: Node.js 24.15.0, npm 12.0.2 on macOS; Node.js 20 is the declared minimum, not a separately tested runtime. Native discovery and behavioral equivalence across all four clients have not been independently tested.
+
+New evaluation tasks exclude documentation-only defects in their common reporting contract. New manifests and grade output retain the scope; human review decides functional versus documentation claims. Fifteen harness tests pass, including equal scope instructions for skill/baseline, fixture/live, and API/UI preparation. Course DOC-08 remains historical evidence and receives no discovery credit under the current scope. Historical reports, scores and submissions are unchanged. No new agent-performance result is claimed for these packaging and scope edits.

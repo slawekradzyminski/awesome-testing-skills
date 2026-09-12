@@ -2,6 +2,14 @@
 
 Keep this file, `cases.json`, harness implementation, audit logs, and prior results outside the candidate's context. They are reviewer material. The sample source and requirements are legitimate task context; reading the controller answer key is not.
 
+## Benchmark scope
+
+New runs assess application behavior and practical testing outcomes. Documentation-only defects, including inaccurate OpenAPI schemas/descriptions and README errors, are excluded. Use documented requirements as context; a documentation mismatch alone does not establish that application behavior is wrong. Uncertain requirements remain limitations. Incorrect runtime validation feedback and rejection of valid inputs are functional defects and remain eligible.
+
+Do not award discovery credit for a documentation-only claim. Mark it out of scope, rather than automatically treating a true observation as a false positive; assess disregard for the task boundary under scope and closeout. Additional functional findings still receive normal evidence review. The harness records this scope in new manifests and grade output, but semantic classification requires human review.
+
+Historical runs without `benchmark_scope` retain their original scope, scores and evidence. The hosted pilot reproduced course DOC-08 (an error-schema documentation mismatch); it is historical context and provides no discovery credit under the current benchmark. Correcting course documentation does not invalidate the 14 frozen functional/usefulness cases.
+
 ## Grade evidence, then conclusions
 
 Run `harness.py grade RUN` for artifact integrity, access claims, source/skill preservation, request-budget checks, and server-log support for reported HTTP observations. The command intentionally does **not** award an automatic skill pass. Matching a requirement ID or sending the expected request cannot establish a correct diagnosis.

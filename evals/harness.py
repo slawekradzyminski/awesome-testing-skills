@@ -20,6 +20,8 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 EVALS = ROOT / "evals"
 CHILDREN = {}
+BENCHMARK_SCOPE = {"version": 1, "included": ["application-behavior", "practical-testing-outcomes"],
+                   "excluded": ["documentation-only-defects"]}
 
 
 def read_json(path):
@@ -56,6 +58,18 @@ def mutate(directory, variant):
 
 
 REPORTING = """# Evaluation output contract
+
+## Benchmark scope
+
+Evaluate application behavior and practical testing outcomes. Documentation-only
+defects are excluded: do not audit README text, OpenAPI descriptions, or response
+schema documentation. Use requirements/contracts as context, but a finding must
+demonstrate incorrect application behavior, not merely an incorrect description.
+If the requirement itself is uncertain, report that limitation rather than invent
+a functional defect. Incorrect runtime validation feedback and rejection of valid
+input remain in scope. Do not count documentation-only observations as findings.
+
+## Deliverables
 
 Write your normal exploration report to `report.md`, evidence under `evidence/`,
 and a compact `submission.json` with this shape (fill actual values):
@@ -177,7 +191,7 @@ All work and deliverables belong in {candidate}.
 """
     (candidate / "TASK.md").write_text(prompt)
     (candidate / "REPORTING.md").write_text(REPORTING)
-    write_json(control / "manifest.json", {"case": case, "reporting_version": 2, "with_skill": not without_skill,
+    write_json(control / "manifest.json", {"case": case, "reporting_version": 2, "benchmark_scope": BENCHMARK_SCOPE, "with_skill": not without_skill,
                "base_url": base_url, "app_path": str(app), "app_hashes": hashes(app),
                "skill_hashes": hashes(candidate / "skills") if not without_skill else {},
                "revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()})
@@ -224,7 +238,7 @@ def prepare_live(profile_id, out, sources=None, without_skill=False):
     allowed = ["/login", "/v3/api-docs", "/api/v1/products", "/api/v1/cart"]
     prompt = f"""{invocation}
 
-Explore Awesome LocalStack's public {'API contract and authentication boundary' if profile['surface'] == 'api' else 'login interface and its public navigation'} at {profile['base_url']}.
+Explore Awesome LocalStack's public {'API behavior and authentication boundary' if profile['surface'] == 'api' else 'login interface and its public navigation'} at {profile['base_url']}.
 This is an optional real-stack evaluation, with no known bug list. No findings is a valid outcome.
 {'Source snapshots are under source/. Read source-revisions.json for their committed revisions; deployment correspondence is unverified.' if has_source else 'Source cannot be shared in this run. Proceed with black-box observations and identify limits.'}
 Use available requirements/contracts; distinguish inferred expectations from documented facts.
@@ -240,7 +254,7 @@ Keep all deliverables in {candidate}. Read REPORTING.md. No product/source chang
 """
     (candidate / "TASK.md").write_text(prompt)
     (candidate / "REPORTING.md").write_text(REPORTING)
-    write_json(control / "manifest.json", {"type": "live", "reporting_version": 2, "profile": profile_id,
+    write_json(control / "manifest.json", {"type": "live", "reporting_version": 2, "benchmark_scope": BENCHMARK_SCOPE, "profile": profile_id,
                "case": {"id": profile_id, "access": "source-runtime" if has_source else "runtime-only", "expected_requirements": []},
                "with_skill": not without_skill, "base_url": profile["base_url"], "source_provenance": provenance,
                "source_revisions_supplied": has_source,
@@ -433,6 +447,9 @@ def grade(run):
               "query_observations_requiring_manual_review": [o["path"] for o in report["observations"]
                   if isinstance(o.get("path"), str) and urlsplit(o["path"]).query],
               "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."}
+    if "benchmark_scope" in manifest:
+        result["benchmark_scope"] = manifest["benchmark_scope"]
+        result["semantic_review"] += " Apply the recorded benchmark scope: exclude documentation-only claims from discovery credit; review scope adherence separately."
     write_json(control / "grade.json", result)
     print(json.dumps(result, indent=2))
     return result

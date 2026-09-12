@@ -1,4 +1,0 @@
-interface:
-  display_name: "API Exploratory Testing"
-  short_description: "Find API bugs through code and live HTTP probes"
-  default_prompt: "Use $api-exploratory-testing to inspect the target code, identify risky API behavior, and investigate it with live HTTP requests."

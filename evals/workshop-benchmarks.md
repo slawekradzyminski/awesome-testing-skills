@@ -13,7 +13,7 @@ The course repository contains 27 recorded findings: 24 Open and 3 Needs clarifi
 
 The kept [course-app](course-app/) implements reduced, deterministic validation behavior derived from those reports. It is a synthetic Python fixture, **not the actual Spring backend or a reproduction of its password encoder**. It has no real login sessions, password storage or delivery effects. Sign-in covers validation/rejection only. Registration retains synthetic username/email records so accepted and rejected outcomes can be verified and cleaned up. Corrected controls exercise the same requirements without the selected defect.
 
-These cases complement the existing cart sample and real-stack profiles. They do not replace source-backed exploration of the actual backend. The hosted product error-schema finding from the first pilot is already course [DOC-08](https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BL%5D%5BD%5D%20DOC-08%20-%20Product%20error%20schemas%20misdescribe%20responses.md); it is a fresh reproduction of a known issue, not a new unique discovery.
+These cases complement the existing cart sample and real-stack profiles. They do not replace source-backed exploration of the actual backend. The hosted product error-schema finding from the first pilot is already course [DOC-08](https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BL%5D%5BD%5D%20DOC-08%20-%20Product%20error%20schemas%20misdescribe%20responses.md); it was a fresh reproduction of a known issue. Documentation-only defects are now excluded from benchmark tasks and discovery credit. DOC-08 is retained only as historical provenance; the original reports and scores remain unchanged. The 14 frozen cases assess functional behavior and useful testing outcomes, so correcting course documentation does not remove their expected defects.
 
 ## Cases for useful reporting
 
@@ -40,7 +40,7 @@ The register also records a rejected traffic-page-size suspicion and intentional
 
 ## Review criteria
 
-Use the [rubric](rubric.md), then record the expected useful outcome separately from numeric quality. For clean cases, require actual passing-check evidence. For unavailable cases, require honest blocking and an actionable next step. For missing-source cases, require productive runtime work plus a specific access limitation and useful source follow-up. For course defects, require the corresponding semantic failure and a neighboring passing contrast. Valid additional findings still deserve review; absence from the seed list is not a false-positive verdict.
+Use the [rubric](rubric.md), then record the expected useful outcome separately from numeric quality. For clean cases, require actual passing-check evidence. For unavailable cases, require honest blocking and an actionable next step. For missing-source cases, require productive runtime work plus a specific access limitation and useful source follow-up. For course defects, require the corresponding semantic failure and a neighboring passing contrast. Valid additional functional findings still deserve review; absence from the seed list is not a false-positive verdict.
 
 Keep development cases separate from held-out effectiveness measurements. Freeze a new case before running it, record fixture and skill hashes, use fresh contexts, and never describe examples already included in skill guidance as unseen benchmarks.
 

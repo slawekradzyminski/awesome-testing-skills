@@ -7,3 +7,7 @@ __pycache__/
 .playwright-cli/
 exploration/
 evals/runs/
+node_modules/
+*.tgz
+.exploratory-skills-backups/
+.exploratory-skills-stage-*/
