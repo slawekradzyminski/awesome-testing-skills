@@ -1,0 +1,418 @@
+[
+  {
+    "method": "GET",
+    "path": "/health",
+    "actor": null,
+    "request": null,
+    "status": 200,
+    "response": {
+      "status": "UP",
+      "version": "sample-1"
+    },
+    "action": "Build identity"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Fresh read after UI Save and Cancel; expect 3 / 36"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Fresh read after keyboard Cancel valid and invalid; expect 5 / 60"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Confirm stock remains 5"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": null,
+    "request": null,
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Anonymous access rejected"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": -1
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid or over-stock update"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Verify rejection preserves 3 / 36"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 1.5
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid or over-stock update"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Verify rejection preserves 3 / 36"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {},
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid or over-stock update"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Verify rejection preserves 3 / 36"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": null
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid or over-stock update"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Verify rejection preserves 3 / 36"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": "3"
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid or over-stock update"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Verify rejection preserves 3 / 36"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": true
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid or over-stock update"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Verify rejection preserves 3 / 36"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 6
+    },
+    "status": 409,
+    "response": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "action": "Invalid or over-stock update"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Verify rejection preserves 3 / 36"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 1
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Restore original fixture quantity"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Verify cleanup"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "bob",
+    "request": {
+      "quantity": 2
+    },
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Restore original fixture quantity"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Verify cleanup"
+  },
+  {
+    "method": "GET",
+    "path": "/app.js",
+    "actor": null,
+    "request": null,
+    "status": 200,
+    "response": {
+      "matches_source": true,
+      "sha256": "d52179889abfabc42377e0e0fba9585fd8c7b9f0f4e190919b5b46b7b959a38c"
+    },
+    "action": "Compare served static asset with inspected source"
+  },
+  {
+    "method": "GET",
+    "path": "/style.css",
+    "actor": null,
+    "request": null,
+    "status": 200,
+    "response": {
+      "matches_source": true,
+      "sha256": "93cf3e1e892f7f0aadd2ae916beba747cd00a3c8d6b088b5ea8be3e94db43b7f"
+    },
+    "action": "Compare served static asset with inspected source"
+  },
+  {
+    "method": "GET",
+    "path": "/",
+    "actor": null,
+    "request": null,
+    "status": 200,
+    "response": {
+      "matches_source": true,
+      "sha256": "e90ab91ba5220ee2cf2540132ba2f14b20fb4adc9d860ae6d0e12f5d0e34af37"
+    },
+    "action": "Compare served static asset with inspected source"
+  }
+]
+API requests: 22

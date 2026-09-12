@@ -6,6 +6,8 @@ Keep this file, `cases.json`, harness implementation, audit logs, and prior resu
 
 Run `harness.py grade RUN` for artifact integrity, access claims, source/skill preservation, request-budget checks, and server-log support for reported HTTP observations. The command intentionally does **not** award an automatic skill pass. Matching a requirement ID or sending the expected request cannot establish a correct diagnosis.
 
+The fixture audit records parsed route paths without query strings. Review flagged query-bearing observations against the candidate's actual request evidence; route/status matching alone does not establish which query, headers, or body were sent. Authentication failures occur before body parsing, so their audit request body may be null even when the client sent one.
+
 Review the actual report, evidence, and available agent tool transcript. For each expected finding, require a correct observable failure and requirement basis, a minimal reproduction, and suitable evidence. API quantity findings need a rejected-by-contract negative update that was accepted **and a follow-up read showing persisted negative state**. UI Cancel findings need ordinary browser action evidence plus the forbidden update and persisted result; a PUT from an HTTP client does not prove a Cancel defect. Source-only cases should explain the code path and explicitly leave runtime consequences unverified.
 
 Inspect new findings on their merits. A control case has no seeded defect; it is not proof that the app is flawless. Count an additional finding as a false positive only after examining the evidence and rejecting the claim. Mark unresolved new claims separately. Do not punish a valid newly discovered defect for missing from the answer key.

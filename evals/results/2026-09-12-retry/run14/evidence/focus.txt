@@ -1,0 +1,4 @@
+### Ran Playwright code
+```js
+await (async (page) => {const out=[]; for(let i=0;i<4;i++){await page.keyboard.press("Tab");out.push(await page.evaluate(()=>({tag:document.activeElement.tagName,id:document.activeElement.id,testid:document.activeElement.getAttribute("data-testid"),text:document.activeElement.textContent})));} console.log(JSON.stringify(out));})(page);
+```

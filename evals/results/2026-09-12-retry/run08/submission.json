@@ -1,0 +1,195 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [],
+  "risks": [
+    {
+      "area": "In-flight identity switch and stale refresh",
+      "reason": "Shared current state is overwritten by each async refresh without checking selected identity; delayed ordering not exercised.",
+      "priority": "high",
+      "next_probe": "Delay Alice GET, select Bob, release Alice response and inspect totals/reopened value."
+    },
+    {
+      "area": "Transport failure and visible errors",
+      "reason": "No fetch catch in app.js; server/network error UI not exercised. Native invalid screenshot does not show validation bubble.",
+      "priority": "medium",
+      "next_probe": "Interrupt save and refresh independently; inspect feedback, retry and persisted state."
+    },
+    {
+      "area": "Zero removal",
+      "reason": "Source deletes existing item; no re-add endpoint, so live removal skipped to preserve fixture restoration.",
+      "priority": "medium",
+      "next_probe": "Use owner-resettable disposable cart, save zero, verify empty items and zero totals after reload."
+    },
+    {
+      "area": "Full keyboard and accessibility coverage",
+      "reason": "Narrow keyboard Save/Cancel sampled; no full keyboard-only desktop loop or assistive technology assessment.",
+      "priority": "medium",
+      "next_probe": "Run repeated edit loop using keyboard at both widths; inspect focus after Save and native invalid-message visibility."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Fresh read after UI Save and Cancel; expect 3 / 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Fresh read after keyboard Cancel valid and invalid; expect 5 / 60",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Confirm stock remains 5",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Anonymous access rejected",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid or over-stock update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejection preserves 3 / 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid or over-stock update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejection preserves 3 / 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid or over-stock update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejection preserves 3 / 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid or over-stock update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejection preserves 3 / 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid or over-stock update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejection preserves 3 / 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid or over-stock update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejection preserves 3 / 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "Invalid or over-stock update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejection preserves 3 / 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Restore original fixture quantity",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify cleanup",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Restore original fixture quantity",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify cleanup",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "Five-minute, 60 API request and 45 browser-action budget; no exhaustive coverage.",
+    "Initial response logging callback failed with tool-side URL ReferenceError; retained screenshots and CLI network log reviewed, independent API outcomes verified.",
+    "Focused repeat console.log values were not surfaced by CLI; not claiming intermediate focus IDs or validation text as captured evidence.",
+    "Zero removal, delayed response races, network-failure UI, real mobile and complete accessibility remain untested.",
+    "Source revision unknown; served frontend matches source, health identifies sample-1, backend revision match unverified."
+  ],
+  "cleanup": "Alice restored to 1 / 12 and Bob to 2 / 24 with fresh GET verification. Dedicated cart08 browser closed; no mocks installed; application left unchanged and owner server left running."
+}

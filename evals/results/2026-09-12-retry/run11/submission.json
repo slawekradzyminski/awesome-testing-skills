@@ -1,0 +1,301 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [],
+  "risks": [
+    {
+      "area": "Browser save/cancel and error feedback (UI-1, UI-2)",
+      "reason": "Source handlers were reviewed, but no browser was exercised. API success cannot establish visible feedback, provisional editing, keyboard usability, or narrow layout.",
+      "priority": "medium",
+      "next_probe": "With reset fixtures, intercept network traffic while editing, cancelling, reopening, and saving by keyboard at desktop and narrow widths; verify no PUT on cancel and capture/open screenshots."
+    },
+    {
+      "area": "Price consistency if catalog becomes mutable (CART-4)",
+      "reason": "app/domain.py Store.cart multiplies quantities by literal 12. This matches the current sole product, whose runtime price is 12; changed prices were neither available nor injected, so this is not a current confirmed discrepancy.",
+      "priority": "low",
+      "next_probe": "If product price changes become supported, change a fixture price through an authorized setup and check cart totals against the resulting catalog price."
+    },
+    {
+      "area": "Concurrent updates and identity changes",
+      "reason": "The server is threaded, while runtime checks were sequential. Existing domain tests do not cover HTTP or concurrent requests. No concurrency failure was observed.",
+      "priority": "low",
+      "next_probe": "After a fixture reset, issue simultaneous authorized updates and verify returned totals remain internally consistent and final carts remain isolated."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 1: Alice baseline (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 2: Bob baseline (actor: bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Request 3: Product baseline (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Request 4: Anonymous read rejected (actor: anonymous)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 401,
+      "action": "Request 5: Anonymous read rejected (actor: anonymous)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 401,
+      "action": "Request 6: Anonymous update rejected (actor: anonymous)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 401,
+      "action": "Request 7: Unknown fixture token rejected (actor: invalid)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart?username=bob",
+      "status": 200,
+      "action": "Request 8: Query cannot select Bob cart (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 9: Reject quantity -1 (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 10: Read after rejection -1 (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 11: Reject quantity 1.5 (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 12: Read after rejection 1.5 (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 13: Reject quantity None (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 14: Read after rejection None (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 15: Reject quantity '3' (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 16: Read after rejection '3' (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 17: Reject quantity True (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 18: Read after rejection True (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 19: Reject quantity False (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 20: Read after rejection False (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 21: Reject malformed/type request {} (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 22: Reject malformed/type request [] (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 23: Reject malformed/type request null (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 24: Reject malformed/type request {\"quantity\": (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 25: Reject malformed/type request {\"quantity\":3.0} (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 26: Read after malformed/type requests (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 27: Accept exact stock with spoofed username body (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 28: Bob after Alice body spoof (actor: bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Request 29: Catalog after cart update (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "Request 30: Reject stock plus one (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 31: Read after stock rejection (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/999",
+      "status": 404,
+      "action": "Request 32: Unknown cart item rejected (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/not-a-number",
+      "status": 400,
+      "action": "Request 33: Invalid product ID rejected (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 34: Restore Alice quantity (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 35: Remove Bob item using quantity zero (actor: bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 36: Read after Bob removal (actor: bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 37: Final Alice verification (actor: alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Request 38: Final catalog verification (actor: alice)",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "The focus was the existing cart quantity-update API and product data; UI files were reviewed only. No browser actions or screenshots, and no claims of visual or keyboard verification.",
+    "Sequential requests only; concurrent requests, client disconnects, and network failure recovery were not exercised.",
+    "Only the documented single product and disposable Alice/Bob identities were used. No production authentication conclusions are drawn.",
+    "No supported API re-add operation exists. Bob remains empty after confirming zero removes the item; only the fixture/process owner should restart the runtime.",
+    "The immutable runtime product price stayed at 12, so behavior following product price changes was not runtime-tested."
+  ],
+  "cleanup": "Alice restored to original quantity 1. Bob item removed by zero-quantity test; no supported re-add endpoint, restart by fixture owner required to restore Bob quantity 2. Product data unchanged."
+}

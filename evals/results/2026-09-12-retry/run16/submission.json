@@ -1,0 +1,71 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [],
+  "risks": [
+    {
+      "area": "Authentication and session lifecycle",
+      "reason": "Read-only constraints exclude the source-defined success/failure and MFA flows.",
+      "priority": "high",
+      "next_probe": "In an authorized disposable session, verify valid/invalid login, MFA challenge, return navigation, logout and token expiry with throwaway accounts."
+    },
+    {
+      "area": "Password recovery safety and delivery",
+      "reason": "Recovery UI promises neutral responses and mentions local developer-token output; neither response behavior nor token exposure was exercised. This is a coverage gap, not evidence of leakage.",
+      "priority": "high",
+      "next_probe": "Use an authorized disposable mailbox/account to verify neutral known/unknown identifier responses, token expiry/single-use and absence of developer tokens in deployed responses."
+    },
+    {
+      "area": "API access contract",
+      "reason": "Cloudflare 403/1010 prevented reaching the API behavior described by the snapshot.",
+      "priority": "medium",
+      "next_probe": "With an authorized origin-reaching disposable setup, verify public API-docs access and unauthenticated products/cart rejection without exposing private records."
+    },
+    {
+      "area": "Validation and accessibility",
+      "reason": "Submission-time errors and mobile layout were not exercised.",
+      "priority": "medium",
+      "next_probe": "In a disposable authorized session, test empty/min/max inputs, error association/announcement and keyboard focus at mobile widths."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/login",
+      "status": 403,
+      "action": "Single unauthenticated direct GET within the explicitly permitted endpoint list; no retries or credentials.",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/v3/api-docs",
+      "status": 403,
+      "action": "Single unauthenticated direct GET within the explicitly permitted endpoint list; no retries or credentials.",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 403,
+      "action": "Single unauthenticated direct GET within the explicitly permitted endpoint list; no retries or credentials.",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 403,
+      "action": "Single unauthenticated direct GET within the explicitly permitted endpoint list; no retries or credentials.",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "PUBLIC READ-ONLY: no login/reset/registration submissions, emails, authenticated browsing, MFA, rate-limit or account enumeration tests.",
+    "All four direct GETs were blocked with Cloudflare 403 and body error code: 1010; no origin API status or contract could be confirmed.",
+    "Source snapshots are not verified deployed revisions; source tests were read but not executed.",
+    "Dedicated newly created browser session/tab used; clean underlying profile storage isolation was not independently verified. No stored credentials were accessed.",
+    "Desktop screenshots only; narrow viewport, zoom, complete focus sequence, screen-reader error announcement, and network tracing were not tested.",
+    "External footer destination URLs were inspected but not visited because they are outside the assigned runtime.",
+    "Exact elapsed duration and token usage were not instrumented; approximately three minutes elapsed by operator estimate, below the five-minute budget."
+  ],
+  "cleanup": "Closed only the newly created test browser tab. No forms submitted, application data changed, source edits, external issues or server changes. Report/evidence/submission remain in candidate directory."
+}

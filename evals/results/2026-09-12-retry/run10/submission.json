@@ -1,0 +1,239 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [
+    {
+      "requirement_id": "UI-1",
+      "title": "Cancel persists valid provisional quantity edits",
+      "status": "confirmed",
+      "expected": "Cancel must discard edits without sending an update or changing persisted cart state (UI-1).",
+      "actual": "Pointer Cancel changed Alice 1 to 3 with total 36; keyboard Cancel changed 2 to 4 with total 48. Both displayed Cart updated; independent GETs confirmed persistence.",
+      "impact": "An explicitly cancelled edit overwrites the saved cart quantity and total.",
+      "evidence": [
+        "evidence/reproduction.txt",
+        "evidence/http.jsonl",
+        "evidence/after-cancel.png",
+        "evidence/narrow-keyboard-cancel.png",
+        "evidence/index-source.txt",
+        "evidence/javascript-source.txt"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Cancel quantity zero",
+      "reason": "Valid Cancel executes submit; zero removal was not exercised because it cannot be restored via supported API.",
+      "priority": "high",
+      "next_probe": "Cancel zero on separately resettable fixture and verify removal behavior."
+    },
+    {
+      "area": "Identity switch during pending Save/refresh",
+      "reason": "Async handlers share mutable current and selected identity; timing not exercised.",
+      "priority": "medium",
+      "next_probe": "Delay responses and switch identities during Save and refresh."
+    },
+    {
+      "area": "Server/network errors and keyboard focus recovery",
+      "reason": "Only native input validation feedback and normal Save were exercised.",
+      "priority": "medium",
+      "next_probe": "Exercise recoverable server/network failure through UI and retry using keyboard."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Baseline while Alice edit is provisional; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Baseline while Alice edit is provisional; actor=bob",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Persisted state after clicking Cancel; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Other identity after Alice Cancel; actor=bob",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Anonymous rejection; actor=None",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 401,
+      "action": "Anonymous update rejection; actor=None",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity/stock rejection; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection leaves state unchanged; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity/stock rejection; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection leaves state unchanged; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity/stock rejection; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection leaves state unchanged; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity/stock rejection; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection leaves state unchanged; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity/stock rejection; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection leaves state unchanged; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity/stock rejection; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection leaves state unchanged; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "Quantity/stock rejection; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection leaves state unchanged; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Accept maximum stock quantity; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Stock remains five after cart update; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Restore Alice baseline; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Persisted quantity after keyboard Cancel; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Final restore Alice to original quantity one; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify final cleanup; actor=alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Bob remains original quantity two; actor=bob",
+      "evidence": "evidence/http.jsonl"
+    }
+  ],
+  "limitations": [
+    "Zero removal not runtime tested to preserve restorable fixture.",
+    "Browser requests inferred from source/actions, not independently network-captured.",
+    "No delayed-response, network failure, full accessibility, or cross-browser audit."
+  ],
+  "cleanup": "Alice restored to 1 / 12 and Bob verified at original 2 / 24. Invalid draft cancelled, viewport reset, own browser tab closed; server left running for owner."
+}

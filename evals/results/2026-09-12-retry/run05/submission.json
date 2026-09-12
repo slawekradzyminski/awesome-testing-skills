@@ -1,0 +1,378 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [],
+  "risks": [
+    {
+      "area": "Concurrent cart read/update/removal",
+      "reason": "ThreadingHTTPServer shares Store; locking in app.py covers audit only. Sequential requests do not establish race behavior.",
+      "priority": "medium",
+      "next_probe": "Use a fresh disposable fixture for one bounded synchronized read/removal experiment and verify final state."
+    },
+    {
+      "area": "Totals when catalog price changes",
+      "reason": "domain.py multiplies by literal 12, matching actual fixture price; no current discrepancy observed.",
+      "priority": "low",
+      "next_probe": "If pricing becomes configurable, domain-test a different price and compare cart totals to catalog."
+    },
+    {
+      "area": "HTTP integration regression protection",
+      "reason": "Two passing existing tests directly call Store and do not exercise authentication, JSON parser or zero removal.",
+      "priority": "low",
+      "next_probe": "Add representative HTTP tests for anonymous writes, malformed/boolean quantity and identity isolation; domain tests for other types and removal."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "action": "#1: Identify deployed build",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#2: Capture Alice initial state",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#3: Capture Bob initial state",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "#4: Establish current product price and available stock",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "#5: Anonymous access boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 401,
+      "action": "#6: Anonymous access boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 401,
+      "action": "#7: Anonymous mutation boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "#8: Unknown bearer token boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#9: Confirm rejected anonymous mutation preserved state",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "#10: Representative valid update, totals and persistence",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#11: Read after valid update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#12: Verify Alice update did not change Bob",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#13: Reject invalid quantity type/value -1",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#14: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#15: Reject invalid quantity type/value 1.5",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#16: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#17: Reject invalid quantity type/value None",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#18: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#19: Reject invalid quantity type/value '3'",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#20: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#21: Reject invalid quantity type/value True",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#22: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#23: Reject invalid quantity type/value False",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#24: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#25: Reject invalid quantity type/value []",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#26: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#27: Reject invalid quantity type/value {}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#28: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#29: Reject invalid quantity type/value 3.0",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#30: Verify invalid update left quantity three and total 36",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#31: Missing quantity must reject",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#32: Verify missing quantity preserved state",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "#33: Stock inclusive boundary must succeed",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "#34: Stock boundary plus one must reject",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#35: Verify excess stock rejection left quantity five",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "#36: Verify updates do not decrement stock",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1?username=bob",
+      "status": 200,
+      "action": "#37: Try client supplied identity override",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#38: Verify spoofed identity did not change Bob",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#39: Verify actor Alice received spoof attempt update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#40: Malformed JSON parser boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "#41: Non-object JSON parser boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#42: Verify parser failures preserved state",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/999",
+      "status": 404,
+      "action": "#43: Unknown existing-cart item",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#44: Verify missing item update preserved state",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "#45: Restore Alice baseline",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#46: Confirm Alice cleanup",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "#47: Terminal zero-removal boundary on disposable Bob fixture",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "#48: Confirm removal persisted and both totals equal zero",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "#49: Verify removal does not change catalog stock",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "No UI testing or screenshots; UI-1/UI-2 not assessed.",
+    "Concurrency, uncertain transport write outcomes, oversized framing and configurable pricing were not exercised.",
+    "Source revision unavailable; hashes recorded. Runtime reports sample-1 but source-to-build identity is unproven.",
+    "49 HTTP requests and 0 browser actions; exact total session timing and token usage unavailable. Approximately three minutes elapsed.",
+    "Out-of-scope checkout, re-adding items and production authentication were not tested."
+  ],
+  "cleanup": "Alice restored to original quantity 1 and confirmed by GET. Bob item removed by terminal zero test; no supported re-add/reset endpoint. Fixture owner can restart to restore Bob. Server left running."
+}

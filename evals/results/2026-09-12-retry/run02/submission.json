@@ -1,0 +1,210 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [],
+  "risks": [
+    {
+      "area": "Requests in flight and identity switching",
+      "reason": "app.js refresh assigns current and summary after await without checking which identity initiated the request; Save remains enabled during its request. No delayed-response runtime reproduction performed.",
+      "priority": "medium",
+      "next_probe": "Delay Alice GET, switch to Bob, reverse response order; then Save and Cancel during an in-flight update."
+    },
+    {
+      "area": "Network and server error recovery",
+      "reason": "UI async fetch handlers lack catch blocks; tested browser validation but did not induce disconnection or 500 responses.",
+      "priority": "medium",
+      "next_probe": "Interrupt save/refresh response and inspect visible feedback and ability to retry."
+    },
+    {
+      "area": "Totals when catalog price changes",
+      "reason": "Store.cart multiplies by literal 12. Current fixture price is 12 and every exercised total was correct; changing product prices is not exposed in scope.",
+      "priority": "low",
+      "next_probe": "If price changes become supported, test totals against the changed current catalog price."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Baseline and anonymous isolation (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Baseline and anonymous isolation (bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Baseline and anonymous isolation (None)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid quantity or stock overflow (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection preserves state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid quantity or stock overflow (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection preserves state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid quantity or stock overflow (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection preserves state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid quantity or stock overflow (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection preserves state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid quantity or stock overflow (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection preserves state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Invalid quantity or stock overflow (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection preserves state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "Invalid quantity or stock overflow (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Check rejection preserves state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 401,
+      "action": "Anonymous update rejected (None)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Anonymous rejection preserves Alice state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Maximum stock accepted (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Alice update does not change Bob (bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Stock stays five after cart update (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Restore Alice baseline (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Final fixture restoration verification (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Final fixture restoration verification (bob)",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "Zero removal was reviewed in source but not exercised on the server because adding removed items is out of scope and restoration requires owner restart.",
+    "Cancel network absence was not directly recorded; source and unchanged/reopened UI values support it.",
+    "No delayed-response, offline, overlapping save or screen-reader testing. Native validation observed for 6; no server-error UI response was induced.",
+    "Keyboard Save and Cancel and focused Edit activation were exercised; full sequential keyboard traversal was not comprehensively verified.",
+    "Elapsed wall time was not captured by a start/stop timer; no token or cost usage metric is available."
+  ],
+  "cleanup": "Verified Alice quantity 1, total 12; Bob quantity 2, total 24. Source and tests unchanged. Reset browser viewport and closed only created tab."
+}

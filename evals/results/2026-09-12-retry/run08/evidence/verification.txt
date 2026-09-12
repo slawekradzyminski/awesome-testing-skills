@@ -1,0 +1,28 @@
+### Ran Playwright code
+```js
+await (async page => {
+  page.removeAllListeners('response');
+  const log=[];const pending=[];const states=[];
+  page.on('response',r=>{if(r.url().includes('/api/'))pending.push(r.text().then(body=>log.push({method:r.request().method(),path:r.url().replace('http://127.0.0.1:64182',''),status:r.status(),request:r.request().postData(),body})));});
+  await page.getByRole('button',{name:'Edit quantity'}).click();
+  await page.getByRole('spinbutton',{name:'Quantity',exact:true}).fill('4');
+  states.push({label:'Provisional Bob 4',text:await page.locator('main').innerText()});
+  await page.getByRole('spinbutton',{name:'Quantity',exact:true}).press('Tab');
+  await page.keyboard.press('Tab');
+  states.push({label:'Keyboard focus before cancel',id:await page.evaluate(()=>document.activeElement.id)});
+  await page.keyboard.press('Enter');
+  states.push({label:'After cancel',text:await page.locator('main').innerText(),id:await page.evaluate(()=>document.activeElement.id),apiRequests:log.length});
+  await page.keyboard.press('Enter');
+  states.push({label:'Reopened with keyboard',value:await page.getByRole('spinbutton',{name:'Quantity',exact:true}).inputValue(),apiRequests:log.length});
+  await page.getByRole('spinbutton',{name:'Quantity',exact:true}).fill('6');
+  await page.getByRole('button',{name:'Save',exact:true}).click();
+  states.push({label:'Invalid Save',validity:await page.getByRole('spinbutton',{name:'Quantity',exact:true}).evaluate(e=>({valid:e.validity.valid,message:e.validationMessage})),apiRequests:log.length});
+  await page.getByRole('button',{name:'Cancel',exact:true}).click();
+  states.push({label:'Invalid Cancel',text:await page.locator('main').innerText(),apiRequests:log.length});
+  await page.reload();
+  await page.getByText('Quantity: 3 · Total: 36',{exact:true}).waitFor();
+  await Promise.all(pending);
+  console.log(JSON.stringify({browser:page.context().browser().version(),states,log},null,2));
+}
+)(page);
+```

@@ -1,0 +1,864 @@
+{
+  "review_type": "independent_condition_blind_artifact_review",
+  "review_date": "2026-09-12",
+  "scope": "Only supplied blind-review directory; no runtime actions, original runs, repositories, other agents or parent material inspected. No condition attribution attempted.",
+  "dimensions": [
+    "Context and access",
+    "Risk selection",
+    "Experimental reasoning",
+    "Evidence",
+    "Finding accuracy",
+    "Scope and closeout"
+  ],
+  "cases": [
+    {
+      "case": "case-A",
+      "access": "source-runtime",
+      "expected_requirements": [],
+      "group": "primary-source-runtime",
+      "dimensions": {
+        "Context and access": {
+          "score": 2,
+          "reason": "Qualifies source fingerprints and explicitly avoids treating sample-1 as build equivalence.",
+          "evidence": [
+            "run05/report.md",
+            "run05/evidence/session.json"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Prioritizes identity and invalid writes; proposes specific concurrency and pricing follow-ups without inventing bugs.",
+          "evidence": [
+            "run05/report.md risk table and residual risks"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Invalid values have state reads; actor spoofing, stock boundaries and terminal zero contrast are discriminating.",
+          "evidence": [
+            "run05/evidence/http.json #10\u201344, #47\u201349"
+          ]
+        },
+        "Evidence": {
+          "score": 2,
+          "reason": "Request bodies, roles, outcomes and persistence are reproducible; source/build and UI limits are explicit.",
+          "evidence": [
+            "run05/evidence/http.json",
+            "run05/evidence/explore.py"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "No unsupported product defect asserted; negative rejection and present-price arithmetic support bounded API conclusion.",
+          "evidence": [
+            "run05/evidence/http.json #13\u201314, #33\u201339"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 1,
+          "reason": "Alice restored, but Bob remains removed and owner restart is outstanding; handoff is explicit.",
+          "evidence": [
+            "run05/evidence/http.json #45\u201349",
+            "run05/evidence/session.json"
+          ]
+        }
+      },
+      "total": 11,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "not_applicable_no_seeded_requirement",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "Bob fixture remains empty; owner restart required.",
+        "No UI exercised; source hashes cannot independently prove target preservation or build identity."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run05"
+    },
+    {
+      "case": "case-B",
+      "access": "source-runtime",
+      "expected_requirements": [],
+      "group": "primary-source-runtime",
+      "dimensions": {
+        "Context and access": {
+          "score": 1,
+          "reason": "Uses source and contract but omits meaningful deployed-build qualification.",
+          "evidence": [
+            "run02/report.md Approach and coverage"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Targets provisional edits, persistence and identity; remaining async and failure probes are specific.",
+          "evidence": [
+            "run02/report.md Remaining risks",
+            "run02/submission.json risks"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Contrasts Cancel, Save, invalid input and identity switching; API rejection state reads support causal boundaries.",
+          "evidence": [
+            "run02/evidence/ui-notes.txt",
+            "run02/evidence/http.json #4\u201321"
+          ]
+        },
+        "Evidence": {
+          "score": 1,
+          "reason": "UI sequence and validation image are useful, but no captured browser traffic establishes zero updates on Cancel.",
+          "evidence": [
+            "run02/evidence/ui-notes.txt",
+            "run02/evidence/narrow-invalid.png"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "No defect asserted and passing claim is bounded; explicitly qualifies Cancel network and keyboard traversal limits.",
+          "evidence": [
+            "run02/report.md Limits and accounting"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "Final reads restore both identities; residual coverage and created-tab cleanup documented.",
+          "evidence": [
+            "run02/evidence/http.json #23\u201325",
+            "run02/evidence/ui-notes.txt"
+          ]
+        }
+      },
+      "total": 10,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "not_applicable_no_seeded_requirement",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "No browser traffic capture; lack of Cancel PUT not independently verified.",
+        "No full keyboard traversal; environment/build poorly qualified."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run02"
+    },
+    {
+      "case": "case-C",
+      "access": "source-runtime",
+      "expected_requirements": [
+        "CART-2"
+      ],
+      "group": "primary-source-runtime",
+      "dimensions": {
+        "Context and access": {
+          "score": 1,
+          "reason": "Source and contract used, but source revision/deployed-build uncertainty is not materially qualified.",
+          "evidence": [
+            "run07/report.md Scope and approach"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Lower-bound source risk drives probing; prioritizes runtime zero and UI follow-up.",
+          "evidence": [
+            "run07/report.md Remaining risks and limitations"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Negative accepted-write/read/Bob contrast plus valid and rejected neighbors isolate the failure.",
+          "evidence": [
+            "run07/evidence/http.json #8\u201314, #27\u201336"
+          ]
+        },
+        "Evidence": {
+          "score": 2,
+          "reason": "Exact negative request and persisted response captured; isolated zero probe clearly distinguished from HTTP.",
+          "evidence": [
+            "run07/evidence/http.json #9\u201311",
+            "run07/evidence/local-zero.json",
+            "run07/evidence/reproduction.txt"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "CART-2 established by 200 on -1 and subsequent negative cart; negative totals correctly grouped with the same defect.",
+          "evidence": [
+            "run07/evidence/http.json #9\u201310"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "Both carts restored by final reads; browser, concurrency and pricing gaps explicit.",
+          "evidence": [
+            "run07/report.md Cleanup",
+            "run07/evidence/http.json #55\u201356"
+          ]
+        }
+      },
+      "total": 11,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "established_at_allowed_evidence_level",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "No browser testing or exact source/deployed build linkage.",
+        "Zero is an isolated domain observation, not assigned-runtime HTTP evidence."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run07"
+    },
+    {
+      "case": "case-D",
+      "access": "runtime-only",
+      "expected_requirements": [
+        "UI-1"
+      ],
+      "group": "supplementary-fallback",
+      "dimensions": {
+        "Context and access": {
+          "score": 2,
+          "reason": "Respects runtime-only access and explicitly leaves source revision and deployed build unknown.",
+          "evidence": [
+            "run12/report.md opening and Limits"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Prioritizes unintended persistence; useful request tracing, pending-save and keyboard follow-ups.",
+          "evidence": [
+            "run12/report.md Risk map"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Desktop saved-state read plus Save and invalid-Cancel contrasts narrow behavior; second keyboard persistence is appropriately weaker.",
+          "evidence": [
+            "run12/evidence/reproduction.txt",
+            "run12/evidence/http.json #1\u20134"
+          ]
+        },
+        "Evidence": {
+          "score": 1,
+          "reason": "Desktop GET supports saved change, but no browser mutation trace; narrow occurrence lacks immediate independent GET.",
+          "evidence": [
+            "run12/evidence/http.json #3",
+            "run12/evidence/reproduction.txt"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 1,
+          "reason": "Strong UI-1 suspicion/persisted discrepancy, but rubric-required forbidden browser update evidence is missing.",
+          "evidence": [
+            "run12/evidence/reproduction.txt final paragraph"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "Final Alice/Bob GETs restore baselines and handoff names outstanding traffic capture.",
+          "evidence": [
+            "run12/evidence/http.json #16\u201317",
+            "run12/report.md Limits"
+          ]
+        }
+      },
+      "total": 10,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "partially_verified_missing_browser_request",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "No forbidden browser update capture.",
+        "Second narrow Cancel lacks independent persisted read; invalid-Cancel contrast has only UI evidence.",
+        "Direct invalid matrix uses one final unchanged-state read."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run12"
+    },
+    {
+      "case": "case-E",
+      "access": "source-only",
+      "expected_requirements": [
+        "CART-2"
+      ],
+      "group": "supplementary-fallback",
+      "dimensions": {
+        "Context and access": {
+          "score": 2,
+          "reason": "Source-only constraint respected; source hashes and absent deployed-build knowledge explicit.",
+          "evidence": [
+            "run03/evidence/source-snapshot.json",
+            "run03/report.md Session"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Orders invalid writes and ownership before boundary and future-data risks; next probes concrete.",
+          "evidence": [
+            "run03/report.md Risk map"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Traces int/stock/zero/assignment branches and names upstream validation/build mismatch as disconfirming alternatives.",
+          "evidence": [
+            "run03/evidence/source-lines.txt domain.py:23\u201337, app.py:69\u201387",
+            "run03/report.md F1"
+          ]
+        },
+        "Evidence": {
+          "score": 2,
+          "reason": "Complete captured source and proposed reproduction support allowed static evidence; no execution claimed.",
+          "evidence": [
+            "run03/evidence/source-lines.txt",
+            "run03/evidence/reproduction.txt"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "CART-2 missing lower bound is established at source-only level; HTTP/persistence predictions remain unverified.",
+          "evidence": [
+            "run03/evidence/source-lines.txt domain.py:24\u201336 and app.py:82\u201383"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "No runtime effects; exact unperformed validation and fixture-safe next steps supplied.",
+          "evidence": [
+            "run03/report.md Closeout",
+            "run03/evidence/session-accounting.json"
+          ]
+        }
+      },
+      "total": 12,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "established_at_allowed_evidence_level",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "Runtime intentionally unavailable; all HTTP and persistence outcomes are static predictions."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run03"
+    },
+    {
+      "case": "case-F",
+      "access": "source-runtime",
+      "expected_requirements": [
+        "UI-1"
+      ],
+      "group": "primary-source-runtime",
+      "dimensions": {
+        "Context and access": {
+          "score": 1,
+          "reason": "Uses HTML/JS and contract, but does not qualify source/deployed build identity adequately.",
+          "evidence": [
+            "run10/report.md",
+            "run10/evidence/index-source.txt"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Explicit-save risk drives experiments; zero cancellation and response ordering are useful residual probes.",
+          "evidence": [
+            "run10/report.md Remaining risks"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Provisional baseline, Save, pointer/keyboard Cancel and invalid Cancel contrasts support event-mechanism explanation.",
+          "evidence": [
+            "run10/evidence/reproduction.txt",
+            "run10/evidence/http.jsonl records 1,3,24"
+          ]
+        },
+        "Evidence": {
+          "score": 1,
+          "reason": "Source mechanism and independent persisted reads are strong; no captured browser update request. Cached reopen caveat is candid.",
+          "evidence": [
+            "run10/evidence/reproduction.txt",
+            "run10/evidence/javascript-source.txt:23\u201333"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 1,
+          "reason": "UI-1 persisted failure is strongly supported, but forbidden browser PUT is inferred from source rather than captured as rubric requires.",
+          "evidence": [
+            "run10/evidence/http.jsonl records 3,24",
+            "run10/evidence/reproduction.txt"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "Final reads restore both carts and scope limitations are explicit; no fix claimed.",
+          "evidence": [
+            "run10/evidence/http.jsonl records 25\u201327",
+            "run10/report.md Budget and cleanup"
+          ]
+        }
+      },
+      "total": 9,
+      "rubric_quality_threshold_met": false,
+      "acceptance": "below_quality_threshold",
+      "expected_finding_assessment": "partially_verified_missing_browser_request",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "No forbidden browser PUT capture.",
+        "One reopened value was stale cached UI after API restore; reproduction acknowledges this.",
+        "Source/runtime linkage and browser-generated request totals are unverified."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run10"
+    },
+    {
+      "case": "case-G",
+      "access": "source-runtime",
+      "expected_requirements": [],
+      "group": "primary-source-runtime",
+      "dimensions": {
+        "Context and access": {
+          "score": 2,
+          "reason": "Uses source and contract, compares served assets, and explicitly retains backend build uncertainty.",
+          "evidence": [
+            "run08/report.md environment",
+            "run08/evidence/http.json records 24\u201326"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Targets Cancel and state transitions; delayed identity, transport and zero probes are concrete.",
+          "evidence": [
+            "run08/report.md Risk map"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Save/reload versus mouse/keyboard Cancel, invalid input and API state contrasts support bounded conclusions.",
+          "evidence": [
+            "run08/evidence/explore.js",
+            "run08/evidence/verify.js",
+            "run08/evidence/http.json #2\u20133"
+          ]
+        },
+        "Evidence": {
+          "score": 2,
+          "reason": "Saved browser request list and API state support claims; failed logger and omitted returned values explicitly limit precision.",
+          "evidence": [
+            "run08/evidence/requests.txt",
+            "run08/evidence/verification.txt",
+            "run08/evidence/http.json",
+            "run08/evidence/narrow-saved.png"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "No bug invented from incomplete native-error capture or speculative async risks; control is not called flawless.",
+          "evidence": [
+            "run08/report.md Results and Evidence limits"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "Both carts restored and confirmed; dedicated session cleanup and remaining gaps stated.",
+          "evidence": [
+            "run08/evidence/http.json #20\u201323",
+            "run08/report.md cleanup"
+          ]
+        }
+      },
+      "total": 12,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "not_applicable_no_seeded_requirement",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "Logger failure removed detailed intermediate values; script text alone does not prove omitted state observations.",
+        "Native invalid message appearance and full keyboard traversal unverified.",
+        "Budget arithmetic distinguishes API from health/static requests; raw counts are not fully comparable across reports."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run08"
+    },
+    {
+      "case": "case-H",
+      "access": "source-runtime",
+      "expected_requirements": [
+        "CART-2"
+      ],
+      "group": "primary-source-runtime",
+      "dimensions": {
+        "Context and access": {
+          "score": 2,
+          "reason": "Fingerprints source and qualifies runtime sample-1 correspondence as unverified.",
+          "evidence": [
+            "run01/report.md Session",
+            "run01/evidence/source-sha256.json"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Missing lower bound is highest priority, with scoped ownership, stock and residual probes.",
+          "evidence": [
+            "run01/report.md Prioritized risk map"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Two negative reproductions from different baselines, follow-up GETs and restoration contrast.",
+          "evidence": [
+            "run01/evidence/http.json #8\u201317"
+          ]
+        },
+        "Evidence": {
+          "score": 2,
+          "reason": "Request/body/status/state sequence is explicit and repeatable; runtime-only and untested claims distinguished.",
+          "evidence": [
+            "run01/evidence/http.json #12\u201316",
+            "run01/evidence/reproduction.txt"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "CART-2 confirmed twice with persisted negative values; no unsupported extra pricing or checkout defect.",
+          "evidence": [
+            "run01/evidence/http.json #12\u201316",
+            "run01/report.md Finding F1"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "Both identities independently restored; follow-up fix/retest and untested surfaces specified.",
+          "evidence": [
+            "run01/evidence/http.json #37\u201342",
+            "run01/report.md closeout"
+          ]
+        }
+      },
+      "total": 12,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "established_at_allowed_evidence_level",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "No browser or runtime zero transition tested.",
+        "Source/deployed build correspondence remains unknown."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run01"
+    },
+    {
+      "case": "case-I",
+      "access": "source-runtime",
+      "expected_requirements": [],
+      "group": "primary-source-runtime",
+      "dimensions": {
+        "Context and access": {
+          "score": 1,
+          "reason": "Uses source and requirements but lacks source/build correspondence qualification.",
+          "evidence": [
+            "run11/report.md Runtime paragraph",
+            "run11/evidence/source-review.txt"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "API risks and browser/price/concurrency next experiments are target-specific and ordered.",
+          "evidence": [
+            "run11/report.md Remaining risks"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Ownership, negative/type rejection, stock and zero contrasts inspect state; parser failures have a shared final read.",
+          "evidence": [
+            "run11/evidence/http.json #9\u201338"
+          ]
+        },
+        "Evidence": {
+          "score": 2,
+          "reason": "Concrete HTTP/state records and bounded assertions; UI remains explicitly unverified.",
+          "evidence": [
+            "run11/evidence/http.json",
+            "run11/evidence/checks.json",
+            "run11/evidence/summary.json"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "No extra defect asserted; current fixture pricing and limited green tests are interpreted correctly.",
+          "evidence": [
+            "run11/report.md Coverage and Remaining risks"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 1,
+          "reason": "Alice restored, but Bob remains empty and requires owner restart, despite a clear handoff.",
+          "evidence": [
+            "run11/evidence/http.json #34\u201338",
+            "run11/evidence/summary.json"
+          ]
+        }
+      },
+      "total": 10,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "not_applicable_no_seeded_requirement",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "Bob requires owner reset after zero-removal probe.",
+        "No browser work or build correspondence evidence.",
+        "Parser matrix checks preservation after the batch rather than after each malformed request."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run11"
+    },
+    {
+      "case": "case-J",
+      "access": "runtime-only",
+      "expected_requirements": [
+        "UI-1"
+      ],
+      "group": "supplementary-fallback",
+      "dimensions": {
+        "Context and access": {
+          "score": 1,
+          "reason": "Respects runtime-only source restriction, but gives little source/build or browser-environment qualification.",
+          "evidence": [
+            "run06/report.md",
+            "run06/evidence/reproduction.txt"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Explores persisted Cancel side effect and nearby validation; residual zero and delayed-save probes are relevant.",
+          "evidence": [
+            "run06/report.md Remaining risks",
+            "run06/submission.json risks"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Pointer and keyboard changes independently read back; Save and invalid Save supply contrasts.",
+          "evidence": [
+            "run06/evidence/reproduction.txt",
+            "run06/evidence/http.json records 5,7,22"
+          ]
+        },
+        "Evidence": {
+          "score": 1,
+          "reason": "Persistence records and narrow screenshot support outcome; actual browser update is uncaptured.",
+          "evidence": [
+            "run06/evidence/http.json records 5,22",
+            "run06/evidence/narrow-cancel.png"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 1,
+          "reason": "UI-1 suspicion is strong and persistence observed, but required forbidden-request evidence remains missing.",
+          "evidence": [
+            "run06/evidence/reproduction.txt final paragraph"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "Final API readbacks confirm both baselines and stock; created-tab cleanup and coverage gaps stated.",
+          "evidence": [
+            "run06/evidence/http.json records 23\u201326",
+            "run06/report.md Cleanup"
+          ]
+        }
+      },
+      "total": 9,
+      "rubric_quality_threshold_met": false,
+      "acceptance": "below_quality_threshold",
+      "expected_finding_assessment": "partially_verified_missing_browser_request",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "No forbidden browser update capture.",
+        "Initial setup time and combined request total not independently measured.",
+        "Build and browser-engine identification incomplete."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run06"
+    },
+    {
+      "case": "case-K",
+      "access": "source-runtime",
+      "expected_requirements": [
+        "UI-1"
+      ],
+      "group": "primary-source-runtime",
+      "dimensions": {
+        "Context and access": {
+          "score": 2,
+          "reason": "Source fingerprints, runtime label and explicit deployment uncertainty; browser engine and dimensions qualified.",
+          "evidence": [
+            "run04/report.md Environment",
+            "run04/evidence/source-sha256.txt",
+            "run04/evidence/browser.txt"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Prioritizes unintended Cancel writes and ties untested async, identity and removal risks to next experiments.",
+          "evidence": [
+            "run04/report.md Risk map"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Save baseline, valid Cancel network delta, reload/read persistence and invalid Cancel contrast distinguish mechanism.",
+          "evidence": [
+            "run04/evidence/network-before-cancel.txt",
+            "run04/evidence/network-after-cancel.txt",
+            "run04/evidence/network-invalid-cancel.txt"
+          ]
+        },
+        "Evidence": {
+          "score": 2,
+          "reason": "Browser PUT delta/body/response, snapshots and separate persisted read jointly satisfy required evidence at artifact-review level.",
+          "evidence": [
+            "run04/evidence/cancel-request-body.txt",
+            "run04/evidence/cancel-response-body.txt",
+            "run04/evidence/cancel-valid-snapshot.txt",
+            "run04/evidence/http.json #2"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "UI-1 established using browser-associated forbidden PUT plus persisted state; console warning not inflated into separate defect.",
+          "evidence": [
+            "run04/evidence/network-after-cancel.txt",
+            "run04/evidence/network-final.txt",
+            "run04/evidence/http.json #2"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "Alice/Bob and stock verified at cleanup; tooling failures and untested recovery disclosed.",
+          "evidence": [
+            "run04/evidence/http.json #19\u201322",
+            "run04/report.md Cleanup"
+          ]
+        }
+      },
+      "total": 12,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "established_at_allowed_evidence_level",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "Full original agent action transcript and server audit absent; action-to-network attribution relies on supplied ordered artifacts.",
+        "Original HTML/JS mechanism not separately captured here beyond report/hashes; network behavior stands independently."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run04"
+    },
+    {
+      "case": "case-L",
+      "access": "source-only",
+      "expected_requirements": [
+        "CART-2"
+      ],
+      "group": "supplementary-fallback",
+      "dimensions": {
+        "Context and access": {
+          "score": 2,
+          "reason": "Source-only constraint respected and no runtime execution claimed; source hashes identify inspected materials.",
+          "evidence": [
+            "run09/evidence/source-review.txt",
+            "run09/report.md Scope"
+          ]
+        },
+        "Risk selection": {
+          "score": 2,
+          "reason": "Prioritizes negative reproduction and quantity/identity matrix with scoped follow-up probes.",
+          "evidence": [
+            "run09/report.md Source-supported coverage"
+          ]
+        },
+        "Experimental reasoning": {
+          "score": 2,
+          "reason": "Handler-through-domain trace explains negative assignment and derived totals, distinguishing exact-int and stock branches.",
+          "evidence": [
+            "run09/evidence/source-review.txt domain.py:23\u201337 and app.py:69\u201387"
+          ]
+        },
+        "Evidence": {
+          "score": 2,
+          "reason": "Numbered source plus proposed baseline/write/read/restore sequence suitable for static access; all runtime effects unverified.",
+          "evidence": [
+            "run09/evidence/source-review.txt",
+            "run09/evidence/reproduction.txt"
+          ]
+        },
+        "Finding accuracy": {
+          "score": 2,
+          "reason": "CART-2 code-evidenced at permitted level; totals are consequences, not a separate bug.",
+          "evidence": [
+            "run09/evidence/source-review.txt domain.py:24\u201336"
+          ]
+        },
+        "Scope and closeout": {
+          "score": 2,
+          "reason": "No runtime state touched; exact outstanding checks and accounting supplied.",
+          "evidence": [
+            "run09/evidence/session.txt",
+            "run09/report.md Limits"
+          ]
+        }
+      },
+      "total": 12,
+      "rubric_quality_threshold_met": true,
+      "acceptance": "provisional_pending_external_integrity_grade",
+      "expected_finding_assessment": "established_at_allowed_evidence_level",
+      "adjudicated_false_positives": [],
+      "unresolved_additional_findings": [],
+      "material_caveats": [
+        "Runtime deliberately unavailable; source predictions cannot establish deployed behavior."
+      ],
+      "critical_integrity_failure": "none_observed_in_supplied_artifacts; external_grade_not_available",
+      "run": "run09"
+    }
+  ],
+  "summary": {
+    "primary_source_runtime": {
+      "reports": 8,
+      "seeded_cases": 4,
+      "expected_defects_identified": 4,
+      "expected_defects_established_to_rubric": 3,
+      "partially_verified_expected_defects": 1,
+      "no_seeded_requirement_cases": 4,
+      "quality_threshold_met": 7
+    },
+    "supplementary_fallback": {
+      "reports": 4,
+      "source_only_code_findings_established": 2,
+      "runtime_only_expected_defects_identified": 2,
+      "runtime_only_expected_defects_fully_verified": 0,
+      "runtime_only_partially_verified": 2,
+      "quality_threshold_met": 3
+    },
+    "adjudicated_false_positives": 0,
+    "unresolved_additional_product_findings": 0,
+    "unknown_unseeded_bugs": "Not assumed absent; no additional confirmed product claims were presented to reject.",
+    "broad_performance_claims_supported": false,
+    "comparative_condition_effect": "Cannot estimate: condition assignments withheld; small single-app artifact sample and unknown independence/control details."
+  },
+  "global_limits": [
+    "No harness grade, server audit, full original agent transcript or target before/after hashes were supplied; integrity, access, execution and budget claims are not independently certified.",
+    "Read all twelve reports and structured findings; inspected selected source snapshots, decisive HTTP sequences, browser network records, reproduction artifacts and six representative images. Did not open every screenshot.",
+    "Screenshots establish visible states only, never browser request occurrence or absence.",
+    "Scores are local ordinal judgments. Threshold is provisional and does not substitute for expected-defect establishment or external integrity gating.",
+    "Intentional source-only/runtime-only access limits are not failures or unauthorized omissions. Source-only static completion is distinct from runtime verification."
+  ]
+}

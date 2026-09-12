@@ -1,0 +1,27 @@
+{
+  "result": {
+    "reviewer_requests": 2,
+    "documented_schema": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ProductDto"
+      }
+    },
+    "runtime_status": 401,
+    "runtime_body": {
+      "message": "Unauthorized"
+    },
+    "confirmed_type_mismatch": true
+  },
+  "spec_fetched_at": "2026-09-12T08:49:42.319719+00:00",
+  "runtime_response": {
+    "time": "2026-09-12T08:49:42.455650+00:00",
+    "method": "GET",
+    "path": "/api/v1/products",
+    "status": 401,
+    "content_type": "application/json;charset=UTF-8",
+    "body": {
+      "message": "Unauthorized"
+    }
+  }
+}

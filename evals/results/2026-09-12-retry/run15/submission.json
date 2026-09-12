@@ -1,0 +1,118 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [
+    {
+      "requirement_id": "UNMAPPED",
+      "title": "GET products 401 response is an object but live OpenAPI declares a product array",
+      "status": "confirmed",
+      "expected": "Live /v3/api-docs declares an array of ProductDto for GET /api/v1/products HTTP 401. Response body type should match that published contract.",
+      "actual": "Two unauthenticated GET requests returned HTTP 401 with application/json and {\"message\":\"Unauthorized\"}, an object. Cart 401 also references a success model, but its permissive schema does not prove formal invalidity.",
+      "impact": "Observed product error response fails the documented top-level array constraint. Client deserialization impact is possible, not executed. No authentication bypass observed.",
+      "evidence": [
+        "evidence/02-v3-api-docs.body",
+        "evidence/03-api-v1-products.body",
+        "evidence/03-api-v1-products.headers",
+        "evidence/05-repeat-api-v1-products.body",
+        "evidence/contract-analysis.txt",
+        "evidence/source-excerpts.txt"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Ownership and role authorization",
+      "reason": "Only anonymous reads were authorized and exercised.",
+      "priority": "high",
+      "next_probe": "Use authorized disposable ordinary-user and administrator sessions to verify cart isolation and role enforcement, with cleanup."
+    },
+    {
+      "area": "Token and account lifecycle",
+      "reason": "No sign-in, refresh, logout, 2FA or reset submissions permitted.",
+      "priority": "high",
+      "next_probe": "With authorized disposable accounts, exercise expiry, refresh, revocation and reset/2FA flows."
+    },
+    {
+      "area": "Authenticated success contract",
+      "reason": "No authenticated product/cart 200 payload observed.",
+      "priority": "medium",
+      "next_probe": "Compare authorized disposable-session success payloads to OpenAPI schemas."
+    },
+    {
+      "area": "Public login UI",
+      "reason": "Only HTML shell availability tested; no browser session used.",
+      "priority": "low",
+      "next_probe": "Inspect rendered login labels, focus and responsive layout in a fresh browser session without submission."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "elapsed_s": 0.159,
+      "bytes": 1160,
+      "evidence": "evidence/01-login.body",
+      "headers": "evidence/01-login.headers",
+      "action": "Baseline public availability and documented authentication boundary"
+    },
+    {
+      "method": "GET",
+      "path": "/v3/api-docs",
+      "status": 200,
+      "elapsed_s": 0.189,
+      "bytes": 69747,
+      "evidence": "evidence/02-v3-api-docs.body",
+      "headers": "evidence/02-v3-api-docs.headers",
+      "action": "Baseline public availability and documented authentication boundary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 401,
+      "elapsed_s": 0.151,
+      "bytes": 34,
+      "evidence": "evidence/03-api-v1-products.body",
+      "headers": "evidence/03-api-v1-products.headers",
+      "action": "Baseline public availability and documented authentication boundary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "elapsed_s": 0.151,
+      "bytes": 34,
+      "evidence": "evidence/04-api-v1-cart.body",
+      "headers": "evidence/04-api-v1-cart.headers",
+      "action": "Baseline public availability and documented authentication boundary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 401,
+      "elapsed_s": 0.172,
+      "bytes": 34,
+      "evidence": "evidence/05-repeat-api-v1-products.body",
+      "headers": "evidence/05-repeat-api-v1-products.headers",
+      "action": "Repeat unauthenticated response to confirm contract discrepancy"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "elapsed_s": 0.152,
+      "bytes": 34,
+      "evidence": "evidence/06-repeat-api-v1-cart.body",
+      "headers": "evidence/06-repeat-api-v1-cart.headers",
+      "action": "Repeat unauthenticated response to confirm contract discrepancy"
+    }
+  ],
+  "limitations": [
+    "Six of twelve permitted direct GET requests used; zero browser actions. Only the four allowed paths exercised.",
+    "Source snapshots are not verified deployed revisions.",
+    "No authenticated sessions, mutations, fault injection, email, private-record enumeration or other endpoints exercised.",
+    "No rendered UI observations or screenshots. Structural OpenAPI checks were not full specification validation.",
+    "No generated client executed; cart error schema is misleading but permissive, so formal cart validation failure is not claimed."
+  ],
+  "cleanup": "Only candidate deliverables/evidence created. No remote data or application/source changes. No browser session or runtime process started."
+}

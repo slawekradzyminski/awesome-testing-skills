@@ -1,0 +1,10 @@
+### Result
+{
+  "width": 375,
+  "height": 740,
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36"
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({width:innerWidth,height:innerHeight,userAgent:navigator.userAgent})');
+```

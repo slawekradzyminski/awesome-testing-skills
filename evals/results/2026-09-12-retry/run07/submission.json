@@ -1,0 +1,439 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [
+    {
+      "requirement_id": "CART-2",
+      "title": "Negative integer quantity is accepted and persisted with negative totals",
+      "status": "confirmed",
+      "expected": "CART-2 requires negative quantities to return 400 and leave the cart unchanged. Alice should remain quantity 1, totalItems 1, totalPrice 12.",
+      "actual": "PUT /api/v1/cart/items/1 with Alice token and {\"quantity\":-1} returns 200; a subsequent GET persists quantity -1, totalItems -1, totalPrice -12.",
+      "impact": "An authenticated fixture caller can corrupt their own cart quantity and produce a negative total. Bob remained unchanged. No checkout or financial impact was tested.",
+      "evidence": [
+        "evidence/reproduction.txt",
+        "evidence/http.json"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Zero removal through the HTTP boundary",
+      "reason": "In-process Store removal passes, but removing the runtime item prevents API restoration because adding items is out of scope. No live zero mutation was issued.",
+      "priority": "medium",
+      "next_probe": "With a fresh resettable fixture, PUT quantity 0 and GET the empty cart, confirming zero totals and isolation; let the owner reset afterward."
+    },
+    {
+      "area": "UI provisional editing, feedback, and keyboard layout",
+      "reason": "Only UI source was inspected. No browser session or visual evidence was collected. Async refresh and identity changes remain unexercised.",
+      "priority": "medium",
+      "next_probe": "Test Edit/Cancel/reopen and Save via keyboard at narrow and desktop widths, including account changes while a response is delayed."
+    },
+    {
+      "area": "Current unit price used by totals",
+      "reason": "app/domain.py:21 multiplies by literal 12, matching current catalog data. No price mutation endpoint exists in scope, so no current runtime discrepancy is claimed.",
+      "priority": "low",
+      "next_probe": "If product prices become configurable, add a controlled price-change domain probe and confirm cart totals follow the catalog price."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 1: Baseline Alice cart",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 2: Baseline Bob cart",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Request 3: Read price and stock",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Request 4: Anonymous cart rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 401,
+      "action": "Request 5: Anonymous product rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 401,
+      "action": "Request 6: Anonymous mutation rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Request 7: Unknown token rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 8: Verify unauthorized attempts did not mutate Alice",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 9: Quantity validation {'quantity': -1}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 10: Read persisted state following validation attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 11: Verify negative Alice mutation isolated from Bob",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 12: Restore Alice after negative probe",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 13: Quantity validation {'quantity': 1.5}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 14: Read persisted state following validation attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 15: Quantity validation {}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 16: Read persisted state following validation attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 17: Quantity validation {'quantity': None}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 18: Read persisted state following validation attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 19: Quantity validation {'quantity': '3'}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 20: Read persisted state following validation attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 21: Quantity validation {'quantity': True}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 22: Read persisted state following validation attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 23: Quantity validation {'quantity': False}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 24: Read persisted state following validation attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 25: Quantity validation {'quantity': 2.0}",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 26: Read persisted state following validation attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 27: Stock boundary and valid update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 28: Read persisted quantity and totals",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "Request 29: Stock boundary and valid update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 30: Read persisted quantity and totals",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "Request 31: Stock boundary and valid update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 32: Read persisted quantity and totals",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 33: Stock boundary and valid update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 34: Read persisted quantity and totals",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Request 35: Stock remains five after accepted changes",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 36: Bob still at baseline after Alice changes",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 37: Bob valid update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 38: Alice unaffected by Bob update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/999",
+      "status": 404,
+      "action": "Request 39: Nonexistent item update rejected",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 40: Non-object JSON rejected",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Request 41: Malformed JSON rejected",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 42: Cart unchanged after bad requests",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 43: Cleanup restore Alice baseline",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 44: Cleanup restore Bob baseline",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 45: Verify Alice cleanup",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 46: Verify Bob cleanup",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Request 47: Verify product unchanged",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 48: Alice holds full stock quantity",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 49: Bob can independently hold full stock quantity without reservation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Request 50: Catalog stock remains five with both carts at five",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 51: Alice totals at upper valid boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 52: Bob totals at upper valid boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 53: Restore Alice original quantity",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Request 54: Restore Bob original quantity",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 55: Final Alice cleanup verification",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Request 56: Final Bob cleanup verification",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "No browser/UI execution or screenshots; UI-1 and UI-2 remain runtime-unverified.",
+    "Zero removal checked only in a disposable in-process Store, not the assigned HTTP runtime, to preserve restorable fixture carts.",
+    "Single-item fixed-price fixture only; concurrency and transport fault injection were not tested.",
+    "Token/account usage metrics are unavailable; only observed request counts and wall-clock time are reported."
+  ],
+  "cleanup": "Alice restored to quantity 1 / total 12 and Bob to quantity 2 / total 24; final GET responses exactly match initial snapshots (requests 55 and 56). Catalog stock remained 5 and price 12. Application and existing tests were not edited. No browser session was opened."
+}

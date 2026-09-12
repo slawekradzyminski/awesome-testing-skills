@@ -1,0 +1,21 @@
+Runtime-only exploration: http://127.0.0.1:64185, 2026-09-12.
+Starting Alice cart: product 1 quantity 1 totalItems 1 totalPrice 12.
+1. Click Edit quantity, set Quantity to 3, click Cancel.
+Observed: editor closed, Quantity: 3 · Total: 36, Cart updated.
+Opened screenshot: cancel-saved.png (1280x720).
+Independent GET /api/v1/cart as Alice returned quantity 3, totalItems 3, totalPrice 36 (http.json, action after UI Cancel 1 to 3).
+2. Reopen Edit: value 3. Change to 6, click Cancel.
+Observed: Edit cancelled, visible Quantity 3 / Total 36. No API read immediately after this contrast, and browser network traffic was not captured.
+3. Reopen Edit, change to 2, click Save.
+Observed Quantity 2 / Total 24, Cart updated. Independent GET confirms quantity 2 and totalPrice 24.
+4. Resize to 375x812. Open Edit, set 4, Tab twice.
+Observed keyboard focus on Cancel; screenshot narrow-editor.png opened and inspected. Visible saved summary remained Quantity 2 / Total 24 before activation.
+Press Return. Observed editor closed, Quantity 4 / Total 48, Cart updated.
+Reopen Edit showed value 4. This second occurrence has UI/reopen evidence, not an immediate independent API read.
+5. Enter 6, click Save. Browser validation visibly says Value must be less than or equal to 5. Editor remains open; visible cart quantity remains 4. Screenshot invalid-save.png opened and inspected.
+6. Set 1, Tab to Save, Return. Observed Quantity 1 / Total 12, Cart updated.
+7. Switch Demo account to Bob: Quantity 2 / Total 24.
+Final independent GETs confirm Alice 1/12 and Bob 2/24, both initial fixtures restored.
+Browser warn/error log reads returned [] before narrow testing and at closeout.
+Only normal UI interactions were used. No DOM edits, forced clicks, mocks, or request interception.
+Browser-generated update request methods/statuses/counts were not captured; persisted side effect is confirmed by independent GET, not inferred solely from a success message.

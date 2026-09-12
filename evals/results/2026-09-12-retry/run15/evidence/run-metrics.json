@@ -1,0 +1,11 @@
+{
+  "started_utc": "2026-09-12T08:47:38+00:00",
+  "report_written_utc": "2026-09-12T08:50:21.132970+00:00",
+  "elapsed_seconds_at_report_write": 163.1,
+  "direct_http_get_requests": 6,
+  "browser_actions": 0,
+  "request_budget": 12,
+  "browser_action_budget": 30,
+  "time_budget_seconds": 300,
+  "usage_metrics": "Token and monetary usage unavailable; not estimated."
+}

@@ -1,0 +1,348 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [
+    {
+      "requirement_id": "CART-2",
+      "title": "Negative integer quantities are accepted and persisted with negative totals",
+      "status": "confirmed",
+      "expected": "CART-2: reject negative quantities with 400 and preserve previous cart state.",
+      "actual": "PUT quantity -1 returned 200 twice; independent GETs returned quantity -1, totalItems -1 and totalPrice -12.",
+      "impact": "Authenticated caller can persist an invalid cart quantity and negative displayed totals in their own cart.",
+      "evidence": [
+        "evidence/reproduction.txt",
+        "evidence/http.json"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Negative quantity validation",
+      "reason": "Missing lower bound in Store.update matches two confirmed HTTP failures.",
+      "priority": "high",
+      "next_probe": "After fix, assert -1 returns 400 and GET preserves prior cart; add domain regression."
+    },
+    {
+      "area": "Current product price in totals",
+      "reason": "Store.cart hardcodes 12; current fixture price is also 12, so no discrepancy demonstrated.",
+      "priority": "medium",
+      "next_probe": "Use separately authorized varying-price fixture and compare totals to catalog."
+    },
+    {
+      "area": "Zero removal",
+      "reason": "Source deletes item; no API re-add operation exists, and live zero was skipped to preserve restorability.",
+      "priority": "medium",
+      "next_probe": "With resettable fixture lifecycle, update zero and verify empty cart and zero totals."
+    },
+    {
+      "area": "Authentication variants",
+      "reason": "Anonymous reads/writes and two valid identities were tested, but malformed or invalid bearer credentials were not.",
+      "priority": "low",
+      "next_probe": "Check invalid bearer identity yields rejection without cart mutation."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "action": "HTTP record 1: Identify runtime build (anonymous)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "HTTP record 2: Establish product ID, price and stock (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 3: Alice baseline (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 4: Bob baseline (bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "HTTP record 5: Anonymous read rejected (anonymous)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 401,
+      "action": "HTTP record 6: Anonymous write rejected (anonymous)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 7: Confirm anonymous write did not alter Alice (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 8: Representative valid update (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 9: Verify successful write persisted and totals (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 10: Check Alice write leaves Bob untouched (bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "HTTP record 11: Check cart update does not decrement stock (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 12: Challenge missing integer lower bound (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 13: Check whether negative quantity persisted (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 14: Restore Alice fresh valid state (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 15: Reproduce minimal negative update from baseline (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 16: Verify repeated failure persisted (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 17: Restore Alice baseline (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "HTTP record 18: Quantity contract invalid value (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 19: Verify rejected input leaves saved state intact (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "HTTP record 20: Quantity contract invalid value (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 21: Verify rejected input leaves saved state intact (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "HTTP record 22: Quantity contract invalid value (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 23: Verify rejected input leaves saved state intact (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "HTTP record 24: Quantity contract invalid value (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 25: Verify rejected input leaves saved state intact (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "HTTP record 26: Quantity contract invalid value (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 27: Verify rejected input leaves saved state intact (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "HTTP record 28: Quantity contract invalid value (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 29: Verify rejected input leaves saved state intact (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 30: Stock boundary accepted (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "HTTP record 31: Stock boundary plus one rejected (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 32: Verify stock rejection preserves quantity five (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "HTTP record 33: Verify stock unchanged at maximum cart quantity (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 34: Check client-provided identity cannot retarget update (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 35: Verify Bob remains isolated after extra identity field (bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 36: Verify authenticated Alice is actual update target (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 37: Restore Alice baseline (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 38: Verify Bob can update his own cart (bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 39: Verify Bob write leaves Alice unchanged (alice)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "HTTP record 40: Restore Bob baseline (bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 41: Confirm Bob restored (bob)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "HTTP record 42: Confirm Alice restored (alice)",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "No browser/UI testing.",
+    "Live zero removal untested because item cannot be re-added within the scoped API.",
+    "No price-change, concurrency, transport-failure, malformed JSON/body-size, or invalid-token experiments.",
+    "Source commit revision unavailable; SHA-256 source fingerprints captured, runtime version sample-1; deployed/source linkage unknown.",
+    "Checkout, adding items and production authentication excluded."
+  ],
+  "cleanup": "Both carts restored and confirmed by final GETs: Alice quantity 1 totalPrice 12; Bob quantity 2 totalPrice 24. No browser session; fixture server left running for owner."
+}

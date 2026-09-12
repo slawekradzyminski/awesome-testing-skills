@@ -1,0 +1,240 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 1}], \"totalItems\": 1, \"totalPrice\": 12}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "bob",
+    "status": 200,
+    "body": "{\"username\": \"bob\", \"items\": [{\"productId\": 1, \"quantity\": 2}], \"totalItems\": 2, \"totalPrice\": 24}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/products",
+    "identity": "alice",
+    "status": 200,
+    "body": "[{\"id\": 1, \"name\": \"Workshop notebook\", \"price\": 12, \"stockQuantity\": 5}]"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": null,
+    "status": 401,
+    "body": "{\"error\": \"Authentication required\"}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "action": "After Alice changed 1 to 3 and clicked Cancel",
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 3}], \"totalItems\": 3, \"totalPrice\": 36}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "bob",
+    "action": "After Alice changed 1 to 3 and clicked Cancel",
+    "status": 200,
+    "body": "{\"username\": \"bob\", \"items\": [{\"productId\": 1, \"quantity\": 2}], \"totalItems\": 2, \"totalPrice\": 24}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}",
+    "action": "After UI Save 4 and blocked UI Save 6"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "request_body": {
+      "quantity": -1
+    },
+    "status": 400,
+    "body": "{\"error\": \"Quantity must be a non-negative integer\"}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "request_body": {
+      "quantity": 1.5
+    },
+    "status": 400,
+    "body": "{\"error\": \"Quantity must be a non-negative integer\"}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "request_body": {},
+    "status": 400,
+    "body": "{\"error\": \"Quantity must be a non-negative integer\"}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "request_body": {
+      "quantity": null
+    },
+    "status": 400,
+    "body": "{\"error\": \"Quantity must be a non-negative integer\"}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "request_body": {
+      "quantity": "3"
+    },
+    "status": 400,
+    "body": "{\"error\": \"Quantity must be a non-negative integer\"}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "request_body": {
+      "quantity": true
+    },
+    "status": 400,
+    "body": "{\"error\": \"Quantity must be a non-negative integer\"}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "request_body": {
+      "quantity": 6
+    },
+    "status": 409,
+    "body": "{\"error\": \"Requested quantity exceeds available stock\"}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}",
+    "action": "API quantity validation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 2}], \"totalItems\": 2, \"totalPrice\": 24}",
+    "action": "After narrow keyboard Cancel"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "request_body": {
+      "quantity": 1
+    },
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 1}], \"totalItems\": 1, \"totalPrice\": 12}",
+    "action": "Restore original Alice fixture"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 1}], \"totalItems\": 1, \"totalPrice\": 12}",
+    "action": "Verify cleanup"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "bob",
+    "request_body": null,
+    "status": 200,
+    "body": "{\"username\": \"bob\", \"items\": [{\"productId\": 1, \"quantity\": 2}], \"totalItems\": 2, \"totalPrice\": 24}",
+    "action": "Verify Bob unchanged"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/products",
+    "identity": "alice",
+    "request_body": null,
+    "status": 200,
+    "body": "[{\"id\": 1, \"name\": \"Workshop notebook\", \"price\": 12, \"stockQuantity\": 5}]",
+    "action": "Verify stock remains 5"
+  }
+]

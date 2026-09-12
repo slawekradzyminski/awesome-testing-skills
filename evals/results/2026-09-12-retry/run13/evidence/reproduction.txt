@@ -1,0 +1,7 @@
+Anonymous HTTPS GETs; no Cookie or Authorization; Accept: application/json; redirects disabled; timeout 20 seconds (repeat 15 seconds).
+1. GET https://awesome.byst.re/v3/api-docs
+2. Inspect paths["/api/v1/products"].get.responses["401"].content["*/*"].schema: type=array, items=$ref ProductDto.
+3. GET https://awesome.byst.re/api/v1/products
+4. Actual: 401; Content-Type application/json;charset=UTF-8; {"message":"Unauthorized"}.
+5. Repeat steps 1-4 independently: same mismatch.
+Evidence pairs: http-2.json/body-2.txt and http-3.json/body-3.txt; repeat http-5.json/body-5.txt and http-6.json/body-6.txt.

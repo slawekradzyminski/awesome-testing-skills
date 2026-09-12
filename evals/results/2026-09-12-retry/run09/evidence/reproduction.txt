@@ -1,0 +1,41 @@
+PROPOSED REPRODUCTION — NOT EXECUTED
+
+The task explicitly says the runtime is unavailable and must not be started.
+No HTTP status or response below was observed. They are source-derived predictions.
+Use only the assigned disposable runtime when it becomes available, replacing
+BASE_URL with its supplied address; do not target any external installation.
+
+1. GET /api/v1/products with Authorization: Bearer demo-alice.
+   Fixture expectation: product 1, Workshop notebook, price 12, stockQuantity 5.
+2. GET /api/v1/cart with Authorization: Bearer demo-alice; save baseline.
+   Fresh fixture: alice, items [{productId: 1, quantity: 1}], totalItems 1, totalPrice 12.
+3. GET /api/v1/cart with Authorization: Bearer demo-bob; save baseline.
+   Fresh fixture: bob, items [{productId: 1, quantity: 2}], totalItems 2, totalPrice 24.
+4. PUT /api/v1/cart/items/1 with Authorization: Bearer demo-alice,
+   Content-Type: application/json, body {"quantity":-1}.
+   CART-2 requires 400 and unchanged Alice cart.
+   Source predicts 200 with {"username":"alice","items":[{"productId":1,
+   "quantity":-1}],"totalItems":-1,"totalPrice":-12}.
+5. GET Alice cart; predicted persisted quantity -1, totalItems -1, totalPrice -12.
+6. GET Bob cart; predicted unchanged baseline.
+7. GET products; predicted unchanged stockQuantity 5.
+8. CLEANUP: PUT Alice item 1 back to the saved baseline quantity (1 on a fresh
+   fixture); GET Alice cart to confirm restoration. Verify Bob remains unchanged.
+   Do not remove an item during this probe: removed items cannot be re-added here.
+
+Source trace supporting step 4:
+- app/app.py:72 authenticates the bearer token through user() at lines 40–45.
+- app/app.py:79–82 parses the JSON object, product id and quantity; -1 reaches update.
+- app/domain.py:24 rejects values whose exact type is not int. -1 is int.
+- app/domain.py:26–30 finds Alice's existing product 1 and the catalog entry.
+- app/domain.py:31 checks only quantity > stockQuantity. -1 > 5 is false.
+- app/domain.py:33 tests equality to zero. -1 is not zero.
+- app/domain.py:36 persists -1 to Alice's cart.
+- app/domain.py:18–21 calculates totalItems -1 and totalPrice -12.
+- app/app.py:83 sends 200 for the returned result.
+
+The HTML min=0 constraint (app/static/index.html:22) does not validate direct API
+requests and does not satisfy CART-2 at the server boundary.
+
+Existing tests (app/test_domain.py:8–18) exercise quantity 3 and overstock 6 only.
+They do not exercise the negative branch. Tests were inspected, not run.

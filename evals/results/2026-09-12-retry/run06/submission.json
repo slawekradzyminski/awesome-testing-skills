@@ -1,0 +1,231 @@
+{
+  "source_access": false,
+  "runtime_exercised": true,
+  "findings": [
+    {
+      "requirement_id": "UI-1",
+      "title": "Cancel persists the provisional quantity",
+      "status": "confirmed",
+      "expected": "Cancel discards the edit without changing persisted state; reopening Edit shows the saved quantity.",
+      "actual": "Changing Alice from 1 to 3 and clicking Cancel displayed 3/36 and Cart updated; independent GET confirmed 3/36 and reopening Edit showed 3. Keyboard Cancel at 375px likewise persisted 1 to 2.",
+      "impact": "A user attempting to discard an edit instead changes the saved cart and price.",
+      "evidence": [
+        "evidence/reproduction.txt",
+        "evidence/http.json",
+        "evidence/cancel.png",
+        "evidence/narrow-cancel.png"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Zero quantity and empty-cart UI",
+      "reason": "Not exercised because removed items cannot be re-added through the supported scope.",
+      "priority": "medium",
+      "next_probe": "With a resettable fixture, Save zero and verify removal, empty totals, and editor behavior."
+    },
+    {
+      "area": "Identity switching during an unsaved edit",
+      "reason": "Separate Alice/Bob reads passed, but switching identities with a draft was not exercised.",
+      "priority": "medium",
+      "next_probe": "Edit Alice, switch to Bob before Save, and verify no draft or mutation crosses accounts."
+    },
+    {
+      "area": "Save failures and repeated activation",
+      "reason": "Stock validation passed, but network failures and overlapping requests were not simulated.",
+      "priority": "medium",
+      "next_probe": "Delay or fail a Save response and test retry, duplicate activation, and visible total consistency."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Baseline alice",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Baseline bob",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Baseline alice",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Baseline None",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "After Alice changed 1 to 3 and clicked Cancel",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "After Alice changed 1 to 3 and clicked Cancel",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "After UI Save 4 and blocked UI Save 6",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "API quantity validation",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "After narrow keyboard Cancel",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Restore original Alice fixture",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify cleanup",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Bob unchanged",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Verify stock remains 5",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "Black-box runtime only; no application source inspected.",
+    "Browser network requests were not captured; 26 direct API requests are recorded, but total browser-generated request count is unavailable.",
+    "Zero/removal, Bob writes, anonymous PUT, identity-switch drafts, race conditions, and network-failure feedback were not tested.",
+    "Keyboard Save on desktop and Cancel at narrow width were exercised; this was not a full accessibility audit."
+  ],
+  "cleanup": "Alice restored to quantity 1 / total 12; Bob verified unchanged at 2 / 24; stock verified 5. Test-created browser tab closed and viewport reset."
+}

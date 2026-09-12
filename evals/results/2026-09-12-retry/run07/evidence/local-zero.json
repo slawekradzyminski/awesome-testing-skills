@@ -1,0 +1,24 @@
+{
+  "method": "isolated in-process Store; not assigned HTTP runtime",
+  "zero_result": {
+    "username": "alice",
+    "items": [],
+    "totalItems": 0,
+    "totalPrice": 0
+  },
+  "readd_result": {
+    "status": 404,
+    "error": "Cart item not found"
+  },
+  "bob_after": {
+    "username": "bob",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 2
+      }
+    ],
+    "totalItems": 2,
+    "totalPrice": 24
+  }
+}

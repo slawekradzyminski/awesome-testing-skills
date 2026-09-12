@@ -1,0 +1,30 @@
+{
+  "method": "GET",
+  "path": "/v3/api-docs",
+  "status": 200,
+  "headers": {
+    "Date": "Sat, 12 Sep 2026 08:44:35 GMT",
+    "Content-Type": "application/json",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close",
+    "Server": "cloudflare",
+    "vary": "Access-Control-Request-Headers",
+    "x-content-type-options": "nosniff",
+    "x-xss-protection": "0",
+    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    "pragma": "no-cache",
+    "expires": "0",
+    "strict-transport-security": "max-age=31536000 ; includeSubDomains",
+    "x-frame-options": "DENY",
+    "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+    "cf-cache-status": "DYNAMIC",
+    "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=2lHNAOeiRxldvfFKyOKnZT3pM%2FWwiKqFHa5XP%2BKtj94Qzcy7JALwxENKz%2Flnml37sGSj4Ik9faApz35ludYFb11EuMQckiVPhFrX8s9Bw90loatoAs1wPo4HIhHYaNjg3%2FDoh6%2FsIOpG6L3AeUM%3D\"}]}",
+    "CF-RAY": "a39da190bb6feebd-WAW",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "utc": "2026-09-12T08:44:35.362118+00:00",
+  "elapsed_seconds": 0.189,
+  "action": "Independent anonymous repeat to confirm live 401 contract mismatch",
+  "evidence": "evidence/http-5.json",
+  "body_evidence": "evidence/body-5.txt"
+}

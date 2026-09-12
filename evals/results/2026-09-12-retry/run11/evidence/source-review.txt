@@ -1,0 +1,256 @@
+app/domain.py
+1: """Small in-memory product/cart domain, inspired by Awesome LocalStack."""
+2: 
+3: from copy import deepcopy
+4: 
+5: 
+6: class ApiError(Exception):
+7:     def __init__(self, status, message):
+8:         self.status = status
+9:         self.message = message
+10: 
+11: 
+12: class Store:
+13:     def __init__(self):
+14:         self.products = [{"id": 1, "name": "Workshop notebook", "price": 12, "stockQuantity": 5}]
+15:         self.carts = {"alice": {1: 1}, "bob": {1: 2}}
+16: 
+17:     def cart(self, username):
+18:         items = [{"productId": pid, "quantity": qty} for pid, qty in self.carts[username].items()]
+19:         return {"username": username, "items": items,
+20:                 "totalItems": sum(item["quantity"] for item in items),
+21:                 "totalPrice": sum(item["quantity"] * 12 for item in items)}
+22: 
+23:     def update(self, username, product_id, quantity):
+24:         if type(quantity) is not int or quantity < 0:
+25:             raise ApiError(400, "Quantity must be a non-negative integer")
+26:         if product_id not in self.carts[username]:
+27:             raise ApiError(404, "Cart item not found")
+28:         product = next((p for p in self.products if p["id"] == product_id), None)
+29:         if not product:
+30:             raise ApiError(404, "Product not found")
+31:         if quantity > product["stockQuantity"]:
+32:             raise ApiError(409, "Requested quantity exceeds available stock")
+33:         if quantity == 0:
+34:             del self.carts[username][product_id]
+35:         else:
+36:             self.carts[username][product_id] = quantity
+37:         return self.cart(username)
+38: 
+39:     def catalog(self):
+40:         return deepcopy(self.products)
+
+app/app.py
+1: """Dependency-free localhost sample. Restart to reset its disposable data."""
+2: 
+3: import argparse
+4: import json
+5: import os
+6: import threading
+7: from datetime import datetime, timezone
+8: from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+9: from pathlib import Path
+10: from urllib.parse import urlsplit
+11: 
+12: from domain import ApiError, Store
+13: 
+14: STATIC = Path(__file__).parent / "static"
+15: 
+16: 
+17: def create_server(port=0, audit_path=None):
+18:     store = Store()
+19:     lock = threading.Lock()
+20: 
+21:     class Handler(BaseHTTPRequestHandler):
+22:         def log_message(self, *args):
+23:             pass
+24: 
+25:         def respond(self, status, payload, actor=None, request_body=None, content_type="application/json"):
+26:             data = json.dumps(payload).encode() if content_type == "application/json" else payload
+27:             self.send_response(status)
+28:             self.send_header("Content-Type", content_type)
+29:             self.send_header("Content-Length", str(len(data)))
+30:             self.end_headers()
+31:             self.wfile.write(data)
+32:             if audit_path:
+33:                 record = {"time": datetime.now(timezone.utc).isoformat(), "method": self.command,
+34:                           "path": urlsplit(self.path).path, "actor": actor,
+35:                           "request": request_body, "status": status,
+36:                           "response": payload if content_type == "application/json" else None}
+37:                 with lock, open(audit_path, "a") as out:
+38:                     out.write(json.dumps(record) + "\n")
+39: 
+40:         def user(self):
+41:             token = self.headers.get("Authorization", "")
+42:             identities = {"Bearer demo-alice": "alice", "Bearer demo-bob": "bob"}
+43:             if token not in identities:
+44:                 raise ApiError(401, "Authentication required")
+45:             return identities[token]
+46: 
+47:         def do_GET(self):
+48:             path = urlsplit(self.path).path
+49:             if path in ("/", "/cart"):
+50:                 return self.respond(200, (STATIC / "index.html").read_bytes(), content_type="text/html")
+51:             if path in ("/app.js", "/style.css"):
+52:                 kind = "text/javascript" if path.endswith(".js") else "text/css"
+53:                 return self.respond(200, (STATIC / path[1:]).read_bytes(), content_type=kind)
+54:             if path == "/favicon.ico":
+55:                 return self.respond(204, b"", content_type="image/x-icon")
+56:             if path == "/health":
+57:                 return self.respond(200, {"status": "UP", "version": "sample-1"})
+58:             actor = None
+59:             try:
+60:                 actor = self.user()
+61:                 if path == "/api/v1/products":
+62:                     return self.respond(200, store.catalog(), actor)
+63:                 if path == "/api/v1/cart":
+64:                     return self.respond(200, store.cart(actor), actor)
+65:                 raise ApiError(404, "Not found")
+66:             except ApiError as error:
+67:                 self.respond(error.status, {"error": error.message}, actor)
+68: 
+69:         def do_PUT(self):
+70:             actor, body = None, None
+71:             try:
+72:                 actor = self.user()
+73:                 path = urlsplit(self.path).path
+74:                 if not path.startswith("/api/v1/cart/items/"):
+75:                     raise ApiError(404, "Not found")
+76:                 length = int(self.headers.get("Content-Length", 0))
+77:                 if length > 4096:
+78:                     raise ApiError(413, "Request too large")
+79:                 body = json.loads(self.rfile.read(length))
+80:                 if not isinstance(body, dict):
+81:                     raise ApiError(400, "Expected a JSON object")
+82:                 result = store.update(actor, int(path.rsplit("/", 1)[1]), body.get("quantity"))
+83:                 self.respond(200, result, actor, body)
+84:             except (ValueError, TypeError):
+85:                 self.respond(400, {"error": "Invalid request"}, actor, body)
+86:             except ApiError as error:
+87:                 self.respond(error.status, {"error": error.message}, actor, body)
+88: 
+89:     return ThreadingHTTPServer(("127.0.0.1", port), Handler)
+90: 
+91: 
+92: if __name__ == "__main__":
+93:     parser = argparse.ArgumentParser()
+94:     parser.add_argument("--port", type=int, default=0)
+95:     parser.add_argument("--ready", type=Path)
+96:     parser.add_argument("--audit", type=Path)
+97:     args = parser.parse_args()
+98:     server = create_server(args.port, args.audit)
+99:     ready = {"pid": os.getpid(), "base_url": f"http://127.0.0.1:{server.server_port}"}
+100:     if args.ready:
+101:         args.ready.write_text(json.dumps(ready))
+102:     print(json.dumps(ready), flush=True)
+103:     server.serve_forever()
+
+app/test_domain.py
+1: """Existing narrow tests: their green result is not a complete coverage claim."""
+2: 
+3: import unittest
+4: from domain import ApiError, Store
+5: 
+6: 
+7: class CartTests(unittest.TestCase):
+8:     def test_updates_total_and_leaves_other_identity_unchanged(self):
+9:         store = Store()
+10:         self.assertEqual(store.update("alice", 1, 3)["totalPrice"], 36)
+11:         self.assertEqual(store.cart("bob")["totalItems"], 2)
+12: 
+13:     def test_stock_rejection_preserves_previous_value(self):
+14:         store = Store()
+15:         with self.assertRaises(ApiError) as error:
+16:             store.update("alice", 1, 6)
+17:         self.assertEqual(error.exception.status, 409)
+18:         self.assertEqual(store.cart("alice")["totalItems"], 1)
+19: 
+20: 
+21: if __name__ == "__main__":
+22:     unittest.main()
+
+app/static/app.js
+1: const identity = document.querySelector('#identity');
+2: const form = document.querySelector('#quantity-form');
+3: const quantity = document.querySelector('#quantity');
+4: const summary = document.querySelector('#summary');
+5: const feedback = document.querySelector('#feedback');
+6: let current;
+7: 
+8: const headers = () => ({Authorization: `Bearer demo-${identity.value}`, 'Content-Type': 'application/json'});
+9: 
+10: async function refresh() {
+11:   const response = await fetch('/api/v1/cart', {headers: headers()});
+12:   current = await response.json();
+13:   summary.textContent = `Quantity: ${current.totalItems} · Total: ${current.totalPrice}`;
+14: }
+15: 
+16: document.querySelector('#edit').addEventListener('click', () => {
+17:   quantity.value = current.items[0]?.quantity ?? 0;
+18:   form.hidden = false;
+19:   feedback.textContent = '';
+20:   quantity.focus();
+21: });
+22: 
+23: document.querySelector('#cancel').addEventListener('click', () => {
+24:   form.hidden = true;
+25:   feedback.textContent = 'Edit cancelled';
+26:   document.querySelector('#edit').focus();
+27: });
+28: 
+29: form.addEventListener('submit', async event => {
+30:   event.preventDefault();
+31:   const response = await fetch('/api/v1/cart/items/1', {
+32:     method: 'PUT', headers: headers(), body: JSON.stringify({quantity: Number(quantity.value)}),
+33:   });
+34:   if (response.ok) {
+35:     await refresh();
+36:     form.hidden = true;
+37:     feedback.textContent = 'Cart updated';
+38:   } else {
+39:     const body = await response.json();
+40:     feedback.textContent = body.error;
+41:   }
+42: });
+43: 
+44: identity.addEventListener('change', async () => {
+45:   form.hidden = true;
+46:   feedback.textContent = '';
+47:   await refresh();
+48: });
+49: 
+50: refresh();
+
+app/static/index.html
+1: <!doctype html>
+2: <html lang="en">
+3: <head>
+4:   <meta charset="UTF-8">
+5:   <meta name="viewport" content="width=device-width,initial-scale=1">
+6:   <title>Workshop cart</title>
+7:   <link rel="stylesheet" href="/style.css">
+8:   <script src="/app.js" defer></script>
+9: </head>
+10: <body>
+11:   <main>
+12:     <h1>Your cart</h1>
+13:     <label for="identity">Demo account</label>
+14:     <select id="identity"><option value="alice">Alice</option><option value="bob">Bob</option></select>
+15:     <section aria-labelledby="product-title">
+16:       <h2 id="product-title">Workshop notebook</h2>
+17:       <p>Price: 12 · Available stock: 5</p>
+18:       <p id="summary" aria-live="polite">Loading cart…</p>
+19:       <button id="edit" type="button">Edit quantity</button>
+20:       <form id="quantity-form" hidden>
+21:         <label for="quantity">Quantity</label>
+22:         <input id="quantity" name="quantity" type="number" min="0" max="5" step="1" required>
+23:         <div class="actions">
+24:           <button id="save" type="submit">Save</button>
+25:           <button id="cancel" type="button">Cancel</button>
+26:         </div>
+27:       </form>
+28:       <p id="feedback" role="status"></p>
+29:     </section>
+30:   </main>
+31: </body>
+32: </html>

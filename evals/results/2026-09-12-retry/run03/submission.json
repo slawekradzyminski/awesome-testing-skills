@@ -1,0 +1,59 @@
+{
+  "source_access": true,
+  "runtime_exercised": false,
+  "findings": [
+    {
+      "requirement_id": "CART-2",
+      "title": "PUT /api/v1/cart/items/1 accepts negative integer quantity and persists negative totals",
+      "status": "code-evidenced",
+      "expected": "CART-2 requires negative quantities to return 400 and leave the cart unchanged.",
+      "actual": "Source trace: quantity -1 passes type(quantity) is int and the upper stock bound, reaches assignment, and is returned through HTTP 200. For baseline Alice this predicts quantity -1, totalItems -1, totalPrice -12. No request was executed.",
+      "impact": "Code demonstrates invalid cart state and negative displayed aggregate values are possible through the scoped update route. Runtime reachability and user impact have not been exercised.",
+      "evidence": [
+        "evidence/source-lines.txt",
+        "evidence/reproduction.txt",
+        "evidence/source-snapshot.json"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Negative quantity rejection and mutation atomicity",
+      "reason": "Missing lower-bound guard in app/domain.py:24-36; existing tests omit negatives. Highest priority because an authenticated normal update path writes invalid state.",
+      "priority": "high",
+      "next_probe": "Execute evidence/reproduction.txt on the matching runtime; require 400 and unchanged Alice/Bob/catalog state."
+    },
+    {
+      "area": "Identity isolation and authentication",
+      "reason": "Handler maps exact public fixture tokens to actor and passes actor to per-user carts; normal domain test checks Bob after Alice update. HTTP auth, anonymous, and invalid-token paths are unexecuted.",
+      "priority": "high",
+      "next_probe": "GET and PUT as Alice/Bob/anonymous/invalid token; compare complete cart snapshots and confirm rejected requests do not mutate either identity."
+    },
+    {
+      "area": "Quantity boundaries, removal, and availability",
+      "reason": "Exact int check rejects bool, null, strings and fractions; >stock rejection precedes assignment and has one domain assertion. Zero removes the item. None is runtime-verified.",
+      "priority": "medium",
+      "next_probe": "From a fresh disposable fixture test missing/null/false/string/fraction/-1/1/5/6; check full state after failures and constant stock after success. Test zero last only when owner can reset fixture."
+    },
+    {
+      "area": "Totals track current product price",
+      "reason": "app/domain.py:21 hardcodes 12 rather than reading catalog price; it matches the sole current product, so no current fixture discrepancy is established.",
+      "priority": "low",
+      "next_probe": "Verify quantities 1 and 5 give totals 12 and 60 against GET products. If mutable-price support is later in scope, add a domain test with changed catalog price."
+    },
+    {
+      "area": "Concurrent update and removal behavior",
+      "reason": "ThreadingHTTPServer exposes a shared Store; the visible lock protects audit writes only. No concurrency tests were inspected, and no failure has been demonstrated.",
+      "priority": "low",
+      "next_probe": "With a resettable fixture and agreed semantics, overlap updates/removal and inspect responses plus final cart; avoid claiming a race defect without evidence."
+    }
+  ],
+  "observations": [],
+  "limitations": [
+    "Source-only by task instruction: runtime unavailable; no server started and no HTTP or browser actions performed.",
+    "Existing app/test_domain.py was inspected but not executed. No application code was executed.",
+    "Source revision and deployed build are unavailable; input SHA-256 fingerprints are recorded and no source/deployment match is asserted.",
+    "UI behavior, HTTP responses, persisted runtime state, concurrency, and malformed transport handling were not verified. Static browser caller was read only for API context."
+  ],
+  "cleanup": "No carts, product data, application files, requirements, skills, or existing tests were changed. No runtime or browser session was started. Only report.md, evidence files, and submission.json were created."
+}

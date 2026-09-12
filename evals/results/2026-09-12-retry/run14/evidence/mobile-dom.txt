@@ -1,0 +1,41 @@
+### Result
+{
+  "viewport": [
+    375,
+    812
+  ],
+  "scrollWidth": 375,
+  "clientWidth": 375,
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+  "active": null,
+  "links": [
+    {
+      "text": "",
+      "href": "/login"
+    },
+    {
+      "text": "Login",
+      "href": "/login"
+    },
+    {
+      "text": "Register",
+      "href": "/register"
+    },
+    {
+      "text": "Read the blog",
+      "href": "https://www.awesome-testing.com/"
+    },
+    {
+      "text": "Follow on LinkedIn",
+      "href": "https://www.linkedin.com/in/slawekradzyminski/?locale=en"
+    },
+    {
+      "text": "Buy me a coffee",
+      "href": "https://buymeacoffee.com/awesometesting"
+    }
+  ]
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({viewport:[innerWidth,innerHeight],scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,ua:navigator.userAgent,active:document.activeElement.getAttribute("data-testid"),links:[...document.querySelectorAll("a")].map(e=>({text:e.textContent,href:e.getAttribute("href")}))})');
+```

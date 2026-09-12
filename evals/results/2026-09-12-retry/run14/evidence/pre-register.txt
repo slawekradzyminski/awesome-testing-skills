@@ -1,0 +1,53 @@
+### Page
+- Page URL: https://awesome.byst.re/login
+- Page Title: Awesome Testing
+### Snapshot
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e148]:
+    - navigation [ref=e149]:
+      - generic [ref=e151]:
+        - link [ref=e153] [cursor=pointer]:
+          - /url: /login
+          - img "Awesome Testing" [ref=e154]
+        - generic [ref=e156]:
+          - link "Login" [ref=e157] [cursor=pointer]:
+            - /url: /login
+          - link "Register" [ref=e158] [cursor=pointer]:
+            - /url: /register
+    - main [ref=e159]:
+      - generic [ref=e161]:
+        - generic [ref=e165]:
+          - generic [ref=e166]: Awesome Testing
+          - generic [ref=e167]:
+            - heading "Sign in to your account" [level=2] [ref=e168]
+            - paragraph [ref=e169]: Step into the operations workspace for product management, live monitoring, and AI-assisted testing flows.
+          - generic [ref=e170]: Public training playground only. Use fake data, expect resets, and do not treat this environment as private or production-grade.
+        - generic [ref=e172]:
+          - generic [ref=e173]:
+            - generic [ref=e174]:
+              - text: Username
+              - textbox "Username" [ref=e175]
+            - generic [ref=e176]:
+              - text: Password
+              - textbox "Password" [ref=e177]
+          - button "Forgot password?" [ref=e179]
+          - button "Sign in" [ref=e181]
+          - generic [ref=e182]:
+            - text: Don't have an account?
+            - button "Register" [ref=e183]
+    - contentinfo [ref=e184]:
+      - generic [ref=e185]:
+        - generic [ref=e186]:
+          - paragraph [ref=e187]: Stay in touch
+          - paragraph [ref=e188]: Follow Awesome Testing blog, author's LinkedIn, or buy me a coffee.
+        - generic [ref=e189]:
+          - link "Read the blog" [ref=e190] [cursor=pointer]:
+            - /url: https://www.awesome-testing.com/
+          - link "Follow on LinkedIn" [ref=e198] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/slawekradzyminski/?locale=en
+          - link "Buy me a coffee" [ref=e208] [cursor=pointer]:
+            - /url: https://buymeacoffee.com/awesometesting
+  - region "Notifications (F8)":
+    - list
+```

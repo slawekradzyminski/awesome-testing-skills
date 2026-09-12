@@ -1,0 +1,226 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [
+    {
+      "requirement_id": "UI-1",
+      "title": "Cancel saves valid provisional quantity and updates persisted totals",
+      "status": "confirmed",
+      "expected": "UI-1 requires Cancel to discard edits without an update request or persisted changes; reopening must show the saved value.",
+      "actual": "Alice saved 3; editing to 4 and clicking Cancel sent PUT 200 and GET 200, showed quantity 4 / total 48 with Cart updated, and persisted across reload. Narrow keyboard Cancel changed 4 to 2 in a second reproduction.",
+      "impact": "A user's discarded edit is committed, changing cart quantities and totals without selecting Save.",
+      "evidence": [
+        "evidence/network-before-cancel.txt",
+        "evidence/network-after-cancel.txt",
+        "evidence/cancel-request-body.txt",
+        "evidence/cancel-response-body.txt",
+        "evidence/cancel-desktop.png",
+        "evidence/narrow-cancel-focused.png",
+        "evidence/narrow-after-keyboard-cancel.png",
+        "evidence/http.json"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Async identity switching and pending saves",
+      "reason": "Shared current state is written by refresh without response-generation checks; async races not exercised.",
+      "priority": "medium",
+      "next_probe": "Delay an Alice refresh/save, switch to Bob, and verify displayed and persisted identity consistency."
+    },
+    {
+      "area": "Keyboard Save and error recovery",
+      "reason": "Narrow Tab-to-Cancel was exercised but complete keyboard Save and backend error recovery were not.",
+      "priority": "medium",
+      "next_probe": "Use keyboard-only Save at desktop/narrow sizes; provoke a visible failure and recover."
+    },
+    {
+      "area": "Zero removal",
+      "reason": "Removal is irreversible through the available update API; kept fixture recoverable.",
+      "priority": "medium",
+      "next_probe": "With an owner-resettable fixture, save zero and verify empty totals and subsequent editor behavior."
+    },
+    {
+      "area": "Bob UI identity switching",
+      "reason": "Bob API state was verified unchanged, but Bob UI switching and mutation were not exercised.",
+      "priority": "medium",
+      "next_probe": "Switch Alice/Bob via UI and validate independent saved values."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "action": "deployed build",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "independent persisted read after keyboard Cancel",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "other identity remains at fixture quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "anonymous access",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity or stock rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify rejection preserves quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity or stock rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify rejection preserves quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity or stock rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify rejection preserves quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity or stock rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify rejection preserves quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity or stock rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify rejection preserves quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity or stock rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify rejection preserves quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "invalid quantity or stock rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify rejection preserves quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "restore original fixture",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify cleanup",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify Bob unchanged",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "verify stock remains 5",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Mouse Cancel after changing saved quantity 3 to provisional 4",
+      "evidence": "evidence/network-after-cancel.txt"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Keyboard Cancel after editing 4 to 2 at 375px",
+      "evidence": "evidence/network-final.txt"
+    }
+  ],
+  "limitations": [
+    "Exact source revision and deployment/source match unknown; source fingerprints preserved and health build sample-1 observed.",
+    "Only HeadlessChrome at 1280x720 and 375x740; no real mobile, Safari, screen-reader, or exhaustive accessibility testing.",
+    "No delayed-response race, full keyboard Save/error recovery, Bob UI switching, or zero removal probe."
+  ],
+  "cleanup": "Alice restored to quantity 1 / total 12 and independently verified; Bob unchanged at 2 / 24; stock 5. Closed only retry04 browser. No mocks installed or application edits. Server remains for owner cleanup."
+}

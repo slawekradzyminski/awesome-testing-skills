@@ -1,0 +1,27 @@
+PROPOSED HTTP REPRODUCTION — NOT EXECUTED
+Source-only assessment; runtime unavailable and starting it is forbidden.
+0 HTTP requests; observed reproduction count 0. BASE_URL must be supplied by the fixture owner when a runtime becomes available.
+The demo tokens below are public disposable fixture identities from requirements.md, not secrets.
+Precondition: Alice has existing product 1, quantity 1; Bob has quantity 2.
+
+1. Capture Alice baseline:
+curl --max-time 10 -i "$BASE_URL/api/v1/cart" -H 'Authorization: Bearer demo-alice'
+Expected baseline: username alice, items [{productId:1,quantity:1}], totalItems 1, totalPrice 12.
+2. Capture Bob baseline:
+curl --max-time 10 -i "$BASE_URL/api/v1/cart" -H 'Authorization: Bearer demo-bob'
+Expected baseline: quantity 2, totalItems 2, totalPrice 24.
+3. Capture catalog:
+curl --max-time 10 -i "$BASE_URL/api/v1/products" -H 'Authorization: Bearer demo-alice'
+Expected product 1: Workshop notebook, price 12, stockQuantity 5.
+4. Submit the minimal invalid update:
+curl --max-time 10 -i -X PUT "$BASE_URL/api/v1/cart/items/1" -H 'Authorization: Bearer demo-alice' -H 'Content-Type: application/json' --data '{"quantity":-1}'
+Required: HTTP 400, Alice cart unchanged (CART-2).
+Predicted from source, NOT observed: HTTP 200; {"username":"alice","items":[{"productId":1,"quantity":-1}],"totalItems":-1,"totalPrice":-12}.
+app/app.py:72 authenticates Alice, :82 passes quantity directly to Store.update, :83 returns 200.
+app/domain.py:24 passes exact integer -1; :31 does not reject it against stock 5; :33 is false; :36 persists -1; :37 returns cart with negative totals (:20-21).
+5. Follow up with GET Alice cart, GET Bob cart, and GET products using the requests above.
+Required Alice baseline must remain unchanged; source predicts Alice negative values persist. Bob and stock should remain unchanged. Inspect actual response status, Content-Type, body, and before/after state, not only curl exit status.
+6. Cleanup only after verifying the baseline: PUT {"quantity":1} as Alice to the same path, then GET Alice cart and verify full baseline. If baseline differs, restore the captured original quantity. Do not use zero in this reproduction: removal cannot be undone by this scoped API.
+
+Disconfirming evidence: HTTP 400 with unchanged cart on the same assessed source/build would contradict the predicted behavior and requires checking deployed build or upstream validation. No alternative validator is present on the inspected handler-to-domain route.
+Regression recommendation (not implemented): a Store.update test for -1 checks ApiError(400) AND full before/after cart equality; one HTTP integration test verifies JSON parsing, 400 response, persisted state, and unaffected Bob/catalog. Extend invalid-type tests to false, null, missing, 1.5, and "1"; these currently have protective branches but no inspected regression assertions.

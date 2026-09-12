@@ -1,0 +1,8 @@
+{
+  "started_utc": "2026-09-12T08:31:42+00:00",
+  "completed_utc": "2026-09-12T08:35:52.947791+00:00",
+  "elapsed_seconds": 250.9,
+  "browser_cli_invocations_conservative": 38,
+  "api_requests": 29,
+  "dynamic_requests_including_health": 30
+}

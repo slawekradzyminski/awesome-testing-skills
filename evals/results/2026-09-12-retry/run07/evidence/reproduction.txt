@@ -1,0 +1,162 @@
+CART-2: negative quantity persists
+Assigned runtime: http://127.0.0.1:64181
+
+{
+  "number": 1,
+  "time": "2026-09-12T08:36:13.146737+00:00",
+  "method": "GET",
+  "path": "/api/v1/cart",
+  "actor": "alice",
+  "body": null,
+  "status": 200,
+  "response": {
+    "username": "alice",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 1
+      }
+    ],
+    "totalItems": 1,
+    "totalPrice": 12
+  },
+  "action": "Baseline Alice cart"
+}
+
+{
+  "number": 9,
+  "time": "2026-09-12T08:36:13.150029+00:00",
+  "method": "PUT",
+  "path": "/api/v1/cart/items/1",
+  "actor": "alice",
+  "body": {
+    "quantity": -1
+  },
+  "status": 200,
+  "response": {
+    "username": "alice",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": -1
+      }
+    ],
+    "totalItems": -1,
+    "totalPrice": -12
+  },
+  "action": "Quantity validation {'quantity': -1}"
+}
+
+{
+  "number": 10,
+  "time": "2026-09-12T08:36:13.150457+00:00",
+  "method": "GET",
+  "path": "/api/v1/cart",
+  "actor": "alice",
+  "body": null,
+  "status": 200,
+  "response": {
+    "username": "alice",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": -1
+      }
+    ],
+    "totalItems": -1,
+    "totalPrice": -12
+  },
+  "action": "Read persisted state following validation attempt"
+}
+
+{
+  "number": 11,
+  "time": "2026-09-12T08:36:13.150847+00:00",
+  "method": "GET",
+  "path": "/api/v1/cart",
+  "actor": "bob",
+  "body": null,
+  "status": 200,
+  "response": {
+    "username": "bob",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 2
+      }
+    ],
+    "totalItems": 2,
+    "totalPrice": 24
+  },
+  "action": "Verify negative Alice mutation isolated from Bob"
+}
+
+{
+  "number": 12,
+  "time": "2026-09-12T08:36:13.151265+00:00",
+  "method": "PUT",
+  "path": "/api/v1/cart/items/1",
+  "actor": "alice",
+  "body": {
+    "quantity": 1
+  },
+  "status": 200,
+  "response": {
+    "username": "alice",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 1
+      }
+    ],
+    "totalItems": 1,
+    "totalPrice": 12
+  },
+  "action": "Restore Alice after negative probe"
+}
+
+{
+  "number": 55,
+  "time": "2026-09-12T08:36:43.535110+00:00",
+  "method": "GET",
+  "path": "/api/v1/cart",
+  "actor": "alice",
+  "body": null,
+  "status": 200,
+  "response": {
+    "username": "alice",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 1
+      }
+    ],
+    "totalItems": 1,
+    "totalPrice": 12
+  },
+  "action": "Final Alice cleanup verification"
+}
+
+{
+  "number": 56,
+  "time": "2026-09-12T08:36:43.535591+00:00",
+  "method": "GET",
+  "path": "/api/v1/cart",
+  "actor": "bob",
+  "body": null,
+  "status": 200,
+  "response": {
+    "username": "bob",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 2
+      }
+    ],
+    "totalItems": 2,
+    "totalPrice": 24
+  },
+  "action": "Final Bob cleanup verification"
+}
+
+Code: app/domain.py:24 checks exact int type, but no quantity < 0 guard precedes assignment at line 36.

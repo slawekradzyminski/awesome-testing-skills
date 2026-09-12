@@ -1,0 +1,19 @@
+### Page
+- Page URL: http://127.0.0.1:64178/
+- Page Title: Workshop cart
+- Console: 1 errors, 0 warnings
+### Snapshot
+```yaml
+- main [ref=f1e2]:
+  - heading "Your cart" [level=1] [ref=f1e3]
+  - generic [ref=f1e4]: Demo account
+  - combobox "Demo account" [ref=f1e5]:
+    - option "Alice" [selected]
+    - option "Bob"
+  - region [ref=f1e6]:
+    - heading "Workshop notebook" [level=2] [ref=f1e7]
+    - paragraph [ref=f1e8]: "Price: 12 · Available stock: 5"
+    - paragraph [ref=f1e9]: "Quantity: 4 · Total: 48"
+    - button "Edit quantity" [active] [ref=f1e10] [cursor=pointer]
+    - status [ref=f1e17]: Edit cancelled
+```

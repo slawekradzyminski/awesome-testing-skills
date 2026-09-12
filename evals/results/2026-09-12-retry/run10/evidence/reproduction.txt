@@ -1,0 +1,40 @@
+Runtime: http://127.0.0.1:64183
+Observed 2026-09-12 08:39–08:41 UTC using Codex browser agent.
+
+Desktop pointer reproduction:
+1. Load cart, Alice selected. Visible Quantity: 1 · Total: 12.
+2. Click Edit quantity; set Quantity to 3. Summary remains 1 / 12.
+3. Direct GET confirms Alice still 1 / 12 and Bob 2 / 24.
+4. Click Cancel (not Save).
+5. Editor closes, summary becomes Quantity: 3 · Total: 36, feedback Cart updated.
+6. Direct GET confirms Alice quantity 3, totalItems 3, totalPrice 36. Bob unchanged.
+Screenshot opened and inspected: after-cancel.png (1280×720).
+Reopened editor displays cached value 3. API restore to 1 occurred before that reopen;
+this reopen alone is not evidence of the server value. Reload then displayed restored 1.
+
+Narrow keyboard reproduction, viewport 375×812:
+1. Reload after API restoration to Alice 1.
+2. Tab to identity, Tab to Edit quantity, Return. Quantity receives focus.
+3. Select all, type 2, Tab to Save, Return.
+4. Summary 2 / 24, Cart updated. Screenshot narrow-save.png opened and inspected.
+5. Reopen Edit: value 2.
+6. Select all, type 4, Tab to Save, Tab to Cancel, Return.
+7. Summary 4 / 48, Cart updated. Screenshot narrow-keyboard-cancel.png opened and inspected.
+8. Direct GET confirms Alice persisted quantity 4 / total 48.
+9. API restore to 1; final GETs confirm Alice 1 / 12 and Bob 2 / 24.
+
+Validation:
+Reload restored Alice, Edit, enter 6, click Save.
+Native visible error: Value must be less than or equal to 5.
+Form remains visible, summary stays 1 / 12; DOM validity false with same validationMessage.
+Screenshot narrow-invalid-save.png opened and inspected. Then Cancel closes form,
+summary remains 1 / 12 and Edit cancelled is displayed. Invalid and valid Cancel paths
+therefore differ. Closed only the created tab and reset viewport override.
+
+Code mechanism:
+index.html line 25: Cancel is a button inside form without type="button".
+app.js lines 23–27 hide the form but do not prevent the button's default submission.
+app.js lines 29–33 submit handler sends PUT with current input quantity.
+Native constraint validation blocks that default submit for input 6, but valid edits submit.
+Browser HTTP traffic was not separately captured; persisted changes are verified by
+independent logged GET requests. The request mechanism is additionally source-evidenced.

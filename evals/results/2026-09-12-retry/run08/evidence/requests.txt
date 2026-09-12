@@ -1,0 +1,11 @@
+### Result
+4. [GET] http://127.0.0.1:64182/api/v1/cart => [200] OK
+5. [PUT] http://127.0.0.1:64182/api/v1/cart/items/1 => [200] OK
+6. [GET] http://127.0.0.1:64182/api/v1/cart => [200] OK
+10. [GET] http://127.0.0.1:64182/api/v1/cart => [200] OK
+11. [GET] http://127.0.0.1:64182/api/v1/cart => [200] OK
+12. [PUT] http://127.0.0.1:64182/api/v1/cart/items/1 => [200] OK
+13. [GET] http://127.0.0.1:64182/api/v1/cart => [200] OK
+17. [GET] http://127.0.0.1:64182/api/v1/cart => [200] OK
+
+Note: 9 static requests not shown, run with --static option to see them.

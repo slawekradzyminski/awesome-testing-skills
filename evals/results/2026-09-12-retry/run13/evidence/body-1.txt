@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/branding/generated/at-32.png?v=3.6.13" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/branding/generated/at-64.png?v=3.6.13" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/branding/generated/at-180.png?v=3.6.13" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Awesome Testing</title>
+    <script type="module" crossorigin src="/assets/index-D3mvI_4r.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/assets/query-DrADlYa4.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-CH6ZI_PP.js">
+    <link rel="modulepreload" crossorigin href="/assets/utils-CISH8glJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-LEWLeLe-.js">
+    <link rel="stylesheet" crossorigin href="/assets/ui-CW-zCINU.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-BxxZFZnJ.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

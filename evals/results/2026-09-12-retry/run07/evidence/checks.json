@@ -1,0 +1,54 @@
+[
+  {
+    "check": "Negative quantity is accepted and persists (confirmed defect)",
+    "passed": true
+  },
+  {
+    "check": "Invalid quantity rejected without mutation, request 13",
+    "passed": true
+  },
+  {
+    "check": "Invalid quantity rejected without mutation, request 15",
+    "passed": true
+  },
+  {
+    "check": "Invalid quantity rejected without mutation, request 17",
+    "passed": true
+  },
+  {
+    "check": "Invalid quantity rejected without mutation, request 19",
+    "passed": true
+  },
+  {
+    "check": "Invalid quantity rejected without mutation, request 21",
+    "passed": true
+  },
+  {
+    "check": "Invalid quantity rejected without mutation, request 23",
+    "passed": true
+  },
+  {
+    "check": "Invalid quantity rejected without mutation, request 25",
+    "passed": true
+  },
+  {
+    "check": "Overstock rejects without mutation, request 29",
+    "passed": true
+  },
+  {
+    "check": "Overstock rejects without mutation, request 31",
+    "passed": true
+  },
+  {
+    "check": "No stock reservation across identities",
+    "passed": true
+  },
+  {
+    "check": "Cleanup Alice exact baseline",
+    "passed": true
+  },
+  {
+    "check": "Cleanup Bob exact baseline",
+    "passed": true
+  }
+]

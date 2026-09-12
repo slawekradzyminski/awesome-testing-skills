@@ -1,0 +1,101 @@
+source/stack/README.md
+469: 
+470: Expected:
+471: 
+472: - `awesome.byst.re/login` returns `200`
+473: - the AI Lab shell and recorded Attention deep route return `200`; this curl check does not verify the application session required to view course content
+474: - `awesome.byst.re/v3/api-docs` returns `200`
+
+source/backend/README.md
+279: ### Products
+280: 
+281: - GET `/api/v1/products` - Get all products (authenticated)
+282: - GET `/api/v1/products/{id}` - Get product by ID (authenticated)
+283: - POST `/api/v1/products` - Create new product (ADMIN only)
+284: - PUT `/api/v1/products/{id}` - Update product (ADMIN only)
+285: - DELETE `/api/v1/products/{id}` - Delete product (ADMIN only)
+286: 
+287: ### Shopping Cart
+288: 
+289: - GET `/api/v1/cart` - Get current user's cart
+
+source/backend/src/main/java/com/awesome/testing/controller/ProductController.java
+20: @RestController
+21: @RequestMapping("/api/v1/products")
+22: @RequiredArgsConstructor
+23: @Tag(name = "Products", description = "Product management endpoints")
+24: @SecurityRequirement(name = "bearerAuth")
+25: @ApiResponse(responseCode = "401", description = "Unauthorized")
+26: public class ProductController {
+27: 
+28:     private final ProductService productService;
+29: 
+30:     @GetMapping
+31:     @Operation(summary = "Get all products",
+32:             description = "Returns the complete product catalog visible to authenticated clients.")
+33:     @ApiResponse(responseCode = "200", description = "Successfully retrieved products")
+34:     public ResponseEntity<List<ProductDto>> getAllProducts() {
+35:         return ResponseEntity.ok(productService.getAllProducts());
+36:     }
+
+source/backend/src/main/java/com/awesome/testing/controller/cart/CartController.java
+16: @RestController
+17: @RequestMapping("/api/v1/cart")
+18: @RequiredArgsConstructor
+19: @Tag(name = "Cart", description = "Shopping cart management endpoints")
+20: @SecurityRequirement(name = "bearerAuth")
+21: @ApiResponse(responseCode = "401", description = "Unauthorized")
+22: public class CartController {
+23: 
+24:     private final CartService cartService;
+25: 
+26:     @GetMapping
+27:     @Operation(summary = "Get current user's cart",
+28:             description = "Returns the authenticated user's cart, including item count and calculated total price.")
+29:     @ApiResponse(responseCode = "200", description = "Successfully retrieved cart")
+30:     public ResponseEntity<CartDto> getCart(
+31:             @Parameter(hidden = true) @AuthenticationPrincipal CustomPrincipal principal) {
+32:         return ResponseEntity.ok(cartService.getCart(principal.getUsername()));
+
+source/backend/src/main/java/com/awesome/testing/security/WebSecurityConfig.java
+87:             // Then allow public endpoints
+88:             PathPatternRequestMatcher.Builder matcherBuilder = PathPatternRequestMatcher.withDefaults();
+89:             auth.requestMatchers(request -> isApiDocsRequest(request.getRequestURI())).permitAll();
+90:             ALLOWED_ENDPOINTS.forEach(endpoint -> auth.requestMatchers(matcherBuilder.matcher(endpoint)).permitAll());
+91:             if (trafficProperties.isLegacyPublicAccess()) {
+92:                 auth.requestMatchers(matcherBuilder.matcher("/api/v1/traffic/**")).permitAll();
+93:             }
+94:             
+95:             // Finally, require authentication for all other endpoints
+96:             auth.anyRequest().authenticated();
+97:         });
+98: 
+99:         // Handle authentication and authorization errors
+100:         http.exceptionHandling(ex -> ex
+101:                 .accessDeniedHandler(this::handleAccessDenied)
+102:                 .authenticationEntryPoint(this::handleUnauthorized)
+
+source/backend/src/main/java/com/awesome/testing/utils/ErrorResponseDefinition.java
+10: public class ErrorResponseDefinition {
+11: 
+12:     public static void sendErrorResponse(HttpServletResponse response, HttpStatus status, String message) throws IOException {
+13:         response.setContentType("application/json;charset=UTF-8");
+14:         response.setStatus(status.value());
+15:         response.getWriter().write("""
+16:             {
+17:                 "message": "%s"
+18:             }
+19:             """.formatted(message));
+20:     }
+21: 
+
+source/backend/src/test/java/com/awesome/testing/config/OpenApiContractTest.java
+150:     private void assertDocumentedResponseCodes(JsonNode spec) {
+151:         assertOperationResponsesContain(spec, "/api/v1/products", "get", List.of("200", "401"));
+152:         assertOperationResponsesContain(spec, "/api/v1/products/{id}", "get", List.of("200", "400", "401", "404"));
+153:         assertOperationResponsesContain(spec, "/api/v1/products", "post", List.of("201", "400", "401", "403"));
+154:         assertOperationResponsesContain(spec, "/api/v1/products/{id}", "put", List.of("200", "400", "401", "403", "404"));
+155:         assertOperationResponsesContain(spec, "/api/v1/products/{id}", "delete", List.of("204", "400", "401", "403", "404"));
+156: 
+157:         assertOperationResponsesContain(spec, "/api/v1/cart", "get", List.of("200", "401"));
+158:         assertOperationResponsesContain(spec, "/api/v1/cart", "delete", List.of("204", "401"));

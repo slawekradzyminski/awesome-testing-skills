@@ -1,0 +1,96 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [
+    {
+      "requirement_id": "UNMAPPED",
+      "title": "GET /api/v1/products: live OpenAPI 401 schema declares a product array but returns an error object",
+      "status": "confirmed",
+      "expected": "The live OpenAPI 3.1.0 document, info.version 1.0, declares responses.401.content[\"*/*\"].schema.type=array with ProductDto items. Documentation should describe the actual authentication error; source ErrorResponseDefinition emits an object containing message.",
+      "actual": "Two anonymous GETs returned HTTP 401 application/json;charset=UTF-8 with {\"message\":\"Unauthorized\"}; two independently fetched live specs both declare an array.",
+      "impact": "The documented 401 JSON type contradicts the observable response, so schema-based contract validation fails. Generated-client error handling impact is plausible but untested. Authentication itself correctly denied access.",
+      "evidence": [
+        "evidence/reproduction.txt",
+        "evidence/contract-comparison.json",
+        "evidence/http-3.json",
+        "evidence/body-3.txt",
+        "evidence/http-6.json",
+        "evidence/body-6.txt",
+        "evidence/body-5.txt",
+        "evidence/source-evidence.txt"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Authenticated cart ownership and role boundaries",
+      "reason": "No authorized identities were used; anonymous 401 checks cannot establish ownership isolation or admin restrictions. CartController derives username from authenticated principal in supplied snapshot.",
+      "priority": "high",
+      "next_probe": "In an authorized disposable environment, compare two users with distinct carts and check client/admin role restrictions using owned fixtures."
+    },
+    {
+      "area": "Cart authentication-error documentation",
+      "reason": "Live cart 401 response references CartDto, while observed body is a message error. CartDto has no required fields and permits additional properties, so no strict JSON-schema failure is demonstrated.",
+      "priority": "medium",
+      "next_probe": "Clarify intended error DTO, then add focused generated-contract assertions for protected operations."
+    },
+    {
+      "area": "Token lifecycle and login flows",
+      "reason": "Session excluded sign-in, reset, account creation, stored credentials, mutations, and faults; valid/expired/revoked token behavior untested.",
+      "priority": "medium",
+      "next_probe": "Use an explicitly authorized disposable account to examine expiry, logout/revocation, refresh, and failed-login behavior without external email delivery."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "action": "Anonymous baseline; no cookies, credentials, or redirect following",
+      "evidence": "evidence/http-1.json"
+    },
+    {
+      "method": "GET",
+      "path": "/v3/api-docs",
+      "status": 200,
+      "action": "Anonymous baseline; no cookies, credentials, or redirect following",
+      "evidence": "evidence/http-2.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 401,
+      "action": "Anonymous baseline; no cookies, credentials, or redirect following",
+      "evidence": "evidence/http-3.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Anonymous baseline; no cookies, credentials, or redirect following",
+      "evidence": "evidence/http-4.json"
+    },
+    {
+      "method": "GET",
+      "path": "/v3/api-docs",
+      "status": 200,
+      "action": "Independent anonymous repeat to confirm live 401 contract mismatch",
+      "evidence": "evidence/http-5.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 401,
+      "action": "Independent anonymous repeat to confirm live 401 contract mismatch",
+      "evidence": "evidence/http-6.json"
+    }
+  ],
+  "limitations": [
+    "Supplied source snapshots are not Git working trees; exact commit IDs were not available from inspected material. Deployed commit/build identity is unknown and equivalence is not asserted. Local SHA256 hashes identify inspected files.",
+    "Read-only scope: only six GET requests across four permitted paths; no browser session or browser actions; login observed as HTML only, without rendering or UI claims.",
+    "No authenticated success response, ownership contrast, role contrast, mutation, token lifecycle, form submission, private records, or email flow exercised.",
+    "Relevant test assertions were inspected but no application test suite was run. No client SDK was generated or exercised.",
+    "Five-minute budget; elapsed time reported approximately, and token/cost metrics unavailable."
+  ],
+  "cleanup": "No application/source changes, identities, fixtures, browser sessions, or external issues created. Only report/submission/evidence files remain in candidate directory."
+}

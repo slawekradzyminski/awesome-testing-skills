@@ -1,0 +1,6 @@
+{
+  "source/frontend/src/pages/auth/loginPage.tsx": "ff329fa1619e302589d4c562d075713bdfd9e149aa691f7f9b025badaff4b0da",
+  "source/frontend/src/validators/auth.ts": "1e3fb52ef924e269f442c30d5dfbd821aa610e8cfd7b8e48ce78e8de527575c6",
+  "source/frontend/e2e/tests/a11y.auth.spec.ts": "5bc82abe73c57d9002886c01100d8f5e9e17baf6c7291b19d564c14a1c0f7def",
+  "source/backend/src/main/java/com/awesome/testing/security/WebSecurityConfig.java": "5be381b651c984c82edfa59834837707239d958dbf6f59cbdb88f5e25129f802"
+}

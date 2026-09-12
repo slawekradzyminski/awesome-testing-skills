@@ -1,0 +1,10 @@
+Browser: Codex in-app browser, assigned localhost runtime only.
+Desktop 1280x720: initial Alice quantity 1 / total 12. Edit focused quantity=1. Changed input to 3; summary remained 1 / 12. Cancel hid form, acknowledged Edit cancelled, focused Edit. Reopened input=1.
+Changed to 3, Tab to Save, Return: summary quantity 3 / total 36; Cart updated; editor hidden. Opened and saved screenshot desktop-save.png.
+Viewport 375x667: after Save, Tab then Return did not reopen editor; then explicitly focused Edit with locator keyboard Enter. Editor reopened with saved 3. Entered 6, Tab, Return: native validation message Value must be less than or equal to 5; summary stayed 3 / 36. Opened and saved narrow-invalid.png.
+From invalid input Tab, Tab, Return activated Cancel; form hidden, Edit cancelled, focus returned to Edit. Opened and saved narrow-cancel.png.
+Selected Bob: quantity 2 / total 24; Enter on Edit showed 2. Selected Alice while Bob editor was open: form hidden, Alice quantity 3 / total 36.
+Reopened Alice editor with Enter, filled 1, Tab, Return: quantity 1 / total 12, Cart updated. Opened and saved narrow-restored.png.
+Reset viewport override and closed only created tab.
+All four saved screenshots were displayed and visually inspected in the browser tool output.
+UI network was not instrumented: no-update behavior of Cancel is supported by source handler and unchanged/reopened values, not a captured request trace.

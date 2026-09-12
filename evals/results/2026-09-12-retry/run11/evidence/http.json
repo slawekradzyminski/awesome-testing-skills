@@ -1,0 +1,628 @@
+[
+  {
+    "number": 1,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Alice baseline"
+  },
+  {
+    "number": 2,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Bob baseline"
+  },
+  {
+    "number": 3,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Product baseline"
+  },
+  {
+    "number": 4,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": null,
+    "request": null,
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Anonymous read rejected"
+  },
+  {
+    "number": 5,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": null,
+    "request": null,
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Anonymous read rejected"
+  },
+  {
+    "number": 6,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": null,
+    "request": {
+      "quantity": 3
+    },
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Anonymous update rejected"
+  },
+  {
+    "number": 7,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "invalid",
+    "request": {
+      "quantity": 3
+    },
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Unknown fixture token rejected"
+  },
+  {
+    "number": 8,
+    "method": "GET",
+    "path": "/api/v1/cart?username=bob",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Query cannot select Bob cart"
+  },
+  {
+    "number": 9,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": -1
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Reject quantity -1"
+  },
+  {
+    "number": 10,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read after rejection -1"
+  },
+  {
+    "number": 11,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 1.5
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Reject quantity 1.5"
+  },
+  {
+    "number": 12,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read after rejection 1.5"
+  },
+  {
+    "number": 13,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": null
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Reject quantity None"
+  },
+  {
+    "number": 14,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read after rejection None"
+  },
+  {
+    "number": 15,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": "3"
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Reject quantity '3'"
+  },
+  {
+    "number": 16,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read after rejection '3'"
+  },
+  {
+    "number": 17,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": true
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Reject quantity True"
+  },
+  {
+    "number": 18,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read after rejection True"
+  },
+  {
+    "number": 19,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": false
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Reject quantity False"
+  },
+  {
+    "number": 20,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read after rejection False"
+  },
+  {
+    "number": 21,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": "{}",
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Reject malformed/type request {}"
+  },
+  {
+    "number": 22,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": "[]",
+    "status": 400,
+    "response": {
+      "error": "Expected a JSON object"
+    },
+    "action": "Reject malformed/type request []"
+  },
+  {
+    "number": 23,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": "null",
+    "status": 400,
+    "response": {
+      "error": "Expected a JSON object"
+    },
+    "action": "Reject malformed/type request null"
+  },
+  {
+    "number": 24,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": "{\"quantity\":",
+    "status": 400,
+    "response": {
+      "error": "Invalid request"
+    },
+    "action": "Reject malformed/type request {\"quantity\":"
+  },
+  {
+    "number": 25,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": "{\"quantity\":3.0}",
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Reject malformed/type request {\"quantity\":3.0}"
+  },
+  {
+    "number": 26,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read after malformed/type requests"
+  },
+  {
+    "number": 27,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 5,
+      "username": "bob"
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Accept exact stock with spoofed username body"
+  },
+  {
+    "number": 28,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Bob after Alice body spoof"
+  },
+  {
+    "number": 29,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Catalog after cart update"
+  },
+  {
+    "number": 30,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 6
+    },
+    "status": 409,
+    "response": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "action": "Reject stock plus one"
+  },
+  {
+    "number": 31,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Read after stock rejection"
+  },
+  {
+    "number": 32,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/999",
+    "actor": "alice",
+    "request": {
+      "quantity": 1
+    },
+    "status": 404,
+    "response": {
+      "error": "Cart item not found"
+    },
+    "action": "Unknown cart item rejected"
+  },
+  {
+    "number": 33,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/not-a-number",
+    "actor": "alice",
+    "request": {
+      "quantity": 1
+    },
+    "status": 400,
+    "response": {
+      "error": "Invalid request"
+    },
+    "action": "Invalid product ID rejected"
+  },
+  {
+    "number": 34,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 1
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Restore Alice quantity"
+  },
+  {
+    "number": 35,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "bob",
+    "request": {
+      "quantity": 0
+    },
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [],
+      "totalItems": 0,
+      "totalPrice": 0
+    },
+    "action": "Remove Bob item using quantity zero"
+  },
+  {
+    "number": 36,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [],
+      "totalItems": 0,
+      "totalPrice": 0
+    },
+    "action": "Read after Bob removal"
+  },
+  {
+    "number": 37,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Final Alice verification"
+  },
+  {
+    "number": 38,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Final catalog verification"
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "api_requests": 38,
+  "checks": 55,
+  "passed": 55,
+  "failures": [],
+  "cleanup": "Alice restored to original quantity 1. Bob item removed by zero-quantity test; no supported re-add endpoint, restart by fixture owner required to restore Bob quantity 2. Product data unchanged."
+}

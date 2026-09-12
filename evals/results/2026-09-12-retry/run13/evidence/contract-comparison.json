@@ -1,0 +1,22 @@
+{
+  "products_401_declared_schema": {
+    "type": "array",
+    "items": {
+      "$ref": "#/components/schemas/ProductDto"
+    }
+  },
+  "products_401_actual_body": {
+    "message": "Unauthorized"
+  },
+  "expected_json_type": "array",
+  "actual_json_type": "dict",
+  "type_matches": false,
+  "cart_401_declared_schema": {
+    "*/*": {
+      "schema": {
+        "$ref": "#/components/schemas/CartDto"
+      }
+    }
+  },
+  "cart_caveat": "CartDto is permissive (no required fields or additionalProperties restriction), so the cart error object is not proven schema-invalid."
+}

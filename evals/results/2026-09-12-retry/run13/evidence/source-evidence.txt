@@ -1,0 +1,740 @@
+source/backend/src/main/java/com/awesome/testing/controller/ProductController.java
+SHA256: d799ad6f36c65242be6ba3c8153516323d0e0c317ea28194d0994612c8e8913c
+1: package com.awesome.testing.controller;
+2: 
+3: import com.awesome.testing.dto.product.ProductCreateDto;
+4: import com.awesome.testing.dto.product.ProductDto;
+5: import com.awesome.testing.dto.product.ProductUpdateDto;
+6: import com.awesome.testing.service.ProductService;
+7: import io.swagger.v3.oas.annotations.Operation;
+8: import io.swagger.v3.oas.annotations.responses.ApiResponse;
+9: import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+10: import io.swagger.v3.oas.annotations.tags.Tag;
+11: import jakarta.validation.Valid;
+12: import lombok.RequiredArgsConstructor;
+13: import org.springframework.http.HttpStatus;
+14: import org.springframework.http.ResponseEntity;
+15: import org.springframework.security.access.prepost.PreAuthorize;
+16: import org.springframework.web.bind.annotation.*;
+17: 
+18: import java.util.List;
+19: 
+20: @RestController
+21: @RequestMapping("/api/v1/products")
+22: @RequiredArgsConstructor
+23: @Tag(name = "Products", description = "Product management endpoints")
+24: @SecurityRequirement(name = "bearerAuth")
+25: @ApiResponse(responseCode = "401", description = "Unauthorized")
+26: public class ProductController {
+27: 
+28:     private final ProductService productService;
+29: 
+30:     @GetMapping
+31:     @Operation(summary = "Get all products",
+32:             description = "Returns the complete product catalog visible to authenticated clients.")
+33:     @ApiResponse(responseCode = "200", description = "Successfully retrieved products")
+34:     public ResponseEntity<List<ProductDto>> getAllProducts() {
+35:         return ResponseEntity.ok(productService.getAllProducts());
+36:     }
+37: 
+38:     @GetMapping("/{id}")
+39:     @Operation(summary = "Get product by ID",
+40:             description = "Returns one product by numeric identifier, or 404 when the product does not exist.")
+41:     @ApiResponse(responseCode = "200", description = "Successfully retrieved product")
+42:     @ApiResponse(responseCode = "400", description = "Bad request")
+43:     @ApiResponse(responseCode = "404", description = "Product not found")
+44:     public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
+45:         return ResponseEntity.ok(productService.getProductById(id));
+46:     }
+47: 
+48:     @PostMapping
+49:     @PreAuthorize("hasRole('ROLE_ADMIN')")
+50:     @Operation(summary = "Create new product",
+51:             description = "Creates a catalog product from the supplied payload. Requires an administrator role.")
+52:     @ApiResponse(responseCode = "201", description = "Product created successfully")
+53:     @ApiResponse(responseCode = "400", description = "Invalid input")
+54:     @ApiResponse(responseCode = "403", description = "Forbidden")
+55:     public ResponseEntity<ProductDto> createProduct(@Valid @RequestBody ProductCreateDto productCreateDto) {
+56:         ProductDto savedProduct = productService.createProduct(productCreateDto);
+57:         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
+58:     }
+59: 
+60:     @PutMapping("/{id}")
+61:     @PreAuthorize("hasRole('ROLE_ADMIN')")
+62:     @Operation(summary = "Update existing product",
+63:             description = "Updates mutable product fields for an existing catalog item. Requires an administrator role.")
+64:     @ApiResponse(responseCode = "200", description = "Product updated successfully")
+65:     @ApiResponse(responseCode = "400", description = "Invalid input")
+66:     @ApiResponse(responseCode = "403", description = "Forbidden")
+67:     @ApiResponse(responseCode = "404", description = "Product not found")
+68:     public ResponseEntity<ProductDto> updateProduct(
+69:             @PathVariable Long id,
+70:             @Valid @RequestBody ProductUpdateDto productUpdateDto) {
+71:         return ResponseEntity.ok(productService.updateProduct(id, productUpdateDto));
+72:     }
+73: 
+74:     @DeleteMapping("/{id}")
+75:     @PreAuthorize("hasRole('ROLE_ADMIN')")
+76:     @Operation(summary = "Delete product",
+77:             description = "Deletes an existing product by identifier. Requires an administrator role.")
+78:     @ApiResponse(responseCode = "204", description = "Product deleted successfully")
+79:     @ApiResponse(responseCode = "400", description = "Bad request")
+80:     @ApiResponse(responseCode = "403", description = "Forbidden")
+81:     @ApiResponse(responseCode = "404", description = "Product not found")
+82:     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+83:         return productService.deleteProduct(id)
+84:                 ? ResponseEntity.noContent().build()
+85:                 : ResponseEntity.notFound().build();
+86:     }
+87: } 
+
+
+source/backend/src/main/java/com/awesome/testing/controller/cart/CartController.java
+SHA256: 09ad6a6cbc2f583513be58a0625bc95167dc62aaf83e30dc42bfcac8b2c017ff
+1: package com.awesome.testing.controller.cart;
+2: 
+3: import com.awesome.testing.dto.cart.CartDto;
+4: import com.awesome.testing.security.CustomPrincipal;
+5: import com.awesome.testing.service.CartService;
+6: import io.swagger.v3.oas.annotations.Operation;
+7: import io.swagger.v3.oas.annotations.responses.ApiResponse;
+8: import io.swagger.v3.oas.annotations.Parameter;
+9: import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+10: import io.swagger.v3.oas.annotations.tags.Tag;
+11: import lombok.RequiredArgsConstructor;
+12: import org.springframework.http.ResponseEntity;
+13: import org.springframework.security.core.annotation.AuthenticationPrincipal;
+14: import org.springframework.web.bind.annotation.*;
+15: 
+16: @RestController
+17: @RequestMapping("/api/v1/cart")
+18: @RequiredArgsConstructor
+19: @Tag(name = "Cart", description = "Shopping cart management endpoints")
+20: @SecurityRequirement(name = "bearerAuth")
+21: @ApiResponse(responseCode = "401", description = "Unauthorized")
+22: public class CartController {
+23: 
+24:     private final CartService cartService;
+25: 
+26:     @GetMapping
+27:     @Operation(summary = "Get current user's cart",
+28:             description = "Returns the authenticated user's cart, including item count and calculated total price.")
+29:     @ApiResponse(responseCode = "200", description = "Successfully retrieved cart")
+30:     public ResponseEntity<CartDto> getCart(
+31:             @Parameter(hidden = true) @AuthenticationPrincipal CustomPrincipal principal) {
+32:         return ResponseEntity.ok(cartService.getCart(principal.getUsername()));
+33:     }
+34: 
+35:     @DeleteMapping
+36:     @Operation(summary = "Clear cart",
+37:             description = "Removes all items from the authenticated user's cart.")
+38:     @ApiResponse(responseCode = "204", description = "Cart cleared successfully")
+39:     public ResponseEntity<Void> clearCart(
+40:             @Parameter(hidden = true) @AuthenticationPrincipal CustomPrincipal principal) {
+41:         cartService.clearCart(principal.getUsername());
+42:         return ResponseEntity.noContent().build();
+43:     }
+44: }
+
+
+source/backend/src/main/java/com/awesome/testing/security/WebSecurityConfig.java
+SHA256: 5be381b651c984c82edfa59834837707239d958dbf6f59cbdb88f5e25129f802
+1: package com.awesome.testing.security;
+2: 
+3: import com.awesome.testing.traffic.TrafficProperties;
+4: import jakarta.servlet.http.HttpServletRequest;
+5: import lombok.RequiredArgsConstructor;
+6: import org.springframework.beans.factory.annotation.Value;
+7: import org.springframework.context.annotation.Bean;
+8: import org.springframework.context.annotation.Configuration;
+9: import org.springframework.http.HttpStatus;
+10: import org.springframework.security.access.AccessDeniedException;
+11: import org.springframework.security.authentication.AuthenticationManager;
+12: import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+13: import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+14: import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+15: import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+16: import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+17: import org.springframework.security.config.http.SessionCreationPolicy;
+18: import org.springframework.security.core.AuthenticationException;
+19: import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+20: import org.springframework.security.crypto.password.PasswordEncoder;
+21: import org.springframework.security.web.SecurityFilterChain;
+22: import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+23: import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
+24: import org.springframework.web.cors.CorsConfiguration;
+25: import org.springframework.web.cors.CorsConfigurationSource;
+26: import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+27: import jakarta.servlet.http.HttpServletResponse;
+28: import org.springframework.core.annotation.Order;
+29: import jakarta.servlet.DispatcherType;
+30: 
+31: import java.io.IOException;
+32: import java.util.List;
+33: 
+34: import static com.awesome.testing.utils.ErrorResponseDefinition.sendErrorResponse;
+35: 
+36: @SuppressWarnings("unused")
+37: @Configuration
+38: @EnableWebSecurity
+39: @EnableMethodSecurity
+40: @RequiredArgsConstructor
+41: @Order(2)
+42: public class WebSecurityConfig {
+43: 
+44:     private static final List<String> ALLOWED_ENDPOINTS = List.of(
+45:             "/api/v1/users/signin",
+46:             "/api/v1/users/signin/2fa",
+47:             "/api/v1/users/signup",
+48:             "/api/v1/users/refresh",
+49:             "/api/v1/users/sso/exchange",
+50:             "/api/v1/users/password/forgot",
+51:             "/api/v1/users/password/reset",
+52:             "/h2-console/**",
+53:             "/v3/api-docs",
+54:             "/v3/api-docs.yaml",
+55:             "/v3/api-docs/**",
+56:             "/swagger-ui/**",
+57:             "/swagger-resources/**",
+58:             "/webjars/**",
+59:             "/actuator/health",
+60:             "/actuator/health/**",
+61:             "/actuator/info",
+62:             "/actuator/prometheus",
+63:             "/api/v1/ws-traffic/**"
+64:     );
+65: 
+66:     private final JwtTokenProvider jwtTokenProvider;
+67:     private final TrafficProperties trafficProperties;
+68:     @Value("${app.cors.allowed-origin-patterns:http://localhost:8081,http://127.0.0.1:8081,http://host.docker.internal:8081}")
+69:     private List<String> allowedOriginPatterns;
+70: 
+71:     @Bean
+72:     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+73:         // Disable CSRF as we use JWT
+74:         http.csrf(AbstractHttpConfigurer::disable);
+75: 
+76:         // Enable CORS
+77:         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+78: 
+79:         // No session will be created or used by Spring Security
+80:         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+81: 
+82:         // Define authorization rules
+83:         http.authorizeHttpRequests(auth -> {
+84:             // First, allow async dispatch
+85:             auth.dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll();
+86:             
+87:             // Then allow public endpoints
+88:             PathPatternRequestMatcher.Builder matcherBuilder = PathPatternRequestMatcher.withDefaults();
+89:             auth.requestMatchers(request -> isApiDocsRequest(request.getRequestURI())).permitAll();
+90:             ALLOWED_ENDPOINTS.forEach(endpoint -> auth.requestMatchers(matcherBuilder.matcher(endpoint)).permitAll());
+91:             if (trafficProperties.isLegacyPublicAccess()) {
+92:                 auth.requestMatchers(matcherBuilder.matcher("/api/v1/traffic/**")).permitAll();
+93:             }
+94:             
+95:             // Finally, require authentication for all other endpoints
+96:             auth.anyRequest().authenticated();
+97:         });
+98: 
+99:         // Handle authentication and authorization errors
+100:         http.exceptionHandling(ex -> ex
+101:                 .accessDeniedHandler(this::handleAccessDenied)
+102:                 .authenticationEntryPoint(this::handleUnauthorized)
+103:         );
+104: 
+105:         // Apply JWT security filter
+106:         http.addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+107: 
+108:         return http.build();
+109:     }
+110: 
+111:     private boolean isApiDocsRequest(String path) {
+112:         return path.equals("/v3/api-docs")
+113:                 || path.equals("/v3/api-docs.yaml")
+114:                 || path.startsWith("/v3/api-docs/");
+115:     }
+116: 
+117:     private void handleAccessDenied(HttpServletRequest request,
+118:                                     HttpServletResponse response,
+119:                                     AccessDeniedException ex) throws IOException {
+120:         sendErrorResponse(response, HttpStatus.FORBIDDEN, "Access denied");
+121:     }
+122: 
+123:     private void handleUnauthorized(HttpServletRequest request,
+124:                                     HttpServletResponse response,
+125:                                     AuthenticationException ex) throws IOException {
+126:         sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "Unauthorized");
+127:     }
+128: 
+129:     @Bean
+130:     public PasswordEncoder passwordEncoder() {
+131:         return new BCryptPasswordEncoder(12);
+132:     }
+133: 
+134:     @Bean
+135:     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+136:         return authConfig.getAuthenticationManager();
+137:     }
+138: 
+139:     @Bean
+140:     public CorsConfigurationSource corsConfigurationSource() {
+141:         CorsConfiguration configuration = new CorsConfiguration();
+142:         configuration.setAllowedOriginPatterns(allowedOriginPatterns);
+143:         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+144:         configuration.setAllowedHeaders(List.of(
+145:             "Authorization", 
+146:             "Content-Type", 
+147:             "X-Requested-With", 
+148:             "X-Client-Session-Id",
+149:             "Accept", 
+150:             "Cache-Control",
+151:             "Last-Event-ID",
+152:             "x-requested-with"
+153:         ));
+154:         configuration.setExposedHeaders(List.of(
+155:             "Content-Type",
+156:             "X-Client-Session-Id",
+157:             "X-Requested-With",
+158:             "Cache-Control",
+159:             "Last-Event-ID"
+160:         ));
+161:         configuration.setAllowCredentials(true);
+162:         configuration.setMaxAge(3600L);
+163: 
+164:         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+165:         source.registerCorsConfiguration("/**", configuration);
+166:         return source;
+167:     }
+168: }
+
+
+source/backend/src/main/java/com/awesome/testing/utils/ErrorResponseDefinition.java
+SHA256: a52e47f2fac2e16572214d2ed5250d9868d656728e5bd2ef5b584ecbb420c346
+1: package com.awesome.testing.utils;
+2: 
+3: import jakarta.servlet.http.HttpServletResponse;
+4: import lombok.experimental.UtilityClass;
+5: import org.springframework.http.HttpStatus;
+6: 
+7: import java.io.IOException;
+8: 
+9: @UtilityClass
+10: public class ErrorResponseDefinition {
+11: 
+12:     public static void sendErrorResponse(HttpServletResponse response, HttpStatus status, String message) throws IOException {
+13:         response.setContentType("application/json;charset=UTF-8");
+14:         response.setStatus(status.value());
+15:         response.getWriter().write("""
+16:             {
+17:                 "message": "%s"
+18:             }
+19:             """.formatted(message));
+20:     }
+21: 
+22: }
+
+
+source/backend/src/test/java/com/awesome/testing/config/OpenApiContractTest.java
+SHA256: 97963c7f0b7d1627c38977df3fc4a4e69ee7f22e6a39adeeb124c80827901d02
+1: package com.awesome.testing.config;
+2: 
+3: import com.awesome.testing.HttpHelper;
+4: import com.fasterxml.jackson.databind.JsonNode;
+5: import com.fasterxml.jackson.databind.ObjectMapper;
+6: import org.junit.jupiter.api.Test;
+7: import org.springframework.http.HttpHeaders;
+8: import org.springframework.http.HttpStatus;
+9: import org.springframework.http.ResponseEntity;
+10: import org.springframework.test.context.ActiveProfiles;
+11: import org.springframework.test.context.TestPropertySource;
+12: 
+13: import java.util.Iterator;
+14: import java.util.List;
+15: import java.util.Locale;
+16: import java.util.Map;
+17: import java.util.Set;
+18: 
+19: import static org.assertj.core.api.Assertions.assertThat;
+20: 
+21: @ActiveProfiles("test")
+22: @TestPropertySource(properties = {
+23:         "springdoc.api-docs.enabled=true",
+24:         "springdoc.swagger-ui.enabled=false"
+25: })
+26: class OpenApiContractTest extends HttpHelper {
+27: 
+28:     private static final Set<String> HTTP_METHODS = Set.of(
+29:             "get", "post", "put", "delete", "patch", "head", "options", "trace"
+30:     );
+31: 
+32:     @Test
+33:     void generatedOpenApiSpecShouldContainAccurateSecurityAndOperationMetadata() throws Exception {
+34:         JsonNode spec = readApiSpec();
+35: 
+36:         assertThat(spec.path("openapi").asText()).isNotBlank();
+37:         assertThat(spec.path("components").path("securitySchemes").has("bearerAuth")).isTrue();
+38: 
+39:         assertPublicEndpointIsNotMarkedAsSecured(spec, "/api/v1/users/signin", "post");
+40:         assertPublicEndpointIsNotMarkedAsSecured(spec, "/api/v1/users/signin/2fa", "post");
+41:         assertPublicEndpointIsNotMarkedAsSecured(spec, "/api/v1/users/signup", "post");
+42:         assertPublicEndpointIsNotMarkedAsSecured(spec, "/api/v1/users/refresh", "post");
+43:         assertPublicEndpointIsNotMarkedAsSecured(spec, "/api/v1/users/sso/exchange", "post");
+44:         assertPublicEndpointIsNotMarkedAsSecured(spec, "/api/v1/users/password/forgot", "post");
+45:         assertPublicEndpointIsNotMarkedAsSecured(spec, "/api/v1/users/password/reset", "post");
+46: 
+47:         assertSecuredEndpoint(spec, "/api/v1/products", "get");
+48:         assertSecuredEndpoint(spec, "/api/v1/orders", "get");
+49:         assertSecuredEndpoint(spec, "/api/v1/cart", "get");
+50:         assertSecuredEndpoint(spec, "/api/v1/users/me/email-events", "get");
+51:         assertSecuredEndpoint(spec, "/api/v1/users/2fa/status", "get");
+52:         assertSecuredEndpoint(spec, "/api/v1/users/2fa/setup", "post");
+53:         assertSecuredEndpoint(spec, "/api/v1/users/{username}/right-to-be-forgotten", "delete");
+54:         assertThat(spec.path("paths").has("/api/v1/local/email/outbox")).isFalse();
+55: 
+56:         assertDocumentedResponseCodes(spec);
+57:         assertRateLimitResponsesAreHiddenWhenRateLimitingIsDisabled(spec);
+58: 
+59:         JsonNode paths = spec.path("paths");
+60:         assertThat(paths.isObject()).isTrue();
+61:         Iterator<String> pathIterator = paths.fieldNames();
+62:         while (pathIterator.hasNext()) {
+63:             String path = pathIterator.next();
+64:             JsonNode pathItem = paths.path(path);
+65:             Iterator<String> operationIterator = pathItem.fieldNames();
+66:             while (operationIterator.hasNext()) {
+67:                 String method = operationIterator.next().toLowerCase(Locale.ROOT);
+68:                 if (!HTTP_METHODS.contains(method)) {
+69:                     continue;
+70:                 }
+71:                 JsonNode operation = pathItem.path(method);
+72:                 assertThat(operation.path("summary").asText())
+73:                         .as("Missing summary for %s %s", method.toUpperCase(Locale.ROOT), path)
+74:                         .isNotBlank();
+75:                 assertThat(operation.path("responses").isObject() && operation.path("responses").size() > 0)
+76:                         .as("Missing responses for %s %s", method.toUpperCase(Locale.ROOT), path)
+77:                         .isTrue();
+78:                 assertResponseCodesAreSorted(operation, path, method);
+79:             }
+80:         }
+81:     }
+82: 
+83:     @Test
+84:     void generatedOpenApiSpecShouldBeAvailableAsYaml() {
+85:         assertYamlApiSpec("/v3/api-docs.yaml");
+86:     }
+87: 
+88:     private JsonNode readApiSpec() throws Exception {
+89:         ResponseEntity<String> response = executeGet("/v3/api-docs", getJsonOnlyHeaders(), String.class);
+90:         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+91:         assertThat(response.getBody()).isNotBlank();
+92:         return new ObjectMapper().readTree(response.getBody());
+93:     }
+94: 
+95:     private void assertYamlApiSpec(String path) {
+96:         ResponseEntity<String> response = executeGet(path, getYamlHeaders(), String.class);
+97:         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+98:         assertThat(response.getBody()).isNotBlank();
+99:         assertThat(response.getBody()).contains("openapi:");
+100:     }
+101: 
+102:     private HttpHeaders getYamlHeaders() {
+103:         HttpHeaders headers = new HttpHeaders();
+104:         headers.add(HttpHeaders.ACCEPT, "*/*");
+105:         return headers;
+106:     }
+107: 
+108:     private void assertPublicEndpointIsNotMarkedAsSecured(JsonNode spec, String path, String method) {
+109:         JsonNode operation = getOperation(spec, path, method);
+110:         JsonNode security = operation.path("security");
+111:         assertThat(security.isMissingNode() || security.isEmpty())
+112:                 .as("Public endpoint %s %s should not require auth in docs", method.toUpperCase(Locale.ROOT), path)
+113:                 .isTrue();
+114:     }
+115: 
+116:     private void assertSecuredEndpoint(JsonNode spec, String path, String method) {
+117:         JsonNode operation = getOperation(spec, path, method);
+118:         JsonNode security = operation.path("security");
+119:         assertThat(security.isArray() && security.size() > 0)
+120:                 .as("Secured endpoint %s %s should declare security", method.toUpperCase(Locale.ROOT), path)
+121:                 .isTrue();
+122:         boolean containsBearerAuth = false;
+123:         for (JsonNode securityRequirement : security) {
+124:             if (securityRequirement.has("bearerAuth")) {
+125:                 containsBearerAuth = true;
+126:                 break;
+127:             }
+128:         }
+129:         assertThat(containsBearerAuth)
+130:                 .as("Secured endpoint %s %s should use bearerAuth", method.toUpperCase(Locale.ROOT), path)
+131:                 .isTrue();
+132:     }
+133: 
+134:     private void assertOperationResponsesContain(JsonNode spec, String path, String method, List<String> responseCodes) {
+135:         JsonNode responses = getOperation(spec, path, method).path("responses");
+136:         for (String responseCode : responseCodes) {
+137:             assertThat(responses.has(responseCode))
+138:                     .as("Expected response code %s for %s %s", responseCode, method.toUpperCase(Locale.ROOT), path)
+139:                     .isTrue();
+140:         }
+141:     }
+142: 
+143:     private void assertOperationResponsesDoNotContain(JsonNode spec, String path, String method, String responseCode) {
+144:         JsonNode responses = getOperation(spec, path, method).path("responses");
+145:         assertThat(responses.has(responseCode))
+146:                 .as("Did not expect response code %s for %s %s", responseCode, method.toUpperCase(Locale.ROOT), path)
+147:                 .isFalse();
+148:     }
+149: 
+150:     private void assertDocumentedResponseCodes(JsonNode spec) {
+151:         assertOperationResponsesContain(spec, "/api/v1/products", "get", List.of("200", "401"));
+152:         assertOperationResponsesContain(spec, "/api/v1/products/{id}", "get", List.of("200", "400", "401", "404"));
+153:         assertOperationResponsesContain(spec, "/api/v1/products", "post", List.of("201", "400", "401", "403"));
+154:         assertOperationResponsesContain(spec, "/api/v1/products/{id}", "put", List.of("200", "400", "401", "403", "404"));
+155:         assertOperationResponsesContain(spec, "/api/v1/products/{id}", "delete", List.of("204", "400", "401", "403", "404"));
+156: 
+157:         assertOperationResponsesContain(spec, "/api/v1/cart", "get", List.of("200", "401"));
+158:         assertOperationResponsesContain(spec, "/api/v1/cart", "delete", List.of("204", "401"));
+159:         assertOperationResponsesContain(spec, "/api/v1/cart/items", "post", List.of("200", "400", "401", "404"));
+160:         assertOperationResponsesContain(spec, "/api/v1/cart/items/{productId}", "put", List.of("200", "400", "401", "404"));
+161:         assertOperationResponsesContain(spec, "/api/v1/cart/items/{productId}", "delete", List.of("200", "400", "401", "404"));
+162: 
+163:         assertOperationResponsesContain(spec, "/api/v1/orders", "post", List.of("201", "400", "401"));
+164:         assertOperationResponsesContain(spec, "/api/v1/orders", "get", List.of("200", "400", "401"));
+165:         assertOperationResponsesContain(spec, "/api/v1/orders/{id}", "get", List.of("200", "400", "401", "404"));
+166:         assertOperationResponsesContain(spec, "/api/v1/orders/{id}/status", "put", List.of("200", "400", "401", "403", "404"));
+167:         assertOperationResponsesContain(spec, "/api/v1/orders/{id}/cancel", "post", List.of("200", "400", "401", "403", "404"));
+168:         assertOperationResponsesContain(spec, "/api/v1/orders/admin", "get", List.of("200", "400", "401", "403"));
+169: 
+170:         assertOperationResponsesContain(spec, "/api/v1/users/signup", "post", List.of("201", "400"));
+171:         assertOperationResponsesContain(spec, "/api/v1/users/signin", "post", List.of("200", "400", "422"));
+172:         assertOperationResponsesContain(spec, "/api/v1/users/signin/2fa", "post", List.of("200", "400", "401"));
+173:         assertOperationResponsesContain(spec, "/api/v1/users/2fa/status", "get", List.of("200", "401"));
+174:         assertOperationResponsesContain(spec, "/api/v1/users/2fa/setup", "post", List.of("200", "401", "409"));
+175:         assertOperationResponsesContain(spec, "/api/v1/users/2fa/confirm", "post", List.of("200", "400", "401", "409", "410"));
+176:         assertOperationResponsesContain(spec, "/api/v1/users/2fa/recovery-codes", "post", List.of("200", "400", "401", "409"));
+177:         assertOperationResponsesContain(spec, "/api/v1/users/2fa/disable", "post", List.of("200", "400", "401", "409"));
+178:         assertOperationResponsesContain(spec, "/api/v1/users/refresh", "post", List.of("200", "400", "401"));
+179:         assertOperationResponsesContain(spec, "/api/v1/users/sso/exchange", "post", List.of("200", "400", "401", "404", "409"));
+180:         assertResponseSchemaRef(spec, "/api/v1/users/sso/exchange", "post", "409", "ErrorDto");
+181:         assertOperationResponsesContain(spec, "/api/v1/users/password/forgot", "post", List.of("202", "400"));
+182:         assertOperationResponsesContain(spec, "/api/v1/users/password/reset", "post", List.of("200", "400"));
+183:         assertOperationResponsesContain(spec, "/api/v1/users", "get", List.of("200", "401"));
+184:         assertOperationResponsesContain(spec, "/api/v1/users/{username}", "get", List.of("200", "401", "404"));
+185:         assertOperationResponsesContain(spec, "/api/v1/users/{username}", "put", List.of("200", "400", "401", "403", "404"));
+186:         assertOperationResponsesContain(spec, "/api/v1/users/{username}", "delete", List.of("204", "401", "403", "404"));
+187:         assertOperationResponsesContain(spec, "/api/v1/users/{username}/right-to-be-forgotten", "delete", List.of("204", "401", "403", "404"));
+188:         assertOperationResponsesContain(spec, "/api/v1/users/me", "get", List.of("200", "401"));
+189:         assertOperationResponsesContain(spec, "/api/v1/users/me/email-events", "get", List.of("200", "401"));
+190:         assertOperationResponsesContain(spec, "/api/v1/users/logout", "post", List.of("200", "401"));
+191:         assertOperationResponsesContain(spec, "/api/v1/users/chat-system-prompt", "get", List.of("200", "401"));
+192:         assertOperationResponsesContain(spec, "/api/v1/users/chat-system-prompt", "put", List.of("200", "400", "401"));
+193:         assertOperationResponsesContain(spec, "/api/v1/users/tool-system-prompt", "get", List.of("200", "401"));
+194:         assertOperationResponsesContain(spec, "/api/v1/users/tool-system-prompt", "put", List.of("200", "400", "401"));
+195: 
+196:         assertOperationResponsesContain(spec, "/api/v1/email", "post", List.of("200", "400", "401"));
+197:         assertOperationResponsesContain(spec, "/api/v1/qr/create", "post", List.of("200", "400", "401"));
+198:         assertOperationResponsesContain(spec, "/api/v1/ollama/generate", "post", List.of("200", "400", "401", "404", "500"));
+199:         assertResponseSchemaRef(spec, "/api/v1/ollama/generate", "post", "404", "ModelNotFoundDto");
+200:         assertOperationResponsesContain(spec, "/api/v1/ollama/chat", "post", List.of("200", "400", "401", "404", "500"));
+201:         assertResponseSchemaRef(spec, "/api/v1/ollama/chat", "post", "404", "ModelNotFoundDto");
+202:         assertOperationResponsesContain(spec, "/api/v1/ollama/chat/tools", "post", List.of("200", "400", "401", "500"));
+203:         assertOperationResponsesContain(spec, "/api/v1/ollama/chat/tools/definitions", "get", List.of("200", "401"));
+204: 
+205:         assertOperationResponsesContain(spec, "/api/v1/traffic/info", "get", List.of("200"));
+206:         assertOperationResponsesContain(spec, "/api/v1/traffic/logs", "get", List.of("200", "400"));
+207:         assertOperationResponsesContain(spec, "/api/v1/traffic/logs/{correlationId}", "get", List.of("200", "404"));
+208:     }
+209: 
+210:     private void assertRateLimitResponsesAreHiddenWhenRateLimitingIsDisabled(JsonNode spec) {
+211:         List.of(
+212:                 List.of("/api/v1/users/signup", "post"),
+213:                 List.of("/api/v1/users/signin", "post"),
+214:                 List.of("/api/v1/users/signin/2fa", "post"),
+215:                 List.of("/api/v1/users/2fa/setup", "post"),
+216:                 List.of("/api/v1/users/2fa/confirm", "post"),
+217:                 List.of("/api/v1/users/2fa/recovery-codes", "post"),
+218:                 List.of("/api/v1/users/2fa/disable", "post"),
+219:                 List.of("/api/v1/users/refresh", "post"),
+220:                 List.of("/api/v1/users/password/forgot", "post"),
+221:                 List.of("/api/v1/users/password/reset", "post"),
+222:                 List.of("/api/v1/email", "post"),
+223:                 List.of("/api/v1/qr/create", "post"),
+224:                 List.of("/api/v1/ollama/generate", "post"),
+225:                 List.of("/api/v1/ollama/chat", "post"),
+226:                 List.of("/api/v1/ollama/chat/tools", "post")
+227:         ).forEach(operation -> assertOperationResponsesDoNotContain(spec, operation.get(0), operation.get(1), "429"));
+228:     }
+229: 
+230:     private void assertResponseSchemaRef(JsonNode spec, String path, String method, String responseCode, String schemaName) {
+231:         JsonNode schema = getOperation(spec, path, method)
+232:                 .path("responses")
+233:                 .path(responseCode)
+234:                 .path("content")
+235:                 .path("application/json")
+236:                 .path("schema");
+237:         assertThat(schema.path("$ref").asText())
+238:                 .as("Expected schema %s for response %s on %s %s",
+239:                         schemaName, responseCode, method.toUpperCase(Locale.ROOT), path)
+240:                 .endsWith("/" + schemaName);
+241:     }
+242: 
+243:     private void assertResponseCodesAreSorted(JsonNode operation, String path, String method) {
+244:         List<Integer> responseCodes = operation.path("responses")
+245:                 .properties()
+246:                 .stream()
+247:                 .map(Map.Entry::getKey)
+248:                 .filter(OpenApiContractTest::isNumericResponseCode)
+249:                 .map(Integer::parseInt)
+250:                 .toList();
+251: 
+252:         assertThat(responseCodes)
+253:                 .as("Response codes should be sorted for %s %s", method.toUpperCase(Locale.ROOT), path)
+254:                 .isSorted();
+255:     }
+256: 
+257:     private static boolean isNumericResponseCode(String responseCode) {
+258:         return responseCode.chars().allMatch(Character::isDigit);
+259:     }
+260: 
+261:     private JsonNode getOperation(JsonNode spec, String path, String method) {
+262:         JsonNode operation = spec.path("paths").path(path).path(method.toLowerCase(Locale.ROOT));
+263:         assertThat(operation.isObject())
+264:                 .as("Missing operation %s %s in generated OpenAPI spec", method.toUpperCase(Locale.ROOT), path)
+265:                 .isTrue();
+266:         return operation;
+267:     }
+268: }
+
+
+source/backend/src/test/java/com/awesome/testing/endpoints/cart/GetCartControllerTest.java
+SHA256: 0e851092249c45723b8735d51ce9eee108a05023b1784d67d8e88221b0b684c4
+1: package com.awesome.testing.endpoints.cart;
+2: 
+3: import com.awesome.testing.dto.ErrorDto;
+4: import com.awesome.testing.dto.cart.CartDto;
+5: import com.awesome.testing.dto.cart.CartItemDto;
+6: import com.awesome.testing.dto.user.Role;
+7: import com.awesome.testing.dto.user.UserRegisterDto;
+8: import com.awesome.testing.endpoints.AbstractEcommerceTest;
+9: import com.awesome.testing.entity.ProductEntity;
+10: import com.awesome.testing.service.CartService;
+11: import org.junit.jupiter.api.Test;
+12: import org.springframework.beans.factory.annotation.Autowired;
+13: import org.springframework.http.HttpStatus;
+14: import org.springframework.http.ResponseEntity;
+15: 
+16: import java.util.List;
+17: 
+18: import static com.awesome.testing.factory.CartItemFactory.getDoubleCartItemFrom;
+19: import static com.awesome.testing.factory.CartItemFactory.getSingleCartItemFrom;
+20: import static com.awesome.testing.factory.UserFactory.getRandomUserWithRoles;
+21: import static org.assertj.core.api.Assertions.assertThat;
+22: 
+23: class GetCartControllerTest extends AbstractEcommerceTest {
+24: 
+25:     @Autowired
+26:     private CartService cartService;
+27: 
+28:     @SuppressWarnings("ConstantConditions")
+29:     @Test
+30:     void shouldGetCart() {
+31:         // given
+32:         UserRegisterDto client = getRandomUserWithRoles(List.of(Role.ROLE_CLIENT));
+33:         String clientToken = getToken(client);
+34:         ProductEntity productEntity = setupProduct();
+35:         ProductEntity productEntity2 = setupProduct();
+36:         CartItemDto cartItemDto = getSingleCartItemFrom(productEntity.getId());
+37:         CartItemDto cartItemDto2 = getDoubleCartItemFrom(productEntity2.getId());
+38:         cartService.addToCart(client.getUsername(), cartItemDto);
+39:         cartService.addToCart(client.getUsername(), cartItemDto2);
+40: 
+41:         // when
+42:         ResponseEntity<CartDto> response = executeGet(
+43:                 CART_ENDPOINT,
+44:                 getHeadersWith(clientToken),
+45:                 CartDto.class);
+46: 
+47:         // then
+48:         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+49:         assertThat(response.getBody().getUsername()).isEqualTo(client.getUsername());
+50:         assertThat(response.getBody().getItems()).containsExactlyInAnyOrder(cartItemDto, cartItemDto2);
+51:         assertThat(response.getBody().getTotalItems()).isEqualTo(3);
+52:         assertThat(response.getBody().getTotalPrice()).isEqualTo(
+53:                 productEntity.getPrice()
+54:                         .add(productEntity2.getPrice())
+55:                         .add(productEntity2.getPrice())
+56:         );
+57:     }
+58: 
+59:     @Test
+60:     void shouldGet401AsUnauthorized() {
+61:         // when
+62:         ResponseEntity<ErrorDto> response = executeGet(
+63:                 CART_ENDPOINT,
+64:                 getJsonOnlyHeaders(),
+65:                 ErrorDto.class);
+66: 
+67:         // then
+68:         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+69:     }
+70: } 
+
+
+source/backend/src/test/java/com/awesome/testing/endpoints/products/GetAllProductsControllerTest.java
+SHA256: 0a86931904021ff442366956f798e049c3eb2f85be6734b5786da8393ca042e5
+1: package com.awesome.testing.endpoints.products;
+2: 
+3: import com.awesome.testing.dto.product.ProductDto;
+4: import com.awesome.testing.dto.user.UserRegisterDto;
+5: import com.awesome.testing.endpoints.AbstractEcommerceTest;
+6: import com.awesome.testing.entity.ProductEntity;
+7: import com.awesome.testing.dto.user.Role;
+8: import org.junit.jupiter.api.Test;
+9: import org.springframework.http.HttpStatus;
+10: import org.springframework.http.ResponseEntity;
+11: 
+12: import java.util.List;
+13: import java.util.Map;
+14: 
+15: import static com.awesome.testing.util.TypeReferenceUtil.mapTypeReference;
+16: import static com.awesome.testing.util.TypeReferenceUtil.productListTypeReference;
+17: import static com.awesome.testing.factory.UserFactory.getRandomUserWithRoles;
+18: import static org.assertj.core.api.Assertions.assertThat;
+19: 
+20: class GetAllProductsControllerTest extends AbstractEcommerceTest {
+21: 
+22:     @Test
+23:     void shouldGetAllProductsWhenAuthenticated() {
+24:         // given
+25:         UserRegisterDto client = getRandomUserWithRoles(List.of(Role.ROLE_CLIENT));
+26:         String clientToken = getToken(client);
+27:         ProductEntity testProduct1 = setupProduct();
+28:         ProductEntity testProduct2 = setupProduct();
+29: 
+30:         // when
+31:         ResponseEntity<List<ProductDto>> response = executeGet(
+32:                 PRODUCTS_ENDPOINT,
+33:                 getHeadersWith(clientToken),
+34:                 productListTypeReference());
+35: 
+36:         // then
+37:         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+38:         assertThat(response.getBody()).hasSize(2);
+39:         assertThat(response.getBody()).map(ProductDto::getName)
+40:                 .containsExactlyInAnyOrder(testProduct1.getName(), testProduct2.getName());
+41:     }
+42: 
+43:     @Test
+44:     void shouldGet401AsNotAuthenticated() {
+45:         // when
+46:         ResponseEntity<Map<String, String>> response = executeGet(
+47:                 PRODUCTS_ENDPOINT,
+48:                 getJsonOnlyHeaders(),
+49:                 mapTypeReference());
+50: 
+51:         // then
+52:         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+53:     }
+54: 
+55: }

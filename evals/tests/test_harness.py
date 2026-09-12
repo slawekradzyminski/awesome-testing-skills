@@ -3,6 +3,11 @@
 import json
 import tempfile
 import subprocess
+import contextlib
+import io
+import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from unittest.mock import patch
 import unittest
 from pathlib import Path
 from urllib.error import HTTPError
@@ -28,6 +33,42 @@ def request(base, method="GET", quantity=None):
 
 
 class HarnessTests(unittest.TestCase):
+    def test_query_observation_matches_parsed_audit_path_without_weakening_status_check(self):
+        record = {"method": "PUT", "path": "/api/v1/cart/items/1", "status": 200}
+        observation = {"method": "PUT", "path": "/api/v1/cart/items/1?username=bob", "status": 200}
+        self.assertTrue(harness.matching_observation(observation, record))
+        self.assertFalse(harness.matching_observation({**observation, "status": 401}, record))
+        self.assertFalse(harness.matching_observation({**observation, "path": "/api/v1/cart/items/2?username=bob"}, record))
+        self.assertFalse(harness.matching_observation({**observation, "method": "GET"}, record))
+
+    def test_preflight_identifies_client_and_uses_only_public_gets(self):
+        requests = []
+        class Handler(BaseHTTPRequestHandler):
+            def log_message(self, *args):
+                pass
+            def do_GET(self):
+                requests.append((self.command, self.path))
+                # Reproduce the observed edge rejection of urllib's default identity.
+                identified = self.headers.get("User-Agent", "").startswith("exploratory-testing-skills/")
+                self.send_response(200 if identified else 403)
+                self.end_headers()
+                self.wfile.write(b"public response")
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            profiles = {"fixture": {"base_url": f"http://127.0.0.1:{server.server_port}"}}
+            output = io.StringIO()
+            with patch.object(harness, "read_json", return_value=profiles), contextlib.redirect_stdout(output):
+                harness.preflight("fixture")
+            result = json.loads(output.getvalue())
+            self.assertEqual([row["status"] for row in result["results"]], [200, 200])
+            self.assertEqual(requests, [("GET", "/login"), ("GET", "/v3/api-docs")])
+        finally:
+            server.shutdown()
+            server.server_close()
+            worker.join()
+
     def test_source_assessment_integrity_passes_then_detects_modified_source(self):
         with tempfile.TemporaryDirectory() as folder:
             run = Path(folder) / "run"
@@ -72,6 +113,11 @@ class HarnessTests(unittest.TestCase):
             self.assertFalse((target / "untracked.txt").exists())
             self.assertFalse((target / ".git").exists())
             self.assertEqual(provenance["revision"], git("rev-parse", "HEAD").strip())
+            live = Path(folder) / "live-run"
+            harness.prepare_live("localstack-hosted-api", live, {"backend": repo})
+            supplied = harness.read_json(live / "candidate/source-revisions.json")
+            self.assertEqual(supplied["backend"]["revision"], provenance["revision"])
+            self.assertEqual(supplied["backend"]["deployed_match"], "unverified")
 
     def test_source_only_without_skill_has_no_runtime_or_skill_copy(self):
         with tempfile.TemporaryDirectory() as folder:

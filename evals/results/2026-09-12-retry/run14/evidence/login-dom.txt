@@ -1,0 +1,58 @@
+### Result
+{
+  "viewport": [
+    1440,
+    900
+  ],
+  "title": "Awesome Testing",
+  "inputs": [
+    {
+      "id": "username",
+      "type": "text",
+      "required": false,
+      "autocomplete": "",
+      "labels": [
+        "Username"
+      ]
+    },
+    {
+      "id": "password",
+      "type": "password",
+      "required": false,
+      "autocomplete": "",
+      "labels": [
+        "Password"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "text": "",
+      "href": "/login"
+    },
+    {
+      "text": "Login",
+      "href": "/login"
+    },
+    {
+      "text": "Register",
+      "href": "/register"
+    },
+    {
+      "text": "Read the blog",
+      "href": "https://www.awesome-testing.com/"
+    },
+    {
+      "text": "Follow on LinkedIn",
+      "href": "https://www.linkedin.com/in/slawekradzyminski/?locale=en"
+    },
+    {
+      "text": "Buy me a coffee",
+      "href": "https://buymeacoffee.com/awesometesting"
+    }
+  ]
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => ({viewport:[innerWidth,innerHeight],title:document.title,inputs:[...document.querySelectorAll("input")].map(e=>({id:e.id,type:e.type,required:e.required,autocomplete:e.autocomplete,labels:[...e.labels].map(l=>l.textContent)})),links:[...document.querySelectorAll("a")].map(e=>({text:e.textContent,href:e.getAttribute("href")}))})');
+```

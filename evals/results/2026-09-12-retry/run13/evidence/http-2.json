@@ -1,0 +1,30 @@
+{
+  "method": "GET",
+  "path": "/v3/api-docs",
+  "status": 200,
+  "headers": {
+    "Date": "Sat, 12 Sep 2026 08:43:37 GMT",
+    "Content-Type": "application/json",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close",
+    "Server": "cloudflare",
+    "vary": "Access-Control-Request-Headers",
+    "x-content-type-options": "nosniff",
+    "x-xss-protection": "0",
+    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    "pragma": "no-cache",
+    "expires": "0",
+    "strict-transport-security": "max-age=31536000 ; includeSubDomains",
+    "x-frame-options": "DENY",
+    "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+    "cf-cache-status": "DYNAMIC",
+    "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=piXU%2FSbr%2FH8NvV4dOgeo71QXicB55w%2BlXuI6F8bknpCj7CSUYSGZ39I61qDZGjtnLmyIv8J1r9%2Bx36qPWIaLgwMJ5mylz5bvyVIkSj0EzHiBE2tnb1aw0J0pyzCZBk3hZvX6xJydmK7iVqRcEVA%3D\"}]}",
+    "CF-RAY": "a39da0253cbc27bc-PRG",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "elapsed_seconds": 0.211,
+  "utc": "2026-09-12T08:43:37.198186+00:00",
+  "action": "Anonymous baseline; no cookies, credentials, or redirect following",
+  "evidence": "evidence/http-2.json",
+  "body_evidence": "evidence/body-2.txt"
+}

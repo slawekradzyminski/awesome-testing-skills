@@ -1,0 +1,55 @@
+{
+  "source_access": true,
+  "runtime_exercised": false,
+  "findings": [
+    {
+      "requirement_id": "CART-2",
+      "title": "Negative integer quantity is persisted with a successful response and negative totals",
+      "status": "code-evidenced",
+      "expected": "Negative quantities must return 400 and leave the cart unchanged, per CART-2.",
+      "actual": "Source trace: PUT quantity -1 passes the exact-int and upper-stock checks, stores -1, computes totalItems -1 and totalPrice -12, and reaches the HTTP 200 response. This was not runtime-observed.",
+      "impact": "The authenticated caller can persist an invalid negative quantity in their existing cart; calculated item count and price become negative. No downstream checkout impact was tested or claimed.",
+      "evidence": ["evidence/source-review.txt", "evidence/reproduction.txt"]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Quantity validation and mutation preservation",
+      "reason": "Existing tests cover only quantity 3 and overstock 6. Exact-int validation and zero removal were inspected but not exercised through HTTP.",
+      "priority": "high",
+      "next_probe": "On the assigned runtime, reproduce -1 first with before/after reads and restoration; check missing, null, string, boolean, fractional quantities and boundaries 0/1/5/6, with zero last on a resettable fixture."
+    },
+    {
+      "area": "Identity isolation and anonymous rejection",
+      "reason": "Both routes authenticate through fixed fixture tokens and use the actor's cart; no runtime isolation or rejection evidence is available.",
+      "priority": "medium",
+      "next_probe": "Compare Alice and Bob before/after independent updates; exercise anonymous and invalid-token product/cart GET and item PUT, verifying unchanged carts."
+    },
+    {
+      "area": "Catalog stock and totals",
+      "reason": "The fixture has stock 5 and price 12; stock rejection precedes mutation and updates do not decrement stock, based on source only.",
+      "priority": "medium",
+      "next_probe": "Verify quantity 5 succeeds with price 60, quantity 6 returns 409 without mutation, and catalog stock remains 5 across both callers' changes."
+    },
+    {
+      "area": "Price consistency under future catalog changes",
+      "reason": "Cart totals use literal 12 rather than the catalog price. Current fixture price is also 12, so no current discrepancy is established.",
+      "priority": "low",
+      "next_probe": "If supported product-price changes enter scope, compare catalog unit price with cart totals after such a change."
+    },
+    {
+      "area": "Adjacent UI feedback and asynchronous refresh",
+      "reason": "UI source was inspected only; refresh has no failure catch and no stale-response guard. Keyboard, layout, and delayed-response behavior were not observed.",
+      "priority": "medium",
+      "next_probe": "When the runtime is available, verify Save/Cancel and keyboard flow at desktop/narrow widths, then test failed and delayed refreshes with Alice/Bob switching."
+    }
+  ],
+  "observations": [],
+  "limitations": [
+    "The assigned runtime was unavailable and was not started. All findings are source-derived, not HTTP-confirmed.",
+    "Existing tests were inspected but not executed; no application execution was performed.",
+    "Zero API requests and zero browser actions; no UI screenshots or visual observations.",
+    "Concurrency and transport behavior remain unverified; no out-of-scope checkout, item adding, or production-authentication assessment."
+  ],
+  "cleanup": "No fixture/cart or application changes occurred. Only report.md, submission.json and evidence files were created; no runtime or browser session was started."
+}

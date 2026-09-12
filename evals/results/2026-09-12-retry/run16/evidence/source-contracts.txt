@@ -1,0 +1,5 @@
+Source snapshot only; deployed revision was not verified.
+source/frontend/e2e/tests/login.spec.ts: Register navigation expects /register; valid login expects /; invalid credentials expect a toast; empty and short username submission cases exist. Tests read, not executed because they submit and create users.
+source/frontend/src/pages/auth/loginPage.tsx: useForm mode onSubmit, noValidate form, labels linked via htmlFor to username/password IDs; password input has type=password; Forgot password button navigates /forgot-password.
+source/frontend/src/validators/auth.ts: login username/password minimum 4 and maximum 255; forgot-password identifier required. No validation submission was executed.
+source/backend/src/main/java/com/awesome/testing/security/WebSecurityConfig.java: API docs permitAll; other endpoints require authentication unless explicitly allowed. Unauthorized handler uses 401. Runtime direct requests stopped at a Cloudflare 403/1010 response, so backend rules are not runtime verified.

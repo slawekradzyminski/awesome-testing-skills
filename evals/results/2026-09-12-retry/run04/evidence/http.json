@@ -1,0 +1,360 @@
+[
+  {
+    "method": "GET",
+    "path": "/health",
+    "actor": null,
+    "request": null,
+    "status": 200,
+    "response": {
+      "status": "UP",
+      "version": "sample-1"
+    },
+    "action": "deployed build"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "independent persisted read after keyboard Cancel"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "other identity remains at fixture quantity 2"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": null,
+    "request": null,
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "anonymous access"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": -1
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "invalid quantity or stock rejection"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "verify rejection preserves quantity 2"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 1.5
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "invalid quantity or stock rejection"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "verify rejection preserves quantity 2"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {},
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "invalid quantity or stock rejection"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "verify rejection preserves quantity 2"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": null
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "invalid quantity or stock rejection"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "verify rejection preserves quantity 2"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": "3"
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "invalid quantity or stock rejection"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "verify rejection preserves quantity 2"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": true
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "invalid quantity or stock rejection"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "verify rejection preserves quantity 2"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 6
+    },
+    "status": 409,
+    "response": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "action": "invalid quantity or stock rejection"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "verify rejection preserves quantity 2"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "request": {
+      "quantity": 1
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "restore original fixture"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "verify cleanup"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "verify Bob unchanged"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "verify stock remains 5"
+  }
+]

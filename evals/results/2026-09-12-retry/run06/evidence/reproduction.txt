@@ -1,0 +1,15 @@
+Runtime: http://127.0.0.1:64180
+Source access: none. Browser agent used; screenshots were rendered and visually inspected.
+Desktop 1280x720: Alice initially Quantity: 1 · Total: 12.
+Click Edit quantity; enter 3; click Cancel.
+Actual: editor closes, Quantity: 3 · Total: 36, Cart updated.
+GET /api/v1/cart with Alice token returned quantity 3, totalItems 3, totalPrice 36.
+Bob remained quantity 2, totalPrice 24. Reopening Edit showed 3.
+Then enter 4 and Save: Quantity: 4 · Total: 48; Cart updated.
+Reopen, enter 6, Save: native validation says Value must be less than or equal to 5; editor stays open; cart stays 4/48.
+Enter 1, Tab, Return: Save restores Quantity: 1 · Total: 12.
+Narrow 375x667: Edit; enter 2; Tab to Save; Tab to Cancel; Return.
+Actual: Quantity: 2 · Total: 24, Cart updated; focus returns to Edit quantity.
+Separate GET confirms persisted 2/24.
+Cleanup PUT quantity 1 and GET verifies Alice 1/12; Bob 2/24; product stock 5.
+No browser network capture was available through the used surface. Persistence is confirmed independently; exact Cancel request method/count is not directly observed.

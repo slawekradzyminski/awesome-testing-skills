@@ -14,7 +14,8 @@ import tarfile
 import time
 from pathlib import Path
 from urllib.error import HTTPError
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 EVALS = ROOT / "evals"
@@ -191,12 +192,16 @@ def prepare_live(profile_id, out, sources=None, without_skill=False):
             (candidate / "source").mkdir(exist_ok=True)
             provenance[name] = snapshot_repo(source, candidate / "source" / name)
     has_source = bool(provenance)
+    if has_source:
+        write_json(candidate / "source-revisions.json", {
+            name: {"revision": source["revision"], "deployed_match": "unverified"}
+            for name, source in provenance.items()})
     allowed = ["/login", "/v3/api-docs", "/api/v1/products", "/api/v1/cart"]
     prompt = f"""{invocation}
 
 Explore Awesome LocalStack's public {'API contract and authentication boundary' if profile['surface'] == 'api' else 'login interface and its public navigation'} at {profile['base_url']}.
 This is an optional real-stack evaluation, with no known bug list. No findings is a valid outcome.
-{'Source snapshots are under source/. They are committed revisions, not verified deployed revisions.' if has_source else 'Source cannot be shared in this run. Proceed with black-box observations and identify limits.'}
+{'Source snapshots are under source/. Read source-revisions.json for their committed revisions; deployment correspondence is unverified.' if has_source else 'Source cannot be shared in this run. Proceed with black-box observations and identify limits.'}
 Use available requirements/contracts; distinguish inferred expectations from documented facts.
 
 The run is PUBLIC READ-ONLY. Do not sign in, submit forms (including login/reset), create accounts,
@@ -213,6 +218,7 @@ Keep all deliverables in {candidate}. Read REPORTING.md. No product/source chang
     write_json(control / "manifest.json", {"type": "live", "profile": profile_id,
                "case": {"id": profile_id, "access": "source-runtime" if has_source else "runtime-only", "expected_requirements": []},
                "with_skill": not without_skill, "base_url": profile["base_url"], "source_provenance": provenance,
+               "source_revisions_supplied": has_source,
                "skill_hashes": hashes(candidate / "skills") if not without_skill else {}})
     print(json.dumps({"run": str(run), "task": str(candidate / "TASK.md")}))
 
@@ -222,7 +228,9 @@ def preflight(profile_id):
     results = []
     for path in ("/login", "/v3/api-docs"):
         try:
-            with urlopen(profile["base_url"] + path, timeout=10) as response:
+            request = Request(profile["base_url"] + path,
+                              headers={"User-Agent": "exploratory-testing-skills/1.0 (+public-read-only-preflight)"})
+            with urlopen(request, timeout=10) as response:
                 data = response.read(2_000_001)
                 results.append({"path": path, "status": response.status,
                                 "content_type": response.headers.get("Content-Type"),
@@ -259,6 +267,15 @@ def valid_evidence(candidate, value):
         return False
     p = (candidate / value).resolve()
     return not Path(value).is_absolute() and p.is_relative_to(candidate) and p.is_file() and p.stat().st_size > 0
+
+
+def matching_observation(observation, record):
+    # The fixture logs a parsed route path, not the query string. Candidate request
+    # evidence still needs manual review for query/header/body-specific claims.
+    path = observation.get("path")
+    return (isinstance(path, str) and path.startswith("/") and
+            urlsplit(path).path == record["path"] and
+            all(observation.get(key) == record[key] for key in ("method", "status")))
 
 
 def grade(run):
@@ -315,13 +332,19 @@ def grade(run):
     if len(api_records) > 60:
         errors.append("API request budget exceeded")
     for observation in ([] if live else report["observations"]):
-        if not any(all(observation.get(key) == row[key] for key in ("method", "path", "status")) for row in audit):
+        if not any(matching_observation(observation, row) for row in audit):
             errors.append(f"Observation has no matching server record: {observation.get('path')}")
     if not live and hashes(Path(manifest["app_path"])) != manifest["app_hashes"]:
         errors.append("Application or requirements were modified")
     for name, source in manifest.get("source_provenance", {}).items():
         if hashes(candidate / "source" / name) != source["hashes"]:
             errors.append(f"Source snapshot changed: {name}")
+    if manifest.get("source_revisions_supplied"):
+        expected_revisions = {name: {"revision": source["revision"], "deployed_match": "unverified"}
+                              for name, source in manifest["source_provenance"].items()}
+        revision_file = candidate / "source-revisions.json"
+        if not revision_file.is_file() or read_json(revision_file) != expected_revisions:
+            errors.append("Source revision metadata changed or removed")
     if manifest["with_skill"] and hashes(candidate / "skills") != manifest["skill_hashes"]:
         errors.append("Skill snapshot was modified")
     expected = set(case["expected_requirements"])
@@ -339,6 +362,8 @@ def grade(run):
               "expected_requirements_missing": sorted(expected - claimed),
               "additional_claims_for_review": sorted(claimed - expected),
               "api_requests": None if live else len(api_records), "negative_quantity_write_and_read_observed": negative_write and negative_read,
+              "query_observations_requiring_manual_review": [o["path"] for o in report["observations"]
+                  if isinstance(o.get("path"), str) and urlsplit(o["path"]).query],
               "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."}
     write_json(control / "grade.json", result)
     print(json.dumps(result, indent=2))

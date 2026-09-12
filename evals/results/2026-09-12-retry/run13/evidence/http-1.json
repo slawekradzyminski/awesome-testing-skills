@@ -1,0 +1,24 @@
+{
+  "method": "GET",
+  "path": "/login",
+  "status": 200,
+  "headers": {
+    "Date": "Sat, 12 Sep 2026 08:43:37 GMT",
+    "Content-Type": "text/html",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close",
+    "Server": "cloudflare",
+    "vary": "Accept-Encoding",
+    "last-modified": "Sun, 16 Aug 2026 14:25:49 GMT",
+    "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=8tMAbL2oNct4Zy8DWsBPFaMX80tPgPsjnyxVXWA5mtuJyNDb8VVftZ9lXRUbyZ6bgRkgawDC8%2B%2FHXlauD5E7djUNG%2FitDRrnk9zEu15R%2FdE2eS%2F7MZNqkRc1FVqgzaU7i4aVKWvVgt22JcmTtto%3D\"}]}",
+    "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+    "cf-cache-status": "DYNAMIC",
+    "CF-RAY": "a39da023a89a6f37-PRG",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "elapsed_seconds": 0.312,
+  "utc": "2026-09-12T08:43:36.986974+00:00",
+  "action": "Anonymous baseline; no cookies, credentials, or redirect following",
+  "evidence": "evidence/http-1.json",
+  "body_evidence": "evidence/body-1.txt"
+}

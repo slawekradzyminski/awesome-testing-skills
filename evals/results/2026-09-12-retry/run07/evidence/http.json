@@ -1,0 +1,1080 @@
+[
+  {
+    "number": 1,
+    "time": "2026-09-12T08:36:13.146737+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Baseline Alice cart"
+  },
+  {
+    "number": 2,
+    "time": "2026-09-12T08:36:13.147386+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Baseline Bob cart"
+  },
+  {
+    "number": 3,
+    "time": "2026-09-12T08:36:13.147829+00:00",
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Read price and stock"
+  },
+  {
+    "number": 4,
+    "time": "2026-09-12T08:36:13.148255+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": null,
+    "body": null,
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Anonymous cart rejection"
+  },
+  {
+    "number": 5,
+    "time": "2026-09-12T08:36:13.148621+00:00",
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": null,
+    "body": null,
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Anonymous product rejection"
+  },
+  {
+    "number": 6,
+    "time": "2026-09-12T08:36:13.148969+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": null,
+    "body": {
+      "quantity": 3
+    },
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Anonymous mutation rejection"
+  },
+  {
+    "number": 7,
+    "time": "2026-09-12T08:36:13.149289+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "invalid",
+    "body": null,
+    "status": 401,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Unknown token rejection"
+  },
+  {
+    "number": 8,
+    "time": "2026-09-12T08:36:13.149629+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Verify unauthorized attempts did not mutate Alice"
+  },
+  {
+    "number": 9,
+    "time": "2026-09-12T08:36:13.150029+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": -1
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": -1
+        }
+      ],
+      "totalItems": -1,
+      "totalPrice": -12
+    },
+    "action": "Quantity validation {'quantity': -1}"
+  },
+  {
+    "number": 10,
+    "time": "2026-09-12T08:36:13.150457+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": -1
+        }
+      ],
+      "totalItems": -1,
+      "totalPrice": -12
+    },
+    "action": "Read persisted state following validation attempt"
+  },
+  {
+    "number": 11,
+    "time": "2026-09-12T08:36:13.150847+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Verify negative Alice mutation isolated from Bob"
+  },
+  {
+    "number": 12,
+    "time": "2026-09-12T08:36:13.151265+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 1
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Restore Alice after negative probe"
+  },
+  {
+    "number": 13,
+    "time": "2026-09-12T08:36:13.151674+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 1.5
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Quantity validation {'quantity': 1.5}"
+  },
+  {
+    "number": 14,
+    "time": "2026-09-12T08:36:13.151986+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read persisted state following validation attempt"
+  },
+  {
+    "number": 15,
+    "time": "2026-09-12T08:36:13.152296+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {},
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Quantity validation {}"
+  },
+  {
+    "number": 16,
+    "time": "2026-09-12T08:36:13.152607+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read persisted state following validation attempt"
+  },
+  {
+    "number": 17,
+    "time": "2026-09-12T08:36:13.152977+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": null
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Quantity validation {'quantity': None}"
+  },
+  {
+    "number": 18,
+    "time": "2026-09-12T08:36:13.153315+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read persisted state following validation attempt"
+  },
+  {
+    "number": 19,
+    "time": "2026-09-12T08:36:13.153675+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": "3"
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Quantity validation {'quantity': '3'}"
+  },
+  {
+    "number": 20,
+    "time": "2026-09-12T08:36:13.153997+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read persisted state following validation attempt"
+  },
+  {
+    "number": 21,
+    "time": "2026-09-12T08:36:13.154374+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": true
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Quantity validation {'quantity': True}"
+  },
+  {
+    "number": 22,
+    "time": "2026-09-12T08:36:13.154709+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read persisted state following validation attempt"
+  },
+  {
+    "number": 23,
+    "time": "2026-09-12T08:36:13.155068+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": false
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Quantity validation {'quantity': False}"
+  },
+  {
+    "number": 24,
+    "time": "2026-09-12T08:36:13.155382+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read persisted state following validation attempt"
+  },
+  {
+    "number": 25,
+    "time": "2026-09-12T08:36:13.155699+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 2.0
+    },
+    "status": 400,
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Quantity validation {'quantity': 2.0}"
+  },
+  {
+    "number": 26,
+    "time": "2026-09-12T08:36:13.156047+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Read persisted state following validation attempt"
+  },
+  {
+    "number": 27,
+    "time": "2026-09-12T08:36:13.156427+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 5
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Stock boundary and valid update"
+  },
+  {
+    "number": 28,
+    "time": "2026-09-12T08:36:13.156812+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Read persisted quantity and totals"
+  },
+  {
+    "number": 29,
+    "time": "2026-09-12T08:36:13.157145+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 6
+    },
+    "status": 409,
+    "response": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "action": "Stock boundary and valid update"
+  },
+  {
+    "number": 30,
+    "time": "2026-09-12T08:36:13.157467+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Read persisted quantity and totals"
+  },
+  {
+    "number": 31,
+    "time": "2026-09-12T08:36:13.157809+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 1000000
+    },
+    "status": 409,
+    "response": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "action": "Stock boundary and valid update"
+  },
+  {
+    "number": 32,
+    "time": "2026-09-12T08:36:13.158126+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Read persisted quantity and totals"
+  },
+  {
+    "number": 33,
+    "time": "2026-09-12T08:36:13.158481+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 3
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Stock boundary and valid update"
+  },
+  {
+    "number": 34,
+    "time": "2026-09-12T08:36:13.158823+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Read persisted quantity and totals"
+  },
+  {
+    "number": 35,
+    "time": "2026-09-12T08:36:13.159173+00:00",
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Stock remains five after accepted changes"
+  },
+  {
+    "number": 36,
+    "time": "2026-09-12T08:36:13.159512+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Bob still at baseline after Alice changes"
+  },
+  {
+    "number": 37,
+    "time": "2026-09-12T08:36:13.159859+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "bob",
+    "body": {
+      "quantity": 4
+    },
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 4
+        }
+      ],
+      "totalItems": 4,
+      "totalPrice": 48
+    },
+    "action": "Bob valid update"
+  },
+  {
+    "number": 38,
+    "time": "2026-09-12T08:36:13.160206+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Alice unaffected by Bob update"
+  },
+  {
+    "number": 39,
+    "time": "2026-09-12T08:36:13.160560+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/999",
+    "actor": "alice",
+    "body": {
+      "quantity": 1
+    },
+    "status": 404,
+    "response": {
+      "error": "Cart item not found"
+    },
+    "action": "Nonexistent item update rejected"
+  },
+  {
+    "number": 40,
+    "time": "2026-09-12T08:36:13.160928+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": "[]",
+    "status": 400,
+    "response": {
+      "error": "Expected a JSON object"
+    },
+    "action": "Non-object JSON rejected"
+  },
+  {
+    "number": 41,
+    "time": "2026-09-12T08:36:13.161303+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": "{bad",
+    "status": 400,
+    "response": {
+      "error": "Invalid request"
+    },
+    "action": "Malformed JSON rejected"
+  },
+  {
+    "number": 42,
+    "time": "2026-09-12T08:36:13.161672+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "action": "Cart unchanged after bad requests"
+  },
+  {
+    "number": 43,
+    "time": "2026-09-12T08:36:13.162057+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 1
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Cleanup restore Alice baseline"
+  },
+  {
+    "number": 44,
+    "time": "2026-09-12T08:36:13.162462+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "bob",
+    "body": {
+      "quantity": 2
+    },
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Cleanup restore Bob baseline"
+  },
+  {
+    "number": 45,
+    "time": "2026-09-12T08:36:13.162829+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Verify Alice cleanup"
+  },
+  {
+    "number": 46,
+    "time": "2026-09-12T08:36:13.163153+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Verify Bob cleanup"
+  },
+  {
+    "number": 47,
+    "time": "2026-09-12T08:36:13.163520+00:00",
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Verify product unchanged"
+  },
+  {
+    "number": 48,
+    "time": "2026-09-12T08:36:43.531282+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 5
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Alice holds full stock quantity"
+  },
+  {
+    "number": 49,
+    "time": "2026-09-12T08:36:43.532118+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "bob",
+    "body": {
+      "quantity": 5
+    },
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Bob can independently hold full stock quantity without reservation"
+  },
+  {
+    "number": 50,
+    "time": "2026-09-12T08:36:43.532692+00:00",
+    "method": "GET",
+    "path": "/api/v1/products",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Catalog stock remains five with both carts at five"
+  },
+  {
+    "number": 51,
+    "time": "2026-09-12T08:36:43.533180+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Alice totals at upper valid boundary"
+  },
+  {
+    "number": 52,
+    "time": "2026-09-12T08:36:43.533751+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Bob totals at upper valid boundary"
+  },
+  {
+    "number": 53,
+    "time": "2026-09-12T08:36:43.534232+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "alice",
+    "body": {
+      "quantity": 1
+    },
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Restore Alice original quantity"
+  },
+  {
+    "number": 54,
+    "time": "2026-09-12T08:36:43.534689+00:00",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "actor": "bob",
+    "body": {
+      "quantity": 2
+    },
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Restore Bob original quantity"
+  },
+  {
+    "number": 55,
+    "time": "2026-09-12T08:36:43.535110+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Final Alice cleanup verification"
+  },
+  {
+    "number": 56,
+    "time": "2026-09-12T08:36:43.535591+00:00",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Final Bob cleanup verification"
+  }
+]

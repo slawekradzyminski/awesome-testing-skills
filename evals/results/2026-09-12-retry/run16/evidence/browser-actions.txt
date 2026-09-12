@@ -1,0 +1,23 @@
+22 browser API operations, counting observations and cleanup conservatively:
+1 create dedicated named Chrome tab at /login
+2 screenshot login (opened in tool output and saved)
+3 full login AX observation
+4 Tab
+5 AX observation: logo focused
+6-8 Tab three times
+9 AX observation: Username focused
+10 click Forgot password navigation button
+11 AX observation: /forgot-password
+12 recovery screenshot (opened and saved)
+13 full recovery AX observation
+14 click Back to login
+15 AX observation: /login
+16 click in-card Register button
+17 AX observation: /register
+18 registration screenshot (opened and saved)
+19 full registration AX observation
+20 click in-card Sign in navigation button (not a form submit)
+21 AX observation: /login
+22 close own tab
+No form input, credentials, submit actions, or external footer destinations used.
+Dedicated new named browser session/tab; underlying profile storage isolation was not independently verifiable with the used API. Logged-out UI was observed throughout.

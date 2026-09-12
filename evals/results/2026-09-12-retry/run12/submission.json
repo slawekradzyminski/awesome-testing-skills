@@ -1,0 +1,174 @@
+{
+  "source_access": false,
+  "runtime_exercised": true,
+  "findings": [
+    {
+      "requirement_id": "UI-1",
+      "title": "Cancel persists a valid quantity edit instead of discarding it",
+      "status": "confirmed",
+      "expected": "UI-1: Cancel discards provisional editing without updating the saved cart; reopening Edit shows the previously saved quantity.",
+      "actual": "Alice 1\u21923 followed by Cancel displayed Cart updated and Quantity 3 / Total 36; independent GET confirmed quantity 3. Keyboard Cancel at 375x812 also changed 2\u21924, and reopening showed 4.",
+      "impact": "A user attempting to abandon an edit unintentionally changes their saved cart quantity and total. Reproduced twice with valid values, using mouse and keyboard.",
+      "evidence": [
+        "evidence/reproduction.txt",
+        "evidence/http.json",
+        "evidence/cancel-saved.png",
+        "evidence/narrow-editor.png"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Cancel forbidden network side effects",
+      "reason": "Saved-data mutation is confirmed, but browser update request count/status and exact handler mechanism were not captured. Invalid value 6 produced Edit cancelled instead.",
+      "priority": "high",
+      "next_probe": "Capture browser traffic around valid and invalid Cancel, assert zero PUT requests and unchanged persisted quantity; investigate default form submission when source becomes available."
+    },
+    {
+      "area": "Delayed responses and account switching while editing",
+      "reason": "Ordinary sequential Alice edits left Bob unchanged; pending-save/account-switch timing was not tested.",
+      "priority": "medium",
+      "next_probe": "Delay a save response and switch fixture identity; confirm totals and edit values remain associated with the correct account."
+    },
+    {
+      "area": "Zero-removal and stock boundary",
+      "reason": "Zero removes the only existing item and re-adding is outside scope; kept fixtures recoverable. Quantity five and sustained maximum-stock saves were not tested.",
+      "priority": "medium",
+      "next_probe": "With a resettable fixture, save five then zero and verify stock remains five and totals become zero."
+    },
+    {
+      "area": "Server error feedback and keyboard coverage",
+      "reason": "Narrow browser-native validation and keyboard Save/Cancel were inspected; actual server 409 feedback through the UI, lost connectivity, full keyboard-only start-to-finish, and assistive technologies were not assessed.",
+      "priority": "medium",
+      "next_probe": "Exercise a server-rejected save and recovery, then keyboard-only role selection/open/edit/save with focus checks."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "baseline alice",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "baseline bob",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "after UI Cancel 1 to 3",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "after UI Save quantity 2",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Bob remains isolated",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "anonymous rejected",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "excess stock",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify unchanged after excess stock",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity -1",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity 1.5",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity None",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity '2'",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "invalid quantity True",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "missing quantity",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "verify unchanged after invalid matrix",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "cleanup verification alice",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "cleanup verification bob",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "No source supplied or inspected; source revision, deployed build identifier, and implementation cause are unknown.",
+    "17 direct API requests recorded. Automatic browser API requests were not instrumented, so their exact count and statuses are unavailable; 25 browser control actions including opening, viewport changes, and closing were used.",
+    "UI screenshots inspected at 1280x720 and 375x812 in the Codex in-app browser; browser engine/version, real mobile devices, other engines, screen readers, and performance were not assessed.",
+    "Zero removal, races, broader authorization manipulation, and server/network-error UI recovery remain untested. Invalid API cases were followed by a final unchanged-state read, not one read after every case."
+  ],
+  "cleanup": "Alice restored to quantity 1 / total 12 through UI Save; Bob unchanged at quantity 2 / total 24; both verified by independent API reads. Temporary viewport override reset and only the created browser tab closed. No app, requirements, skills, or tests changed."
+}

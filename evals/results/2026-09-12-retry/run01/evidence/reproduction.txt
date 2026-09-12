@@ -1,0 +1,22 @@
+F1 / CART-2, assigned runtime http://127.0.0.1:64091, 2026-09-12.
+Use ALICE_TOKEN = the Alice disposable fixture bearer token in requirements.md.
+All response bodies below came from real HTTP requests (Content-Type: application/json).
+
+First occurrence, evidence/http.json IDs 8–13:
+Alice PUT quantity 3 -> 200; GET -> quantity 3, totalItems 3, totalPrice 36.
+PUT /api/v1/cart/items/1
+Authorization: Bearer <ALICE_TOKEN>
+Content-Type: application/json
+{"quantity": -1}
+-> 200
+{"username":"alice","items":[{"productId":1,"quantity":-1}],"totalItems":-1,"totalPrice":-12}
+GET /api/v1/cart with same identity -> 200, same body.
+
+Independent baseline repeat, IDs 14–16:
+PUT quantity 1 -> 200, quantity 1 / totalItems 1 / totalPrice 12.
+PUT quantity -1 -> 200, quantity -1 / totalItems -1 / totalPrice -12.
+GET -> 200, confirms quantity -1 / totalItems -1 / totalPrice -12 persisted.
+
+Expected for both attempts: 400 and unchanged previous cart, per CART-2.
+2 failures in 2 attempts. The repeat used restored state, not the first invalid state.
+Final cleanup verified in IDs 41–42: Bob quantity 2, Alice quantity 1.

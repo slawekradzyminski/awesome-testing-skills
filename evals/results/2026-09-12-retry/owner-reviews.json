@@ -1,0 +1,284 @@
+{
+  "run01": {
+    "scores": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "reasons": [
+      "Source fingerprints and deployed build uncertainty recorded.",
+      "Guard and actor paths drive prioritized risks.",
+      "Valid/invalid contrasts, independent reads, two restored-state reproductions.",
+      "HTTP records match audit; report links minimal reproduction.",
+      "CART-2 is correctly confirmed; no unsupported additional findings.",
+      "41 API requests, scoped probes, both carts restored and final reads audited."
+    ],
+    "expected_found": 1,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 163,
+    "browser_actions_reported": 0
+  },
+  "run02": {
+    "scores": [
+      1,
+      2,
+      2,
+      1,
+      2,
+      2
+    ],
+    "reasons": [
+      "Uses supplied source/requirements but does not qualify source/deployed revision.",
+      "Prioritizes persistence, isolation, stock and relevant UI uncertainty.",
+      "Normal keyboard Save/Cancel and invalid-value contrast, persisted reads, account switching.",
+      "Opened screenshots and real HTTP evidence; forbidden Cancel traffic was not independently captured by candidate.",
+      "No seeded finding on control; no unsupported bug claim; uncertain focus issue left unverified.",
+      "32 API requests corroborated, 27 reported browser interactions, fixtures restored and owned tab closed."
+    ],
+    "expected_found": 0,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": null,
+    "browser_actions_reported": 27
+  },
+  "run03": {
+    "scores": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "reasons": [
+      "Source fingerprints; runtime and build correspondence explicitly unavailable.",
+      "Missing guard, actor boundaries and supplied tests drive risk order.",
+      "Traces negative data flow; proposes contrast, independent reads and cleanup without executing runtime.",
+      "Exact source and proposed reproduction clearly separated from observations.",
+      "CART-2 code defect established; hypothetical price/concurrency issues correctly remain risks.",
+      "Zero runtime requests or tests; target preserved, useful next probes and limitations."
+    ],
+    "expected_found": 1,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 180,
+    "browser_actions_reported": 0
+  },
+  "run04": {
+    "scores": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "reasons": [
+      "Inspected source/test assertions, fingerprints and unknown deployed correspondence.",
+      "Implicit submission and state flows determine prioritized probes.",
+      "Valid Save, normal pointer/keyboard Cancel, invalid-input contrast and reload/independent read.",
+      "Opened screenshots plus bounded network captures and actual PUT body/response; audit corroborates persistence.",
+      "UI-1 correctly established twice; validation console error treated as supporting evidence, not extra bug.",
+      "29 API requests, conservative 38 CLI invocations, 251 seconds; fixtures restored, own session closed."
+    ],
+    "expected_found": 1,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 251,
+    "browser_actions_reported": 38,
+    "browser_count_definition": "All CLI invocations, including observations"
+  },
+  "run05": {
+    "scores": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "reasons": [
+      "Source/test inspection and fingerprints; does not assume deployed equivalence.",
+      "Source-based identity, validation, stock and terminal zero transition risks.",
+      "Ten validation contrasts with unchanged-state reads, spoofed identity, stock boundary, zero removal.",
+      "Full HTTP evidence and script; query-bearing observation correctly matches stripped audit route after grader repair.",
+      "No seeded defect on control; integral-float ambiguity and future price concern not mislabeled as bugs.",
+      "48 API requests plus health; Alice restored, Bob terminal removal clearly disclosed for owner reset."
+    ],
+    "expected_found": 0,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 180,
+    "browser_actions_reported": 0,
+    "harness_issue": "Query string omitted by server audit caused false integrity failure; fixed and regraded."
+  },
+  "run06": {
+    "scores": [
+      2,
+      2,
+      2,
+      1,
+      2,
+      2
+    ],
+    "reasons": [
+      "Honors unavailable source and uses runtime plus supplied requirements.",
+      "Relevant remaining risks have concrete next probes; no source guesses.",
+      "Normal pointer and keyboard Cancel from restored state, independent GET persistence, Save and invalid-value contrasts.",
+      "Opened screenshots and direct HTTP evidence; browser-generated PUT was not captured by candidate, though owner audit records it.",
+      "UI-1 persisted cancellation is supported; no unsupported extras.",
+      "35 API requests corroborated, 21 reported browser interactions; fixtures restored and owned tab closed."
+    ],
+    "expected_found": 1,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": null,
+    "browser_actions_reported": 21,
+    "elapsed_note": "169 seconds from baseline to report, excluding initial setup; no comparable total."
+  },
+  "run07": {
+    "scores": [
+      1,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "reasons": [
+      "Uses source/requirements and respects assigned target; omits source revision/deployed-build qualification.",
+      "Prioritizes source-discovered lower bound, state integrity and identity.",
+      "Negative write/read, valid/type/stock/identity contrasts; local zero probe clearly distinct from runtime.",
+      "Detailed HTTP evidence and minimal reproduction corroborated by owner audit.",
+      "Correct CART-2 finding, negative totals treated as consequence; no invented extra bugs.",
+      "56 API requests, 174 seconds, no browser, both carts restored and verified."
+    ],
+    "expected_found": 1,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 174,
+    "browser_actions_reported": 0
+  },
+  "run08": {
+    "scores": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "reasons": [
+      "Source/test inspection, direct static-asset equivalence check and explicit backend revision uncertainty.",
+      "Source-based cancellation, async identity, failures and keyboard risks with useful next probes.",
+      "Mouse/keyboard Save/Cancel, invalid input, reload and API read; two browser PUTs attributable to valid saves.",
+      "Reviewed screenshots and CLI request list recovered usable evidence after logger failure; unrecorded intermediate values explicitly excluded.",
+      "Control produces no confirmed bug; uncertain focus/validation concerns remain risks.",
+      "30 API requests, conservative 40 browser actions/observations, about 236 seconds; restores fixtures and closes owned session."
+    ],
+    "expected_found": 0,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 236,
+    "browser_actions_reported": 40,
+    "browser_count_definition": "34 actions including screenshots plus six CLI observations"
+  },
+  "run09": {
+    "scores": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "reasons": [
+      "Uses source snapshots/hashes and requirements; runtime unavailable and not started.",
+      "Target-specific validation, actor, stock and state risks are prioritized.",
+      "Traces code and proposes before/after/identity contrasts without implying execution.",
+      "Numbered source evidence, explicit predicted responses and unexecuted reproduction.",
+      "CART-2 established at code level; negative total not double-counted and future pricing not a current bug.",
+      "149 seconds, no requests/browser/tests executed, no target changes, clear next verification."
+    ],
+    "expected_found": 1,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 149,
+    "browser_actions_reported": 0
+  },
+  "run10": {
+    "scores": [
+      1,
+      2,
+      2,
+      1,
+      2,
+      2
+    ],
+    "reasons": [
+      "Source and requirements used; missing source/deployed-build qualification.",
+      "Source submission mechanism, zero deletion and async identity risks have meaningful next probes.",
+      "Ordinary pointer/keyboard Cancel with persisted GET, valid Save and invalid-input contrast.",
+      "Opened screenshots and direct API records; browser update traffic inferred rather than captured by candidate.",
+      "UI-1 correctly established; totals/feedback not counted as separate bugs and no invented extras.",
+      "36 API requests corroborated, 27 reported state-changing browser actions; fixtures restored and own tab closed."
+    ],
+    "expected_found": 1,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": null,
+    "elapsed_note": "Approximate 3.5 minutes in report; final message says about four. Not used for comparative timing.",
+    "browser_actions_reported": 27,
+    "browser_count_definition": "State-changing actions; observations and screenshots excluded"
+  },
+  "run11": {
+    "scores": [
+      1,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "reasons": [
+      "Reads source/requirements and limits claims, but does not qualify source/deployed revision.",
+      "Relevant input/identity/state risks plus source-grounded remaining price/concurrency concerns.",
+      "Status and state assertions cover rejected writes, spoofed identity, boundary and removal transitions.",
+      "38 HTTP records with actual payloads; assertion file and owner audit corroborate results.",
+      "Control yields no confirmed discrepancy; price concern remains risk and 3.0 rejection is reported as observation.",
+      "146 seconds, 38 API requests, no browser; Alice restored, Bob removal disclosed for owner reset."
+    ],
+    "expected_found": 0,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 146,
+    "browser_actions_reported": 0
+  },
+  "run12": {
+    "scores": [
+      2,
+      2,
+      2,
+      1,
+      2,
+      2
+    ],
+    "reasons": [
+      "Explicit runtime-only mode, source/deployment unknown; no source speculation asserted as fact.",
+      "Prioritized forbidden saves, totals, role and error-recovery risks with useful next probes.",
+      "Pointer/keyboard Cancel, valid Save, invalid-input contrast and independent saved-state reads.",
+      "Opened screenshots and direct API evidence; automatic mutation traffic not captured, invalid API sequence checked only with one final read.",
+      "UI-1 correct; default-submit mechanism clearly a hypothesis. High provisional severity is debatable within sample impact.",
+      "27 API requests corroborated, 25 reported browser control actions, 246 seconds; fixtures restored and owned tab closed."
+    ],
+    "expected_found": 1,
+    "false_positives": 0,
+    "unresolved_claims": 0,
+    "elapsed_seconds_reported": 246,
+    "browser_actions_reported": 25
+  }
+}

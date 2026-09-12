@@ -1,0 +1,3 @@
+Browser tab: 1535564406, Title: "Awesome Testing", URL: "https://awesome.byst.re/login".
+There has been no change in the accessibility tree.
+The focused UI element is 13 text field (settable) Username

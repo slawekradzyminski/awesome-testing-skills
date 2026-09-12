@@ -1,0 +1,420 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Baseline and anonymous isolation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "bob",
+    "request": null,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Baseline and anonymous isolation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 401,
+    "identity": null,
+    "request": null,
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Baseline and anonymous isolation"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "identity": "alice",
+    "request": {
+      "quantity": -1
+    },
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid quantity or stock overflow"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Check rejection preserves state"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "identity": "alice",
+    "request": {
+      "quantity": 1.5
+    },
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid quantity or stock overflow"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Check rejection preserves state"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "identity": "alice",
+    "request": {},
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid quantity or stock overflow"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Check rejection preserves state"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "identity": "alice",
+    "request": {
+      "quantity": null
+    },
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid quantity or stock overflow"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Check rejection preserves state"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "identity": "alice",
+    "request": {
+      "quantity": "2"
+    },
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid quantity or stock overflow"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Check rejection preserves state"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "identity": "alice",
+    "request": {
+      "quantity": true
+    },
+    "response": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "action": "Invalid quantity or stock overflow"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Check rejection preserves state"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 409,
+    "identity": "alice",
+    "request": {
+      "quantity": 6
+    },
+    "response": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "action": "Invalid quantity or stock overflow"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Check rejection preserves state"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 401,
+    "identity": null,
+    "request": {
+      "quantity": 3
+    },
+    "response": {
+      "error": "Authentication required"
+    },
+    "action": "Anonymous update rejected"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Anonymous rejection preserves Alice state"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 200,
+    "identity": "alice",
+    "request": {
+      "quantity": 5
+    },
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "action": "Maximum stock accepted"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "bob",
+    "request": null,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Alice update does not change Bob"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/products",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "action": "Stock stays five after cart update"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 200,
+    "identity": "alice",
+    "request": {
+      "quantity": 1
+    },
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Restore Alice baseline"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "alice",
+    "request": null,
+    "response": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "action": "Final fixture restoration verification"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "identity": "bob",
+    "request": null,
+    "response": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "action": "Final fixture restoration verification"
+  }
+]

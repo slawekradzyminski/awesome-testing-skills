@@ -79,3 +79,5 @@ See [validation notes](docs/validation.md) for checks and their limits.
 ## Skill evaluations
 
 The [evaluation suite](evals/README.md) includes a kept sample application, frozen seeded defects and matching controls, source-only/runtime-only cases, evidence checks, and a reviewer rubric. Optional profiles connect to local or hosted Awesome LocalStack using public read-only tasks. Fresh agent runs and real testing evidence are evaluated separately from fixture unit tests.
+
+The [completed pilot assessment](evals/results/2026-09-12-retry.md) includes 16 fresh runs with and without skills. Both groups found the same seeded defects; the skill group produced stronger evidence on the primary cases. The report separates source-backed cases, fallback checks and real hosted observations, and states the limits of this small comparison.

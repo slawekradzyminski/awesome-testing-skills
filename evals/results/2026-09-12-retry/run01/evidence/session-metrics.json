@@ -1,0 +1,9 @@
+{
+  "start_utc": "2026-09-12T08:28:14+00:00",
+  "artifact_write_utc": "2026-09-12T08:30:57.410917+00:00",
+  "elapsed_seconds_to_artifact_write": 163.4,
+  "runtime_http_requests": 42,
+  "api_requests": 41,
+  "browser_actions": 0,
+  "notes": "Elapsed time excludes final artifact verification and final response. No token or cost metrics available."
+}

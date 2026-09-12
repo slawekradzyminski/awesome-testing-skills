@@ -1,0 +1,70 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "findings": [],
+  "risks": [
+    {
+      "area": "Authentication and recovery",
+      "reason": "Public read-only scope prohibits all submissions; core success/error/MFA/delivery outcomes unobserved",
+      "priority": "high",
+      "next_probe": "Authorized disposable session for login, MFA, recovery and return navigation"
+    },
+    {
+      "area": "API authorization",
+      "reason": "All direct requests including public login received 403; browser login 200. Edge rejection prevents application-layer conclusions",
+      "priority": "medium",
+      "next_probe": "Use an authorized known client and known deployed revision to check public docs and unauthenticated products/cart"
+    },
+    {
+      "area": "Keyboard and autocomplete",
+      "reason": "Four Tab presses executed but returned focus values were not retained; browser reports missing autocomplete",
+      "priority": "low",
+      "next_probe": "Capture full focus order and password-manager behavior without assuming browser heuristics fail"
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/login",
+      "status": 403,
+      "action": "Direct Python GET, no credentials; login is contrasting public control",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/v3/api-docs",
+      "status": 403,
+      "action": "Direct Python GET, no credentials; login is contrasting public control",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 403,
+      "action": "Direct Python GET, no credentials; login is contrasting public control",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 403,
+      "action": "Direct Python GET, no credentials; login is contrasting public control",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/login",
+      "status": 200,
+      "action": "Open fresh browser on public login",
+      "evidence": "evidence/browser-requests.txt"
+    }
+  ],
+  "limitations": [
+    "No forms submitted, authentication, reset delivery, account creation, SSO or MFA exercised",
+    "Committed source revision and deployed match unknown; source tests inspected but not executed",
+    "Direct HTTP edge rejection prevents backend authorization conclusions",
+    "Sampled desktop/narrow Chrome only; no full keyboard, screen reader, real device or external destination test",
+    "No findings does not establish absence of defects"
+  ],
+  "cleanup": "Closed own retry14 browser; no application/source changes, submissions, records, mocks, emails or external issues. Evidence and local CLI artifacts remain."
+}

@@ -8,6 +8,8 @@ This suite evaluates an agent using the API/UI skills. It keeps three kinds of e
 
 The first category cannot substitute for the other two. `harness.py grade` performs deterministic integrity checks; an evidence-based review using [rubric.md](rubric.md) decides the testing-quality result.
 
+The **primary comparison uses source plus runtime**. Supply the actual backend, frontend and stack sources for live runs. The explicitly source-only/runtime-only cases are supplementary robustness checks that deliberately restrict access; they are not evidence that available project source was missing. Report their results separately from the primary comparison.
+
 ## Kept sample repository
 
 [sample-app](sample-app/) is a small self-contained application that stays in this repository. It requires Python 3.10+ and an available browser agent for UI work. It uses Awesome LocalStack's product/cart route conventions and quantity rules, but has its own implementation, disposable identities, and in-memory state. It is not a copy of Spring, React, SSO, or the production stack. See [requirements](sample-app/requirements.md).
@@ -37,16 +39,16 @@ Always stop owned fixtures, including after failed evaluations. Preparation and 
 
 For a baseline comparison, prepare the same case with `--without-skill` and use another fresh agent context. Keep the model, budget, tool versions, and environment fixed. The baseline retains the same task and output contract. Repeated runs and counterbalanced order are needed before claiming an improvement due to the skill.
 
-| Case | Surface | Access | Purpose (evaluator-only) |
+| Case | Surface | Group / access | Purpose (evaluator-only) |
 | --- | --- | --- | --- |
-| api-01 | API | Source + runtime | Detect persisted negative quantity |
-| api-02 | API | Source + runtime | Matching control; evaluate restraint and risk assessment |
-| ui-01 | UI | Source + runtime | Detect Cancel sending an update and persisting it |
-| ui-02 | UI | Source + runtime | Matching control; inspect ordinary Save/Cancel behavior |
-| api-03 | API | Source only | Find code-level defect without claiming runtime execution |
-| ui-03 | UI | Runtime only | Explore without repeatedly blocking on missing source |
+| api-01 | API | Primary: source + runtime | Detect persisted negative quantity |
+| api-02 | API | Primary: source + runtime | Matching control; evaluate restraint and risk assessment |
+| ui-01 | UI | Primary: source + runtime | Detect Cancel sending an update and persisting it |
+| ui-02 | UI | Primary: source + runtime | Matching control; inspect ordinary Save/Cancel behavior |
+| api-03 | API | Supplementary: source only | Find code-level defect without claiming runtime execution |
+| ui-03 | UI | Supplementary: runtime only | Explore without repeatedly blocking on missing source |
 
-Candidates receive neutral application tasks with a five-minute budget, up to 60 API requests or 45 browser actions. The fixture's server audit corroborates requests; a reviewer checks browser actions, opened screenshots, meaning of findings, and untested claims. The harness currently reports request counts but does not automatically measure browser-action counts or token usage. Record those from the runner transcript when available.
+Candidates receive neutral application tasks with a five-minute budget, up to 60 API requests or 45 browser actions. The fixture's server audit corroborates requests; a reviewer checks browser actions, opened screenshots, meaning of findings, and untested claims. Audit route paths omit query strings: the grader matches the parsed route and flags query-bearing observations for manual evidence review. It does not independently prove query/header/body-specific claims. The harness currently reports request counts but does not automatically measure browser-action counts or token usage. Record those from the runner transcript when available.
 
 To verify the browser fixture itself, with `playwright-cli` and a browser installed:
 
@@ -68,9 +70,9 @@ python3 evals/harness.py prepare-live localstack-hosted-api \
   --stack /path/to/awesome-localstack
 ```
 
-For UI source context, add `--frontend /path/to/vite-react-frontend`. Source snapshots are taken from each checkout's committed HEAD; uncommitted changes and Git history are excluded. This preserves the original working trees and records revisions/hashes. Source snapshots may still contain private project information; runs remain local until reviewed for publication. They are not evidence that the deployment uses those commits. With no supplied source, the task explicitly uses runtime-only exploration.
+For UI source context, add `--frontend /path/to/vite-react-frontend`. Source snapshots are taken from each checkout's committed HEAD; uncommitted changes and Git history are excluded. This preserves the original working trees and records revisions/hashes. Candidates receive the commit IDs in `source-revisions.json`, so they do not need Git history to identify supplied source. Source snapshots may still contain private project information; runs remain local until reviewed for publication. They are not evidence that the deployment uses those commits. With no supplied source, the task explicitly uses runtime-only exploration; use that mode only for a deliberate fallback test, not the primary source-informed comparison.
 
-Preflight performs two public GETs (`/login` and `/v3/api-docs`) and reports availability. It does not log in or verify application correctness. Optional browser tasks inspect public login UI, keyboard/focus, layout, and passive network observations without submitting forms. API tasks are limited to the public contract and unauthenticated product/cart access. The generator does not accept an arbitrary target override.
+Preflight performs two public GETs (`/login` and `/v3/api-docs`) and reports availability. It identifies itself as `exploratory-testing-skills/1.0`; an earlier default urllib identity received edge 403 responses while curl and the identified client succeeded. A client-specific rejection is not proof that the application is unavailable to ordinary users. Preflight does not log in or verify application correctness. Optional browser tasks inspect public login UI, keyboard/focus, layout, and passive network observations without submitting forms. API tasks are limited to the public contract and unauthenticated product/cart access. The generator does not accept an arbitrary target override.
 
 For deeper authenticated exploration, use a separately authorized disposable deployment, dedicated accounts, a mutation/cleanup scope, and appropriate time/request limits. Define that as a new profile/task; do not repurpose the hosted public task to sign in or send writes. Do not apply seeded mutations to either hosted deployment. Live findings require manual adjudication and have no known complete bug oracle.
 
@@ -90,4 +92,4 @@ Authoritative deployment instructions remain in [Awesome LocalStack](https://git
 
 Reviewed, sanitized results can be committed under [results/](results/). Keep raw run workspaces, credentials, browser storage, and unreviewed traces out of Git. Record the fixture/skill hashes, model when known, runner/tools, prompt, grading rationale, and material limitations. Do not describe this sample as a hidden benchmark once evaluators have seen its answers.
 
-The [September 12, 2026 result](results/2026-09-12.md) records passing infrastructure checks and the access/usage limits that prevented independent skill scores.
+The [completed September 12 retry assessment](results/2026-09-12-retry.md) records 16 fresh runs, a condition-blind review of the 12 sample reports, and source-backed hosted API/UI comparisons. Both conditions identified both seeded defects; primary artifact scores averaged 11.75/12 with skills and 10.0/12 without. This is a small development pilot, not evidence of a general bug-discovery improvement. The [initial result](results/2026-09-12.md) preserves the earlier usage-blocked attempt.

@@ -1,0 +1,30 @@
+Browser tab: 1535564406, Title: "Awesome Testing", URL: "https://awesome.byst.re/login".
+0 AXWebArea Awesome Testing, URL: awesome.byst.re/login
+	1 container root
+		2 container
+			3 link Description: Awesome Testing, Value: awesome.byst.re/login
+			4 link Description: Login, Value: awesome.byst.re/login
+			5 link Description: Register, Value: awesome.byst.re/register
+			6 container
+				7 text AWESOME TESTING
+				8 heading Sign in to your account, Value: 2
+					9 text Sign in to your account
+				10 text Step into the operations workspace for product management, live monitoring, and AI-assisted testing flows. Public training playground only. Use fake data, expect resets, and do not treat this environment as private or production-grade.
+			11 container
+				12 text Username
+				13 text field (settable) Username
+				14 text Password
+				15 text field (settable) Password
+				16 button Forgot password?
+				17 button Sign in
+				18 text Don't have an account? 
+				19 button Register
+			20 text STAY IN TOUCH
+			21 text Follow Awesome Testing blog, author's LinkedIn, or buy me a coffee.
+			22 link Description: Read the blog, Value: awesome-testing.com/
+			23 link Description: Follow on LinkedIn, Value: linkedin.com/in/slawekradzyminski/?locale=en
+			24 link Description: Buy me a coffee, Value: buymeacoffee.com/awesometesting
+		25 container Notifications (F8)
+			26 content list
+
+The focused UI element is 0 AXWebArea Awesome Testing, URL: awesome.byst.re/login

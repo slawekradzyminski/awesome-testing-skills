@@ -1,0 +1,298 @@
+[
+  {
+    "check": "Alice baseline status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Bob baseline status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Product baseline status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Fixture baseline",
+    "passed": true
+  },
+  {
+    "check": "Anonymous read rejected status",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "check": "Anonymous read rejected status",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "check": "Anonymous update rejected status",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "check": "Unknown fixture token rejected status",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "check": "Query cannot select Bob cart status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Reject quantity -1 status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Read after rejection -1 status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Rejected -1 preserved Alice baseline",
+    "passed": true
+  },
+  {
+    "check": "Reject quantity 1.5 status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Read after rejection 1.5 status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Rejected 1.5 preserved Alice baseline",
+    "passed": true
+  },
+  {
+    "check": "Reject quantity None status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Read after rejection None status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Rejected None preserved Alice baseline",
+    "passed": true
+  },
+  {
+    "check": "Reject quantity '3' status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Read after rejection '3' status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Rejected '3' preserved Alice baseline",
+    "passed": true
+  },
+  {
+    "check": "Reject quantity True status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Read after rejection True status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Rejected True preserved Alice baseline",
+    "passed": true
+  },
+  {
+    "check": "Reject quantity False status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Read after rejection False status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Rejected False preserved Alice baseline",
+    "passed": true
+  },
+  {
+    "check": "Reject malformed/type request {} status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Reject malformed/type request [] status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Reject malformed/type request null status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Reject malformed/type request {\"quantity\": status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Reject malformed/type request {\"quantity\":3.0} status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Read after malformed/type requests status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "All extra invalid bodies preserve Alice",
+    "passed": true
+  },
+  {
+    "check": "Accept exact stock with spoofed username body status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Stock boundary totals and authenticated actor",
+    "passed": true
+  },
+  {
+    "check": "Bob after Alice body spoof status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Spoofed username did not update Bob",
+    "passed": true
+  },
+  {
+    "check": "Catalog after cart update status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Stock is not decremented",
+    "passed": true
+  },
+  {
+    "check": "Reject stock plus one status",
+    "passed": true,
+    "expected": 409,
+    "actual": 409
+  },
+  {
+    "check": "Read after stock rejection status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Stock rejection preserves five",
+    "passed": true
+  },
+  {
+    "check": "Unknown cart item rejected status",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "check": "Invalid product ID rejected status",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "Restore Alice quantity status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Restore Alice baseline",
+    "passed": true
+  },
+  {
+    "check": "Remove Bob item using quantity zero status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Zero removes item and clears totals",
+    "passed": true
+  },
+  {
+    "check": "Read after Bob removal status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Removal persisted",
+    "passed": true
+  },
+  {
+    "check": "Final Alice verification status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Bob removal leaves Alice unchanged",
+    "passed": true
+  },
+  {
+    "check": "Final catalog verification status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Removal leaves stock unchanged",
+    "passed": true
+  }
+]

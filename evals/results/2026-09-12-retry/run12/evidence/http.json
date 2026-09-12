@@ -1,0 +1,246 @@
+[
+  {
+    "action": "baseline alice",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    }
+  },
+  {
+    "action": "baseline bob",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  },
+  {
+    "action": "after UI Cancel 1 to 3",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "action": "after UI Save quantity 2",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  },
+  {
+    "action": "Bob remains isolated",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  },
+  {
+    "action": "anonymous rejected",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 401,
+    "body": {
+      "error": "Authentication required"
+    }
+  },
+  {
+    "action": "excess stock",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 409,
+    "body": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "request_body": {
+      "quantity": 6
+    }
+  },
+  {
+    "action": "verify unchanged after excess stock",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  },
+  {
+    "action": "invalid quantity -1",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": -1
+    }
+  },
+  {
+    "action": "invalid quantity 1.5",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": 1.5
+    }
+  },
+  {
+    "action": "invalid quantity None",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": null
+    }
+  },
+  {
+    "action": "invalid quantity '2'",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": "2"
+    }
+  },
+  {
+    "action": "invalid quantity True",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": true
+    }
+  },
+  {
+    "action": "missing quantity",
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {}
+  },
+  {
+    "action": "verify unchanged after invalid matrix",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  },
+  {
+    "action": "cleanup verification alice",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    }
+  },
+  {
+    "action": "cleanup verification bob",
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  }
+]

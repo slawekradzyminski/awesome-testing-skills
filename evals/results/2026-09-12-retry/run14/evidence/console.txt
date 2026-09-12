@@ -1,0 +1,6 @@
+### Result
+Total messages: 3 (Errors: 0, Warnings: 0)
+
+[VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://awesome.byst.re/login:0
+[VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://awesome.byst.re/login:0
+[VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://awesome.byst.re/register:0

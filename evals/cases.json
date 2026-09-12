@@ -1,11 +1,61 @@
 {
   "version": 1,
   "cases": [
-    {"id": "api-01", "skill": "api-exploratory-testing", "variant": "quantity", "access": "source-runtime", "expected_requirements": ["CART-2"]},
-    {"id": "api-02", "skill": "api-exploratory-testing", "variant": "control", "access": "source-runtime", "expected_requirements": []},
-    {"id": "ui-01", "skill": "ui-exploratory-testing", "variant": "cancel", "access": "source-runtime", "expected_requirements": ["UI-1"]},
-    {"id": "ui-02", "skill": "ui-exploratory-testing", "variant": "control", "access": "source-runtime", "expected_requirements": []},
-    {"id": "api-03", "skill": "api-exploratory-testing", "variant": "quantity", "access": "source-only", "expected_requirements": ["CART-2"]},
-    {"id": "ui-03", "skill": "ui-exploratory-testing", "variant": "cancel", "access": "runtime-only", "expected_requirements": ["UI-1"]}
+    {
+      "id": "api-01",
+      "skill": "api-exploratory-testing",
+      "variant": "quantity",
+      "access": "source-runtime",
+      "expected_requirements": [
+        "CART-2"
+      ],
+      "group": "primary-source-runtime"
+    },
+    {
+      "id": "api-02",
+      "skill": "api-exploratory-testing",
+      "variant": "control",
+      "access": "source-runtime",
+      "expected_requirements": [],
+      "group": "primary-source-runtime"
+    },
+    {
+      "id": "ui-01",
+      "skill": "ui-exploratory-testing",
+      "variant": "cancel",
+      "access": "source-runtime",
+      "expected_requirements": [
+        "UI-1"
+      ],
+      "group": "primary-source-runtime"
+    },
+    {
+      "id": "ui-02",
+      "skill": "ui-exploratory-testing",
+      "variant": "control",
+      "access": "source-runtime",
+      "expected_requirements": [],
+      "group": "primary-source-runtime"
+    },
+    {
+      "id": "api-03",
+      "skill": "api-exploratory-testing",
+      "variant": "quantity",
+      "access": "source-only",
+      "expected_requirements": [
+        "CART-2"
+      ],
+      "group": "supplementary-fallback"
+    },
+    {
+      "id": "ui-03",
+      "skill": "ui-exploratory-testing",
+      "variant": "cancel",
+      "access": "runtime-only",
+      "expected_requirements": [
+        "UI-1"
+      ],
+      "group": "supplementary-fallback"
+    }
   ]
 }

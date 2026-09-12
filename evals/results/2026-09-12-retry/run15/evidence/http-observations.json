@@ -1,0 +1,56 @@
+[
+  {
+    "method": "GET",
+    "path": "/login",
+    "status": 200,
+    "elapsed_s": 0.159,
+    "bytes": 1160,
+    "evidence": "evidence/01-login.body",
+    "headers": "evidence/01-login.headers"
+  },
+  {
+    "method": "GET",
+    "path": "/v3/api-docs",
+    "status": 200,
+    "elapsed_s": 0.189,
+    "bytes": 69747,
+    "evidence": "evidence/02-v3-api-docs.body",
+    "headers": "evidence/02-v3-api-docs.headers"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/products",
+    "status": 401,
+    "elapsed_s": 0.151,
+    "bytes": 34,
+    "evidence": "evidence/03-api-v1-products.body",
+    "headers": "evidence/03-api-v1-products.headers"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 401,
+    "elapsed_s": 0.151,
+    "bytes": 34,
+    "evidence": "evidence/04-api-v1-cart.body",
+    "headers": "evidence/04-api-v1-cart.headers"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/products",
+    "status": 401,
+    "elapsed_s": 0.172,
+    "bytes": 34,
+    "evidence": "evidence/05-repeat-api-v1-products.body",
+    "headers": "evidence/05-repeat-api-v1-products.headers"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 401,
+    "elapsed_s": 0.152,
+    "bytes": 34,
+    "evidence": "evidence/06-repeat-api-v1-cart.body",
+    "headers": "evidence/06-repeat-api-v1-cart.headers"
+  }
+]

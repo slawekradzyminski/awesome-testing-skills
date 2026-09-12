@@ -1,0 +1,13 @@
+OpenAPI version: 3.1.0
+Server URL: https://awesome.byst.re
+Operation count: 53
+Unresolved local schema references: []
+Duplicate operation IDs: []
+GET /api/v1/products: security=[{'bearerAuth': []}]
+401 documented schema: {"type": "array", "items": {"$ref": "#/components/schemas/ProductDto"}}
+Observed 401 body: {"message": "Unauthorized"}
+Top-level array contract matches observed response: False (expected array, actual object)
+GET /api/v1/cart: security=[{'bearerAuth': []}]
+401 documented schema: {"$ref": "#/components/schemas/CartDto"}
+Observed 401 body: {"message": "Unauthorized"}
+CartDto declares cart properties, no required list or additionalProperties:false. The error object is misleadingly documented as CartDto but is not proved invalid under its permissive JSON schema.

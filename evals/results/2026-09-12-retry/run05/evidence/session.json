@@ -1,0 +1,14 @@
+{
+  "base_url": "http://127.0.0.1:64179",
+  "requests": 49,
+  "browser_actions": 0,
+  "probe_elapsed_seconds": 0.027,
+  "source_revision": "No revision metadata supplied; only candidate directory inspected",
+  "source_sha256": {
+    "app/app.py": "3cd1941d80e007428cfe9ac3469e93af0dfbfc24325ac29efebcc1d84313a2b7",
+    "app/domain.py": "29f6253b888664112d06fc9fbef9eb996ce04b89ce5d045184aa7c77a42527ec",
+    "app/test_domain.py": "dfda44c0719a4ea5a3a0332af38274ee707f74f9e9c0ab3a627f183dd7e7cca1",
+    "requirements.md": "e1a2c940c23976129e1e4fb26d1c3132b15b56e21b4ed98be20593325d4861aa"
+  },
+  "cleanup": "Alice restored to original quantity 1 and confirmed by GET. Bob item removed by terminal zero test; no supported re-add/reset endpoint. Fixture owner can restart to restore Bob. Server left running."
+}

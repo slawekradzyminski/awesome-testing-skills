@@ -1,0 +1,1190 @@
+[
+  {
+    "number": 1,
+    "method": "GET",
+    "path": "/health",
+    "role": "anonymous",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "39"
+    },
+    "body": {
+      "status": "UP",
+      "version": "sample-1"
+    },
+    "elapsed_ms": 8.67,
+    "action": "Identify deployed build"
+  },
+  {
+    "number": 2,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "elapsed_ms": 0.38,
+    "action": "Capture Alice initial state"
+  },
+  {
+    "number": 3,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "bob",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "98"
+    },
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "elapsed_ms": 0.28,
+    "action": "Capture Bob initial state"
+  },
+  {
+    "number": 4,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "73"
+    },
+    "body": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "elapsed_ms": 0.32,
+    "action": "Establish current product price and available stock"
+  },
+  {
+    "number": 5,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "anonymous",
+    "request": null,
+    "status": 401,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "36"
+    },
+    "body": {
+      "error": "Authentication required"
+    },
+    "elapsed_ms": 0.33,
+    "action": "Anonymous access boundary"
+  },
+  {
+    "number": 6,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "role": "anonymous",
+    "request": null,
+    "status": 401,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "36"
+    },
+    "body": {
+      "error": "Authentication required"
+    },
+    "elapsed_ms": 0.34,
+    "action": "Anonymous access boundary"
+  },
+  {
+    "number": 7,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "anonymous",
+    "request": {
+      "quantity": 4
+    },
+    "status": 401,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "36"
+    },
+    "body": {
+      "error": "Authentication required"
+    },
+    "elapsed_ms": 0.3,
+    "action": "Anonymous mutation boundary"
+  },
+  {
+    "number": 8,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "invalid",
+    "request": null,
+    "status": 401,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "36"
+    },
+    "body": {
+      "error": "Authentication required"
+    },
+    "elapsed_ms": 0.29,
+    "action": "Unknown bearer token boundary"
+  },
+  {
+    "number": 9,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "elapsed_ms": 0.26,
+    "action": "Confirm rejected anonymous mutation preserved state"
+  },
+  {
+    "number": 10,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 3
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.32,
+    "action": "Representative valid update, totals and persistence"
+  },
+  {
+    "number": 11,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.26,
+    "action": "Read after valid update"
+  },
+  {
+    "number": 12,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "bob",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "98"
+    },
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "elapsed_ms": 0.24,
+    "action": "Verify Alice update did not change Bob"
+  },
+  {
+    "number": 13,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": -1
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.25,
+    "action": "Reject invalid quantity type/value -1"
+  },
+  {
+    "number": 14,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.23,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 15,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 1.5
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.24,
+    "action": "Reject invalid quantity type/value 1.5"
+  },
+  {
+    "number": 16,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.22,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 17,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": null
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.25,
+    "action": "Reject invalid quantity type/value None"
+  },
+  {
+    "number": 18,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.26,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 19,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": "3"
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.25,
+    "action": "Reject invalid quantity type/value '3'"
+  },
+  {
+    "number": 20,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.24,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 21,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": true
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.24,
+    "action": "Reject invalid quantity type/value True"
+  },
+  {
+    "number": 22,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.22,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 23,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": false
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.24,
+    "action": "Reject invalid quantity type/value False"
+  },
+  {
+    "number": 24,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.23,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 25,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": []
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.23,
+    "action": "Reject invalid quantity type/value []"
+  },
+  {
+    "number": 26,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.3,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 27,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": {}
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.29,
+    "action": "Reject invalid quantity type/value {}"
+  },
+  {
+    "number": 28,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.26,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 29,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 3.0
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.25,
+    "action": "Reject invalid quantity type/value 3.0"
+  },
+  {
+    "number": 30,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.22,
+    "action": "Verify invalid update left quantity three and total 36"
+  },
+  {
+    "number": 31,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {},
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "52"
+    },
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "elapsed_ms": 0.22,
+    "action": "Missing quantity must reject"
+  },
+  {
+    "number": 32,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    },
+    "elapsed_ms": 0.19,
+    "action": "Verify missing quantity preserved state"
+  },
+  {
+    "number": 33,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 5
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "elapsed_ms": 0.21,
+    "action": "Stock inclusive boundary must succeed"
+  },
+  {
+    "number": 34,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 6
+    },
+    "status": 409,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55"
+    },
+    "body": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "elapsed_ms": 0.2,
+    "action": "Stock boundary plus one must reject"
+  },
+  {
+    "number": 35,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5,
+      "totalPrice": 60
+    },
+    "elapsed_ms": 0.18,
+    "action": "Verify excess stock rejection left quantity five"
+  },
+  {
+    "number": 36,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "73"
+    },
+    "body": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "elapsed_ms": 0.18,
+    "action": "Verify updates do not decrement stock"
+  },
+  {
+    "number": 37,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1?username=bob",
+    "role": "alice",
+    "request": {
+      "quantity": 4,
+      "username": "bob"
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 4
+        }
+      ],
+      "totalItems": 4,
+      "totalPrice": 48
+    },
+    "elapsed_ms": 0.2,
+    "action": "Try client supplied identity override"
+  },
+  {
+    "number": 38,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "bob",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "98"
+    },
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    },
+    "elapsed_ms": 0.19,
+    "action": "Verify spoofed identity did not change Bob"
+  },
+  {
+    "number": 39,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 4
+        }
+      ],
+      "totalItems": 4,
+      "totalPrice": 48
+    },
+    "elapsed_ms": 0.23,
+    "action": "Verify actor Alice received spoof attempt update"
+  },
+  {
+    "number": 40,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": "{",
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "28"
+    },
+    "body": {
+      "error": "Invalid request"
+    },
+    "elapsed_ms": 0.27,
+    "action": "Malformed JSON parser boundary"
+  },
+  {
+    "number": 41,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": "[]",
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "35"
+    },
+    "body": {
+      "error": "Expected a JSON object"
+    },
+    "elapsed_ms": 0.23,
+    "action": "Non-object JSON parser boundary"
+  },
+  {
+    "number": 42,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 4
+        }
+      ],
+      "totalItems": 4,
+      "totalPrice": 48
+    },
+    "elapsed_ms": 0.23,
+    "action": "Verify parser failures preserved state"
+  },
+  {
+    "number": 43,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/999",
+    "role": "alice",
+    "request": {
+      "quantity": 1
+    },
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "32"
+    },
+    "body": {
+      "error": "Cart item not found"
+    },
+    "elapsed_ms": 0.24,
+    "action": "Unknown existing-cart item"
+  },
+  {
+    "number": 44,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 4
+        }
+      ],
+      "totalItems": 4,
+      "totalPrice": 48
+    },
+    "elapsed_ms": 0.21,
+    "action": "Verify missing item update preserved state"
+  },
+  {
+    "number": 45,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 1
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "elapsed_ms": 0.22,
+    "action": "Restore Alice baseline"
+  },
+  {
+    "number": 46,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "100"
+    },
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    },
+    "elapsed_ms": 0.2,
+    "action": "Confirm Alice cleanup"
+  },
+  {
+    "number": 47,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "bob",
+    "request": {
+      "quantity": 0
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "66"
+    },
+    "body": {
+      "username": "bob",
+      "items": [],
+      "totalItems": 0,
+      "totalPrice": 0
+    },
+    "elapsed_ms": 0.23,
+    "action": "Terminal zero-removal boundary on disposable Bob fixture"
+  },
+  {
+    "number": 48,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "bob",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "66"
+    },
+    "body": {
+      "username": "bob",
+      "items": [],
+      "totalItems": 0,
+      "totalPrice": 0
+    },
+    "elapsed_ms": 0.26,
+    "action": "Confirm removal persisted and both totals equal zero"
+  },
+  {
+    "number": 49,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "role": "alice",
+    "request": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 08:33:10 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "73"
+    },
+    "body": [
+      {
+        "id": 1,
+        "name": "Workshop notebook",
+        "price": 12,
+        "stockQuantity": 5
+      }
+    ],
+    "elapsed_ms": 0.22,
+    "action": "Verify removal does not change catalog stock"
+  }
+]

@@ -1,0 +1,27 @@
+Browser tab: 1535564406, Title: "Awesome Testing", URL: "https://awesome.byst.re/forgot-password".
+0 AXWebArea Awesome Testing, URL: awesome.byst.re/forgot-password
+	1 container root
+		2 container
+			3 link Description: Awesome Testing, Value: awesome.byst.re/login
+			4 link Description: Login, Value: awesome.byst.re/login
+			5 link Description: Register, Value: awesome.byst.re/register
+			6 container
+				7 image Awesome Testing
+				8 text PASSWORD RECOVERY
+				9 heading Forgot password, Value: 2
+					10 text Forgot password
+				11 text Enter your username or e-mail and we will send a password reset link. Single step Request a reset with either username or e-mail. Safe flow The response stays neutral even when an account does not exist. Local dev Developer token output remains visible for local workflows.
+			12 container
+				13 text Username or email
+				14 text field (settable) Username or email
+				15 button Send reset link
+				16 button Back to login
+			17 text STAY IN TOUCH
+			18 text Follow Awesome Testing blog, author's LinkedIn, or buy me a coffee.
+			19 link Description: Read the blog, Value: awesome-testing.com/
+			20 link Description: Follow on LinkedIn, Value: linkedin.com/in/slawekradzyminski/?locale=en
+			21 link Description: Buy me a coffee, Value: buymeacoffee.com/awesometesting
+		22 container Notifications (F8)
+			23 content list
+
+The focused UI element is 0 AXWebArea Awesome Testing, URL: awesome.byst.re/forgot-password

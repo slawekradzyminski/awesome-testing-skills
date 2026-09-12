@@ -1,0 +1,9 @@
+Assessment start UTC: 2026-09-12T08:36:47+00:00
+Artifact validation UTC: 2026-09-12T08:39:16.008768+00:00
+Elapsed through validation: 149.0 seconds (limit 300 seconds).
+API requests: 0 / 60. Browser actions: 0 / 45.
+Application executions: 0. Existing test executions: 0.
+Tool accounting through this validation: 7 functions.exec calls, containing 7 exec_command calls, 2 clock reads, and 1 apply_patch call.
+Shell actions read source, created evidence, and validated artifact JSON/paths; no app imports, server startup or network requests.
+Validation: submission JSON parses; runtime flag false; HTTP observations empty; finding statuses code-evidenced; cited finding evidence files exist.
+Token and billing usage metrics unavailable; not estimated.

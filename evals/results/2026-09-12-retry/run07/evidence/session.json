@@ -1,0 +1,9 @@
+{
+  "started_utc": "2026-09-12T08:35:08+00:00",
+  "report_generated_utc": "2026-09-12T08:38:02.160097+00:00",
+  "elapsed_seconds_through_report_generation": 174.160097,
+  "api_requests": 56,
+  "browser_actions": 0,
+  "existing_unit_tests": 2,
+  "source_modified": false
+}
