@@ -18,10 +18,12 @@ Detailed guidance loads through references at the point of use. Each skill remai
 Requires **Node.js 20+**, npm/npx and Git. From the project where you want to use the skills:
 
 ```sh
-npx --yes --package='git+ssh://git@github.com/slawekradzyminski/exploratory-testing-skills.git#main' exploratory-skills --agent claude
+npx --yes --allow-git=root --package='git+ssh://git@github.com/slawekradzyminski/exploratory-testing-skills.git#main' exploratory-skills --agent claude
 ```
 
 Replace `claude` with **`codex`**, **`cursor`** or **`copilot`**. Both skills and their references are installed in the current project. The repository is currently private: the command requires GitHub access and working SSH authentication. It runs the package directly from Git; no npm-registry release or npm account is required. See [npm's execution documentation](https://docs.npmjs.com/cli/npm-exec/).
+
+The command opts into fetching this direct Git package with `--allow-git=root`; npm 12 blocks Git packages by default. This setting applies only to this invocation. Older npm versions that do not recognize the flag can omit it. See [npm's Git-fetch configuration](https://docs.npmjs.com/cli/install/#allow-git).
 
 Add options to that command as needed:
 
