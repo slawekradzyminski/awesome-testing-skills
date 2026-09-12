@@ -1,0 +1,7 @@
+{
+  "useful_outcome_met": true,
+  "disposition": "useful-clean-control",
+  "reason": "27 evidenced checks and 58 HTTP requests, including ASCII/Unicode maximum acceptance, invalid-write absence and duplicate preservation. Correctly recognized 1020-byte guard as compatible with 255-character contract, no invented defect. Seven DELETE 204 responses; final baseline absence verified, other deletions not individually read back and explicitly qualified.",
+  "runtime_result": "tested-no-confirmed-defects",
+  "sources_missing": false
+}

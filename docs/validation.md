@@ -81,3 +81,7 @@ The added guidance was manually walked through against these decision cases:
 | A failing sequence passes only after reusing changed test data | Preserve the first evidence and compare fresh-state reproduction instead of treating the retry as a clean pass |
 
 HTTP retry/idempotency and acceptance guidance was checked against the linked RFC 9110 sections; workflow guidance links to OWASP WSTG. These additions have not been independently tested with another agent. The original live smoke evidence remains valid for the unchanged fixture and should not be read as validation of the new asynchronous or concurrency techniques.
+
+## Practical benchmark follow-up — September 12, 2026
+
+The [usability extension](../evals/results/2026-09-12-usability.md) added explicit passing/blocked/missing-source outcomes and course-derived validation cases. Observed failures led to two narrow skill changes: stop unavailable-service probe batches, and explain what relevant source could add to a completed runtime-only assessment. Fresh targeted reruns met those outcomes; initial failures remain preserved. These development cases are not held-out effectiveness evidence.

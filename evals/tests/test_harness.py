@@ -33,6 +33,94 @@ def request(base, method="GET", quantity=None):
 
 
 class HarnessTests(unittest.TestCase):
+    def test_unavailable_runtime_requires_honest_blocked_outcome(self):
+        with tempfile.TemporaryDirectory() as folder:
+            run = Path(folder) / "run"
+            harness.prepare("api-05", run)
+            candidate = run / "candidate"
+            manifest = harness.read_json(run / "controller/manifest.json")
+            try:
+                status, payload = request(manifest["base_url"])
+                self.assertEqual(status, 503)
+                (candidate / "report.md").write_text("Application blocked by 503. Functional cart tests not run.")
+                (candidate / "evidence/http.txt").write_text(json.dumps({"status": status, "body": payload}))
+                report = {"source_access": True, "runtime_exercised": False, "runtime_status": "blocked",
+                    "checks": [{"name": "Read cart", "basis": "runtime", "status": "blocked", "expected": "Cart response",
+                        "actual": "503 gateway response", "evidence": ["evidence/http.txt"]}],
+                    "findings": [], "risks": [{"area": "cart", "reason": "Cannot reach application", "priority": "high", "next_probe": "Retry after service restored"}],
+                    "observations": [{"method": "GET", "path": "/api/v1/cart", "status": 503, "action": "Availability check", "evidence": "evidence/http.txt"}],
+                    "limitations": ["Functional runtime untested"], "cleanup": "No state changed"}
+                harness.write_json(candidate / "submission.json", report)
+                self.assertTrue(harness.grade(run)["artifact_checks_passed"])
+                report["runtime_exercised"] = True
+                report["runtime_status"] = "tested"
+                report["checks"][0]["status"] = "passed"
+                harness.write_json(candidate / "submission.json", report)
+                result = harness.grade(run)
+                self.assertFalse(result["artifact_checks_passed"])
+                self.assertIn("Unavailable runtime must be reported as blocked, not functionally tested", result["errors"])
+            finally:
+                harness.stop(run)
+
+    def test_runtime_only_clean_case_does_not_supply_source_or_answer(self):
+        with tempfile.TemporaryDirectory() as folder:
+            run = Path(folder) / "run"
+            harness.prepare("api-04", run)
+            try:
+                candidate = run / "candidate"
+                self.assertFalse((candidate / "app").exists())
+                self.assertTrue((run / "controller/runtime-app/domain.py").exists())
+                task = (candidate / "TASK.md").read_text()
+                self.assertIn("Source code cannot be shared", task)
+                self.assertNotIn("no-confirmed-defects", task)
+                self.assertNotIn("control", task)
+            finally:
+                harness.stop(run)
+
+    def test_check_outcomes_distinguish_access_and_unexecuted_work(self):
+        report = {"runtime_status": "blocked", "runtime_exercised": False,
+                  "checks": [{"name": "Cart check", "basis": "runtime", "status": "passed",
+                              "expected": "Cart", "actual": "Claimed success", "evidence": ["http.txt"]}]}
+        self.assertIn("Functional runtime check claimed without tested runtime", harness.check_outcomes(report, {"access": "source-runtime"}))
+        report["checks"][0].update(basis="source", status="passed")
+        self.assertIn("Source check claimed without source access", harness.check_outcomes(report, {"access": "runtime-only"}))
+
+    def test_course_mutations_have_matching_working_controls(self):
+        def send(base, method, path, body=None):
+            req = Request(base + path, method=method, data=json.dumps(body).encode() if body is not None else None,
+                          headers={"Content-Type": "application/json"})
+            try:
+                response = urlopen(req, timeout=3)
+            except HTTPError as error:
+                response = error
+            with response:
+                raw = response.read()
+                return response.status, json.loads(raw) if raw else None
+        with tempfile.TemporaryDirectory() as folder:
+            for case in ("api-06", "api-07", "api-08", "api-09"):
+                with self.subTest(case=case):
+                    run = Path(folder) / case
+                    harness.prepare(case, run)
+                    base = harness.read_json(run / "controller/manifest.json")["base_url"]
+                    try:
+                        if case in ("api-06", "api-07"):
+                            status, result = send(base, "POST", "/api/v1/users/signin", {"username": "x" * 256, "password": "xxxx"})
+                            self.assertEqual(status, 400)
+                            self.assertEqual("Minimum" in result["username"], case == "api-06")
+                            self.assertEqual(send(base, "POST", "/api/v1/users/signin", {"username": "xxxx", "password": "xxxx"})[0], 422)
+                        else:
+                            for idx, password in enumerate(("x" * 72, "x" * 73, "ą" * 37, "🌍" * 255)):
+                                name = f"synthetic-{idx}"
+                                status, _ = send(base, "POST", "/api/v1/users/signup", {"username": name, "email": name + "@example.test", "password": password})
+                                accepted = case == "api-09" or idx == 0
+                                self.assertEqual(status, 201 if accepted else 400)
+                                self.assertEqual(send(base, "GET", "/api/v1/users/" + name)[0], 200 if accepted else 404)
+                                if accepted:
+                                    self.assertEqual(send(base, "DELETE", "/api/v1/users/" + name)[0], 204)
+                                    self.assertEqual(send(base, "GET", "/api/v1/users/" + name)[0], 404)
+                    finally:
+                        harness.stop(run)
+
     def test_query_observation_matches_parsed_audit_path_without_weakening_status_check(self):
         record = {"method": "PUT", "path": "/api/v1/cart/items/1", "status": 200}
         observation = {"method": "PUT", "path": "/api/v1/cart/items/1?username=bob", "status": 200}
@@ -77,7 +165,9 @@ class HarnessTests(unittest.TestCase):
             (candidate / "report.md").write_text("Source-only assessment, runtime unavailable.")
             (candidate / "evidence/code.txt").write_text("The quantity guard checks type but not sign.")
             harness.write_json(candidate / "submission.json", {
-                "source_access": True, "runtime_exercised": False,
+                "source_access": True, "runtime_exercised": False, "runtime_status": "not-run",
+                "checks": [{"name": "Quantity sign guard", "basis": "source", "status": "failed",
+                            "expected": "Reject negatives", "actual": "Sign guard absent", "evidence": ["evidence/code.txt"]}],
                 "findings": [{"requirement_id": "CART-2", "title": "Missing quantity sign guard",
                               "status": "code-evidenced", "expected": "CART-2 rejects negatives",
                               "actual": "Negative integers pass the guard", "impact": "Potential invalid totals",

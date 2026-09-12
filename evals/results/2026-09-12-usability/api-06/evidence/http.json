@@ -1,0 +1,782 @@
+[
+  {
+    "number": 1,
+    "name": "build availability",
+    "time_utc": "2026-09-12T09:07:29.121231+00:00",
+    "method": "GET",
+    "path": "/health",
+    "request": null,
+    "raw_input_description": null,
+    "encoded_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "51"
+    },
+    "body": "{\"status\": \"UP\", \"version\": \"validation-fixture-1\"}",
+    "elapsed_ms": 9.45,
+    "expected_status": 200,
+    "status_matches": true
+  },
+  {
+    "number": 2,
+    "name": "no record before sign-in",
+    "time_utc": "2026-09-12T09:07:29.121999+00:00",
+    "method": "GET",
+    "path": "/api/v1/users/probe_c_0612",
+    "request": null,
+    "raw_input_description": null,
+    "encoded_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.43,
+    "expected_status": 404,
+    "status_matches": true
+  },
+  {
+    "number": 3,
+    "name": "valid representative",
+    "time_utc": "2026-09-12T09:07:29.122472+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 57,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.36,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 4,
+    "name": "username ASCII length 3",
+    "time_utc": "2026-09-12T09:07:29.122885+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "uuu",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 48,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"username\": \"Minimum username length: 4 characters\"}",
+    "elapsed_ms": 0.3,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 5,
+    "name": "username ASCII length 4",
+    "time_utc": "2026-09-12T09:07:29.123358+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "uuuu",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 49,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.35,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 6,
+    "name": "username ASCII length 255",
+    "time_utc": "2026-09-12T09:07:29.123901+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 300,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.39,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 7,
+    "name": "username ASCII length 256",
+    "time_utc": "2026-09-12T09:07:29.124414+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 301,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"username\": \"Minimum username length: 4 characters\"}",
+    "elapsed_ms": 0.38,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 8,
+    "name": "password ASCII length 3",
+    "time_utc": "2026-09-12T09:07:29.124929+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 3,
+        "utf8_bytes": 3
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 44,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"password\": \"Minimum password length: 4 characters\"}",
+    "elapsed_ms": 0.34,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 9,
+    "name": "password ASCII length 4",
+    "time_utc": "2026-09-12T09:07:29.125404+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 4,
+        "utf8_bytes": 4
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 45,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.35,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 10,
+    "name": "password ASCII length 255",
+    "time_utc": "2026-09-12T09:07:29.125847+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 255,
+        "utf8_bytes": 255
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 296,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.33,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 11,
+    "name": "password ASCII length 256",
+    "time_utc": "2026-09-12T09:07:29.126266+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 256,
+        "utf8_bytes": 256
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 297,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"password\": \"Minimum password length: 4 characters\"}",
+    "elapsed_ms": 0.29,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 12,
+    "name": "password Unicode length 3",
+    "time_utc": "2026-09-12T09:07:29.126667+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 3,
+        "utf8_bytes": 12
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 53,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"password\": \"Minimum password length: 4 characters\"}",
+    "elapsed_ms": 0.27,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 13,
+    "name": "password Unicode length 4",
+    "time_utc": "2026-09-12T09:07:29.127065+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 4,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 57,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.29,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 14,
+    "name": "password Unicode length 255",
+    "time_utc": "2026-09-12T09:07:29.127500+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 255,
+        "utf8_bytes": 1020
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 1061,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.32,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 15,
+    "name": "password Unicode length 256",
+    "time_utc": "2026-09-12T09:07:29.127947+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 256,
+        "utf8_bytes": 1024
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 1065,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"password\": \"Minimum password length: 4 characters\"}",
+    "elapsed_ms": 0.3,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 16,
+    "name": "username missing",
+    "time_utc": "2026-09-12T09:07:29.128375+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 31,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"username\": \"Minimum username length: 4 characters\"}",
+    "elapsed_ms": 0.3,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 17,
+    "name": "username null",
+    "time_utc": "2026-09-12T09:07:29.128848+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": null,
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 47,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"username\": \"Minimum username length: 4 characters\"}",
+    "elapsed_ms": 0.29,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 18,
+    "name": "username number",
+    "time_utc": "2026-09-12T09:07:29.129249+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": 12345,
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 48,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"username\": \"Minimum username length: 4 characters\"}",
+    "elapsed_ms": 0.27,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 19,
+    "name": "password missing",
+    "time_utc": "2026-09-12T09:07:29.129655+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612"
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 27,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"password\": \"Minimum password length: 4 characters\"}",
+    "elapsed_ms": 0.27,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 20,
+    "name": "password null",
+    "time_utc": "2026-09-12T09:07:29.130052+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": null
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 43,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"password\": \"Minimum password length: 4 characters\"}",
+    "elapsed_ms": 0.26,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 21,
+    "name": "password number",
+    "time_utc": "2026-09-12T09:07:29.130456+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": 12345
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 44,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"password\": \"Minimum password length: 4 characters\"}",
+    "elapsed_ms": 0.28,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 22,
+    "name": "malformed JSON",
+    "time_utc": "2026-09-12T09:07:29.130889+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": null,
+    "raw_input_description": "malformed JSON: {",
+    "encoded_bytes": 1,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "35"
+    },
+    "body": "{\"message\": \"Invalid JSON request\"}",
+    "elapsed_ms": 0.27,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 23,
+    "name": "non-object JSON array",
+    "time_utc": "2026-09-12T09:07:29.131290+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": null,
+    "raw_input_description": "raw non-object or byte-sized JSON",
+    "encoded_bytes": 2,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "37"
+    },
+    "body": "{\"message\": \"Expected a JSON object\"}",
+    "elapsed_ms": 0.28,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 24,
+    "name": "unknown fields ignored",
+    "time_utc": "2026-09-12T09:07:29.131659+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      },
+      "extra": {
+        "nested": true
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 81,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.25,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 25,
+    "name": "JSON body size 8192",
+    "time_utc": "2026-09-12T09:07:29.132052+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": null,
+    "raw_input_description": "raw non-object or byte-sized JSON",
+    "encoded_bytes": 8192,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.26,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 26,
+    "name": "JSON body size 8193",
+    "time_utc": "2026-09-12T09:07:29.132609+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": null,
+    "raw_input_description": "raw non-object or byte-sized JSON",
+    "encoded_bytes": 8193,
+    "status": 413,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "32"
+    },
+    "body": "{\"message\": \"Request too large\"}",
+    "elapsed_ms": 0.41,
+    "expected_status": 413,
+    "status_matches": true
+  },
+  {
+    "number": 27,
+    "name": "repeat username upper boundary",
+    "time_utc": "2026-09-12T09:07:29.133019+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 16,
+        "utf8_bytes": 16
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 301,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"username\": \"Minimum username length: 4 characters\"}",
+    "elapsed_ms": 0.28,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 28,
+    "name": "repeat password upper boundary",
+    "time_utc": "2026-09-12T09:07:29.133402+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "probe_c_0612",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 256,
+        "utf8_bytes": 256
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 297,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "53"
+    },
+    "body": "{\"password\": \"Minimum password length: 4 characters\"}",
+    "elapsed_ms": 0.26,
+    "expected_status": 400,
+    "status_matches": true
+  },
+  {
+    "number": 29,
+    "name": "corrected lengths after upper boundary errors",
+    "time_utc": "2026-09-12T09:07:29.133843+00:00",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "request": {
+      "username": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+      "password": {
+        "placeholder": "SYNTHETIC_PASSWORD",
+        "unicode_characters": 255,
+        "utf8_bytes": 255
+      }
+    },
+    "raw_input_description": null,
+    "encoded_bytes": 539,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": "{\"message\": \"Invalid username/password supplied\"}",
+    "elapsed_ms": 0.29,
+    "expected_status": 422,
+    "status_matches": true
+  },
+  {
+    "number": 30,
+    "name": "no record after sign-in",
+    "time_utc": "2026-09-12T09:07:29.134231+00:00",
+    "method": "GET",
+    "path": "/api/v1/users/probe_c_0612",
+    "request": null,
+    "raw_input_description": null,
+    "encoded_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:29 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.27,
+    "expected_status": 404,
+    "status_matches": true
+  }
+]

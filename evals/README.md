@@ -14,7 +14,7 @@ The **primary comparison uses source plus runtime**. Supply the actual backend, 
 
 [sample-app](sample-app/) is a small self-contained application that stays in this repository. It requires Python 3.10+ and an available browser agent for UI work. It uses Awesome LocalStack's product/cart route conventions and quantity rules, but has its own implementation, disposable identities, and in-memory state. It is not a copy of Spring, React, SSO, or the production stack. See [requirements](sample-app/requirements.md).
 
-The baseline application is the control. The evaluator-only harness applies one frozen change to an isolated copy: accepting a negative quantity, or allowing Cancel to submit an edit. The agent sees the resulting code when source is available, never a variant flag or the expected finding. The sample's existing tests intentionally cover only a narrow slice of behavior.
+The baseline application is the control. The evaluator-only harness applies one frozen change to an isolated copy: accepting a negative quantity, or allowing Cancel to submit an edit. The agent sees the resulting code when source is available, never a variant flag or the expected finding. The sample's existing tests intentionally cover only a narrow slice of behavior. [Workshop-derived benchmarks](workshop-benchmarks.md) add a separate retained validation fixture and practical reporting cases; the suite now contains 14 cases.
 
 ## Run a case
 
@@ -47,8 +47,14 @@ For a baseline comparison, prepare the same case with `--without-skill` and use 
 | ui-02 | UI | Primary: source + runtime | Matching control; inspect ordinary Save/Cancel behavior |
 | api-03 | API | Supplementary: source only | Find code-level defect without claiming runtime execution |
 | ui-03 | UI | Supplementary: runtime only | Explore without repeatedly blocking on missing source |
+| api-04 / ui-04 | API / UI | Usability: runtime only | Clean control; test productively and explain what source could add |
+| api-05 / ui-05 | API / UI | Usability: source + unavailable gateway | Recognize blocked functional testing and provide useful handoff |
+| api-06 / api-07 | API | Course: source + runtime | Misleading maximum-length guidance and matching corrected control |
+| api-08 / api-09 | API | Course: source + runtime | Password character/byte contract mismatch and matching corrected control |
 
 Candidates receive neutral application tasks with a five-minute budget, up to 60 API requests or 45 browser actions. The fixture's server audit corroborates requests; a reviewer checks browser actions, opened screenshots, meaning of findings, and untested claims. Audit route paths omit query strings: the grader matches the parsed route and flags query-bearing observations for manual evidence review. It does not independently prove query/header/body-specific claims. The harness currently reports request counts but does not automatically measure browser-action counts or token usage. Record those from the runner transcript when available.
+
+New runs use reporting version 2: individual checks have evidence and passed/failed/blocked/not-run outcomes. `runtime_exercised` distinguishes functional application testing from availability attempts. Unexpected environment failures are inconclusive for discovery trials; intentional unavailable cases assess the usefulness of the agent's blocked report. The [rubric](rubric.md) grades these outcomes explicitly.
 
 To verify the browser fixture itself, with `playwright-cli` and a browser installed:
 
@@ -93,3 +99,5 @@ Authoritative deployment instructions remain in [Awesome LocalStack](https://git
 Reviewed, sanitized results can be committed under [results/](results/). Keep raw run workspaces, credentials, browser storage, and unreviewed traces out of Git. Record the fixture/skill hashes, model when known, runner/tools, prompt, grading rationale, and material limitations. Do not describe this sample as a hidden benchmark once evaluators have seen its answers.
 
 The [completed September 12 retry assessment](results/2026-09-12-retry.md) records 16 fresh runs, a condition-blind review of the 12 sample reports, and source-backed hosted API/UI comparisons. Both conditions identified both seeded defects; primary artifact scores averaged 11.75/12 with skills and 10.0/12 without. This is a small development pilot, not evidence of a general bug-discovery improvement. The [initial result](results/2026-09-12.md) preserves the earlier usage-blocked attempt.
+
+The [practical extension assessment](results/2026-09-12-usability.md) exercises all eight added cases plus two targeted corrections. It preserves an excessive-retry failure and an incomplete source handoff, then records the fresh revised-skill outcomes.

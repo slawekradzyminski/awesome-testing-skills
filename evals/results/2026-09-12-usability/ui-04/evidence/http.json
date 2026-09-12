@@ -1,0 +1,371 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "baseline before UI edits",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "bob",
+    "status": 200,
+    "action": "baseline before UI edits",
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "after Cancel of draft 3",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "after Alice keyboard Save 3",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "bob",
+    "status": 200,
+    "action": "after Alice keyboard Save 3",
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "after narrow invalid Save then Cancel",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "anonymous",
+    "status": 401,
+    "action": "anonymous access",
+    "body": {
+      "error": "Authentication required"
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "status": 400,
+    "action": "direct API boundary check",
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": -1
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "unchanged-state check after rejected update",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "status": 400,
+    "action": "direct API boundary check",
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": 1.5
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "unchanged-state check after rejected update",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "status": 400,
+    "action": "direct API boundary check",
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": null
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "unchanged-state check after rejected update",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "status": 400,
+    "action": "direct API boundary check",
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": "2"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "unchanged-state check after rejected update",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "status": 400,
+    "action": "direct API boundary check",
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {
+      "quantity": true
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "unchanged-state check after rejected update",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "status": 409,
+    "action": "direct API boundary check",
+    "body": {
+      "error": "Requested quantity exceeds available stock"
+    },
+    "request_body": {
+      "quantity": 6
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "unchanged-state check after rejected update",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "identity": "alice",
+    "status": 400,
+    "action": "missing quantity",
+    "body": {
+      "error": "Quantity must be a non-negative integer"
+    },
+    "request_body": {}
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "unchanged-state check after missing quantity",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "totalItems": 3,
+      "totalPrice": 36
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "alice",
+    "status": 200,
+    "action": "final cleanup verification",
+    "body": {
+      "username": "alice",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "totalItems": 1,
+      "totalPrice": 12
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "identity": "bob",
+    "status": 200,
+    "action": "final cleanup verification",
+    "body": {
+      "username": "bob",
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ],
+      "totalItems": 2,
+      "totalPrice": 24
+    }
+  }
+]

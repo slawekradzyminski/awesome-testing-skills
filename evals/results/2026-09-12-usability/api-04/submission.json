@@ -1,0 +1,384 @@
+{
+  "source_access": false,
+  "runtime_exercised": true,
+  "runtime_status": "tested",
+  "checks": [
+    {
+      "name": "Authenticated product data",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Fixture notebook price 12 and stock 5",
+      "actual": "GET returned product 1, Workshop notebook, price 12, stockQuantity 5 (request IDs 5)",
+      "evidence": [
+        "evidence/http.jsonl"
+      ]
+    },
+    {
+      "name": "CART-1: anonymous access and mutation",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Anonymous API access is rejected",
+      "actual": "Products/cart GET and item PUT returned 401; follow-up Alice read unchanged (request IDs 1,4,23,24)",
+      "evidence": [
+        "evidence/http.jsonl"
+      ]
+    },
+    {
+      "name": "CART-1: identity isolation",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Caller sees and changes only own cart",
+      "actual": "Separate initial Alice/Bob quantities; Alice update left Bob unchanged; Bob update carrying username=alice changed only Bob; zero removal left Bob unchanged (request IDs 2,3,6\u20138,28\u201330,35\u201337)",
+      "evidence": [
+        "evidence/http.jsonl"
+      ]
+    },
+    {
+      "name": "CART-2: valid quantities and persistence",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Non-negative integers accepted within stock",
+      "actual": "Quantities 3 and 5 persisted on Alice, 4 on Bob; successful restore updates also persisted (request IDs 6,7,25,26,28,30\u201334)",
+      "evidence": [
+        "evidence/http.jsonl"
+      ]
+    },
+    {
+      "name": "CART-2: invalid quantity atomic rejection",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Negative, fractional, missing, null, string and boolean quantities return 400 and leave cart unchanged",
+      "actual": "-1,1.5,missing,null,string 2,true each returned 400; each immediate GET retained Alice quantity 3 and totals 3/36 (request IDs 9\u201320)",
+      "evidence": [
+        "evidence/http.jsonl"
+      ]
+    },
+    {
+      "name": "CART-3: stock boundary and failure atomicity",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Above five returns 409 without mutation; five accepted; stock not reserved/decremented",
+      "actual": "6 returned 409 and quantity stayed 3; 5 accepted; product stock stayed 5 across updates and removal (request IDs 21,22,25\u201327,38)",
+      "evidence": [
+        "evidence/http.jsonl"
+      ]
+    },
+    {
+      "name": "CART-4: calculated persisted totals",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "totalItems sums quantities and totalPrice uses price 12",
+      "actual": "Read-after-write totals matched 3/36,5/60,4/48,1/12,2/24,0/0; client totalPrice=1 did not override Bob total 48 (request IDs 7,26,28,30,32,34,36)",
+      "evidence": [
+        "evidence/http.jsonl"
+      ]
+    },
+    {
+      "name": "CART-2: zero removal",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Quantity zero removes existing item",
+      "actual": "Alice PUT returned empty items and zero totals; subsequent GET confirmed removal (request IDs 34\u201336)",
+      "evidence": [
+        "evidence/http.jsonl"
+      ]
+    }
+  ],
+  "findings": [],
+  "risks": [
+    {
+      "area": "UI-1 and UI-2 browser behavior",
+      "reason": "API-only charter; browser was not used. Server behavior cannot establish provisional edits, Cancel, visible feedback or keyboard/narrow-width usability.",
+      "priority": "high",
+      "next_probe": "With a fresh fixture, exercise edit/cancel/reopen/save with browser network evidence and desktop/narrow keyboard checks."
+    },
+    {
+      "area": "Malformed JSON and retry/concurrent outcomes",
+      "reason": "Only valid JSON objects and sequential requests were exercised; no source or deployed build identity supplied.",
+      "priority": "medium",
+      "next_probe": "Inspect relevant parser/update code when available, then test one malformed JSON request and controlled repeated/concurrent updates against an agreed ordering contract."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 401,
+      "action": "Read product identity, stock and current unit price",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Establish Alice baseline",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Establish Bob baseline",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Anonymous cart access",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Authenticated product data baseline",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Representative valid update",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify saved quantity and totals",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Alice write did not affect Bob",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Reject negative quantity",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify unchanged after negative",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Reject fractional quantity",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify unchanged after fractional",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Reject missing quantity",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify unchanged after missing",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Reject null quantity",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify unchanged after null",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Reject string quantity",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify unchanged after string",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Reject boolean quantity",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify unchanged after boolean",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "Reject over stock quantity",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify unchanged after over stock",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 401,
+      "action": "Anonymous mutation must be rejected",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify anonymous mutation did not affect Alice",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Exact stock boundary",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify stock-boundary persistence and totals",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Verify stock is not decremented by cart updates",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Bob update with client-supplied owner and total must remain Bob-owned and server-calculated",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Bob update cannot target Alice through body username",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Bob update and server totals persisted",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Restore Bob baseline",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Bob baseline restored",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Restore Alice baseline before final removal transition",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Alice baseline restored",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Zero must remove existing item and clear totals; re-add is out of scope",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify zero removal persisted",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify removal isolated from Bob",
+      "evidence": "evidence/http.jsonl"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Verify stock unchanged after removal",
+      "evidence": "evidence/http.jsonl"
+    }
+  ],
+  "limitations": [
+    "Source unavailable by task instruction; source revision, deployed build identifier and source/build relationship unknown. No application code or existing tests inspected or executed.",
+    "UI-1/UI-2 were not tested; no browser opened and no screenshots claimed.",
+    "Sequential bounded exploration of one product and two disposable identities; no concurrency, malformed JSON, service failure injection or production authentication assessment.",
+    "Checkout, adding removed items and service lifecycle are out of scope."
+  ],
+  "cleanup": "Bob restored to quantity 2 and totalPrice 24, verified by requests 32 and 37. Alice was restored to 1 before the final zero-removal test, then left empty (request 36). Re-adding removed items is explicitly not implemented/in scope, so owner reset is required to recover Alice initial fixture. Product stock remains 5. No service lifecycle action taken; no browser session opened.",
+  "accounting": {
+    "api_requests": 38,
+    "browser_actions": 0,
+    "availability_failures": 0,
+    "first_request_utc": "2026-09-12T09:10:09Z",
+    "last_request_utc": "2026-09-12T09:10:42Z"
+  }
+}

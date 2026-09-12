@@ -1,0 +1,117 @@
+{
+  "source_access": true,
+  "runtime_exercised": false,
+  "runtime_status": "blocked",
+  "checks": [
+    {
+      "name": "Authenticated representative cart read",
+      "basis": "runtime",
+      "status": "blocked",
+      "expected": "CART-1: authenticated Alice can read her cart",
+      "actual": "503 Application temporarily unavailable; Retry-After 60; no cart state received",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "Targeted availability and deployed build check",
+      "basis": "runtime",
+      "status": "blocked",
+      "expected": "Usable runtime and identifiable deployed version",
+      "actual": "GET /health returned 503 with no build version",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "Existing domain test: valid update totals and identity isolation",
+      "basis": "source",
+      "status": "passed",
+      "expected": "Quantity three gives price 36 and Bob remains at two items",
+      "actual": "Existing unittest passed locally; HTTP authentication and persistence not exercised",
+      "evidence": [
+        "evidence/tests.txt",
+        "evidence/test-source.txt"
+      ]
+    },
+    {
+      "name": "Existing domain test: overstock preserves cart",
+      "basis": "source",
+      "status": "passed",
+      "expected": "CART-3: six units returns ApiError 409 and Alice remains at one",
+      "actual": "Existing unittest passed locally",
+      "evidence": [
+        "evidence/tests.txt",
+        "evidence/test-source.txt"
+      ]
+    },
+    {
+      "name": "Source validation and authorization branch review",
+      "basis": "source",
+      "status": "passed",
+      "expected": "CART-1/CART-2/CART-3: identify authorization and validation before mutation",
+      "actual": "Router resolves identity before API handlers; domain exact-int/nonnegative and stock checks precede cart writes. Runtime outcome remains unverified.",
+      "evidence": [
+        "evidence/router-source.txt",
+        "evidence/domain-source.txt"
+      ]
+    }
+  ],
+  "findings": [],
+  "risks": [
+    {
+      "area": "Runtime availability",
+      "reason": "Representative cart and health reads both returned 503; all functional API behavior remains blocked",
+      "priority": "high",
+      "next_probe": "After fixture owner restores availability, perform one authenticated cart GET before further requests"
+    },
+    {
+      "area": "HTTP identity isolation",
+      "reason": "Domain isolation test passes but does not exercise header authentication or live routing",
+      "priority": "high",
+      "next_probe": "Read Alice/Bob baselines, reject anonymous access, and compare Bob after Alice update"
+    },
+    {
+      "area": "Quantity validation and stock atomicity",
+      "reason": "Source checks are explicit; type/zero cases lack existing tests and none were exercised via HTTP",
+      "priority": "medium",
+      "next_probe": "Contrast valid five with six and invalid types; follow each rejection with a cart read; test zero last with owner reset available"
+    },
+    {
+      "area": "Product data and totals",
+      "reason": "Source fixture is price 12 and stock five; runtime products unavailable, totals use a hardcoded 12",
+      "priority": "medium",
+      "next_probe": "Compare catalog price/stock to valid update totals and subsequent reads; verify stock unchanged"
+    },
+    {
+      "area": "UI save/cancel and accessibility",
+      "reason": "No browser work within this API exploration",
+      "priority": "low",
+      "next_probe": "Separate UI session verifying provisional edits, cancel network behavior, feedback, keyboard use and viewport layouts"
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Representative feature availability and Alice baseline",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 503,
+      "action": "Targeted availability check after representative cart returned 503; no mutation batch continued",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "Functional runtime not exercised: 2 availability requests (1 API request plus 1 health request), 0 mutation requests, 0 browser actions.",
+    "No live products, cart baselines, update validation, identity contrasts, persistence, totals, or zero-removal verification.",
+    "Existing tests executed locally against domain code only; deployed build and relationship to supplied source unknown. Source SHA-256 fingerprints recorded.",
+    "UI-1/UI-2 not exercised; no screenshots or browser session.",
+    "No service lifecycle operations performed; planned script stopped on its first 503 and all subsequent planned probes were unexecuted."
+  ],
+  "cleanup": "No cart mutations occurred, so no restoration needed. No browser opened and no service started/repaired/stopped. Source, requirements, skills and existing tests unchanged."
+}

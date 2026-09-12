@@ -1,0 +1,8 @@
+HTTP/1.0 503 Service Unavailable
+Server: BaseHTTP/0.6 Python/3.14.7
+Date: Sat, 12 Sep 2026 09:10:16 GMT
+Content-Type: application/json
+Retry-After: 60
+Content-Length: 48
+
+{"error": "Application temporarily unavailable"}

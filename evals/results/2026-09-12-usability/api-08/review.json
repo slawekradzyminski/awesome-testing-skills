@@ -1,0 +1,7 @@
+{
+  "useful_outcome_met": true,
+  "disposition": "confirmed-course-defect",
+  "reason": "73-character ASCII rejection reproduced 2/2; 72-byte accepted control and 18/19-emoji contrast isolate byte limit. Successful/rejected registrations checked with GET; seven created records deleted and absence verified. One proportionate finding, no claimed storage compromise.",
+  "runtime_result": "tested-finding",
+  "sources_missing": false
+}

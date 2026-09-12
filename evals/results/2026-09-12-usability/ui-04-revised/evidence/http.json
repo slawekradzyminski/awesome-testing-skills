@@ -1,0 +1,167 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "alice",
+    "action": "Independent saved-state read after UI Save and invalid UI attempt",
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "bob",
+    "action": "Bob isolation baseline",
+    "response": "{\"username\": \"bob\", \"items\": [{\"productId\": 1, \"quantity\": 2}], \"totalItems\": 2, \"totalPrice\": 24}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 401,
+    "body": null,
+    "role": null,
+    "action": "Anonymous read rejection",
+    "response": "{\"error\": \"Authentication required\"}"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "quantity": -1
+    },
+    "role": "alice",
+    "action": "Quantity validation probe",
+    "response": "{\"error\": \"Quantity must be a non-negative integer\"}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "alice",
+    "action": "Verify rejected update preserves saved quantity 4",
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "quantity": 1.5
+    },
+    "role": "alice",
+    "action": "Quantity validation probe",
+    "response": "{\"error\": \"Quantity must be a non-negative integer\"}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "alice",
+    "action": "Verify rejected update preserves saved quantity 4",
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {},
+    "role": "alice",
+    "action": "Quantity validation probe",
+    "response": "{\"error\": \"Quantity must be a non-negative integer\"}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "alice",
+    "action": "Verify rejected update preserves saved quantity 4",
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "quantity": null
+    },
+    "role": "alice",
+    "action": "Quantity validation probe",
+    "response": "{\"error\": \"Quantity must be a non-negative integer\"}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "alice",
+    "action": "Verify rejected update preserves saved quantity 4",
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "quantity": "2"
+    },
+    "role": "alice",
+    "action": "Quantity validation probe",
+    "response": "{\"error\": \"Quantity must be a non-negative integer\"}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "alice",
+    "action": "Verify rejected update preserves saved quantity 4",
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 400,
+    "body": {
+      "quantity": true
+    },
+    "role": "alice",
+    "action": "Quantity validation probe",
+    "response": "{\"error\": \"Quantity must be a non-negative integer\"}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "alice",
+    "action": "Verify rejected update preserves saved quantity 4",
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "status": 409,
+    "body": {
+      "quantity": 6
+    },
+    "role": "alice",
+    "action": "Quantity validation probe",
+    "response": "{\"error\": \"Requested quantity exceeds available stock\"}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "status": 200,
+    "body": null,
+    "role": "alice",
+    "action": "Verify rejected update preserves saved quantity 4",
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 4}], \"totalItems\": 4, \"totalPrice\": 48}"
+  }
+]

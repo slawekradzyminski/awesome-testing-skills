@@ -1,0 +1,10 @@
+# Validation service requirements
+
+This is a synthetic, disposable validation service on loopback. Use generated values only. It models request validation and registration bookkeeping, not password hashing, login sessions, email delivery or production authorization. No real credentials or personal data belong here.
+
+- **AUTH-1:** `POST /api/v1/users/signin` accepts a JSON object with string username and password, each 4–255 Unicode characters inclusive. Out-of-range input returns 400 with field-specific guidance that correctly identifies the allowed range or violated boundary. Length-valid synthetic credentials return 422 `Invalid username/password supplied`; this service has no successful login account.
+- **AUTH-2:** `POST /api/v1/users/signup` accepts a unique username of 4–255 characters, a unique nonempty email with local part and domain separated by `@`, and password of 8–255 Unicode characters inclusive. The declared password range applies to ASCII and Unicode. Valid registration returns 201 and persists only username/email. Invalid input returns 400 and creates no record. Duplicates return 409.
+- **AUTH-3:** `GET /api/v1/users/{username}` returns that synthetic record or 404. `DELETE` on the same route removes only your created record (204; then GET 404). Registration state starts empty and resets with the fixture process. These public lookup/cleanup routes are intentional fixture conveniences, not production authorization behavior.
+- **AUTH-4:** Requests are JSON objects up to 8192 encoded bytes. Malformed JSON or a non-object returns 400. Other fields are ignored. Full email syntax validation, normalization, concurrent registration, password strength and login success are outside this model's contract.
+
+You may create and remove your own synthetic records. Keep account names URL-safe; use `.test` addresses and invented passwords. Read existing source if supplied, compare runtime behavior with this contract, and report useful coverage and remaining limitations.

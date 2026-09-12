@@ -1,0 +1,126 @@
+{
+  "source_access": true,
+  "runtime_exercised": false,
+  "runtime_status": "blocked",
+  "checks": [
+    {
+      "name": "Cart editor runtime availability",
+      "basis": "runtime",
+      "status": "blocked",
+      "expected": "Cart page available for UI-1/UI-2 exploration",
+      "actual": "Page and health endpoint return 503; no cart controls rendered",
+      "evidence": [
+        "evidence/root.txt",
+        "evidence/health.txt",
+        "evidence/unavailable.png"
+      ]
+    },
+    {
+      "name": "Local domain update totals and other identity preservation",
+      "basis": "source",
+      "status": "passed",
+      "expected": "CART-1/CART-4: Alice quantity 3 gives total 36 and Bob remains 2",
+      "actual": "Existing local unittest passes",
+      "evidence": [
+        "evidence/tests.txt",
+        "evidence/test-source.txt"
+      ]
+    },
+    {
+      "name": "Local domain stock rejection preserves cart",
+      "basis": "source",
+      "status": "passed",
+      "expected": "CART-3: quantity 6 raises 409 and preserves quantity 1",
+      "actual": "Existing local unittest passes",
+      "evidence": [
+        "evidence/tests.txt",
+        "evidence/test-source.txt"
+      ]
+    },
+    {
+      "name": "Cancel implementation avoids submission",
+      "basis": "source",
+      "status": "passed",
+      "expected": "UI-1: Cancel does not submit an update",
+      "actual": "HTML uses type=button; click handler hides form, acknowledges cancellation, and returns focus without fetch. Runtime unverified.",
+      "evidence": [
+        "evidence/index-source.txt",
+        "evidence/app-js-source.txt"
+      ]
+    },
+    {
+      "name": "Save persistence, visible totals, keyboard and responsive usability",
+      "basis": "runtime",
+      "status": "blocked",
+      "expected": "UI-1/UI-2/CART-4: explicit save, persisted totals, usable feedback and controls",
+      "actual": "503 prevented functional UI exploration",
+      "evidence": [
+        "evidence/unavailable.png"
+      ]
+    }
+  ],
+  "findings": [],
+  "risks": [
+    {
+      "area": "Cancel and provisional edits",
+      "reason": "Source handler inspected but real forbidden side effects and reopening unverified",
+      "priority": "high",
+      "next_probe": "Change 1 to 3, cancel, verify no PUT, read persisted cart and reopen editor"
+    },
+    {
+      "area": "Save totals and persistence",
+      "reason": "Local domain tests do not cover deployed Save flow",
+      "priority": "high",
+      "next_probe": "Save 3, compare visible total 36 with GET and reload"
+    },
+    {
+      "area": "Validation and identity isolation",
+      "reason": "Only two narrow domain tests; API access blocked",
+      "priority": "medium",
+      "next_probe": "Check invalid quantities, stock rejection, Bob cart and anonymous rejection"
+    },
+    {
+      "area": "Keyboard and narrow layout",
+      "reason": "Only unavailable JSON page could be rendered",
+      "priority": "medium",
+      "next_probe": "Use keyboard edit/save/cancel at 375px and desktop widths"
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 503,
+      "action": "Browser navigation",
+      "evidence": "evidence/browser-requests.txt"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 503,
+      "action": "Automatic browser favicon request observed in console",
+      "evidence": "evidence/browser-console.txt"
+    },
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 503,
+      "action": "Direct availability probe",
+      "evidence": "evidence/health.txt"
+    },
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 503,
+      "action": "Direct page availability confirmation",
+      "evidence": "evidence/root.txt"
+    }
+  ],
+  "limitations": [
+    "Assigned runtime returned 503; no functional application behavior exercised.",
+    "Deployed build and source revision unknown; source hashes retained.",
+    "Save/Cancel persistence, runtime totals, validation, identity API boundaries, error feedback, responsive layout and keyboard flow untested.",
+    "Four observed availability requests including automatic favicon; zero API requests; seven browser CLI operations and zero feature actions."
+  ],
+  "cleanup": "Closed only own Playwright session ui05. No cart mutations, app changes, mocks, service restart or repair. No cart restoration needed."
+}

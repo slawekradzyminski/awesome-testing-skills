@@ -1,0 +1,335 @@
+{
+  "source_access": false,
+  "runtime_exercised": true,
+  "runtime_status": "tested",
+  "checks": [
+    {
+      "name": "UI-1 provisional edit and Cancel",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Editing stays provisional; Cancel sends no update and reopening shows saved quantity.",
+      "actual": "Alice started at 1 / 12; entering 3 retained visible 1 / 12. Cancel displayed Edit cancelled and reopening showed 1. Bounded before/after network lists contained only the initial GET and no PUT.",
+      "evidence": [
+        "evidence/provisional-desktop.png",
+        "evidence/after-cancel.png",
+        "evidence/reopened-after-cancel.yml",
+        "evidence/network-before-cancel.txt",
+        "evidence/network-after-cancel.txt"
+      ]
+    },
+    {
+      "name": "UI-1 / CART-4 explicit Save and persistence",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Save persists quantity and updates totals.",
+      "actual": "Desktop Save of 4 returned PUT 200 followed by GET 200; UI acknowledged Cart updated and displayed 4 / 48. Independent API read confirmed totalItems 4 and totalPrice 48. New browser session reopened saved quantity 4.",
+      "evidence": [
+        "evidence/after-save.txt",
+        "evidence/network-after-save.txt",
+        "evidence/http.json",
+        "evidence/reopened-saved-narrow.yml"
+      ]
+    },
+    {
+      "name": "UI-2 narrow keyboard Save",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Primary flow usable by keyboard at narrow width.",
+      "actual": "At 375\u00d7812, Tab, Tab, Enter opened Edit; ArrowDown changed 4 to 3; Tab, Enter saved. Visible total became 36 and Cart updated appeared. Independent API read confirmed 3 / 36.",
+      "evidence": [
+        "evidence/narrow-keyboard-saved.png",
+        "evidence/keyboard-save.yml",
+        "evidence/network-second-session.txt",
+        "evidence/cleanup.json"
+      ]
+    },
+    {
+      "name": "UI-2 visible invalid quantity feedback",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Errors visible and unsuccessful edit preserves saved state.",
+      "actual": "At 375\u00d7812, keyboard Save of 6 displayed native validation \u201cValue must be less than or equal to 5.\u201d No PUT occurred; saved quantity stayed 4.",
+      "evidence": [
+        "evidence/narrow-stock-error.png",
+        "evidence/network-after-error.txt",
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "CART-2 invalid input rejection",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Negative, fractional, missing, null, string and boolean quantities return 400 without change.",
+      "actual": "All six API cases returned 400; GET after each returned Alice quantity 4 / total 48.",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "CART-3 overstock and stock stability",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Quantity over five returns 409 unchanged; edits do not decrement stock.",
+      "actual": "API quantity 6 returned 409, subsequent cart remained 4 / 48; final products read showed stockQuantity 5.",
+      "evidence": [
+        "evidence/http.json",
+        "evidence/cleanup.json"
+      ]
+    },
+    {
+      "name": "CART-1 sampled identity isolation",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Alice edits affect only Alice; anonymous read rejected.",
+      "actual": "Bob remained quantity 2 / total 24 after Alice edits and cleanup. Anonymous GET returned 401. Full ownership/security assessment not performed.",
+      "evidence": [
+        "evidence/http.json",
+        "evidence/cleanup.json"
+      ]
+    }
+  ],
+  "findings": [],
+  "risks": [
+    {
+      "area": "Role switch while editing or saving",
+      "reason": "Only Alice UI journey and Bob API reads exercised; transition timing remains untested.",
+      "priority": "medium",
+      "next_probe": "Switch account with a provisional edit and a deliberately delayed save; verify displayed owner and persisted carts."
+    },
+    {
+      "area": "Server failure feedback and recovery",
+      "reason": "UI overstock was blocked by browser validation, so no UI server-error response was exercised.",
+      "priority": "medium",
+      "next_probe": "Trigger an authorized controlled server error and verify visible message, retained edit, and successful retry."
+    },
+    {
+      "area": "Zero removal and exact stock boundary",
+      "reason": "Zero would remove the item without an implemented add-back route; zero and exact five were not exercised.",
+      "priority": "medium",
+      "next_probe": "Use a separately resettable fixture to test zero removal and quantity five."
+    },
+    {
+      "area": "Keyboard Cancel and broader accessibility",
+      "reason": "Desktop Cancel used pointer; invalid narrow Save refocused input, so the subsequent Tab/Enter activated Save again. No keyboard Cancel success claim.",
+      "priority": "low",
+      "next_probe": "Test keyboard Cancel with valid and invalid provisional values, then desktop keyboard journey and screen-reader announcements."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Independent saved-state read after UI Save and invalid UI attempt",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Bob isolation baseline",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "Anonymous read rejection",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity validation probe",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejected update preserves saved quantity 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity validation probe",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejected update preserves saved quantity 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity validation probe",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejected update preserves saved quantity 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity validation probe",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejected update preserves saved quantity 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity validation probe",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejected update preserves saved quantity 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "Quantity validation probe",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejected update preserves saved quantity 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "Quantity validation probe",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify rejected update preserves saved quantity 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify keyboard save persisted 3",
+      "evidence": "evidence/cleanup.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Restore initial Alice quantity",
+      "evidence": "evidence/cleanup.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Alice restoration",
+      "evidence": "evidence/cleanup.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Verify Bob remains unchanged",
+      "evidence": "evidence/cleanup.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 200,
+      "action": "Verify stock remains five after updates",
+      "evidence": "evidence/cleanup.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Initial Alice page load",
+      "evidence": "evidence/network-final.txt"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Pointer Save of quantity 4",
+      "evidence": "evidence/network-final.txt"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Refresh cart after successful Save",
+      "evidence": "evidence/network-final.txt"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "New browser saved-state load",
+      "evidence": "evidence/network-second-session.txt"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 200,
+      "action": "Keyboard Save of quantity 3",
+      "evidence": "evidence/network-second-session.txt"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "Refresh cart after successful keyboard Save",
+      "evidence": "evidence/network-second-session.txt"
+    }
+  ],
+  "limitations": [
+    "Source unavailable by session constraint; source revision, deployed build identifier and source/build match unknown. No source or test review.",
+    "No full authorization assessment, anonymous writes, Bob UI edits, racing requests, server-error UI recovery, removal, or exact-stock boundary.",
+    "Visual samples: desktop 1280\u00d7720 and narrow 375\u00d7812 in headless Chromium 152; no real mobile, other browser, intermediate viewport or screen reader.",
+    "Native number-field validation prevented an overstock update through UI; API 409 was verified separately.",
+    "Cancel persistence evidence is bounded network absence plus reopened value; independent API read was taken after the later explicit Save, not directly after Cancel.",
+    "One run-code observation failed due to tool callback signature; it made no application request. A second run-code observation produced no usable output; eval supplied browser metadata."
+  ],
+  "cleanup": "Alice restored to quantity 1 / total 12 and independently read back; Bob unchanged at 2 / 24; stock remains 5. Both session-owned browser instances closed. No mocks, source changes, service lifecycle changes, or remaining data mutations.",
+  "accounting": {
+    "browser_commands": 42,
+    "browser_command_definition": "Includes navigation, interactions, observations, screenshot captures, two close commands, and failed run-code; excludes two CLI help calls and filesystem reads.",
+    "api_requests": 28,
+    "browser_api_requests": 6,
+    "direct_api_requests": 22,
+    "static_document_requests": 6,
+    "total_observed_http_requests": 34,
+    "availability_failures": 0
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "case": {
+    "id": "api-09",
+    "skill": "api-exploratory-testing",
+    "variant": "control",
+    "access": "source-runtime",
+    "group": "course-source-runtime",
+    "expected_outcome": "no-confirmed-defects",
+    "expected_requirements": [],
+    "fixture": "course-app",
+    "feature": "signup",
+    "workshop_finding": "BUG-06"
+  },
+  "reporting_version": 2,
+  "with_skill": true,
+  "base_url": "http://127.0.0.1:49532",
+  "app_hashes": {
+    "app.py": "b383172f9caadfb7d421c79b94f1a4b0314a22afeb8341320903fa782c144b2f",
+    "domain.py": "3ccecfb8be66ac0b2345b5c33b0bc68ab3d52941c7ce2381a168a04a9ff617e7",
+    "requirements.md": "c45060e1ef2a7717d532984a8e5e6b8b0b20465bd690bd1b30c45a6b2e2520ca"
+  },
+  "skill_hashes": {
+    "api-exploratory-testing/SKILL.md": "47421f52d3b5b9b0fd93d92888c44c755d1772a3d43ba975b1bafd70161c06a8",
+    "api-exploratory-testing/agents/openai.yaml": "1fcf632e64937e3f398cf5a6a1bf79c405bf3e44381fc34e7770836bb76f7f11",
+    "api-exploratory-testing/references/experiment-design.md": "e2dba068da5b803d35a665d922ffe9cdb317c54ad9733dd16392856acf702010",
+    "api-exploratory-testing/references/reporting.md": "c4f3f4b881ab7e5176e4df7daaca86ed7382343b6a076850e4197eb9bd1e1095"
+  },
+  "revision": "e6a65c016dde4c0b079e4cf7fb04d34bf5404d08"
+}

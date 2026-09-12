@@ -1,0 +1,563 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "runtime_status": "tested",
+  "checks": [
+    {
+      "name": "build availability",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 200",
+      "actual": "HTTP 200: {\"status\": \"UP\", \"version\": \"validation-fixture-1\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "no record before sign-in",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 404",
+      "actual": "HTTP 404: {\"message\": \"User not found\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "valid representative",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "username ASCII length 3",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"username\": \"Minimum username length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "username ASCII length 4",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "username ASCII length 255",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "username ASCII length 256",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-1: HTTP 400 with field-specific guidance naming maximum 255 characters or the complete 4–255 range",
+      "actual": "HTTP 400: {\"username\": \"Minimum username length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password ASCII length 3",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"password\": \"Minimum password length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password ASCII length 4",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password ASCII length 255",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password ASCII length 256",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-1: HTTP 400 with field-specific guidance naming maximum 255 characters or the complete 4–255 range",
+      "actual": "HTTP 400: {\"password\": \"Minimum password length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password Unicode length 3",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"password\": \"Minimum password length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password Unicode length 4",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password Unicode length 255",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password Unicode length 256",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-1: HTTP 400 with field-specific guidance naming maximum 255 characters or the complete 4–255 range",
+      "actual": "HTTP 400: {\"password\": \"Minimum password length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "username missing",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"username\": \"Minimum username length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "username null",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"username\": \"Minimum username length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "username number",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"username\": \"Minimum username length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password missing",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"password\": \"Minimum password length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password null",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"password\": \"Minimum password length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "password number",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"password\": \"Minimum password length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "malformed JSON",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"message\": \"Invalid JSON request\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "non-object JSON array",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 400",
+      "actual": "HTTP 400: {\"message\": \"Expected a JSON object\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "unknown fields ignored",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "JSON body size 8192",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "JSON body size 8193",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 413",
+      "actual": "HTTP 413: {\"message\": \"Request too large\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "repeat username upper boundary",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-1: HTTP 400 with field-specific guidance naming maximum 255 characters or the complete 4–255 range",
+      "actual": "HTTP 400: {\"username\": \"Minimum username length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "repeat password upper boundary",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-1: HTTP 400 with field-specific guidance naming maximum 255 characters or the complete 4–255 range",
+      "actual": "HTTP 400: {\"password\": \"Minimum password length: 4 characters\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "corrected lengths after upper boundary errors",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-1/AUTH-4: HTTP 422 with Invalid username/password supplied after valid request validation",
+      "actual": "HTTP 422: {\"message\": \"Invalid username/password supplied\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "no record after sign-in",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "HTTP 404",
+      "actual": "HTTP 404: {\"message\": \"User not found\"}",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "requirement_id": "AUTH-1",
+      "title": "Sign-in upper-bound failures incorrectly advise a minimum of 4 characters",
+      "status": "confirmed",
+      "expected": "A 256-character username or password must receive HTTP 400 with field-specific guidance correctly identifying the 255-character maximum or the 4–255 allowed range (requirements.md AUTH-1).",
+      "actual": "Both fields return HTTP 400 but the body says Minimum username/password length: 4 characters. Reproduced twice per ASCII field and once for a 256-character Unicode password; 255-character corrections return the specified 422 credential rejection.",
+      "impact": "A client with an oversized value receives an irrelevant correction and no information about the maximum. Rejection itself works; no validation bypass or successful login was observed.",
+      "evidence": [
+        "evidence/http.json",
+        "evidence/source.txt",
+        "evidence/explore.py"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Maximum-length corrective guidance",
+      "reason": "Five HTTP responses confirm misleading feedback; domain.signin uses one minimum-only message for every invalid condition.",
+      "priority": "medium",
+      "next_probe": "After correction, retest lengths 3, 4, 255, and 256 for both fields, asserting error text as well as status."
+    },
+    {
+      "area": "Uncovered sign-in types and Unicode username behavior",
+      "reason": "Missing, null and numeric fields were exercised; boolean, array/object field values and Unicode usernames were not exercised. Usernames were kept URL-safe as required.",
+      "priority": "low",
+      "next_probe": "Add focused validator-level cases for remaining types and, if permitted, non-ASCII usernames."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "action": "Request 1: build availability",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/probe_c_0612",
+      "status": 404,
+      "action": "Request 2: no record before sign-in",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 3: valid representative",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 4: username ASCII length 3",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 5: username ASCII length 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 6: username ASCII length 255",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 7: username ASCII length 256",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 8: password ASCII length 3",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 9: password ASCII length 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 10: password ASCII length 255",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 11: password ASCII length 256",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 12: password Unicode length 3",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 13: password Unicode length 4",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 14: password Unicode length 255",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 15: password Unicode length 256",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 16: username missing",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 17: username null",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 18: username number",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 19: password missing",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 20: password null",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 21: password number",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 22: malformed JSON",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 23: non-object JSON array",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 24: unknown fields ignored",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 25: JSON body size 8192",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 413,
+      "action": "Request 26: JSON body size 8193",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 27: repeat username upper boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 400,
+      "action": "Request 28: repeat password upper boundary",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signin",
+      "status": 422,
+      "action": "Request 29: corrected lengths after upper boundary errors",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/probe_c_0612",
+      "status": 404,
+      "action": "Request 30: no record after sign-in",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "This is a bounded sign-in exploration, not exhaustive API coverage. Signup, duplicates, registration persistence and deletion were outside the selected feature scope.",
+    "No existing tests were present in the supplied candidate (file discovery found no test files); no existing suite was run. Source app/app.py and app/domain.py were inspected.",
+    "Source revision metadata was not supplied. SHA256 snapshots identify inspected source; runtime /health reports validation-fixture-1, but exact source-to-deployment identity is unverified.",
+    "Unicode password lengths were exercised using an astral character; Unicode usernames were not exercised because usernames were required to be URL-safe. Other Unicode composition forms and remaining invalid field types were not tested.",
+    "No browser was used and no UI behavior or production authentication was assessed. Total session wall time was not instrumented; HTTP probe elapsed time is recorded separately."
+  ],
+  "cleanup": "No registrations were created or deleted. GET for the session username was 404 before and after sign-in. No browser session was opened. Fixture server lifecycle was left to its owner.",
+  "accounting": {
+    "api_requests": 30,
+    "availability_requests": 1,
+    "browser_actions": 0,
+    "browser_sessions_created": 0,
+    "elapsed_seconds": 0.02
+  }
+}

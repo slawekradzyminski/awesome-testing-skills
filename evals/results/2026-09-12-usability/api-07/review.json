@@ -1,0 +1,7 @@
+{
+  "useful_outcome_met": true,
+  "disposition": "useful-clean-control",
+  "reason": "38 functional requests with adjacent field-length, Unicode, shape and size contrasts; status and corrective guidance checked. No invented defect, no claim of successful authentication; no registrations to clean.",
+  "runtime_result": "tested-no-confirmed-defects",
+  "sources_missing": false
+}

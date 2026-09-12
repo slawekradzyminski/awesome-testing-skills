@@ -1,0 +1,7 @@
+{
+  "useful_outcome_met": true,
+  "disposition": "useful-blocked-report-after-correction",
+  "reason": "Representative cart GET caused probe script to stop; one targeted health GET followed. Audit confirms two reads, zero mutations; blocked runtime, source tests and owner handoff accurately separated. This is a targeted rerun on the same development case, not held-out improvement evidence.",
+  "runtime_result": "blocked",
+  "sources_missing": false
+}

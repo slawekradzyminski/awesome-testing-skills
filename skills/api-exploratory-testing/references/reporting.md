@@ -31,3 +31,5 @@ Useful statuses: explored with no defect observed, runtime-confirmed finding, co
 ## Closeout
 
 Record tested and untested behaviors, residual risks in priority order, environment/tool limitations, and cleanup performed or still needed. State whether relevant existing tests were inspected, executed, failed, or unavailable. Mark a finding verified only after retesting the identified build. Keep raw secrets, tokens, cookies, private data, and unreviewed captures out of shared reports.
+
+When source was unavailable, include a short handoff explaining what the runtime checks established, which relevant source/revision could improve the assessment, and what it would help inspect. Make the benefit concrete, such as hidden validation branches, ownership checks or persistence logic. Do not promise more bugs or repeat a request the user has already declined; this is context for a possible later session.

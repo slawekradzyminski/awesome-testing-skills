@@ -1,0 +1,879 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "runtime_status": "tested",
+  "checks": [
+    {
+      "name": "valid baseline and ignored fields",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2/4: 201 and only username/email persisted",
+      "actual": "POST 201, GET 200: {'username': 'qh926base', 'email': 'qh926base@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        2,
+        3
+      ]
+    },
+    {
+      "name": "duplicate username preserves record",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 409, existing record unchanged",
+      "actual": "POST 409; GET {'username': 'qh926base', 'email': 'qh926base@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        4,
+        5
+      ]
+    },
+    {
+      "name": "duplicate email creates no record",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 409 and candidate GET 404",
+      "actual": "POST 409; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        6,
+        7
+      ]
+    },
+    {
+      "name": "ascii7",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        8,
+        9
+      ]
+    },
+    {
+      "name": "ascii255",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+      "actual": "POST 201; GET 200; response {'username': 'qh926ascii255', 'email': 'qh926ascii255@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "ascii256",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        13,
+        14
+      ]
+    },
+    {
+      "name": "unicode7",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        15,
+        16
+      ]
+    },
+    {
+      "name": "unicode8",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+      "actual": "POST 201; GET 200; response {'username': 'qh926unicode8', 'email': 'qh926unicode8@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "name": "unicode255",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+      "actual": "POST 201; GET 200; response {'username': 'qh926unicode255', 'email': 'qh926unicode255@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "name": "unicode256",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        23,
+        24
+      ]
+    },
+    {
+      "name": "name3",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'username': 'Username length must be between 4 and 255 characters'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        25,
+        26
+      ]
+    },
+    {
+      "name": "name4",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+      "actual": "POST 201; GET 200; response {'username': 'q9xz', 'email': 'qh926name4@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        27,
+        28,
+        29
+      ]
+    },
+    {
+      "name": "name255",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+      "actual": "POST 201; GET 200; response {'username': 'qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'email': 'qh926name255@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        30,
+        31,
+        32
+      ]
+    },
+    {
+      "name": "name256",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'username': 'Username length must be between 4 and 255 characters'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        33,
+        34
+      ]
+    },
+    {
+      "name": "emaillocal",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        35,
+        36
+      ]
+    },
+    {
+      "name": "emaildomain",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        37,
+        38
+      ]
+    },
+    {
+      "name": "emailat",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        39,
+        40
+      ]
+    },
+    {
+      "name": "emailempty",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        41,
+        42
+      ]
+    },
+    {
+      "name": "pwnull",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        43,
+        44
+      ]
+    },
+    {
+      "name": "namelist",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'username': 'Username length must be between 4 and 255 characters'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        45,
+        46
+      ]
+    },
+    {
+      "name": "emailnumber",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+      "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        47,
+        48
+      ]
+    },
+    {
+      "name": "malformed",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: 400",
+      "actual": "400: {'message': 'Invalid JSON request'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        49
+      ]
+    },
+    {
+      "name": "nonobject",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: 400",
+      "actual": "400: {'message': 'Expected a JSON object'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        50
+      ]
+    },
+    {
+      "name": "8192 byte envelope",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: 8192 accepted; oversized rejected (specific status unspecified)",
+      "actual": "POST 201; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        51,
+        52,
+        53
+      ]
+    },
+    {
+      "name": "8193 byte envelope",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: 8192 accepted; oversized rejected (specific status unspecified)",
+      "actual": "POST 413; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        54,
+        55
+      ]
+    },
+    {
+      "name": "cleanup isolation",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: baseline survives other deletes",
+      "actual": "GET 200: {'username': 'qh926base', 'email': 'qh926base@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        56
+      ]
+    },
+    {
+      "name": "delete then absent",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        57,
+        58
+      ]
+    }
+  ],
+  "findings": [],
+  "risks": [
+    {
+      "area": "Unicode variants and missing/type combinations",
+      "reason": "Boundary tests covered ASCII and four-byte Unicode passwords, but not combining sequences, all types, or omitted fields. Source uses Python string length and explicit string checks.",
+      "priority": "low",
+      "next_probe": "Add focused domain tests for omitted fields, mixed Unicode passwords and representative non-string values."
+    },
+    {
+      "area": "Source/deployment identity and regression protection",
+      "reason": "Health exposes validation-fixture-1; no source revision or existing test files were supplied. Runtime/source equivalence cannot be established by version label.",
+      "priority": "low",
+      "next_probe": "Provide the deployed source revision and existing tests, then run focused validator and persistence integration cases."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "action": "single initial availability request",
+      "evidence": "evidence/http.json",
+      "request_id": 1
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "valid registration with ignored extra fields",
+      "evidence": "evidence/http.json",
+      "request_id": 2
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926base",
+      "status": 200,
+      "action": "baseline read",
+      "evidence": "evidence/http.json",
+      "request_id": 3
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 409,
+      "action": "duplicate username with alternate email",
+      "evidence": "evidence/http.json",
+      "request_id": 4
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926base",
+      "status": 200,
+      "action": "duplicate username does not replace email",
+      "evidence": "evidence/http.json",
+      "request_id": 5
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 409,
+      "action": "duplicate email with new username",
+      "evidence": "evidence/http.json",
+      "request_id": 6
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926dupemail",
+      "status": 404,
+      "action": "duplicate email creates no secondary record",
+      "evidence": "evidence/http.json",
+      "request_id": 7
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "ascii7",
+      "evidence": "evidence/http.json",
+      "request_id": 8
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926ascii7",
+      "status": 404,
+      "action": "ascii7 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 9
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "ascii255",
+      "evidence": "evidence/http.json",
+      "request_id": 10
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926ascii255",
+      "status": 200,
+      "action": "ascii255 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 11
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/qh926ascii255",
+      "status": 204,
+      "action": "ascii255 cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 12
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "ascii256",
+      "evidence": "evidence/http.json",
+      "request_id": 13
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926ascii256",
+      "status": 404,
+      "action": "ascii256 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 14
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "unicode7",
+      "evidence": "evidence/http.json",
+      "request_id": 15
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926unicode7",
+      "status": 404,
+      "action": "unicode7 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 16
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "unicode8",
+      "evidence": "evidence/http.json",
+      "request_id": 17
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926unicode8",
+      "status": 200,
+      "action": "unicode8 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 18
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/qh926unicode8",
+      "status": 204,
+      "action": "unicode8 cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 19
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "unicode255",
+      "evidence": "evidence/http.json",
+      "request_id": 20
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926unicode255",
+      "status": 200,
+      "action": "unicode255 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 21
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/qh926unicode255",
+      "status": 204,
+      "action": "unicode255 cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 22
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "unicode256",
+      "evidence": "evidence/http.json",
+      "request_id": 23
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926unicode256",
+      "status": 404,
+      "action": "unicode256 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 24
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "name3",
+      "evidence": "evidence/http.json",
+      "request_id": 25
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/q9x",
+      "status": 404,
+      "action": "name3 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 26
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "name4",
+      "evidence": "evidence/http.json",
+      "request_id": 27
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/q9xz",
+      "status": 200,
+      "action": "name4 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 28
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/q9xz",
+      "status": 204,
+      "action": "name4 cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 29
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "name255",
+      "evidence": "evidence/http.json",
+      "request_id": 30
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": 200,
+      "action": "name255 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 31
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": 204,
+      "action": "name255 cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 32
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "name256",
+      "evidence": "evidence/http.json",
+      "request_id": 33
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": 404,
+      "action": "name256 persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 34
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "emaillocal",
+      "evidence": "evidence/http.json",
+      "request_id": 35
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926emaillocal",
+      "status": 404,
+      "action": "emaillocal persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 36
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "emaildomain",
+      "evidence": "evidence/http.json",
+      "request_id": 37
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926emaildomain",
+      "status": 404,
+      "action": "emaildomain persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 38
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "emailat",
+      "evidence": "evidence/http.json",
+      "request_id": 39
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926emailat",
+      "status": 404,
+      "action": "emailat persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 40
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "emailempty",
+      "evidence": "evidence/http.json",
+      "request_id": 41
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926emailempty",
+      "status": 404,
+      "action": "emailempty persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 42
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "pwnull",
+      "evidence": "evidence/http.json",
+      "request_id": 43
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926pwnull",
+      "status": 404,
+      "action": "pwnull persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 44
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "namelist",
+      "evidence": "evidence/http.json",
+      "request_id": 45
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926namelist",
+      "status": 404,
+      "action": "namelist persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 46
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "emailnumber",
+      "evidence": "evidence/http.json",
+      "request_id": 47
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926emailnumber",
+      "status": 404,
+      "action": "emailnumber persisted state",
+      "evidence": "evidence/http.json",
+      "request_id": 48
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "malformed",
+      "evidence": "evidence/http.json",
+      "request_id": 49
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "nonobject",
+      "evidence": "evidence/http.json",
+      "request_id": 50
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "exact 8192 encoded bytes",
+      "evidence": "evidence/http.json",
+      "request_id": 51
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926bytes8192",
+      "status": 200,
+      "action": "8192 bytes state",
+      "evidence": "evidence/http.json",
+      "request_id": 52
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/qh926bytes8192",
+      "status": 204,
+      "action": "byte boundary cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 53
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 413,
+      "action": "exact 8193 encoded bytes",
+      "evidence": "evidence/http.json",
+      "request_id": 54
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926bytes8193",
+      "status": 404,
+      "action": "8193 bytes state",
+      "evidence": "evidence/http.json",
+      "request_id": 55
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926base",
+      "status": 200,
+      "action": "deleting other records preserves baseline",
+      "evidence": "evidence/http.json",
+      "request_id": 56
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/qh926base",
+      "status": 204,
+      "action": "final baseline cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 57
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/qh926base",
+      "status": 404,
+      "action": "verify baseline absent after delete",
+      "evidence": "evidence/http.json",
+      "request_id": 58
+    }
+  ],
+  "limitations": [
+    "This bounded session exercised registration, lookup and deletion; signin was outside the chosen registration charter and was not exercised.",
+    "58 API requests total including one successful availability request; zero browser actions, no browser session opened. No requests were made to other runtimes.",
+    "No existing tests were found in the supplied app directory; none were run. The recorded script is a one-off experiment, not a regression suite.",
+    "No concurrent registration, normalization, full email syntax, production authorization, password strength, delivery, or successful login testing; these are outside the fixture contract.",
+    "Not every omitted field, invalid JSON shape, Unicode sequence, or wrong-type combination was tested. Oversized body rejection was observed as 413; the contract does not prescribe its exact status.",
+    "Source revision metadata unavailable in the allowed directory; source hashes recorded independently from deployed health version.",
+    "State absence after DELETE was explicitly read back for the baseline; other successful creations each received DELETE 204."
+  ],
+  "cleanup": "All 7 registrations created by this session received DELETE 204. Baseline GET after deletion returned 404. No owned registrations remain. No browser was opened; the fixture service was left running for its owner."
+}

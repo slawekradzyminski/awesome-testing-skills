@@ -1,0 +1,32 @@
+     1	<!doctype html>
+     2	<html lang="en">
+     3	<head>
+     4	  <meta charset="UTF-8">
+     5	  <meta name="viewport" content="width=device-width,initial-scale=1">
+     6	  <title>Workshop cart</title>
+     7	  <link rel="stylesheet" href="/style.css">
+     8	  <script src="/app.js" defer></script>
+     9	</head>
+    10	<body>
+    11	  <main>
+    12	    <h1>Your cart</h1>
+    13	    <label for="identity">Demo account</label>
+    14	    <select id="identity"><option value="alice">Alice</option><option value="bob">Bob</option></select>
+    15	    <section aria-labelledby="product-title">
+    16	      <h2 id="product-title">Workshop notebook</h2>
+    17	      <p>Price: 12 · Available stock: 5</p>
+    18	      <p id="summary" aria-live="polite">Loading cart…</p>
+    19	      <button id="edit" type="button">Edit quantity</button>
+    20	      <form id="quantity-form" hidden>
+    21	        <label for="quantity">Quantity</label>
+    22	        <input id="quantity" name="quantity" type="number" min="0" max="5" step="1" required>
+    23	        <div class="actions">
+    24	          <button id="save" type="submit">Save</button>
+    25	          <button id="cancel" type="button">Cancel</button>
+    26	        </div>
+    27	      </form>
+    28	      <p id="feedback" role="status"></p>
+    29	    </section>
+    30	  </main>
+    31	</body>
+    32	</html>

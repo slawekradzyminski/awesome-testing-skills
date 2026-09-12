@@ -1,0 +1,113 @@
+test_check_outcomes_distinguish_access_and_unexecuted_work (test_harness.HarnessTests.test_check_outcomes_distinguish_access_and_unexecuted_work) ... ok
+test_course_mutations_have_matching_working_controls (test_harness.HarnessTests.test_course_mutations_have_matching_working_controls) ... ok
+test_evidence_cannot_escape_candidate (test_harness.HarnessTests.test_evidence_cannot_escape_candidate) ... ok
+test_frozen_quantity_mutation_changes_runtime_contract (test_harness.HarnessTests.test_frozen_quantity_mutation_changes_runtime_contract) ... ok
+test_grader_rejects_fabricated_source_only_runtime (test_harness.HarnessTests.test_grader_rejects_fabricated_source_only_runtime) ... ok
+test_live_source_snapshot_excludes_local_edits_and_configuration (test_harness.HarnessTests.test_live_source_snapshot_excludes_local_edits_and_configuration) ... ok
+test_mutation_fails_closed_if_source_anchor_changes (test_harness.HarnessTests.test_mutation_fails_closed_if_source_anchor_changes) ... ok
+test_preflight_identifies_client_and_uses_only_public_gets (test_harness.HarnessTests.test_preflight_identifies_client_and_uses_only_public_gets) ... ok
+test_query_observation_matches_parsed_audit_path_without_weakening_status_check (test_harness.HarnessTests.test_query_observation_matches_parsed_audit_path_without_weakening_status_check) ... ok
+test_run_creation_never_overwrites (test_harness.HarnessTests.test_run_creation_never_overwrites) ... ok
+test_runtime_only_clean_case_does_not_supply_source_or_answer (test_harness.HarnessTests.test_runtime_only_clean_case_does_not_supply_source_or_answer) ... ok
+test_source_assessment_integrity_passes_then_detects_modified_source (test_harness.HarnessTests.test_source_assessment_integrity_passes_then_detects_modified_source) ... ok
+test_source_only_without_skill_has_no_runtime_or_skill_copy (test_harness.HarnessTests.test_source_only_without_skill_has_no_runtime_or_skill_copy) ... ok
+test_unavailable_runtime_requires_honest_blocked_outcome (test_harness.HarnessTests.test_unavailable_runtime_requires_honest_blocked_outcome) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 1.214s
+
+OK
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-06", "candidate": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-06/candidate", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-06/candidate/TASK.md"}
+Stopped owned fixture 15035
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-07", "candidate": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-07/candidate", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-07/candidate/TASK.md"}
+Stopped owned fixture 15038
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-08", "candidate": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-08/candidate", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-08/candidate/TASK.md"}
+Stopped owned fixture 15041
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-09", "candidate": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-09/candidate", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmp0_6dx_9m/api-09/candidate/TASK.md"}
+Stopped owned fixture 15044
+Stopped owned fixture 15047
+Stopped owned fixture 15049
+{
+  "case": "source-only",
+  "with_skill": false,
+  "artifact_checks_passed": false,
+  "errors": [
+    "Missing cleanup statement",
+    "Runtime execution claimed in source-only case",
+    "Observation has no matching server record: /api/v1/cart"
+  ],
+  "expected_requirements_reported": [],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 0,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."
+}
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpih6lo0pa/live-run", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpih6lo0pa/live-run/candidate/TASK.md"}
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpzy2brbxg/run", "candidate": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpzy2brbxg/run/candidate", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpzy2brbxg/run/candidate/TASK.md"}
+Stopped owned fixture 15061
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpezq3crgm/run", "candidate": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpezq3crgm/run/candidate", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpezq3crgm/run/candidate/TASK.md"}
+{
+  "case": "api-03",
+  "with_skill": true,
+  "artifact_checks_passed": true,
+  "errors": [],
+  "expected_requirements_reported": [
+    "CART-2"
+  ],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 0,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."
+}
+{
+  "case": "api-03",
+  "with_skill": true,
+  "artifact_checks_passed": false,
+  "errors": [
+    "Application or requirements were modified"
+  ],
+  "expected_requirements_reported": [
+    "CART-2"
+  ],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 0,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."
+}
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpkv43rq94/run", "candidate": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpkv43rq94/run/candidate", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpkv43rq94/run/candidate/TASK.md"}
+{"run": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpb2o4mh6a/run", "candidate": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpb2o4mh6a/run/candidate", "task": "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/tmpb2o4mh6a/run/candidate/TASK.md"}
+{
+  "case": "api-05",
+  "with_skill": true,
+  "artifact_checks_passed": true,
+  "errors": [],
+  "expected_requirements_reported": [],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 1,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."
+}
+{
+  "case": "api-05",
+  "with_skill": true,
+  "artifact_checks_passed": false,
+  "errors": [
+    "Unavailable runtime must be reported as blocked, not functionally tested"
+  ],
+  "expected_requirements_reported": [],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 1,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."
+}
+Stopped owned fixture 15066

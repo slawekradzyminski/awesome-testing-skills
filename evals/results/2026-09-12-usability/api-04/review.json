@@ -1,0 +1,7 @@
+{
+  "useful_outcome_met": true,
+  "disposition": "useful-black-box-pass",
+  "reason": "38 API requests and eight evidenced passing checks, no invented defect. Source/build limits explicit; parser/update code named as useful input for targeted future probes. Alice zero-removal requires disclosed owner reset.",
+  "runtime_result": "tested-no-confirmed-defects",
+  "sources_missing": true
+}

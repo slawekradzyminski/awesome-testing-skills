@@ -1,0 +1,16 @@
+{
+  "started_unix": 1789204573.659189,
+  "duration_seconds": 0.03,
+  "api_requests": 58,
+  "availability_requests": 1,
+  "browser_actions": 0,
+  "remaining_owned_records": [],
+  "source_sha256": {
+    "app/app.py": "b383172f9caadfb7d421c79b94f1a4b0314a22afeb8341320903fa782c144b2f",
+    "app/domain.py": "3ccecfb8be66ac0b2345b5c33b0bc68ab3d52941c7ce2381a168a04a9ff617e7",
+    "requirements.md": "c45060e1ef2a7717d532984a8e5e6b8b0b20465bd690bd1b30c45a6b2e2520ca"
+  },
+  "deployed_build": "validation-fixture-1",
+  "source_revision": "No revision metadata supplied inside allowed directory; content hashes recorded",
+  "source_runtime_relationship": "Unknown; runtime health version is not a source revision"
+}

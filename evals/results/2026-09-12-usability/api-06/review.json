@@ -1,0 +1,7 @@
+{
+  "useful_outcome_met": true,
+  "disposition": "confirmed-course-defect",
+  "reason": "Both credential fields tested at short, accepted and excessive lengths. Preserved wrong-direction feedback and passing status contrasts; limited impact correctly classified, no successful-login claim.",
+  "runtime_result": "tested-finding",
+  "sources_missing": false
+}

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "cases": [
     {
       "id": "api-01",
@@ -9,7 +9,8 @@
       "expected_requirements": [
         "CART-2"
       ],
-      "group": "primary-source-runtime"
+      "group": "primary-source-runtime",
+      "expected_outcome": "evidence-backed-finding"
     },
     {
       "id": "api-02",
@@ -17,7 +18,8 @@
       "variant": "control",
       "access": "source-runtime",
       "expected_requirements": [],
-      "group": "primary-source-runtime"
+      "group": "primary-source-runtime",
+      "expected_outcome": "no-confirmed-defects"
     },
     {
       "id": "ui-01",
@@ -27,7 +29,8 @@
       "expected_requirements": [
         "UI-1"
       ],
-      "group": "primary-source-runtime"
+      "group": "primary-source-runtime",
+      "expected_outcome": "evidence-backed-finding"
     },
     {
       "id": "ui-02",
@@ -35,7 +38,8 @@
       "variant": "control",
       "access": "source-runtime",
       "expected_requirements": [],
-      "group": "primary-source-runtime"
+      "group": "primary-source-runtime",
+      "expected_outcome": "no-confirmed-defects"
     },
     {
       "id": "api-03",
@@ -45,7 +49,8 @@
       "expected_requirements": [
         "CART-2"
       ],
-      "group": "supplementary-fallback"
+      "group": "supplementary-fallback",
+      "expected_outcome": "evidence-backed-finding"
     },
     {
       "id": "ui-03",
@@ -55,7 +60,98 @@
       "expected_requirements": [
         "UI-1"
       ],
-      "group": "supplementary-fallback"
+      "group": "supplementary-fallback",
+      "expected_outcome": "evidence-backed-finding"
+    },
+    {
+      "id": "api-04",
+      "skill": "api-exploratory-testing",
+      "variant": "control",
+      "access": "runtime-only",
+      "group": "usability",
+      "expected_outcome": "no-confirmed-defects",
+      "expected_requirements": []
+    },
+    {
+      "id": "ui-04",
+      "skill": "ui-exploratory-testing",
+      "variant": "control",
+      "access": "runtime-only",
+      "group": "usability",
+      "expected_outcome": "no-confirmed-defects",
+      "expected_requirements": []
+    },
+    {
+      "id": "api-05",
+      "skill": "api-exploratory-testing",
+      "variant": "control",
+      "access": "source-runtime",
+      "group": "usability",
+      "expected_outcome": "blocked-runtime",
+      "expected_requirements": [],
+      "environment": "unavailable"
+    },
+    {
+      "id": "ui-05",
+      "skill": "ui-exploratory-testing",
+      "variant": "control",
+      "access": "source-runtime",
+      "group": "usability",
+      "expected_outcome": "blocked-runtime",
+      "expected_requirements": [],
+      "environment": "unavailable"
+    },
+    {
+      "id": "api-06",
+      "skill": "api-exploratory-testing",
+      "variant": "length-message",
+      "access": "source-runtime",
+      "group": "course-source-runtime",
+      "expected_outcome": "evidence-backed-finding",
+      "expected_requirements": [
+        "AUTH-1"
+      ],
+      "fixture": "course-app",
+      "feature": "signin",
+      "workshop_finding": "BUG-03"
+    },
+    {
+      "id": "api-07",
+      "skill": "api-exploratory-testing",
+      "variant": "control",
+      "access": "source-runtime",
+      "group": "course-source-runtime",
+      "expected_outcome": "no-confirmed-defects",
+      "expected_requirements": [],
+      "fixture": "course-app",
+      "feature": "signin",
+      "workshop_finding": "BUG-03"
+    },
+    {
+      "id": "api-08",
+      "skill": "api-exploratory-testing",
+      "variant": "password-bytes",
+      "access": "source-runtime",
+      "group": "course-source-runtime",
+      "expected_outcome": "evidence-backed-finding",
+      "expected_requirements": [
+        "AUTH-2"
+      ],
+      "fixture": "course-app",
+      "feature": "signup",
+      "workshop_finding": "BUG-06"
+    },
+    {
+      "id": "api-09",
+      "skill": "api-exploratory-testing",
+      "variant": "control",
+      "access": "source-runtime",
+      "group": "course-source-runtime",
+      "expected_outcome": "no-confirmed-defects",
+      "expected_requirements": [],
+      "fixture": "course-app",
+      "feature": "signup",
+      "workshop_finding": "BUG-06"
     }
   ]
 }

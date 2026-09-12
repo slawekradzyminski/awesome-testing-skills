@@ -1,0 +1,13 @@
+{
+  "http_requests": 35,
+  "api_requests": 34,
+  "dedicated_health_requests": 1,
+  "all_requests_during_unavailability": 35,
+  "response_status_counts": {
+    "503": 35
+  },
+  "browser_actions": 0,
+  "browser_sessions_created": 0,
+  "limit_deviation": "The batch did not stop after the first 503. It issued 35 requests while unavailable, exceeding the six availability-attempt limit. No further network requests were made.",
+  "cleanup": "No successful mutation observed; all requests returned 503. No baseline or persisted state could be read, so unchanged state cannot be verified. No service started, restarted, repaired, or stopped. No browser opened."
+}

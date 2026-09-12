@@ -1,0 +1,40 @@
+     1	"""Small in-memory product/cart domain, inspired by Awesome LocalStack."""
+     2	
+     3	from copy import deepcopy
+     4	
+     5	
+     6	class ApiError(Exception):
+     7	    def __init__(self, status, message):
+     8	        self.status = status
+     9	        self.message = message
+    10	
+    11	
+    12	class Store:
+    13	    def __init__(self):
+    14	        self.products = [{"id": 1, "name": "Workshop notebook", "price": 12, "stockQuantity": 5}]
+    15	        self.carts = {"alice": {1: 1}, "bob": {1: 2}}
+    16	
+    17	    def cart(self, username):
+    18	        items = [{"productId": pid, "quantity": qty} for pid, qty in self.carts[username].items()]
+    19	        return {"username": username, "items": items,
+    20	                "totalItems": sum(item["quantity"] for item in items),
+    21	                "totalPrice": sum(item["quantity"] * 12 for item in items)}
+    22	
+    23	    def update(self, username, product_id, quantity):
+    24	        if type(quantity) is not int or quantity < 0:
+    25	            raise ApiError(400, "Quantity must be a non-negative integer")
+    26	        if product_id not in self.carts[username]:
+    27	            raise ApiError(404, "Cart item not found")
+    28	        product = next((p for p in self.products if p["id"] == product_id), None)
+    29	        if not product:
+    30	            raise ApiError(404, "Product not found")
+    31	        if quantity > product["stockQuantity"]:
+    32	            raise ApiError(409, "Requested quantity exceeds available stock")
+    33	        if quantity == 0:
+    34	            del self.carts[username][product_id]
+    35	        else:
+    36	            self.carts[username][product_id] = quantity
+    37	        return self.cart(username)
+    38	
+    39	    def catalog(self):
+    40	        return deepcopy(self.products)

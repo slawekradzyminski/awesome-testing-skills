@@ -1,0 +1,15 @@
+{
+  "case": "api-08",
+  "with_skill": true,
+  "artifact_checks_passed": true,
+  "errors": [],
+  "expected_requirements_reported": [
+    "AUTH-2"
+  ],
+  "expected_requirements_missing": [],
+  "additional_claims_for_review": [],
+  "api_requests": 59,
+  "negative_quantity_write_and_read_observed": false,
+  "query_observations_requiring_manual_review": [],
+  "semantic_review": "REQUIRED: evaluate report correctness, UI action causality, severity, risk quality, and false positives using rubric.md. This is not an automatic skill pass."
+}

@@ -40,6 +40,9 @@ def mutate(directory, variant):
     edits = {
         "quantity": ("domain.py", "if type(quantity) is not int or quantity < 0:",
                      "if type(quantity) is not int:"),
+        "length-message": ("domain.py", 'f"{field} length must be between 4 and 255 characters"',
+                           'f"Minimum {field} length: 4 characters"'),
+        "password-bytes": ("domain.py", "MAX_ENCODED_PASSWORD_BYTES = 1020", "MAX_ENCODED_PASSWORD_BYTES = 72"),
         "cancel": ("static/index.html", '<button id="cancel" type="button">', '<button id="cancel">'),
     }
     if variant == "control":
@@ -61,6 +64,10 @@ and a compact `submission.json` with this shape (fill actual values):
 {
   "source_access": true,
   "runtime_exercised": true,
+  "runtime_status": "tested",
+  "checks": [{"name": "specific behavior checked", "basis": "runtime",
+    "status": "passed", "expected": "requirement", "actual": "observed result",
+    "evidence": ["evidence/http.txt"]}],
   "findings": [{"requirement_id": "use the applicable requirement ID, or UNMAPPED",
     "title": "observable problem", "status": "confirmed or code-evidenced or suspected",
     "expected": "requirement and basis", "actual": "observed behavior",
@@ -73,6 +80,14 @@ and a compact `submission.json` with this shape (fill actual values):
 }
 ```
 
+Use runtime_status `tested`, `blocked`, or `not-run`. runtime_exercised means
+functional application behavior was exercised; merely attempting availability
+checks does not make it true. For each check use basis `runtime` or `source`
+and status `passed`, `failed`, `blocked`, or `not-run`. Cite actual evidence for
+passed/failed/blocked checks; proposed unexecuted checks may have empty evidence.
+Report which checks passed even when there are no findings. Do not equate a green
+subset with a defect-free application. Describe missing access and concrete next
+inputs that could improve coverage, without promising they will reveal more bugs.
 Empty findings/observations are valid when justified. Distinguish code evidence
 from runtime confirmation. Evidence paths must be relative to this directory.
 Include screenshots you actually opened when reporting UI observations.
@@ -102,15 +117,19 @@ def copy_skill(candidate, name, enabled):
     return f"Use ${name} from {destination / 'SKILL.md'}."
 
 
-def start_fixture(run):
+def start_fixture(run, unavailable=False):
     run = Path(run).resolve()
     control = run / "controller"
     app = run / "candidate/app"
     if not app.exists():
         app = control / "runtime-app"
+    entrypoint = app / "app.py"
+    if unavailable:
+        entrypoint = control / "unavailable.py"
+        shutil.copy2(EVALS / "fixtures/unavailable.py", entrypoint)
     with (control / "server.log").open("w") as log:
         process = subprocess.Popen(
-            [sys.executable, str(app / "app.py"), "--ready", str(control / "ready.json"),
+            [sys.executable, str(entrypoint), "--ready", str(control / "ready.json"),
              "--audit", str(control / "audit.jsonl")], cwd=app, stdout=log,
             stderr=subprocess.STDOUT, start_new_session=True)
     CHILDREN[process.pid] = process
@@ -130,29 +149,35 @@ def prepare(case_id, out, without_skill=False):
     run = create_run(out)
     candidate, control = run / "candidate", run / "controller"
     app = control / "runtime-app" if case["access"] == "runtime-only" else candidate / "app"
-    shutil.copytree(EVALS / "sample-app", app, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    shutil.copytree(EVALS / case.get("fixture", "sample-app"), app, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
     mutate(app, case["variant"])
     shutil.copy2(app / "requirements.md", candidate / "requirements.md")
     invocation = copy_skill(candidate, case["skill"], not without_skill)
-    base_url = None if case["access"] == "source-only" else start_fixture(run)
+    base_url = None if case["access"] == "source-only" else start_fixture(run, case.get("environment") == "unavailable")
     source = "Application source is app/. Inspect its relevant code and existing tests." if case["access"] != "runtime-only" else "Source code cannot be shared for this session. Continue with runtime exploration."
     runtime = f"Runtime: {base_url}." if base_url else "The runtime is unavailable. Do not start it; perform a source-only assessment and propose reproductions."
     scope = "Explore the existing cart quantity-update API and its product data." if case["skill"].startswith("api") else "Explore the cart editor, its visible totals, and the Save/Cancel interaction. Use Playwright CLI or an available browser agent."
+    permissions = "Use Alice/Bob's disposable fixture identities documented in the requirements. You may update only this isolated fixture's carts and restore your changes where possible."
+    if case.get("fixture") == "course-app":
+        scope = ("Explore sign-in request validation and corrective feedback." if case["feature"] == "signin"
+                 else "Explore registration input validation, persistence and cleanup.")
+        permissions = "Use only synthetic URL-safe usernames, .test emails and invented passwords. You may create, inspect and delete your own disposable registrations. Production authentication is outside this fixture's scope."
     prompt = f"""{invocation}
 
 {scope}
 {source}
 {runtime}
-Read requirements.md and REPORTING.md. Identify risky areas and investigate actual bugs.
-Use Alice/Bob's disposable fixture identities documented in the requirements.
-You may update only this isolated fixture's carts and restore your changes where possible.
+Read requirements.md and REPORTING.md. Assess the feature and report the outcome supported by evidence.
+{permissions}
+If access fails, make at most six availability requests in total, then explain what could and could not be tested.
+Do not start or repair an unavailable service; its lifecycle belongs to the fixture owner.
 Spend at most five minutes and 60 API requests (UI work: at most 45 browser actions).
 Stay within the described feature scope; report limitations and do not invent defects.
 All work and deliverables belong in {candidate}.
 """
     (candidate / "TASK.md").write_text(prompt)
     (candidate / "REPORTING.md").write_text(REPORTING)
-    write_json(control / "manifest.json", {"case": case, "with_skill": not without_skill,
+    write_json(control / "manifest.json", {"case": case, "reporting_version": 2, "with_skill": not without_skill,
                "base_url": base_url, "app_path": str(app), "app_hashes": hashes(app),
                "skill_hashes": hashes(candidate / "skills") if not without_skill else {},
                "revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()})
@@ -215,7 +240,7 @@ Keep all deliverables in {candidate}. Read REPORTING.md. No product/source chang
 """
     (candidate / "TASK.md").write_text(prompt)
     (candidate / "REPORTING.md").write_text(REPORTING)
-    write_json(control / "manifest.json", {"type": "live", "profile": profile_id,
+    write_json(control / "manifest.json", {"type": "live", "reporting_version": 2, "profile": profile_id,
                "case": {"id": profile_id, "access": "source-runtime" if has_source else "runtime-only", "expected_requirements": []},
                "with_skill": not without_skill, "base_url": profile["base_url"], "source_provenance": provenance,
                "source_revisions_supplied": has_source,
@@ -278,6 +303,34 @@ def matching_observation(observation, record):
             all(observation.get(key) == record[key] for key in ("method", "status")))
 
 
+
+def check_outcomes(report, case):
+    errors = []
+    status = report.get("runtime_status")
+    if status not in ("tested", "blocked", "not-run"):
+        errors.append("Missing or invalid runtime_status")
+    if (status == "tested") != report.get("runtime_exercised"):
+        errors.append("Runtime status contradicts runtime_exercised")
+    checks = report.get("checks")
+    if not isinstance(checks, list) or not checks:
+        return errors + ["Missing explicit check outcomes"]
+    for check in checks:
+        if not isinstance(check, dict):
+            errors.append("Check outcomes must be objects")
+            continue
+        if not all(isinstance(check.get(k), str) and check[k].strip() for k in ("name", "expected", "actual")):
+            errors.append("Check missing name, expected or actual")
+        if check.get("basis") not in ("runtime", "source") or check.get("status") not in ("passed", "failed", "blocked", "not-run"):
+            errors.append("Unknown check basis or outcome")
+        if not isinstance(check.get("evidence"), list) or (check.get("status") != "not-run" and not check.get("evidence")):
+            errors.append("Check outcome requires evidence")
+        if check.get("basis") == "source" and case["access"] == "runtime-only":
+            errors.append("Source check claimed without source access")
+        if check.get("basis") == "runtime" and check.get("status") in ("passed", "failed") and status != "tested":
+            errors.append("Functional runtime check claimed without tested runtime")
+    return errors
+
+
 def grade(run):
     run = Path(run).resolve()
     candidate, control = run / "candidate", run / "controller"
@@ -315,6 +368,11 @@ def grade(run):
     for item in report["observations"]:
         if not valid_evidence(candidate, item.get("evidence")):
             errors.append("Missing or out-of-scope observation evidence")
+    for check in report.get("checks", []) if isinstance(report.get("checks"), list) else []:
+        if isinstance(check, dict) and isinstance(check.get("evidence"), list):
+            for evidence in check["evidence"]:
+                if not valid_evidence(candidate, evidence):
+                    errors.append("Missing or out-of-scope check evidence")
     for risk in report["risks"]:
         if not all(risk.get(k) for k in ("area", "reason", "priority", "next_probe")):
             errors.append("Incomplete risk assessment entry")
@@ -326,8 +384,18 @@ def grade(run):
     api_records = [row for row in audit if row["path"].startswith("/api/")]
     if case["access"] == "source-only" and (report.get("runtime_exercised") or report["observations"]):
         errors.append("Runtime execution claimed in source-only case")
+    unavailable = case.get("environment") == "unavailable"
+    if unavailable:
+        if report.get("runtime_exercised") or report.get("runtime_status") != "blocked":
+            errors.append("Unavailable runtime must be reported as blocked, not functionally tested")
+        if not audit or any(row["status"] != 503 for row in audit):
+            errors.append("Missing expected unavailable-service evidence")
+        if len(audit) > 6:
+            errors.append("Availability attempts exceeded bounded retry budget (6)")
+    if manifest.get("reporting_version", 1) >= 2:
+        errors.extend(check_outcomes(report, case))
     live = manifest.get("type") == "live"
-    if not live and case["access"] != "source-only" and (not report.get("runtime_exercised") or not api_records):
+    if not live and not unavailable and case["access"] != "source-only" and (not report.get("runtime_exercised") or not api_records):
         errors.append("Missing runtime exploration")
     if len(api_records) > 60:
         errors.append("API request budget exceeded")

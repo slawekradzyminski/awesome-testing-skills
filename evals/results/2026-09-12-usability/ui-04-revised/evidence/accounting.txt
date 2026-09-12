@@ -1,0 +1,5 @@
+Browser commands, chronological (42 total, limit 45):
+1 open; 2 failed run-code; 3 run-code; 4 requests; 5 click Edit; 6 eval metadata; 7 fill 3; 8 screenshot; 9 requests; 10 click Cancel; 11 requests; 12 screenshot; 13 click Edit; 14 snapshot; 15 fill 4; 16 click Save; 17 requests; 18 snapshot; 19 resize; 20 click Edit; 21 fill 6; 22 Tab; 23 Enter; 24 screenshot; 25 requests; 26 Tab; 27 Enter (second invalid Save, not Cancel); 28 snapshot; 29 console; 30 requests --static; 31 close; 32 open; 33 resize; 34 Tab; 35 Tab; 36 Enter; 37 ArrowDown; 38 Tab; 39 Enter; 40 screenshot; 41 requests --static; 42 close.
+Two CLI help calls are non-browser metadata commands.
+API requests: first browser 3 + second browser 3 + http.json 17 + cleanup.json 5 = 28 (limit 60). Six extra browser document/static requests, total observed HTTP 34. No failed availability requests.
+Screenshots captured and opened: provisional-desktop.png, after-cancel.png, narrow-stock-error.png, narrow-keyboard-saved.png.

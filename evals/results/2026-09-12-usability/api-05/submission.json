@@ -1,0 +1,342 @@
+{
+  "source_access": true,
+  "runtime_exercised": false,
+  "runtime_status": "blocked",
+  "checks": [
+    {
+      "name": "Assigned runtime availability",
+      "basis": "runtime",
+      "status": "blocked",
+      "expected": "Service permits functional product/cart requests",
+      "actual": "All 35 HTTP requests returned 503 with Application temporarily unavailable; no functional application behavior exercised.",
+      "evidence": [
+        "evidence/http.json",
+        "evidence/run.txt"
+      ]
+    },
+    {
+      "name": "Existing domain total and identity isolation test",
+      "basis": "source",
+      "status": "passed",
+      "expected": "CART-1 and CART-4: Alice quantity 3 yields price 36 and leaves Bob quantity 2",
+      "actual": "Existing unittest test_updates_total_and_leaves_other_identity_unchanged passed locally.",
+      "evidence": [
+        "evidence/existing-tests.txt",
+        "evidence/source.txt"
+      ]
+    },
+    {
+      "name": "Existing domain stock rejection preserves previous quantity",
+      "basis": "source",
+      "status": "passed",
+      "expected": "CART-3: quantity 6 raises 409 and preserves Alice quantity 1",
+      "actual": "Existing unittest test_stock_rejection_preserves_previous_value passed locally.",
+      "evidence": [
+        "evidence/existing-tests.txt",
+        "evidence/source.txt"
+      ]
+    },
+    {
+      "name": "Authentication and ownership route wiring review",
+      "basis": "source",
+      "status": "passed",
+      "expected": "CART-1: anonymous access rejected and identity chooses cart",
+      "actual": "Handler.user maps two fixture tokens and raises 401 otherwise; GET cart and PUT update use authenticated actor. Runtime responses cannot verify this wiring.",
+      "evidence": [
+        "evidence/source.txt"
+      ]
+    },
+    {
+      "name": "Quantity type validation and removal source review",
+      "basis": "source",
+      "status": "passed",
+      "expected": "CART-2: reject invalid types and negative values; zero removes existing item",
+      "actual": "Store.update checks exact int type and nonnegative value before mutation, and deletes existing item for zero. These branches were inspected, not executed live.",
+      "evidence": [
+        "evidence/source.txt"
+      ]
+    }
+  ],
+  "findings": [],
+  "risks": [
+    {
+      "area": "CART-1 runtime authentication and isolation",
+      "reason": "Source wiring looks consistent, but 503 prevents observing identity-specific responses and changes. Highest priority because other users' carts must remain isolated.",
+      "priority": "high",
+      "next_probe": "After fixture owner restores service, capture Alice/Bob baselines; reject anonymous reads/writes, update Alice, and verify Bob unchanged."
+    },
+    {
+      "area": "CART-2/CART-3 rejection atomicity",
+      "reason": "Validation precedes writes in inspected source; live parser/route integration and persisted state remain unverified.",
+      "priority": "high",
+      "next_probe": "Establish valid quantity, vary negative/fractional/missing/null/string/boolean and above-stock inputs, and follow each rejected request with a cart read."
+    },
+    {
+      "area": "CART-2 zero removal and CART-4 totals",
+      "reason": "Zero deletion and fixed fixture arithmetic appear in source, but no live cart baseline, totals or removal were observed.",
+      "priority": "medium",
+      "next_probe": "With an available disposable fixture, verify quantities 1/3/5 and totals; finish with zero removal and coordinate owner reset because re-add is unavailable."
+    },
+    {
+      "area": "Product stock consistency",
+      "reason": "Catalog uses a copy and update does not decrement product stock; runtime product data unavailable.",
+      "priority": "medium",
+      "next_probe": "Read catalog before and after valid cart updates and confirm price 12, stock 5 and matching totals."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 503,
+      "action": "Availability and deployed build identity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 503,
+      "action": "Product price and stock baseline (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Alice initial cart (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Bob initial cart (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Anonymous read rejected (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Anonymous update rejected (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify anonymous mutation did not change Alice (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Representative valid update (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify quantity three and total 36 persisted (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify Alice update left Bob unchanged (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Client supplied username cannot choose another cart (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Extra username field still updates authenticated Alice (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify extra username field left Bob unchanged (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Exact stock boundary accepted (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products",
+      "status": 503,
+      "action": "Stock remains five after cart changes (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Reject negative quantity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify unchanged quantity five after negative (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Reject fractional quantity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify unchanged quantity five after fractional (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Reject missing quantity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify unchanged quantity five after missing (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Reject null quantity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify unchanged quantity five after null (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Reject string quantity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify unchanged quantity five after string (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Reject boolean true quantity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify unchanged quantity five after boolean true (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Reject boolean false quantity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify unchanged quantity five after boolean false (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Reject above stock quantity (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify unchanged quantity five after above stock (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Malformed JSON rejected (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify malformed JSON did not mutate cart (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 503,
+      "action": "Non-object JSON rejected (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 503,
+      "action": "Verify non-object JSON did not mutate cart (attempt only; service unavailable)",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "Runtime unavailable: every response was 503; source/deployed-build relationship unknown. Health response provided no version.",
+    "No browser session or UI assessment; UI-1/UI-2 are outside this API exploration.",
+    "Only two existing domain tests were run. Other branches were inspected rather than executed; no exhaustive coverage claim.",
+    "Actual request accounting exceeded the fallback constraint: 35 requests while unavailable, rather than at most six. The script lacked an availability guard and continued until baseline-dependent cleanup raised KeyError.",
+    "Cart baselines and final state could not be read. No mutation succeeded observably; unchanged state is not proven."
+  ],
+  "cleanup": "No successful mutation observed; all requests returned 503. No baseline or persisted state could be read, so unchanged state cannot be verified. No service started, restarted, repaired, or stopped. No browser opened."
+}

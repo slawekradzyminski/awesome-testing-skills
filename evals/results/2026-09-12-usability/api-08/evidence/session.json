@@ -1,0 +1,429 @@
+{
+  "started_unix": 1789204432.2727208,
+  "duration_seconds": 0.03,
+  "api_requests": 60,
+  "browser_actions": 0,
+  "availability_requests": 1,
+  "created": [
+    "uf9204432base",
+    "uf9204432ascii72",
+    "uf9204432unicode18",
+    "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "u432",
+    "uf9204432body8192",
+    "uf9204432basereuse"
+  ],
+  "checks": [
+    {
+      "name": "base",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'uf9204432base', 'email': 'uf9204432base@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        3,
+        4
+      ]
+    },
+    {
+      "name": "duplicate username",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 409 and original record unchanged",
+      "actual": "POST 409; GET {'username': 'uf9204432base', 'email': 'uf9204432base@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        5,
+        6
+      ]
+    },
+    {
+      "name": "duplicate email",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 409 and no new record",
+      "actual": "POST 409; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        7,
+        8
+      ]
+    },
+    {
+      "name": "ascii72",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'uf9204432ascii72', 'email': 'uf9204432ascii72@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        9,
+        10
+      ]
+    },
+    {
+      "name": "ascii73",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 400: {'error': 'password cannot be more than 72 bytes'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        11,
+        12
+      ]
+    },
+    {
+      "name": "ascii255",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 400: {'error': 'password cannot be more than 72 bytes'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        13,
+        14
+      ]
+    },
+    {
+      "name": "unicode18",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'uf9204432unicode18', 'email': 'uf9204432unicode18@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        15,
+        16
+      ]
+    },
+    {
+      "name": "unicode19",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 400: {'error': 'password cannot be more than 72 bytes'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        17,
+        18
+      ]
+    },
+    {
+      "name": "ascii73repeat",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 400: {'error': 'password cannot be more than 72 bytes'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        19,
+        20
+      ]
+    },
+    {
+      "name": "shortpassword",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'password': 'Password length must be between 8 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        21,
+        22
+      ]
+    },
+    {
+      "name": "longpassword",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'password': 'Password length must be between 8 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        23,
+        24
+      ]
+    },
+    {
+      "name": "nullpassword",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'password': 'Password length must be between 8 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        25,
+        26
+      ]
+    },
+    {
+      "name": "shortusername",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'username': 'Username length must be between 4 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        27,
+        28
+      ]
+    },
+    {
+      "name": "longusername",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'username': 'Username length must be between 4 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        29,
+        30
+      ]
+    },
+    {
+      "name": "username255",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'email': 'uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        31,
+        32
+      ]
+    },
+    {
+      "name": "username4",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'u432', 'email': 'u432@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        33,
+        34
+      ]
+    },
+    {
+      "name": "emailnodomain",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'email': 'Use a nonempty email address with a local part and domain'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        35,
+        36
+      ]
+    },
+    {
+      "name": "emailnolocal",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'email': 'Use a nonempty email address with a local part and domain'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        37,
+        38
+      ]
+    },
+    {
+      "name": "emailnonscalar",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'email': 'Use a nonempty email address with a local part and domain'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        39,
+        40
+      ]
+    },
+    {
+      "name": "malformed",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: 400",
+      "actual": "{'message': 'Invalid JSON request'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        41
+      ]
+    },
+    {
+      "name": "nonobject",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: 400",
+      "actual": "{'message': 'Expected a JSON object'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        42
+      ]
+    },
+    {
+      "name": "8192-byte JSON object",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: accepted; AUTH-2: only username/email stored",
+      "actual": "POST 201, GET {'username': 'uf9204432body8192', 'email': 'uf9204432body8192@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        43,
+        44
+      ]
+    },
+    {
+      "name": "cleanup uf9204432base",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        45,
+        46
+      ]
+    },
+    {
+      "name": "cleanup uf9204432ascii72",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        47,
+        48
+      ]
+    },
+    {
+      "name": "cleanup uf9204432unicode18",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        49,
+        50
+      ]
+    },
+    {
+      "name": "cleanup uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        51,
+        52
+      ]
+    },
+    {
+      "name": "cleanup u432",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        53,
+        54
+      ]
+    },
+    {
+      "name": "cleanup uf9204432body8192",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        55,
+        56
+      ]
+    },
+    {
+      "name": "8-character password and email reuse following deletion",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2/AUTH-3: 201, persist only username/email, then 204 and 404",
+      "actual": "201, GET matching record; DELETE 204; GET 404. Previously deleted email available again.",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        57,
+        58,
+        59,
+        60
+      ]
+    }
+  ],
+  "source_sha256": {
+    "app/app.py": "b383172f9caadfb7d421c79b94f1a4b0314a22afeb8341320903fa782c144b2f",
+    "app/domain.py": "bf0559426f0b05ef1939131bbf71bc9bf9aace1fdbec7fc93b3fe7be132cf852"
+  },
+  "last_request_unix": 1789204536.4393091
+}

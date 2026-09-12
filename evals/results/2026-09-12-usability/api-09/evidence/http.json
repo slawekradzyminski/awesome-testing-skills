@@ -1,0 +1,1268 @@
+[
+  {
+    "id": 1,
+    "method": "GET",
+    "path": "/health",
+    "action": "single initial availability request",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "51"
+    },
+    "response": "{\"status\": \"UP\", \"version\": \"validation-fixture-1\"}",
+    "elapsed_ms": 9.63
+  },
+  {
+    "id": 2,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "valid registration with ignored extra fields",
+    "request": {
+      "username": "qh926base",
+      "email": "qh926base@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      },
+      "role": "admin",
+      "extra": {
+        "ignored": true
+      }
+    },
+    "encoded_request_bytes": 131,
+    "raw_request_description": null,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "60"
+    },
+    "response": "{\"username\": \"qh926base\", \"email\": \"qh926base@example.test\"}",
+    "elapsed_ms": 0.39
+  },
+  {
+    "id": 3,
+    "method": "GET",
+    "path": "/api/v1/users/qh926base",
+    "action": "baseline read",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "60"
+    },
+    "response": "{\"username\": \"qh926base\", \"email\": \"qh926base@example.test\"}",
+    "elapsed_ms": 0.27
+  },
+  {
+    "id": 4,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "duplicate username with alternate email",
+    "request": {
+      "username": "qh926base",
+      "email": "qh926other@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      },
+      "role": "admin",
+      "extra": {
+        "ignored": true
+      }
+    },
+    "encoded_request_bytes": 132,
+    "raw_request_description": null,
+    "status": 409,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "47"
+    },
+    "response": "{\"message\": \"Username or email already exists\"}",
+    "elapsed_ms": 0.32
+  },
+  {
+    "id": 5,
+    "method": "GET",
+    "path": "/api/v1/users/qh926base",
+    "action": "duplicate username does not replace email",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "60"
+    },
+    "response": "{\"username\": \"qh926base\", \"email\": \"qh926base@example.test\"}",
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 6,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "duplicate email with new username",
+    "request": {
+      "username": "qh926dupemail",
+      "email": "qh926base@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      },
+      "role": "admin",
+      "extra": {
+        "ignored": true
+      }
+    },
+    "encoded_request_bytes": 135,
+    "raw_request_description": null,
+    "status": 409,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "47"
+    },
+    "response": "{\"message\": \"Username or email already exists\"}",
+    "elapsed_ms": 0.25
+  },
+  {
+    "id": 7,
+    "method": "GET",
+    "path": "/api/v1/users/qh926dupemail",
+    "action": "duplicate email creates no secondary record",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.33
+  },
+  {
+    "id": 8,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "ascii7",
+    "request": {
+      "username": "qh926ascii7",
+      "email": "qh926ascii7@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 7,
+        "utf8_bytes": 7,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 87,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"password\": \"Password length must be between 8 and 255 characters\"}",
+    "elapsed_ms": 0.3
+  },
+  {
+    "id": 9,
+    "method": "GET",
+    "path": "/api/v1/users/qh926ascii7",
+    "action": "ascii7 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.27
+  },
+  {
+    "id": 10,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "ascii255",
+    "request": {
+      "username": "qh926ascii255",
+      "email": "qh926ascii255@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 255,
+        "utf8_bytes": 255,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 339,
+    "raw_request_description": null,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"username\": \"qh926ascii255\", \"email\": \"qh926ascii255@example.test\"}",
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 11,
+    "method": "GET",
+    "path": "/api/v1/users/qh926ascii255",
+    "action": "ascii255 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"username\": \"qh926ascii255\", \"email\": \"qh926ascii255@example.test\"}",
+    "elapsed_ms": 0.22
+  },
+  {
+    "id": 12,
+    "method": "DELETE",
+    "path": "/api/v1/users/qh926ascii255",
+    "action": "ascii255 cleanup",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "response": "",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 13,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "ascii256",
+    "request": {
+      "username": "qh926ascii256",
+      "email": "qh926ascii256@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 256,
+        "utf8_bytes": 256,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 340,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"password\": \"Password length must be between 8 and 255 characters\"}",
+    "elapsed_ms": 0.22
+  },
+  {
+    "id": 14,
+    "method": "GET",
+    "path": "/api/v1/users/qh926ascii256",
+    "action": "ascii256 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.21
+  },
+  {
+    "id": 15,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "unicode7",
+    "request": {
+      "username": "qh926unicode7",
+      "email": "qh926unicode7@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 7,
+        "utf8_bytes": 28,
+        "value_description": "U+1F680 repeated"
+      }
+    },
+    "encoded_request_bytes": 112,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"password\": \"Password length must be between 8 and 255 characters\"}",
+    "elapsed_ms": 0.21
+  },
+  {
+    "id": 16,
+    "method": "GET",
+    "path": "/api/v1/users/qh926unicode7",
+    "action": "unicode7 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.22
+  },
+  {
+    "id": 17,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "unicode8",
+    "request": {
+      "username": "qh926unicode8",
+      "email": "qh926unicode8@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 8,
+        "utf8_bytes": 32,
+        "value_description": "U+1F680 repeated"
+      }
+    },
+    "encoded_request_bytes": 116,
+    "raw_request_description": null,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"username\": \"qh926unicode8\", \"email\": \"qh926unicode8@example.test\"}",
+    "elapsed_ms": 0.21
+  },
+  {
+    "id": 18,
+    "method": "GET",
+    "path": "/api/v1/users/qh926unicode8",
+    "action": "unicode8 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"username\": \"qh926unicode8\", \"email\": \"qh926unicode8@example.test\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 19,
+    "method": "DELETE",
+    "path": "/api/v1/users/qh926unicode8",
+    "action": "unicode8 cleanup",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "response": "",
+    "elapsed_ms": 0.18
+  },
+  {
+    "id": 20,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "unicode255",
+    "request": {
+      "username": "qh926unicode255",
+      "email": "qh926unicode255@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 255,
+        "utf8_bytes": 1020,
+        "value_description": "U+1F680 repeated"
+      }
+    },
+    "encoded_request_bytes": 1108,
+    "raw_request_description": null,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "72"
+    },
+    "response": "{\"username\": \"qh926unicode255\", \"email\": \"qh926unicode255@example.test\"}",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 21,
+    "method": "GET",
+    "path": "/api/v1/users/qh926unicode255",
+    "action": "unicode255 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "72"
+    },
+    "response": "{\"username\": \"qh926unicode255\", \"email\": \"qh926unicode255@example.test\"}",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 22,
+    "method": "DELETE",
+    "path": "/api/v1/users/qh926unicode255",
+    "action": "unicode255 cleanup",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "response": "",
+    "elapsed_ms": 0.18
+  },
+  {
+    "id": 23,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "unicode256",
+    "request": {
+      "username": "qh926unicode256",
+      "email": "qh926unicode256@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 256,
+        "utf8_bytes": 1024,
+        "value_description": "U+1F680 repeated"
+      }
+    },
+    "encoded_request_bytes": 1112,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"password\": \"Password length must be between 8 and 255 characters\"}",
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 24,
+    "method": "GET",
+    "path": "/api/v1/users/qh926unicode256",
+    "action": "unicode256 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.22
+  },
+  {
+    "id": 25,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "name3",
+    "request": {
+      "username": "q9x",
+      "email": "qh926name3@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 81,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"username\": \"Username length must be between 4 and 255 characters\"}",
+    "elapsed_ms": 0.21
+  },
+  {
+    "id": 26,
+    "method": "GET",
+    "path": "/api/v1/users/q9x",
+    "action": "name3 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 27,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "name4",
+    "request": {
+      "username": "q9xz",
+      "email": "qh926name4@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 82,
+    "raw_request_description": null,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "56"
+    },
+    "response": "{\"username\": \"q9xz\", \"email\": \"qh926name4@example.test\"}",
+    "elapsed_ms": 0.21
+  },
+  {
+    "id": 28,
+    "method": "GET",
+    "path": "/api/v1/users/q9xz",
+    "action": "name4 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "56"
+    },
+    "response": "{\"username\": \"q9xz\", \"email\": \"qh926name4@example.test\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 29,
+    "method": "DELETE",
+    "path": "/api/v1/users/q9xz",
+    "action": "name4 cleanup",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "response": "",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 30,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "name255",
+    "request": {
+      "username": "qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "email": "qh926name255@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 335,
+    "raw_request_description": null,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "309"
+    },
+    "response": "{\"username\": \"qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\", \"email\": \"qh926name255@example.test\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 31,
+    "method": "GET",
+    "path": "/api/v1/users/qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "action": "name255 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "309"
+    },
+    "response": "{\"username\": \"qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\", \"email\": \"qh926name255@example.test\"}",
+    "elapsed_ms": 0.21
+  },
+  {
+    "id": 32,
+    "method": "DELETE",
+    "path": "/api/v1/users/qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "action": "name255 cleanup",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "response": "",
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 33,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "name256",
+    "request": {
+      "username": "qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "email": "qh926name256@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 336,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"username\": \"Username length must be between 4 and 255 characters\"}",
+    "elapsed_ms": 0.28
+  },
+  {
+    "id": 34,
+    "method": "GET",
+    "path": "/api/v1/users/qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "action": "name256 persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 35,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "emaillocal",
+    "request": {
+      "username": "qh926emaillocal",
+      "email": "@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 83,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "response": "{\"email\": \"Use a nonempty email address with a local part and domain\"}",
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 36,
+    "method": "GET",
+    "path": "/api/v1/users/qh926emaillocal",
+    "action": "emaillocal persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.21
+  },
+  {
+    "id": 37,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "emaildomain",
+    "request": {
+      "username": "qh926emaildomain",
+      "email": "qh926@",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 77,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "response": "{\"email\": \"Use a nonempty email address with a local part and domain\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 38,
+    "method": "GET",
+    "path": "/api/v1/users/qh926emaildomain",
+    "action": "emaildomain persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 39,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "emailat",
+    "request": {
+      "username": "qh926emailat",
+      "email": "qh926.example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 85,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "response": "{\"email\": \"Use a nonempty email address with a local part and domain\"}",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 40,
+    "method": "GET",
+    "path": "/api/v1/users/qh926emailat",
+    "action": "emailat persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 41,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "emailempty",
+    "request": {
+      "username": "qh926emailempty",
+      "email": "",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 70,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "response": "{\"email\": \"Use a nonempty email address with a local part and domain\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 42,
+    "method": "GET",
+    "path": "/api/v1/users/qh926emailempty",
+    "action": "emailempty persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.18
+  },
+  {
+    "id": 43,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "pwnull",
+    "request": {
+      "username": "qh926pwnull",
+      "email": "qh926pwnull@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "NoneType",
+        "characters": null,
+        "utf8_bytes": null,
+        "value_description": "None"
+      }
+    },
+    "encoded_request_bytes": 82,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"password\": \"Password length must be between 8 and 255 characters\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 44,
+    "method": "GET",
+    "path": "/api/v1/users/qh926pwnull",
+    "action": "pwnull persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.22
+  },
+  {
+    "id": 45,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "namelist",
+    "request": {
+      "username": [],
+      "email": "qh926namelist@example.test",
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 81,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "response": "{\"username\": \"Username length must be between 4 and 255 characters\"}",
+    "elapsed_ms": 0.23
+  },
+  {
+    "id": 46,
+    "method": "GET",
+    "path": "/api/v1/users/qh926namelist",
+    "action": "namelist persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 47,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "emailnumber",
+    "request": {
+      "username": "qh926emailnumber",
+      "email": 123,
+      "password": {
+        "synthetic": true,
+        "type": "str",
+        "characters": 10,
+        "utf8_bytes": 10,
+        "value_description": "invented ASCII password"
+      }
+    },
+    "encoded_request_bytes": 72,
+    "raw_request_description": null,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "response": "{\"email\": \"Use a nonempty email address with a local part and domain\"}",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 48,
+    "method": "GET",
+    "path": "/api/v1/users/qh926emailnumber",
+    "action": "emailnumber persisted state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 49,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "malformed",
+    "request": null,
+    "encoded_request_bytes": 1,
+    "raw_request_description": "{",
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "35"
+    },
+    "response": "{\"message\": \"Invalid JSON request\"}",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 50,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "nonobject",
+    "request": null,
+    "encoded_request_bytes": 2,
+    "raw_request_description": "[]",
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "37"
+    },
+    "response": "{\"message\": \"Expected a JSON object\"}",
+    "elapsed_ms": 0.18
+  },
+  {
+    "id": 51,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "exact 8192 encoded bytes",
+    "request": null,
+    "encoded_request_bytes": 8192,
+    "raw_request_description": "JSON object padded with ignored field",
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "response": "{\"username\": \"qh926bytes8192\", \"email\": \"qh926bytes8192@example.test\"}",
+    "elapsed_ms": 0.19
+  },
+  {
+    "id": 52,
+    "method": "GET",
+    "path": "/api/v1/users/qh926bytes8192",
+    "action": "8192 bytes state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "response": "{\"username\": \"qh926bytes8192\", \"email\": \"qh926bytes8192@example.test\"}",
+    "elapsed_ms": 0.17
+  },
+  {
+    "id": 53,
+    "method": "DELETE",
+    "path": "/api/v1/users/qh926bytes8192",
+    "action": "byte boundary cleanup",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "response": "",
+    "elapsed_ms": 0.16
+  },
+  {
+    "id": 54,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "exact 8193 encoded bytes",
+    "request": null,
+    "encoded_request_bytes": 8193,
+    "raw_request_description": "JSON object padded with ignored field",
+    "status": 413,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "32"
+    },
+    "response": "{\"message\": \"Request too large\"}",
+    "elapsed_ms": 0.23
+  },
+  {
+    "id": 55,
+    "method": "GET",
+    "path": "/api/v1/users/qh926bytes8193",
+    "action": "8193 bytes state",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.2
+  },
+  {
+    "id": 56,
+    "method": "GET",
+    "path": "/api/v1/users/qh926base",
+    "action": "deleting other records preserves baseline",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "60"
+    },
+    "response": "{\"username\": \"qh926base\", \"email\": \"qh926base@example.test\"}",
+    "elapsed_ms": 0.17
+  },
+  {
+    "id": 57,
+    "method": "DELETE",
+    "path": "/api/v1/users/qh926base",
+    "action": "final baseline cleanup",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "response": "",
+    "elapsed_ms": 0.25
+  },
+  {
+    "id": 58,
+    "method": "GET",
+    "path": "/api/v1/users/qh926base",
+    "action": "verify baseline absent after delete",
+    "request": null,
+    "encoded_request_bytes": 0,
+    "raw_request_description": null,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:16:13 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "response": "{\"message\": \"User not found\"}",
+    "elapsed_ms": 0.19
+  }
+]

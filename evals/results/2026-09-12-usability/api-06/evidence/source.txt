@@ -1,0 +1,120 @@
+app/app.py SHA256 b383172f9caadfb7d421c79b94f1a4b0314a22afeb8341320903fa782c144b2f
+1: """Loopback validation fixture. Restart to reset synthetic registrations."""
+2: 
+3: import argparse
+4: import json
+5: import os
+6: import threading
+7: from datetime import datetime, timezone
+8: from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+9: from urllib.parse import urlsplit, unquote
+10: from pathlib import Path
+11: from domain import signin, registration_errors
+12: 
+13: 
+14: def create_server(port=0, audit_path=None):
+15:     users = {}
+16:     lock = threading.Lock()
+17: 
+18:     class Handler(BaseHTTPRequestHandler):
+19:         def log_message(self, *args):
+20:             pass
+21: 
+22:         def respond(self, status, payload, request=None):
+23:             data = json.dumps(payload).encode() if payload is not None else b""
+24:             self.send_response(status)
+25:             self.send_header("Content-Type", "application/json")
+26:             self.send_header("Content-Length", str(len(data)))
+27:             self.end_headers()
+28:             self.wfile.write(data)
+29:             if audit_path:
+30:                 with open(audit_path, "a") as out:
+31:                     out.write(json.dumps({"time": datetime.now(timezone.utc).isoformat(),
+32:                         "method": self.command, "path": urlsplit(self.path).path,
+33:                         "status": status, "actor": None, "request": request, "response": payload}) + "\n")
+34: 
+35:         def do_GET(self):
+36:             path = unquote(urlsplit(self.path).path)
+37:             with lock:
+38:                 if path == "/health":
+39:                     return self.respond(200, {"status": "UP", "version": "validation-fixture-1"})
+40:                 if path.startswith("/api/v1/users/"):
+41:                     user = users.get(path.removeprefix("/api/v1/users/"))
+42:                     return self.respond(200, user) if user else self.respond(404, {"message": "User not found"})
+43:                 self.respond(404, {"message": "Not found"})
+44: 
+45:         def do_POST(self):
+46:             body = None
+47:             with lock:
+48:                 try:
+49:                     length = int(self.headers.get("Content-Length", 0))
+50:                     if length > 8192:
+51:                         return self.respond(413, {"message": "Request too large"})
+52:                     body = json.loads(self.rfile.read(length))
+53:                     if not isinstance(body, dict):
+54:                         return self.respond(400, {"message": "Expected a JSON object"}, body)
+55:                     path = urlsplit(self.path).path
+56:                     if path == "/api/v1/users/signin":
+57:                         status, result = signin(body)
+58:                         return self.respond(status, result, body)
+59:                     if path == "/api/v1/users/signup":
+60:                         errors = registration_errors(body)
+61:                         if errors:
+62:                             return self.respond(400, errors, body)
+63:                         name = body["username"]
+64:                         if name in users or any(u["email"] == body["email"] for u in users.values()):
+65:                             return self.respond(409, {"message": "Username or email already exists"}, body)
+66:                         users[name] = {"username": name, "email": body["email"]}
+67:                         return self.respond(201, users[name], body)
+68:                     self.respond(404, {"message": "Not found"}, body)
+69:                 except (ValueError, TypeError):
+70:                     self.respond(400, {"message": "Invalid JSON request"}, body)
+71: 
+72:         def do_DELETE(self):
+73:             path = unquote(urlsplit(self.path).path)
+74:             with lock:
+75:                 name = path.removeprefix("/api/v1/users/") if path.startswith("/api/v1/users/") else None
+76:                 if name in users:
+77:                     del users[name]
+78:                     return self.respond(204, None)
+79:                 self.respond(404, {"message": "User not found"})
+80: 
+81:     return ThreadingHTTPServer(("127.0.0.1", port), Handler)
+82: 
+83: 
+84: if __name__ == "__main__":
+85:     parser = argparse.ArgumentParser()
+86:     parser.add_argument("--ready", type=Path, required=True)
+87:     parser.add_argument("--audit", type=Path)
+88:     args = parser.parse_args()
+89:     server = create_server(audit_path=args.audit)
+90:     args.ready.write_text(json.dumps({"pid": os.getpid(), "base_url": f"http://127.0.0.1:{server.server_port}"}))
+91:     server.serve_forever()
+
+app/domain.py SHA256 248bfdf91b76265a52d32a301488eb279c0027ccb95ab7bbc51f5b3a809da8ab
+1: """Disposable validation model. No password storage or production authentication."""
+2: 
+3: 
+4: MAX_ENCODED_PASSWORD_BYTES = 1020
+5: 
+6: def signin(body):
+7:     for field in ("username", "password"):
+8:         value = body.get(field)
+9:         if not isinstance(value, str) or not 4 <= len(value) <= 255:
+10:             return 400, {field: f"Minimum {field} length: 4 characters"}
+11:     return 422, {"message": "Invalid username/password supplied"}
+12: 
+13: 
+14: def registration_errors(body):
+15:     password = body.get("password")
+16:     if not isinstance(password, str) or not 8 <= len(password) <= 255:
+17:         return {"password": "Password length must be between 8 and 255 characters"}
+18:     if len(password.encode("utf-8")) > MAX_ENCODED_PASSWORD_BYTES:
+19:         return {"error": f"password cannot be more than {MAX_ENCODED_PASSWORD_BYTES} bytes"}
+20:     username = body.get("username")
+21:     if not isinstance(username, str) or not 4 <= len(username) <= 255:
+22:         return {"username": "Username length must be between 4 and 255 characters"}
+23:     email = body.get("email")
+24:     if not isinstance(email, str) or "@" not in email or email.startswith("@") or email.endswith("@"):
+25:         return {"email": "Use a nonempty email address with a local part and domain"}
+26:     return None

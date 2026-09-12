@@ -1,0 +1,91 @@
+{
+  "repository": "https://github.com/slawekradzyminski/playwright-2026",
+  "revision": "94dccc853d421746956ea2691ed5c4fcaa81bf95",
+  "review_date": "2026-09-12",
+  "register_counts": {
+    "total": 27,
+    "open": 24,
+    "needs_clarification": 3
+  },
+  "scope": "Reviewed register and selected individual reports; this is benchmark curation, not a live retest of all course bugs.",
+  "candidates": [
+    {
+      "workshop_id": "BUG-03",
+      "status": "implemented-derived-fixture",
+      "cases": [
+        "api-06",
+        "api-07"
+      ],
+      "purpose": "Boundary-feedback accuracy; 400 alone is insufficient.",
+      "oracle_design": "Compare lengths 3/4/255/256 for each field; assess message direction without claiming failed valid login.",
+      "source_report": "docs/bugs/api/[L][FA] BUG-03 - Sign-in maximum-length error mentions minimum.md",
+      "source_url": "https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BL%5D%5BFA%5D%20BUG-03%20-%20Sign-in%20maximum-length%20error%20mentions%20minimum.md",
+      "source_report_sha256": "8a1497c065a889583d8ec27cceea3b3cda59e2c8739f5a3a7a46ec05b4e4771d"
+    },
+    {
+      "workshop_id": "BUG-06",
+      "status": "implemented-derived-fixture",
+      "cases": [
+        "api-08",
+        "api-09"
+      ],
+      "purpose": "Characters versus encoded bytes; contract-valid input can fail.",
+      "oracle_design": "Compare 72/73 ASCII bytes and 37 Polish characters (74 UTF-8 bytes), verify registration presence/absence and cleanup.",
+      "source_report": "docs/bugs/api/[M][FA] BUG-06 - Sign-up password limit contradicts contract.md",
+      "source_url": "https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BM%5D%5BFA%5D%20BUG-06%20-%20Sign-up%20password%20limit%20contradicts%20contract.md",
+      "source_report_sha256": "02deff7498f8c0eccd5683340cde024baed5edccaf29acb762eefab9bd600ab3"
+    },
+    {
+      "workshop_id": "BUG-11",
+      "status": "candidate-needs-portable-decoder",
+      "cases": [],
+      "purpose": "Verify artifact semantics, not only HTTP 200 or PNG signature.",
+      "oracle_design": "Generate and decode Unicode/ASCII controls in an isolated pinned backend; exact decoded text is the oracle.",
+      "source_report": "docs/bugs/api/[M][FA] BUG-11 - QR codes silently replace Unicode characters.md",
+      "source_url": "https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BM%5D%5BFA%5D%20BUG-11%20-%20QR%20codes%20silently%20replace%20Unicode%20characters.md",
+      "source_report_sha256": "e5250e32cf2905fd157b96dda5c0b4ea0930cea992eb80a71e6e2809829adcea"
+    },
+    {
+      "workshop_id": "BUG-04",
+      "status": "candidate-needs-isolated-state",
+      "cases": [],
+      "purpose": "Distinguish masked precondition from fixed defect.",
+      "oracle_design": "Fresh database for empty-email acceptance; a separate occupied-value scenario must be reported as reproduction blocked, not fixed.",
+      "source_report": "docs/bugs/api/[M][FA] BUG-04 - Sign-up accepts empty email.md",
+      "source_url": "https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BM%5D%5BFA%5D%20BUG-04%20-%20Sign-up%20accepts%20empty%20email.md",
+      "source_report_sha256": "371a8bc9fd4fde9b17a1ddd327f45d3128ec320aee68623d4d1faa61192ce471"
+    },
+    {
+      "workshop_id": "BUG-10",
+      "status": "candidate-clarification",
+      "cases": [],
+      "purpose": "Do not invent a state-transition policy.",
+      "oracle_design": "Show observed reopening and stock behavior; require a transition/reservation decision before confirming a policy violation.",
+      "source_report": "docs/bugs/api/[L][FA] BUG-10 - Order reopening and backward transition policy is unclear.md",
+      "source_url": "https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BL%5D%5BFA%5D%20BUG-10%20-%20Order%20reopening%20and%20backward%20transition%20policy%20is%20unclear.md",
+      "source_report_sha256": "209a5eb79078731a66921d1edf9ee848caf2eb50266a2fe5fe1124cb3e2ca840"
+    },
+    {
+      "workshop_id": "BUG-12",
+      "status": "candidate-clarification",
+      "cases": [],
+      "purpose": "Distinguish per-iteration completion from conversation completion.",
+      "oracle_design": "Retain complete event sequence and ask for marker semantics; do not infer a contract from marker names.",
+      "source_report": "docs/bugs/api/[L][FA] BUG-12 - Tool chat completion marker semantics are unclear.md",
+      "source_url": "https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BL%5D%5BFA%5D%20BUG-12%20-%20Tool%20chat%20completion%20marker%20semantics%20are%20unclear.md",
+      "source_report_sha256": "e7f4d61476c73ec872c6959c3839da0b76fd2bbd48e1b08430bbc3d5a224cbff"
+    },
+    {
+      "workshop_id": "DOC-08",
+      "status": "covered-by-live-pilot",
+      "cases": [
+        "localstack-hosted-api"
+      ],
+      "purpose": "Compare error schema to actual runtime representation.",
+      "oracle_design": "Array/object mismatch is decisive; a permissive object schema with optional fields needs more careful reasoning.",
+      "source_report": "docs/bugs/api/[L][D] DOC-08 - Product error schemas misdescribe responses.md",
+      "source_url": "https://github.com/slawekradzyminski/playwright-2026/blob/94dccc853d421746956ea2691ed5c4fcaa81bf95/docs/bugs/api/%5BL%5D%5BD%5D%20DOC-08%20-%20Product%20error%20schemas%20misdescribe%20responses.md",
+      "source_report_sha256": "3412698cad592cf33d07470c29d23c1e113e2ac577061a21964ec99741fdbfa1"
+    }
+  ]
+}

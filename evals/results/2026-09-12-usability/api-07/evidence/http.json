@@ -1,0 +1,1040 @@
+[
+  {
+    "id": 1,
+    "name": "Runtime availability and advertised build",
+    "method": "GET",
+    "path": "/health",
+    "input": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "51"
+    },
+    "body": {
+      "status": "UP",
+      "version": "validation-fixture-1"
+    },
+    "elapsed_ms": 9.2,
+    "expected_status": 200,
+    "passed": true
+  },
+  {
+    "id": 2,
+    "name": "Representative length-valid credentials",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 57,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.4,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 3,
+    "name": "username ASCII length 0",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "",
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 43,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.31,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 4,
+    "name": "username ASCII length 3",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "uuu",
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 46,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.27,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 5,
+    "name": "username ASCII length 4",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "uuuu",
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 47,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.31,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 6,
+    "name": "username ASCII length 255",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 298,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.28,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 7,
+    "name": "username ASCII length 256",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 299,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.27,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 8,
+    "name": "username wrong type null",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": null,
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 45,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.31,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 9,
+    "name": "username wrong type integer",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": 42,
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 43,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.26,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 10,
+    "name": "username wrong type boolean",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": true,
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 45,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.34,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 11,
+    "name": "username wrong type array",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": [],
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 43,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.3,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 12,
+    "name": "username wrong type object",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": {},
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 43,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.31,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 13,
+    "name": "username missing",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 27,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.27,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 14,
+    "name": "password ASCII length 0",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 0,
+        "utf8_bytes": 0,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 46,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.26,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 15,
+    "name": "password ASCII length 3",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 3,
+        "utf8_bytes": 3,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 49,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.24,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 16,
+    "name": "password ASCII length 4",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 4,
+        "utf8_bytes": 4,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 50,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.25,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 17,
+    "name": "password ASCII length 255",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 255,
+        "utf8_bytes": 255,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 301,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.24,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 18,
+    "name": "password ASCII length 256",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 256,
+        "utf8_bytes": 256,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 302,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.26,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 19,
+    "name": "password wrong type null",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": null
+    },
+    "request_bytes": 48,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.23,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 20,
+    "name": "password wrong type integer",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": 42
+    },
+    "request_bytes": 46,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.28,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 21,
+    "name": "password wrong type boolean",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": true
+    },
+    "request_bytes": 48,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.24,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 22,
+    "name": "password wrong type array",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": []
+    },
+    "request_bytes": 46,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.22,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 23,
+    "name": "password wrong type object",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {}
+    },
+    "request_bytes": 46,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.23,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 24,
+    "name": "password missing",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g"
+    },
+    "request_bytes": 30,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.25,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 25,
+    "name": "Unicode password 3 codepoints",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 3,
+        "utf8_bytes": 12,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 58,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.29,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 26,
+    "name": "Unicode password 4 codepoints",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 4,
+        "utf8_bytes": 16,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 62,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.25,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 27,
+    "name": "Unicode password 255 codepoints",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 255,
+        "utf8_bytes": 1020,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 1066,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.26,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 28,
+    "name": "Unicode password 256 codepoints",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 256,
+        "utf8_bytes": 1024,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 1070,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.23,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 29,
+    "name": "Both fields invalid: first corrective step",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "abc",
+      "password": {
+        "type": "synthetic string",
+        "characters": 3,
+        "utf8_bytes": 3,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 38,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.23,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 30,
+    "name": "Correct username: next field guidance",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "abcd",
+      "password": {
+        "type": "synthetic string",
+        "characters": 3,
+        "utf8_bytes": 3,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 39,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "password length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.26,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 31,
+    "name": "Correct both fields: credential feedback",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "abcd",
+      "password": {
+        "type": "synthetic string",
+        "characters": 4,
+        "utf8_bytes": 4,
+        "value": "<invented password omitted>"
+      }
+    },
+    "request_bytes": 40,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.26,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 32,
+    "name": "Ignored extra fields",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {
+      "username": "probe_signin_g",
+      "password": {
+        "type": "synthetic string",
+        "characters": 11,
+        "utf8_bytes": 11,
+        "value": "<invented password omitted>"
+      },
+      "email": "example@synthetic.test",
+      "admin": true
+    },
+    "request_bytes": 107,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.23,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 33,
+    "name": "malformed JSON",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": "{",
+    "request_bytes": 1,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "35"
+    },
+    "body": {
+      "message": "Invalid JSON request"
+    },
+    "elapsed_ms": 0.29,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 34,
+    "name": "array body",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": "[]",
+    "request_bytes": 2,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "37"
+    },
+    "body": {
+      "message": "Expected a JSON object"
+    },
+    "elapsed_ms": 0.24,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 35,
+    "name": "null body",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": "null",
+    "request_bytes": 4,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "37"
+    },
+    "body": {
+      "message": "Expected a JSON object"
+    },
+    "elapsed_ms": 0.28,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 36,
+    "name": "string body",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": "\"example\"",
+    "request_bytes": 9,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "37"
+    },
+    "body": {
+      "message": "Expected a JSON object"
+    },
+    "elapsed_ms": 0.21,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 37,
+    "name": "Empty object",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": {},
+    "request_bytes": 2,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0.24,
+    "expected_status": 400,
+    "passed": true
+  },
+  {
+    "id": 38,
+    "name": "Encoded body 8192 bytes",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": "Valid synthetic credentials plus ignored ASCII padding; exactly 8192 encoded bytes; credentials omitted",
+    "request_bytes": 8192,
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49"
+    },
+    "body": {
+      "message": "Invalid username/password supplied"
+    },
+    "elapsed_ms": 0.25,
+    "expected_status": 422,
+    "passed": true
+  },
+  {
+    "id": 39,
+    "name": "Encoded body 8193 bytes",
+    "method": "POST",
+    "path": "/api/v1/users/signin",
+    "input": "Valid synthetic credentials plus ignored ASCII padding; exactly 8193 encoded bytes; credentials omitted",
+    "request_bytes": 8193,
+    "status": 413,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:46 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "32"
+    },
+    "body": {
+      "message": "Request too large"
+    },
+    "elapsed_ms": 0.23,
+    "expected_status": 413,
+    "passed": true
+  }
+]

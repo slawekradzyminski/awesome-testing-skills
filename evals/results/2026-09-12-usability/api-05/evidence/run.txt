@@ -1,0 +1,40 @@
+1 GET /health None 503 {'error': 'Application temporarily unavailable'}
+2 GET /api/v1/products alice 503 {'error': 'Application temporarily unavailable'}
+3 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+4 GET /api/v1/cart bob 503 {'error': 'Application temporarily unavailable'}
+5 GET /api/v1/cart None 503 {'error': 'Application temporarily unavailable'}
+6 PUT /api/v1/cart/items/1 None 503 {'error': 'Application temporarily unavailable'}
+7 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+8 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+9 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+10 GET /api/v1/cart bob 503 {'error': 'Application temporarily unavailable'}
+11 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+12 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+13 GET /api/v1/cart bob 503 {'error': 'Application temporarily unavailable'}
+14 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+15 GET /api/v1/products alice 503 {'error': 'Application temporarily unavailable'}
+16 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+17 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+18 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+19 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+20 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+21 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+22 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+23 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+24 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+25 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+26 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+27 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+28 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+29 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+30 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+31 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+32 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+33 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+34 PUT /api/v1/cart/items/1 alice 503 {'error': 'Application temporarily unavailable'}
+35 GET /api/v1/cart alice 503 {'error': 'Application temporarily unavailable'}
+Traceback (most recent call last):
+  File "/private/var/folders/hc/_qs8lmtj3wldtbls_clrl0980000gn/T/exploratory-usability-5mozbvtq/api-05/candidate/evidence/explore.py", line 48, in <module>
+    req('PUT',item,'alice',{'quantity':a['items'][0]['quantity']},action='Restore Alice initial quantity')
+                                       ~^^^^^^^^^
+KeyError: 'items'

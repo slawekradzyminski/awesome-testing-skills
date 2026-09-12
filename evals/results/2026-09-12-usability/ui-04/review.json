@@ -1,0 +1,7 @@
+{
+  "useful_outcome_met": false,
+  "disposition": "partial-source-handoff",
+  "reason": "Productive black-box exploration and bounded passing claims, source/build absence disclosed. No concrete source handoff explaining how source could improve the assessment. Browser request absence explicitly left unverified.",
+  "runtime_result": "tested-no-confirmed-defects",
+  "sources_missing": true
+}

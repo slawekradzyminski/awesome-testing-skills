@@ -1,0 +1,7 @@
+### Result
+1. [GET] http://127.0.0.1:49949/ => [200] OK
+2. [GET] http://127.0.0.1:49949/style.css => [200] OK
+3. [GET] http://127.0.0.1:49949/app.js => [200] OK
+4. [GET] http://127.0.0.1:49949/api/v1/cart => [200] OK
+5. [PUT] http://127.0.0.1:49949/api/v1/cart/items/1 => [200] OK
+6. [GET] http://127.0.0.1:49949/api/v1/cart => [200] OK

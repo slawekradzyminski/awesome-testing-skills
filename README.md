@@ -81,3 +81,7 @@ See [validation notes](docs/validation.md) for checks and their limits.
 The [evaluation suite](evals/README.md) includes a kept sample application, frozen seeded defects and matching controls, source-only/runtime-only cases, evidence checks, and a reviewer rubric. Optional profiles connect to local or hosted Awesome LocalStack using public read-only tasks. Fresh agent runs and real testing evidence are evaluated separately from fixture unit tests.
 
 The [completed pilot assessment](evals/results/2026-09-12-retry.md) includes 16 fresh runs with and without skills. Both groups found the same seeded defects; the skill group produced stronger evidence on the primary cases. The report separates source-backed cases, fallback checks and real hosted observations, and states the limits of this small comparison.
+
+[Workshop-derived and usability benchmarks](evals/workshop-benchmarks.md) extend the suite to 14 cases: course validation defects and corrected controls, productive testing without source, and honest handling of an unavailable environment. Checks record passed, failed, blocked or unexecuted outcomes; finding a bug is not the only successful result.
+
+See the [practical extension results](evals/results/2026-09-12-usability.md) for the ten fresh trials, including the observed weaknesses and verified narrow corrections.

@@ -1,0 +1,49 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "body": null,
+    "role": "alice",
+    "action": "Verify keyboard save persisted 3",
+    "status": 200,
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 3}], \"totalItems\": 3, \"totalPrice\": 36}"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "body": {
+      "quantity": 1
+    },
+    "role": "alice",
+    "action": "Restore initial Alice quantity",
+    "status": 200,
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 1}], \"totalItems\": 1, \"totalPrice\": 12}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "body": null,
+    "role": "alice",
+    "action": "Verify Alice restoration",
+    "status": 200,
+    "response": "{\"username\": \"alice\", \"items\": [{\"productId\": 1, \"quantity\": 1}], \"totalItems\": 1, \"totalPrice\": 12}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "body": null,
+    "role": "bob",
+    "action": "Verify Bob remains unchanged",
+    "status": 200,
+    "response": "{\"username\": \"bob\", \"items\": [{\"productId\": 1, \"quantity\": 2}], \"totalItems\": 2, \"totalPrice\": 24}"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/products",
+    "body": null,
+    "role": "alice",
+    "action": "Verify stock remains five after updates",
+    "status": 200,
+    "response": "[{\"id\": 1, \"name\": \"Workshop notebook\", \"price\": 12, \"stockQuantity\": 5}]"
+  }
+]

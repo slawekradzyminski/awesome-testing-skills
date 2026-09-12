@@ -1,0 +1,951 @@
+{
+  "source_access": true,
+  "runtime_exercised": true,
+  "runtime_status": "tested",
+  "checks": [
+    {
+      "name": "base",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'uf9204432base', 'email': 'uf9204432base@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        3,
+        4
+      ]
+    },
+    {
+      "name": "duplicate username",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 409 and original record unchanged",
+      "actual": "POST 409; GET {'username': 'uf9204432base', 'email': 'uf9204432base@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        5,
+        6
+      ]
+    },
+    {
+      "name": "duplicate email",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 409 and no new record",
+      "actual": "POST 409; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        7,
+        8
+      ]
+    },
+    {
+      "name": "ascii72",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'uf9204432ascii72', 'email': 'uf9204432ascii72@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        9,
+        10
+      ]
+    },
+    {
+      "name": "ascii73",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 400: {'error': 'password cannot be more than 72 bytes'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        11,
+        12
+      ]
+    },
+    {
+      "name": "ascii255",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 400: {'error': 'password cannot be more than 72 bytes'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        13,
+        14
+      ]
+    },
+    {
+      "name": "unicode18",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'uf9204432unicode18', 'email': 'uf9204432unicode18@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        15,
+        16
+      ]
+    },
+    {
+      "name": "unicode19",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 400: {'error': 'password cannot be more than 72 bytes'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        17,
+        18
+      ]
+    },
+    {
+      "name": "ascii73repeat",
+      "basis": "runtime",
+      "status": "failed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 400: {'error': 'password cannot be more than 72 bytes'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        19,
+        20
+      ]
+    },
+    {
+      "name": "shortpassword",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'password': 'Password length must be between 8 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        21,
+        22
+      ]
+    },
+    {
+      "name": "longpassword",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'password': 'Password length must be between 8 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        23,
+        24
+      ]
+    },
+    {
+      "name": "nullpassword",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'password': 'Password length must be between 8 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        25,
+        26
+      ]
+    },
+    {
+      "name": "shortusername",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'username': 'Username length must be between 4 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        27,
+        28
+      ]
+    },
+    {
+      "name": "longusername",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'username': 'Username length must be between 4 and 255 characters'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        29,
+        30
+      ]
+    },
+    {
+      "name": "username255",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'email': 'uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        31,
+        32
+      ]
+    },
+    {
+      "name": "username4",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 201; persist only username/email",
+      "actual": "POST 201: {'username': 'u432', 'email': 'u432@example.test'}; GET 200",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        33,
+        34
+      ]
+    },
+    {
+      "name": "emailnodomain",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'email': 'Use a nonempty email address with a local part and domain'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        35,
+        36
+      ]
+    },
+    {
+      "name": "emailnolocal",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'email': 'Use a nonempty email address with a local part and domain'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        37,
+        38
+      ]
+    },
+    {
+      "name": "emailnonscalar",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2: 400; no record",
+      "actual": "POST 400: {'email': 'Use a nonempty email address with a local part and domain'}; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        39,
+        40
+      ]
+    },
+    {
+      "name": "malformed",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: 400",
+      "actual": "{'message': 'Invalid JSON request'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        41
+      ]
+    },
+    {
+      "name": "nonobject",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: 400",
+      "actual": "{'message': 'Expected a JSON object'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        42
+      ]
+    },
+    {
+      "name": "8192-byte JSON object",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-4: accepted; AUTH-2: only username/email stored",
+      "actual": "POST 201, GET {'username': 'uf9204432body8192', 'email': 'uf9204432body8192@example.test'}",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        43,
+        44
+      ]
+    },
+    {
+      "name": "cleanup uf9204432base",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        45,
+        46
+      ]
+    },
+    {
+      "name": "cleanup uf9204432ascii72",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        47,
+        48
+      ]
+    },
+    {
+      "name": "cleanup uf9204432unicode18",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        49,
+        50
+      ]
+    },
+    {
+      "name": "cleanup uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        51,
+        52
+      ]
+    },
+    {
+      "name": "cleanup u432",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        53,
+        54
+      ]
+    },
+    {
+      "name": "cleanup uf9204432body8192",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-3: DELETE 204 then GET 404",
+      "actual": "DELETE 204; GET 404",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        55,
+        56
+      ]
+    },
+    {
+      "name": "8-character password and email reuse following deletion",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "AUTH-2/AUTH-3: 201, persist only username/email, then 204 and 404",
+      "actual": "201, GET matching record; DELETE 204; GET 404. Previously deleted email available again.",
+      "evidence": [
+        "evidence/http.json"
+      ],
+      "request_ids": [
+        57,
+        58,
+        59,
+        60
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "requirement_id": "AUTH-2",
+      "title": "Signup rejects contract-valid passwords exceeding 72 UTF-8 bytes",
+      "status": "confirmed",
+      "expected": "Unique registrations with passwords of 8–255 Unicode characters return 201 and persist username/email.",
+      "actual": "73 ASCII characters (two fresh registrations), 255 ASCII characters and 19 emoji (76 UTF-8 bytes) return 400 with error \"password cannot be more than 72 bytes\"; subsequent GET returns 404. Controls of 72 ASCII characters and 18 emoji succeed.",
+      "impact": "Users cannot register with valid passwords above an undocumented byte limit; the effective character ceiling varies with encoding.",
+      "severity": "Medium (provisional)",
+      "evidence": [
+        "evidence/http.json",
+        "evidence/domain.py.txt"
+      ],
+      "request_ids": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "area": "Password character/byte boundary regression",
+      "reason": "Confirmed AUTH-2 failure; no existing tests supplied.",
+      "priority": "high",
+      "next_probe": "After a fix, run domain boundary cases for 8/72/73/255/256 ASCII and multibyte characters, plus representative signup/persistence API checks."
+    },
+    {
+      "area": "Other input shapes and oversized objects",
+      "reason": "Tested null password, array email, malformed JSON, array root and 8192-byte object; other missing/type variations and 8193 bytes not exercised.",
+      "priority": "low",
+      "next_probe": "A follow-up bounded pass over missing fields, scalar roots and 8193-byte rejection with state inspection."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "action": "identify assigned deployed build",
+      "evidence": "evidence/http.json",
+      "request_id": 1
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432base",
+      "status": 404,
+      "action": "baseline absence",
+      "evidence": "evidence/http.json",
+      "request_id": 2
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "base",
+      "evidence": "evidence/http.json",
+      "request_id": 3
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432base",
+      "status": 200,
+      "action": "base persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 4
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 409,
+      "action": "duplicate username with altered email",
+      "evidence": "evidence/http.json",
+      "request_id": 5
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432base",
+      "status": 200,
+      "action": "original record after duplicate username",
+      "evidence": "evidence/http.json",
+      "request_id": 6
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 409,
+      "action": "duplicate email under fresh username",
+      "evidence": "evidence/http.json",
+      "request_id": 7
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432dupemail",
+      "status": 404,
+      "action": "duplicate email creates no new record",
+      "evidence": "evidence/http.json",
+      "request_id": 8
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "ascii72",
+      "evidence": "evidence/http.json",
+      "request_id": 9
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432ascii72",
+      "status": 200,
+      "action": "ascii72 persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 10
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "ascii73",
+      "evidence": "evidence/http.json",
+      "request_id": 11
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432ascii73",
+      "status": 404,
+      "action": "ascii73 persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 12
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "ascii255",
+      "evidence": "evidence/http.json",
+      "request_id": 13
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432ascii255",
+      "status": 404,
+      "action": "ascii255 persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 14
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "unicode18",
+      "evidence": "evidence/http.json",
+      "request_id": 15
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432unicode18",
+      "status": 200,
+      "action": "unicode18 persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 16
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "unicode19",
+      "evidence": "evidence/http.json",
+      "request_id": 17
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432unicode19",
+      "status": 404,
+      "action": "unicode19 persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 18
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "ascii73repeat",
+      "evidence": "evidence/http.json",
+      "request_id": 19
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432ascii73repeat",
+      "status": 404,
+      "action": "ascii73repeat persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 20
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "shortpassword",
+      "evidence": "evidence/http.json",
+      "request_id": 21
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432shortpassword",
+      "status": 404,
+      "action": "shortpassword persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 22
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "longpassword",
+      "evidence": "evidence/http.json",
+      "request_id": 23
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432longpassword",
+      "status": 404,
+      "action": "longpassword persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 24
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "nullpassword",
+      "evidence": "evidence/http.json",
+      "request_id": 25
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432nullpassword",
+      "status": 404,
+      "action": "nullpassword persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 26
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "shortusername",
+      "evidence": "evidence/http.json",
+      "request_id": 27
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/u32",
+      "status": 404,
+      "action": "shortusername persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 28
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "longusername",
+      "evidence": "evidence/http.json",
+      "request_id": 29
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": 404,
+      "action": "longusername persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 30
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "username255",
+      "evidence": "evidence/http.json",
+      "request_id": 31
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": 200,
+      "action": "username255 persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 32
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "username4",
+      "evidence": "evidence/http.json",
+      "request_id": 33
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/u432",
+      "status": 200,
+      "action": "username4 persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 34
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "emailnodomain",
+      "evidence": "evidence/http.json",
+      "request_id": 35
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432emailnodomain",
+      "status": 404,
+      "action": "emailnodomain persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 36
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "emailnolocal",
+      "evidence": "evidence/http.json",
+      "request_id": 37
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432emailnolocal",
+      "status": 404,
+      "action": "emailnolocal persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 38
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "emailnonscalar",
+      "evidence": "evidence/http.json",
+      "request_id": 39
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432emailnonscalar",
+      "status": 404,
+      "action": "emailnonscalar persistence inspection",
+      "evidence": "evidence/http.json",
+      "request_id": 40
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "malformed",
+      "evidence": "evidence/http.json",
+      "request_id": 41
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 400,
+      "action": "nonobject",
+      "evidence": "evidence/http.json",
+      "request_id": 42
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "8192 encoded bytes accepted",
+      "evidence": "evidence/http.json",
+      "request_id": 43
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432body8192",
+      "status": 200,
+      "action": "8192-byte payload persistence",
+      "evidence": "evidence/http.json",
+      "request_id": 44
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/uf9204432base",
+      "status": 204,
+      "action": "cleanup own successful registration",
+      "evidence": "evidence/http.json",
+      "request_id": 45
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432base",
+      "status": 404,
+      "action": "confirm cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 46
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/uf9204432ascii72",
+      "status": 204,
+      "action": "cleanup own successful registration",
+      "evidence": "evidence/http.json",
+      "request_id": 47
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432ascii72",
+      "status": 404,
+      "action": "confirm cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 48
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/uf9204432unicode18",
+      "status": 204,
+      "action": "cleanup own successful registration",
+      "evidence": "evidence/http.json",
+      "request_id": 49
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432unicode18",
+      "status": 404,
+      "action": "confirm cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 50
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": 204,
+      "action": "cleanup own successful registration",
+      "evidence": "evidence/http.json",
+      "request_id": 51
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": 404,
+      "action": "confirm cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 52
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/u432",
+      "status": 204,
+      "action": "cleanup own successful registration",
+      "evidence": "evidence/http.json",
+      "request_id": 53
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/u432",
+      "status": 404,
+      "action": "confirm cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 54
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/uf9204432body8192",
+      "status": 204,
+      "action": "cleanup own successful registration",
+      "evidence": "evidence/http.json",
+      "request_id": 55
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432body8192",
+      "status": 404,
+      "action": "confirm cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 56
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/users/signup",
+      "status": 201,
+      "action": "8-character password; reuse email after cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 57
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432basereuse",
+      "status": 200,
+      "action": "verify minimum-password registration",
+      "evidence": "evidence/http.json",
+      "request_id": 58
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/uf9204432basereuse",
+      "status": 204,
+      "action": "cleanup final registration",
+      "evidence": "evidence/http.json",
+      "request_id": 59
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/users/uf9204432basereuse",
+      "status": 404,
+      "action": "verify final cleanup",
+      "evidence": "evidence/http.json",
+      "request_id": 60
+    }
+  ],
+  "limitations": [
+    "No existing tests or revision metadata were supplied in the candidate directory; relevant application source was inspected, but no existing suite was executed. Source file hashes are recorded; health build validation-fixture-1 has no verifiable commit mapping.",
+    "Scoped to registration, lookup and cleanup. Signin, production authentication, concurrency, normalization, full email syntax, password strength and restart persistence were not exercised.",
+    "Not exhaustive: missing-field permutations, all non-string inputs, other Unicode classes and the 8193-byte rejection boundary remain untested. Malformed and non-object rejection did not include a record lookup because neither supplied a usable username.",
+    "API-only exploration: no browser session or screenshots."
+  ],
+  "cleanup": "Seven successful registrations deleted; every DELETE returned 204 and subsequent GET returned 404. All rejected identifiable registrations were absent. No browser opened; server lifecycle left to fixture owner.",
+  "accounting": {
+    "api_requests": 60,
+    "availability_requests": 1,
+    "browser_actions": 0,
+    "request_budget": 60
+  }
+}

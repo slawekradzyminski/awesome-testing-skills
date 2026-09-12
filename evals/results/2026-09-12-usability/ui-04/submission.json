@@ -1,0 +1,294 @@
+{
+  "source_access": false,
+  "runtime_exercised": true,
+  "runtime_status": "tested",
+  "checks": [
+    {
+      "name": "Valid draft cancellation and reopening",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "UI-1: Cancel discards provisional edits; reopen uses saved value",
+      "actual": "Draft 3 cancelled from saved 1. Visible summary and independent GET stayed 1 / 12; reopen showed 1.",
+      "evidence": [
+        "evidence/ui-session.md",
+        "evidence/http.json",
+        "evidence/cancel.png"
+      ]
+    },
+    {
+      "name": "Save total, acknowledgement, and persistence",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "UI-1, UI-2, CART-4: Save updates and acknowledges cart with correct total",
+      "actual": "Keyboard Save 3 showed quantity 3, total 36, Cart updated. GET and reload confirmed persisted values.",
+      "evidence": [
+        "evidence/ui-session.md",
+        "evidence/http.json",
+        "evidence/save.png"
+      ]
+    },
+    {
+      "name": "Narrow keyboard flow and invalid-draft recovery",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "UI-2: primary flow usable by keyboard at narrow and desktop widths, with visible errors",
+      "actual": "At 375\u00d7812, Tab/Enter opened editor, invalid 6 produced visible max-5 validation, keyboard Cancel discarded it, and keyboard Save restored 1.",
+      "evidence": [
+        "evidence/ui-session.md",
+        "evidence/http.json",
+        "evidence/narrow-error.png",
+        "evidence/narrow-restored.png"
+      ]
+    },
+    {
+      "name": "Invalid quantity types rejected without mutation",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "CART-2: negative, fractional, missing, null, string, boolean rejected with 400",
+      "actual": "PUT values -1, 1.5, null, string 2, true, and missing quantity each returned 400; a GET after every attempt stayed 3 / 36.",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "Overstock rejected without mutation",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "CART-3: more than five returns 409 without mutation",
+      "actual": "Direct PUT quantity 6 returned 409; subsequent GET stayed 3 / 36.",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "Anonymous cart access rejected",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "CART-1: anonymous API access rejected",
+      "actual": "Anonymous GET /api/v1/cart returned 401.",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "Alice update leaves Bob fixture unchanged",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "CART-1: caller changes only own cart",
+      "actual": "Alice saved 3; independent Bob GET remained initial 2 / 24.",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    },
+    {
+      "name": "Cancel sends no update request",
+      "basis": "runtime",
+      "status": "not-run",
+      "expected": "UI-1: Cancel sends no update request",
+      "actual": "Persisted-state preservation verified, but browser request capture was not available; no no-request claim is made.",
+      "evidence": []
+    },
+    {
+      "name": "Fixture restoration",
+      "basis": "runtime",
+      "status": "passed",
+      "expected": "Restore disposable carts where possible",
+      "actual": "Final GETs confirm Alice 1 / 12 and Bob 2 / 24.",
+      "evidence": [
+        "evidence/http.json"
+      ]
+    }
+  ],
+  "findings": [],
+  "risks": [
+    {
+      "area": "Cancel network side effects",
+      "reason": "State remained unchanged but browser request methods/counts were not captured.",
+      "priority": "medium",
+      "next_probe": "Capture network before valid and invalid Cancel and assert zero PUT requests."
+    },
+    {
+      "area": "Server error feedback and timing",
+      "reason": "UI overstock was stopped by native validation; direct API 409 did not exercise UI handling of a server failure.",
+      "priority": "medium",
+      "next_probe": "Use controlled server rejection or delayed response and verify visible feedback, preserved draft, and successful retry."
+    },
+    {
+      "area": "Removal and identity switching while editing",
+      "reason": "Zero removal was avoided because adding removed items is out of scope; UI identity switching with an open draft was not sampled.",
+      "priority": "medium",
+      "next_probe": "Use a resettable fixture to test zero removal, then switch Alice/Bob during a draft and verify isolation."
+    }
+  ],
+  "observations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "baseline before UI edits",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "baseline before UI edits",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "after Cancel of draft 3",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "after Alice keyboard Save 3",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "after Alice keyboard Save 3",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "after narrow invalid Save then Cancel",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 401,
+      "action": "anonymous access",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "direct API boundary check",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "unchanged-state check after rejected update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "direct API boundary check",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "unchanged-state check after rejected update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "direct API boundary check",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "unchanged-state check after rejected update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "direct API boundary check",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "unchanged-state check after rejected update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "direct API boundary check",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "unchanged-state check after rejected update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 409,
+      "action": "direct API boundary check",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "unchanged-state check after rejected update",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/cart/items/1",
+      "status": 400,
+      "action": "missing quantity",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "unchanged-state check after missing quantity",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "final cleanup verification",
+      "evidence": "evidence/http.json"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cart",
+      "status": 200,
+      "action": "final cleanup verification",
+      "evidence": "evidence/http.json"
+    }
+  ],
+  "limitations": [
+    "Runtime-only: source was explicitly unavailable; source revision and deployed build are unknown.",
+    "Browser-generated API traffic and console errors were not captured; exact combined API request count is unknown. 23 direct requests and 27 state-changing browser actions were counted.",
+    "Only Chrome desktop and a 375\u00d7812 viewport sampled; exact browser version and desktop CSS dimensions not recorded. No real mobile device or screen-reader testing.",
+    "No zero removal, upper-valid-bound 5, concurrent tabs, rapid double Save, failure injection, or open-editor identity-switch test.",
+    "No claim of exhaustive authorization or accessibility coverage; sample is a disposable implementation, not production authentication."
+  ],
+  "cleanup": "Restored Alice to quantity 1 via UI Save; independent GET confirmed Alice 1 / 12 and Bob unchanged 2 / 24. Reset viewport and closed own tab. No mocks or application changes."
+}

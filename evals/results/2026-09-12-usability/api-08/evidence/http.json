@@ -1,0 +1,1226 @@
+[
+  {
+    "id": 1,
+    "method": "GET",
+    "path": "/health",
+    "action": "identify assigned deployed build",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "51"
+    },
+    "body": {
+      "status": "UP",
+      "version": "validation-fixture-1"
+    },
+    "elapsed_ms": 9
+  },
+  {
+    "id": 2,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432base",
+    "action": "baseline absence",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 3,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "base",
+    "request": {
+      "username": "uf9204432base",
+      "email": "uf9204432base@example.test",
+      "password": "Invented8",
+      "admin": true,
+      "displayName": "ignored"
+    },
+    "request_bytes": 134,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "uf9204432base",
+      "email": "uf9204432base@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 4,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432base",
+    "action": "base persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "uf9204432base",
+      "email": "uf9204432base@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 5,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "duplicate username with altered email",
+    "request": {
+      "username": "uf9204432base",
+      "email": "uf9204432different@example.test",
+      "password": "Invented9"
+    },
+    "request_bytes": 98,
+    "status": 409,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "47"
+    },
+    "body": {
+      "message": "Username or email already exists"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 6,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432base",
+    "action": "original record after duplicate username",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "uf9204432base",
+      "email": "uf9204432base@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 7,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "duplicate email under fresh username",
+    "request": {
+      "username": "uf9204432dupemail",
+      "email": "uf9204432base@example.test",
+      "password": "Invented9"
+    },
+    "request_bytes": 97,
+    "status": 409,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "47"
+    },
+    "body": {
+      "message": "Username or email already exists"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 8,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432dupemail",
+    "action": "duplicate email creates no new record",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 9,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "ascii72",
+    "request": {
+      "username": "uf9204432ascii72",
+      "email": "uf9204432ascii72@example.test",
+      "password": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "request_bytes": 162,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "74"
+    },
+    "body": {
+      "username": "uf9204432ascii72",
+      "email": "uf9204432ascii72@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 10,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432ascii72",
+    "action": "ascii72 persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "74"
+    },
+    "body": {
+      "username": "uf9204432ascii72",
+      "email": "uf9204432ascii72@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 11,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "ascii73",
+    "request": {
+      "username": "uf9204432ascii73",
+      "email": "uf9204432ascii73@example.test",
+      "password": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "request_bytes": 163,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50"
+    },
+    "body": {
+      "error": "password cannot be more than 72 bytes"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 12,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432ascii73",
+    "action": "ascii73 persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 13,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "ascii255",
+    "request": {
+      "username": "uf9204432ascii255",
+      "email": "uf9204432ascii255@example.test",
+      "password": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "request_bytes": 347,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50"
+    },
+    "body": {
+      "error": "password cannot be more than 72 bytes"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 14,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432ascii255",
+    "action": "ascii255 persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 15,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "unicode18",
+    "request": {
+      "username": "uf9204432unicode18",
+      "email": "uf9204432unicode18@example.test",
+      "password": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀"
+    },
+    "request_bytes": 166,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "78"
+    },
+    "body": {
+      "username": "uf9204432unicode18",
+      "email": "uf9204432unicode18@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 16,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432unicode18",
+    "action": "unicode18 persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "78"
+    },
+    "body": {
+      "username": "uf9204432unicode18",
+      "email": "uf9204432unicode18@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 17,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "unicode19",
+    "request": {
+      "username": "uf9204432unicode19",
+      "email": "uf9204432unicode19@example.test",
+      "password": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀"
+    },
+    "request_bytes": 170,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50"
+    },
+    "body": {
+      "error": "password cannot be more than 72 bytes"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 18,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432unicode19",
+    "action": "unicode19 persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 19,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "ascii73repeat",
+    "request": {
+      "username": "uf9204432ascii73repeat",
+      "email": "uf9204432ascii73repeat@example.test",
+      "password": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+    },
+    "request_bytes": 175,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50"
+    },
+    "body": {
+      "error": "password cannot be more than 72 bytes"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 20,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432ascii73repeat",
+    "action": "ascii73repeat persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 21,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "shortpassword",
+    "request": {
+      "username": "uf9204432shortpassword",
+      "email": "uf9204432shortpassword@example.test",
+      "password": "AAAAAAA"
+    },
+    "request_bytes": 109,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "Password length must be between 8 and 255 characters"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 22,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432shortpassword",
+    "action": "shortpassword persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 23,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "longpassword",
+    "request": {
+      "username": "uf9204432longpassword",
+      "email": "uf9204432longpassword@example.test",
+      "password": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "request_bytes": 356,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "Password length must be between 8 and 255 characters"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 24,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432longpassword",
+    "action": "longpassword persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 25,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "nullpassword",
+    "request": {
+      "username": "uf9204432nullpassword",
+      "email": "uf9204432nullpassword@example.test",
+      "password": null
+    },
+    "request_bytes": 102,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "password": "Password length must be between 8 and 255 characters"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 26,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432nullpassword",
+    "action": "nullpassword persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 27,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "shortusername",
+    "request": {
+      "username": "u32",
+      "email": "u32@example.test",
+      "password": "Invented8"
+    },
+    "request_bytes": 73,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "Username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 28,
+    "method": "GET",
+    "path": "/api/v1/users/u32",
+    "action": "shortusername persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 29,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "longusername",
+    "request": {
+      "username": "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "email": "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.test",
+      "password": "Invented8"
+    },
+    "request_bytes": 579,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "68"
+    },
+    "body": {
+      "username": "Username length must be between 4 and 255 characters"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 30,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "action": "longusername persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 31,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "username255",
+    "request": {
+      "username": "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "email": "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.test",
+      "password": "Invented8"
+    },
+    "request_bytes": 577,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "552"
+    },
+    "body": {
+      "username": "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "email": "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 32,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "action": "username255 persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "552"
+    },
+    "body": {
+      "username": "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "email": "uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 33,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "username4",
+    "request": {
+      "username": "u432",
+      "email": "u432@example.test",
+      "password": "Invented8"
+    },
+    "request_bytes": 75,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50"
+    },
+    "body": {
+      "username": "u432",
+      "email": "u432@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 34,
+    "method": "GET",
+    "path": "/api/v1/users/u432",
+    "action": "username4 persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50"
+    },
+    "body": {
+      "username": "u432",
+      "email": "u432@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 35,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "emailnodomain",
+    "request": {
+      "username": "uf9204432emailnodomain",
+      "email": "uf9204432@",
+      "password": "Invented8"
+    },
+    "request_bytes": 86,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "body": {
+      "email": "Use a nonempty email address with a local part and domain"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 36,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432emailnodomain",
+    "action": "emailnodomain persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 37,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "emailnolocal",
+    "request": {
+      "username": "uf9204432emailnolocal",
+      "email": "@example.test",
+      "password": "Invented8"
+    },
+    "request_bytes": 88,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "body": {
+      "email": "Use a nonempty email address with a local part and domain"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 38,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432emailnolocal",
+    "action": "emailnolocal persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 39,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "emailnonscalar",
+    "request": {
+      "username": "uf9204432emailnonscalar",
+      "email": [],
+      "password": "Invented8"
+    },
+    "request_bytes": 77,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70"
+    },
+    "body": {
+      "email": "Use a nonempty email address with a local part and domain"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 40,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432emailnonscalar",
+    "action": "emailnonscalar persistence inspection",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 41,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "malformed",
+    "request": "{\"username\":",
+    "request_bytes": 12,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "35"
+    },
+    "body": {
+      "message": "Invalid JSON request"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 42,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "nonobject",
+    "request": "[]",
+    "request_bytes": 2,
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "37"
+    },
+    "body": {
+      "message": "Expected a JSON object"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 43,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "8192 encoded bytes accepted",
+    "request": "{\"username\": \"uf9204432body8192\", \"email\": \"uf9204432body8192@example.test\", \"password\": \"Invented8\", \"padding\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"}",
+    "request_bytes": 8192,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "76"
+    },
+    "body": {
+      "username": "uf9204432body8192",
+      "email": "uf9204432body8192@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 44,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432body8192",
+    "action": "8192-byte payload persistence",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "76"
+    },
+    "body": {
+      "username": "uf9204432body8192",
+      "email": "uf9204432body8192@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 45,
+    "method": "DELETE",
+    "path": "/api/v1/users/uf9204432base",
+    "action": "cleanup own successful registration",
+    "request": null,
+    "request_bytes": 0,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "body": null,
+    "elapsed_ms": 0
+  },
+  {
+    "id": 46,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432base",
+    "action": "confirm cleanup",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 47,
+    "method": "DELETE",
+    "path": "/api/v1/users/uf9204432ascii72",
+    "action": "cleanup own successful registration",
+    "request": null,
+    "request_bytes": 0,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "body": null,
+    "elapsed_ms": 0
+  },
+  {
+    "id": 48,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432ascii72",
+    "action": "confirm cleanup",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 49,
+    "method": "DELETE",
+    "path": "/api/v1/users/uf9204432unicode18",
+    "action": "cleanup own successful registration",
+    "request": null,
+    "request_bytes": 0,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "body": null,
+    "elapsed_ms": 0
+  },
+  {
+    "id": 50,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432unicode18",
+    "action": "confirm cleanup",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 51,
+    "method": "DELETE",
+    "path": "/api/v1/users/uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "action": "cleanup own successful registration",
+    "request": null,
+    "request_bytes": 0,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "body": null,
+    "elapsed_ms": 0
+  },
+  {
+    "id": 52,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "action": "confirm cleanup",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 53,
+    "method": "DELETE",
+    "path": "/api/v1/users/u432",
+    "action": "cleanup own successful registration",
+    "request": null,
+    "request_bytes": 0,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "body": null,
+    "elapsed_ms": 0
+  },
+  {
+    "id": 54,
+    "method": "GET",
+    "path": "/api/v1/users/u432",
+    "action": "confirm cleanup",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 55,
+    "method": "DELETE",
+    "path": "/api/v1/users/uf9204432body8192",
+    "action": "cleanup own successful registration",
+    "request": null,
+    "request_bytes": 0,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "body": null,
+    "elapsed_ms": 0
+  },
+  {
+    "id": 56,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432body8192",
+    "action": "confirm cleanup",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:13:52 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 57,
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "action": "8-character password; reuse email after cleanup",
+    "request": {
+      "username": "uf9204432basereuse",
+      "email": "uf9204432base@example.test",
+      "password": "Abcd1234"
+    },
+    "request_bytes": 97,
+    "status": 201,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:15:36 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "73"
+    },
+    "body": {
+      "username": "uf9204432basereuse",
+      "email": "uf9204432base@example.test"
+    },
+    "elapsed_ms": 10
+  },
+  {
+    "id": 58,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432basereuse",
+    "action": "verify minimum-password registration",
+    "request": null,
+    "request_bytes": 0,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:15:36 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "73"
+    },
+    "body": {
+      "username": "uf9204432basereuse",
+      "email": "uf9204432base@example.test"
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": 59,
+    "method": "DELETE",
+    "path": "/api/v1/users/uf9204432basereuse",
+    "action": "cleanup final registration",
+    "request": null,
+    "request_bytes": 0,
+    "status": 204,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:15:36 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "0"
+    },
+    "body": null,
+    "elapsed_ms": 0
+  },
+  {
+    "id": 60,
+    "method": "GET",
+    "path": "/api/v1/users/uf9204432basereuse",
+    "action": "verify final cleanup",
+    "request": null,
+    "request_bytes": 0,
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:15:36 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "29"
+    },
+    "body": {
+      "message": "User not found"
+    },
+    "elapsed_ms": 0
+  }
+]

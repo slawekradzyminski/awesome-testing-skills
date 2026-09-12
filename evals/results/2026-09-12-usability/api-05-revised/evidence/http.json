@@ -1,0 +1,43 @@
+[
+  {
+    "number": 1,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "authorization": "Bearer <alice fixture token>",
+    "action": "Representative feature availability and Alice baseline",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:12:18 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 9.05
+  },
+  {
+    "number": 2,
+    "method": "GET",
+    "path": "/health",
+    "role": "anonymous",
+    "request": null,
+    "action": "Targeted availability check after representative cart returned 503; no mutation batch continued",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:12:43 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 9.87
+  }
+]

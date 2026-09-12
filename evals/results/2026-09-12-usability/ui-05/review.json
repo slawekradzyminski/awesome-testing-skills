@@ -1,0 +1,7 @@
+{
+  "useful_outcome_met": true,
+  "disposition": "useful-blocked-report",
+  "reason": "Four observed availability requests, zero feature interactions, blocked checks and restoration handoff explicit. Two local tests passed without being presented as deployed UI verification.",
+  "runtime_result": "blocked",
+  "sources_missing": false
+}

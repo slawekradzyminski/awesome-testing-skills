@@ -1,0 +1,725 @@
+[
+  {
+    "id": 1,
+    "method": "GET",
+    "path": "/health",
+    "role": "anonymous",
+    "request": null,
+    "action": "Availability and deployed build identity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 8.92
+  },
+  {
+    "id": 2,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "role": "alice",
+    "request": null,
+    "action": "Product price and stock baseline",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.39
+  },
+  {
+    "id": 3,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Alice initial cart",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.32
+  },
+  {
+    "id": 4,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "bob",
+    "request": null,
+    "action": "Bob initial cart",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.32
+  },
+  {
+    "id": 5,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "anonymous",
+    "request": null,
+    "action": "Anonymous read rejected",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.31
+  },
+  {
+    "id": 6,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "anonymous",
+    "request": {
+      "quantity": 3
+    },
+    "action": "Anonymous update rejected",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.35
+  },
+  {
+    "id": 7,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify anonymous mutation did not change Alice",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "id": 8,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 3
+    },
+    "action": "Representative valid update",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.33
+  },
+  {
+    "id": 9,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify quantity three and total 36 persisted",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "id": 10,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "bob",
+    "request": null,
+    "action": "Verify Alice update left Bob unchanged",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.28
+  },
+  {
+    "id": 11,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 4,
+      "username": "bob"
+    },
+    "action": "Client supplied username cannot choose another cart",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.27
+  },
+  {
+    "id": 12,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Extra username field still updates authenticated Alice",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.28
+  },
+  {
+    "id": 13,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "bob",
+    "request": null,
+    "action": "Verify extra username field left Bob unchanged",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.26
+  },
+  {
+    "id": 14,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 5
+    },
+    "action": "Exact stock boundary accepted",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.26
+  },
+  {
+    "id": 15,
+    "method": "GET",
+    "path": "/api/v1/products",
+    "role": "alice",
+    "request": null,
+    "action": "Stock remains five after cart changes",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.29
+  },
+  {
+    "id": 16,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": -1
+    },
+    "action": "Reject negative quantity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.27
+  },
+  {
+    "id": 17,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify unchanged quantity five after negative",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.25
+  },
+  {
+    "id": 18,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 1.5
+    },
+    "action": "Reject fractional quantity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "id": 19,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify unchanged quantity five after fractional",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.26
+  },
+  {
+    "id": 20,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {},
+    "action": "Reject missing quantity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.26
+  },
+  {
+    "id": 21,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify unchanged quantity five after missing",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.27
+  },
+  {
+    "id": 22,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": null
+    },
+    "action": "Reject null quantity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.27
+  },
+  {
+    "id": 23,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify unchanged quantity five after null",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.25
+  },
+  {
+    "id": 24,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": "2"
+    },
+    "action": "Reject string quantity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.29
+  },
+  {
+    "id": 25,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify unchanged quantity five after string",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.27
+  },
+  {
+    "id": 26,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": true
+    },
+    "action": "Reject boolean true quantity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.26
+  },
+  {
+    "id": 27,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify unchanged quantity five after boolean true",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.26
+  },
+  {
+    "id": 28,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": false
+    },
+    "action": "Reject boolean false quantity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.27
+  },
+  {
+    "id": 29,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify unchanged quantity five after boolean false",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 30,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": {
+      "quantity": 6
+    },
+    "action": "Reject above stock quantity",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.25
+  },
+  {
+    "id": 31,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify unchanged quantity five after above stock",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 32,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": "{",
+    "action": "Malformed JSON rejected",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.26
+  },
+  {
+    "id": 33,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify malformed JSON did not mutate cart",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.24
+  },
+  {
+    "id": 34,
+    "method": "PUT",
+    "path": "/api/v1/cart/items/1",
+    "role": "alice",
+    "request": "[]",
+    "action": "Non-object JSON rejected",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.41
+  },
+  {
+    "id": 35,
+    "method": "GET",
+    "path": "/api/v1/cart",
+    "role": "alice",
+    "request": null,
+    "action": "Verify non-object JSON did not mutate cart",
+    "status": 503,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 09:07:14 GMT",
+      "Content-Type": "application/json",
+      "Retry-After": "60",
+      "Content-Length": "48"
+    },
+    "response": {
+      "error": "Application temporarily unavailable"
+    },
+    "elapsed_ms": 0.23
+  }
+]

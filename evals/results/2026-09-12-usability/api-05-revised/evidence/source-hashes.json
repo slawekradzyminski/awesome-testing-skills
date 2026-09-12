@@ -1,0 +1,9 @@
+{
+  "app/requirements.md": "e1a2c940c23976129e1e4fb26d1c3132b15b56e21b4ed98be20593325d4861aa",
+  "app/domain.py": "29f6253b888664112d06fc9fbef9eb996ce04b89ce5d045184aa7c77a42527ec",
+  "app/test_domain.py": "dfda44c0719a4ea5a3a0332af38274ee707f74f9e9c0ab3a627f183dd7e7cca1",
+  "app/app.py": "3cd1941d80e007428cfe9ac3469e93af0dfbfc24325ac29efebcc1d84313a2b7",
+  "app/static/index.html": "e90ab91ba5220ee2cf2540132ba2f14b20fb4adc9d860ae6d0e12f5d0e34af37",
+  "app/static/style.css": "93cf3e1e892f7f0aadd2ae916beba747cd00a3c8d6b088b5ea8be3e94db43b7f",
+  "app/static/app.js": "d52179889abfabc42377e0e0fba9585fd8c7b9f0f4e190919b5b46b7b959a38c"
+}

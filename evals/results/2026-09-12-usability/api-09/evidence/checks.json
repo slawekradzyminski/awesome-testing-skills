@@ -1,0 +1,383 @@
+[
+  {
+    "name": "valid baseline and ignored fields",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2/4: 201 and only username/email persisted",
+    "actual": "POST 201, GET 200: {'username': 'qh926base', 'email': 'qh926base@example.test'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      2,
+      3
+    ]
+  },
+  {
+    "name": "duplicate username preserves record",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 409, existing record unchanged",
+    "actual": "POST 409; GET {'username': 'qh926base', 'email': 'qh926base@example.test'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      4,
+      5
+    ]
+  },
+  {
+    "name": "duplicate email creates no record",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 409 and candidate GET 404",
+    "actual": "POST 409; GET 404",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      6,
+      7
+    ]
+  },
+  {
+    "name": "ascii7",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      8,
+      9
+    ]
+  },
+  {
+    "name": "ascii255",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+    "actual": "POST 201; GET 200; response {'username': 'qh926ascii255', 'email': 'qh926ascii255@example.test'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      10,
+      11,
+      12
+    ]
+  },
+  {
+    "name": "ascii256",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      13,
+      14
+    ]
+  },
+  {
+    "name": "unicode7",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      15,
+      16
+    ]
+  },
+  {
+    "name": "unicode8",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+    "actual": "POST 201; GET 200; response {'username': 'qh926unicode8', 'email': 'qh926unicode8@example.test'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      17,
+      18,
+      19
+    ]
+  },
+  {
+    "name": "unicode255",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+    "actual": "POST 201; GET 200; response {'username': 'qh926unicode255', 'email': 'qh926unicode255@example.test'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      20,
+      21,
+      22
+    ]
+  },
+  {
+    "name": "unicode256",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      23,
+      24
+    ]
+  },
+  {
+    "name": "name3",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'username': 'Username length must be between 4 and 255 characters'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      25,
+      26
+    ]
+  },
+  {
+    "name": "name4",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+    "actual": "POST 201; GET 200; response {'username': 'q9xz', 'email': 'qh926name4@example.test'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      27,
+      28,
+      29
+    ]
+  },
+  {
+    "name": "name255",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 201; valid records persist username/email only, invalid records absent",
+    "actual": "POST 201; GET 200; response {'username': 'qh926xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'email': 'qh926name255@example.test'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      30,
+      31,
+      32
+    ]
+  },
+  {
+    "name": "name256",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'username': 'Username length must be between 4 and 255 characters'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      33,
+      34
+    ]
+  },
+  {
+    "name": "emaillocal",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      35,
+      36
+    ]
+  },
+  {
+    "name": "emaildomain",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      37,
+      38
+    ]
+  },
+  {
+    "name": "emailat",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      39,
+      40
+    ]
+  },
+  {
+    "name": "emailempty",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      41,
+      42
+    ]
+  },
+  {
+    "name": "pwnull",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'password': 'Password length must be between 8 and 255 characters'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      43,
+      44
+    ]
+  },
+  {
+    "name": "namelist",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'username': 'Username length must be between 4 and 255 characters'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      45,
+      46
+    ]
+  },
+  {
+    "name": "emailnumber",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-2: 400; valid records persist username/email only, invalid records absent",
+    "actual": "POST 400; GET 404; response {'email': 'Use a nonempty email address with a local part and domain'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      47,
+      48
+    ]
+  },
+  {
+    "name": "malformed",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-4: 400",
+    "actual": "400: {'message': 'Invalid JSON request'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      49
+    ]
+  },
+  {
+    "name": "nonobject",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-4: 400",
+    "actual": "400: {'message': 'Expected a JSON object'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      50
+    ]
+  },
+  {
+    "name": "8192 byte envelope",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-4: 8192 accepted; oversized rejected (specific status unspecified)",
+    "actual": "POST 201; GET 200",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      51,
+      52,
+      53
+    ]
+  },
+  {
+    "name": "8193 byte envelope",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-4: 8192 accepted; oversized rejected (specific status unspecified)",
+    "actual": "POST 413; GET 404",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      54,
+      55
+    ]
+  },
+  {
+    "name": "cleanup isolation",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-3: baseline survives other deletes",
+    "actual": "GET 200: {'username': 'qh926base', 'email': 'qh926base@example.test'}",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      56
+    ]
+  },
+  {
+    "name": "delete then absent",
+    "basis": "runtime",
+    "status": "passed",
+    "expected": "AUTH-3: DELETE 204 then GET 404",
+    "actual": "DELETE 204; GET 404",
+    "evidence": [
+      "evidence/http.json"
+    ],
+    "request_ids": [
+      57,
+      58
+    ]
+  }
+]

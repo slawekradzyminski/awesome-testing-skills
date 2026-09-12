@@ -1,0 +1,18 @@
+- main [ref=e2]:
+  - heading "Your cart" [level=1] [ref=e3]
+  - generic [ref=e4]: Demo account
+  - combobox "Demo account" [ref=e5]:
+    - option "Alice" [selected]
+    - option "Bob"
+  - region [ref=e6]:
+    - heading "Workshop notebook" [level=2] [ref=e7]
+    - paragraph [ref=e8]: "Price: 12 · Available stock: 5"
+    - paragraph [ref=e9]: "Quantity: 4 · Total: 48"
+    - button "Edit quantity" [ref=e10] [cursor=pointer]
+    - generic [ref=e11]:
+      - generic [ref=e12]: Quantity
+      - spinbutton "Quantity" [active] [ref=e13]: "4"
+      - generic [ref=e14]:
+        - button "Save" [ref=e15] [cursor=pointer]
+        - button "Cancel" [ref=e16] [cursor=pointer]
+    - status
