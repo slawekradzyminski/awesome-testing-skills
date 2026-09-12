@@ -105,3 +105,7 @@ The original validation demo now has a maintained [benchmark fixture](../evals/v
 Seventeen harness tests pass. Real browser checks verify Save, valid-input Cancel, the empty-input contrast, persisted state after reload, and restoration for both profile variants. [Retained validation evidence](../evals/results/2026-09-12-validation-fixture/README.md) includes command/audit logs, results and reviewed screenshots. These checks validate the new fixtures; no new agent-performance score is claimed. The two public hosts passed availability preflight; the documented Docker setup was source-reviewed but not launched here.
 
 The [benchmark user guide](../evals/GETTING_STARTED.md) now covers the included apps, public deployments, full local stack, source links, candidate handoff, grading and cleanup. The main README presents a standalone project and no longer includes workshop attribution or branch lineage.
+
+## Public repository access — September 12, 2026
+
+Repository visibility was changed to public and verified through an unauthenticated GitHub API request. Current installation and cloning instructions use HTTPS. The public `npx` command passed with a fresh npm cache, Git credential prompts disabled and global Git configuration excluded; both installed skill directories matched the repository files. Earlier private-SSH validation above records the previous setup. This change did not publish a package to the npm registry.

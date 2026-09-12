@@ -18,10 +18,10 @@ Detailed guidance loads through references at the point of use. Each skill remai
 Requires **Node.js 20+**, npm/npx and Git. From the project where you want to use the skills:
 
 ```sh
-npx --yes --allow-git=root --package='git+ssh://git@github.com/slawekradzyminski/exploratory-testing-skills.git#main' exploratory-skills --agent claude
+npx --yes --allow-git=root --package='git+https://github.com/slawekradzyminski/exploratory-testing-skills.git#main' exploratory-skills --agent claude
 ```
 
-Replace `claude` with **`codex`**, **`cursor`** or **`copilot`**. Both skills and their references are installed in the current project. The repository is currently private: the command requires GitHub access and working SSH authentication. It runs the package directly from Git; no npm-registry release or npm account is required. See [npm's execution documentation](https://docs.npmjs.com/cli/npm-exec/).
+Replace `claude` with **`codex`**, **`cursor`** or **`copilot`**. Both skills and their references are installed in the current project. The repository is public; this HTTPS command requires no GitHub login or SSH setup. It runs the package directly from Git; no npm-registry release or npm account is required. See [npm's execution documentation](https://docs.npmjs.com/cli/npm-exec/).
 
 The command opts into fetching this direct Git package with `--allow-git=root`; npm 12 blocks Git packages by default. This setting applies only to this invocation. Older npm versions that do not recognize the flag can omit it. See [npm's Git-fetch configuration](https://docs.npmjs.com/cli/install/#allow-git).
 
@@ -39,10 +39,10 @@ Add options to that command as needed:
 
 Identical copies are skipped. If either selected skill differs, installation stops before writes unless `--force` is supplied. Replacements preserve the complete previous directory under `.exploratory-skills-backups/` in the selected project or home directory; the command prints its path. Backups sit outside skill-discovery directories. To update, run the command again with `--force`; replace `#main` with a reviewed commit SHA when you need a fixed version. Keep personal edits in the backup or merge them deliberately.
 
-If you prefer an authenticated clone, the same installer works locally without npm installation:
+If you prefer a clone, the same installer works locally without npm installation:
 
 ```sh
-gh repo clone slawekradzyminski/exploratory-testing-skills
+git clone https://github.com/slawekradzyminski/exploratory-testing-skills.git
 cd exploratory-testing-skills
 node bin/install.mjs --agent codex --project /path/to/your/project
 ```

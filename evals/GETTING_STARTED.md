@@ -12,10 +12,10 @@ The benchmark measures whether an agent can investigate application behavior, su
 
 The local fixtures need no Docker, AWS account, cloud credentials or external services. Awesome LocalStack is the separate application's project name. Using its public deployment requires no local stack installation; the agent and evaluation harness still run on your machine. These are shared application targets, not a hosted benchmark runner.
 
-The skill installer distributes skill files only. Clone this repository to obtain the benchmark apps and harness. Repository access is required while this project remains private:
+The skill installer distributes skill files only. Clone this repository to obtain the benchmark apps and harness. The public repository can be cloned without GitHub authentication:
 
 ```sh
-git clone git@github.com:slawekradzyminski/exploratory-testing-skills.git
+git clone https://github.com/slawekradzyminski/exploratory-testing-skills.git
 cd exploratory-testing-skills
 ```
 
