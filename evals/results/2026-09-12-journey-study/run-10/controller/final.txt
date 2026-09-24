@@ -1,0 +1,5 @@
+Saved the [assessment report](evidence/report.md) and supporting evidence.
+
+No confirmed administrative API defects found. All 89 live checks and four existing tests passed.
+
+Owner reset is needed: A100’s refunded total is now 10,000 cents; A200’s address version is 4. All reversible changes were restored.

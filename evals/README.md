@@ -2,6 +2,12 @@
 
 Start with the [user guide](GETTING_STARTED.md) for local fixtures, public targets, source links and a complete prepare → agent → grade → cleanup walkthrough.
 
+The separate [Dispatch Desk screening study](journey-study/) compares a normal request, a reporting template and the full skill on broader journeys, with a frozen protocol and repeated fresh sessions. It has its own runner and evidence review; its cases and results are not merged with the 18-case suite below. The [completed 24-run assessment](results/2026-09-12-journey-study.md) found all three conditions established every seeded fault with actionable evidence; it does not demonstrate an effectiveness advantage for the full skill.
+
+A separate [Claude Opus 5.5 four-arm development pilot](results/2026-09-24-claude-ablation.md) splits API investigation and reporting guidance and scores candidate-observed state from the runtime audit. All four arms again reached 3/3 on the known-ceiling Dispatch Desk API fixture, so it does not establish an advantage. The same result includes fresh API/UI behavior checks of the new check-ledger, screenshot, visit-log and HTTP-evidence guidance. The [pilot protocol and runner](journey-study/claude-ablation.md) remain separate from both the 18-case suite and the historical study.
+
+A later [six-run Opus 5.5 historical cart diagnostic](results/2026-09-24-history-opus55-diagnostic.md) used two frozen repetitions of one real React/Java ticket across ordinary, template and full-skill conditions. All reported a related direct-update defect, but none reproduced the prespecified two-tab reconnect target. The full skill produced check ledgers in both runs; no run saved a correlated HTTP exchange log. This is not the full historical matrix or an effectiveness ranking.
+
 This suite evaluates an agent using the API/UI skills. It keeps three kinds of evidence separate:
 
 1. **Infrastructure checks:** does the fixture, mutation application, isolation, and artifact validator work?
@@ -113,3 +119,5 @@ Reviewed, sanitized results can be committed under [results/](results/). Keep ra
 The [completed September 12 retry assessment](results/2026-09-12-retry.md) records 16 fresh runs, a condition-blind review of the 12 sample reports, and source-backed hosted API/UI comparisons. Both conditions identified both seeded defects; primary artifact scores averaged 11.75/12 with skills and 10.0/12 without. This is a small development pilot, not evidence of a general bug-discovery improvement. The [initial result](results/2026-09-12.md) preserves the earlier usage-blocked attempt.
 
 The [practical extension assessment](results/2026-09-12-usability.md) exercises all eight added cases plus two targeted corrections. It preserves an excessive-retry failure and an incomplete source handoff, then records the fresh revised-skill outcomes.
+
+The separate [historical-project runner](history-study/README.md) uses real before/fix Java/React revisions, a normal request/template/skill comparison, corrected controls and an unavailable API. Its [September 12 closeout](results/2026-09-12-history-study.md) is incomplete and ungraded; it must not be cited as a completed effectiveness result. The optional Claude runner passed Sonnet 5 setup checks but has no candidate comparison results.

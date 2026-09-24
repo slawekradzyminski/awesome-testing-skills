@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"01a09541-c664-79d3-8f85-e15314a6e671"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"playwright-cli\n\nREADY"}}
+{"type":"turn.completed","usage":{"input_tokens":12013,"cached_input_tokens":10496,"cache_write_input_tokens":0,"output_tokens":9,"reasoning_output_tokens":0}}

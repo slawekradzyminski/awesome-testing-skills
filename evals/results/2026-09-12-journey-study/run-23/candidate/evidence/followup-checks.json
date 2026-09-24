@@ -1,0 +1,81 @@
+{
+  "api_requests_including_baseline": 97,
+  "checks": [
+    {
+      "check": "missing required fields /api/orders/A200/refund status 400",
+      "passed": true
+    },
+    {
+      "check": "missing required fields /api/orders/A200/address status 400",
+      "passed": true
+    },
+    {
+      "check": "missing required fields /api/orders/A200/note status 400",
+      "passed": true
+    },
+    {
+      "check": "missing required fields /api/services status 400",
+      "passed": true
+    },
+    {
+      "check": "oversized JSON body status 400",
+      "passed": true
+    },
+    {
+      "check": "Bob forbidden write /api/orders/A200/refund status 403",
+      "passed": true
+    },
+    {
+      "check": "Bob forbidden write /api/orders/A200/address status 403",
+      "passed": true
+    },
+    {
+      "check": "Bob forbidden write /api/orders/A200/note status 403",
+      "passed": true
+    },
+    {
+      "check": "Bob forbidden write /api/services status 403",
+      "passed": true
+    },
+    {
+      "check": "unknown fixture rejected",
+      "passed": true
+    },
+    {
+      "check": "followup rejected mutations preserve all state",
+      "passed": true
+    },
+    {
+      "check": "one character note status 200",
+      "passed": true
+    },
+    {
+      "check": "one character note persists",
+      "passed": true
+    },
+    {
+      "check": "restore one character note status 200",
+      "passed": true
+    },
+    {
+      "check": "padded 120 character address status 200",
+      "passed": true
+    },
+    {
+      "check": "address stores bounded normalized value",
+      "passed": true
+    },
+    {
+      "check": "normalized address persisted",
+      "passed": true
+    },
+    {
+      "check": "restore padded address status 200",
+      "passed": true
+    },
+    {
+      "check": "followup reversible fields restored",
+      "passed": true
+    }
+  ]
+}

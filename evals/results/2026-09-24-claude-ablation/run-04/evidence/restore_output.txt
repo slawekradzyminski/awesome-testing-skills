@@ -1,0 +1,6 @@
+1 POST /api/services alice {'ids': ['A100', 'A200'], 'service': 'standard'} -> 200 {"orders": [{"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}, {"id": "A200", "owner": "al
+2 POST /api/orders/A200/note alice {'note': 'Ring twice'} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "STALE Street", "version": 3, "note": "Ring twice", "service": "standard"}
+3 GET /api/orders/A200 alice None -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "STALE Street", "version": 3, "note": "Ring twice", "service": "standard"}
+4 POST /api/orders/A200/address alice {'address': '20 Pine Street', 'version': 3} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "20 Pine Street", "version": 4, "note": "Ring twice", "service": "standard"}
+5 GET /api/orders alice None -> 200 {"orders": [{"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}, {"id": "A200", "owner": "al
+6 GET /api/orders bob None -> 200 {"orders": [{"id": "B100", "owner": "bob", "paid": 4000, "refunded": 6000, "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}]}

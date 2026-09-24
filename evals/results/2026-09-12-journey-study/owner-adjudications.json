@@ -1,0 +1,26 @@
+[
+  {
+    "run_id": "run-23",
+    "title": "API-01 \u2014 Padded notes persist beyond the stated length bound",
+    "original_classification": "valid",
+    "classification": "unresolved",
+    "reason": "The accepted and persisted padded inputs are established, but the product brief says 1\u2013160 nonblank characters without defining whether the limit applies before or after trimming. The candidate acknowledges this ambiguity and demonstrates no further impairment. The reviewer accepted a reasonable literal-length interpretation; the final assessment conservatively applies the frozen requirement-uncertainty rule and treats this as a product clarification, not a confirmed functional defect or a disproved false positive. Apply this decision to any equivalent claim in other conditions.",
+    "evidence": [
+      "run-23/candidate/app/requirements.md",
+      "run-23/candidate/evidence/report.md",
+      "run-23/candidate/evidence/API-01-evidence.json"
+    ]
+  },
+  {
+    "run_id": "run-24",
+    "title": "Whitespace padding bypasses the persisted note length limit",
+    "original_classification": "valid",
+    "classification": "unresolved",
+    "reason": "The accepted and persisted padded inputs are established, but the product brief says 1\u2013160 nonblank characters without defining whether the limit applies before or after trimming. The candidate acknowledges this ambiguity and demonstrates no further impairment. The reviewer accepted a reasonable literal-length interpretation; the final assessment conservatively applies the frozen requirement-uncertainty rule and treats this as a product clarification, not a confirmed functional defect or a disproved false positive. Apply this decision to any equivalent claim in other conditions.",
+    "evidence": [
+      "run-24/candidate/app/requirements.md",
+      "run-24/candidate/evidence/report.md",
+      "run-24/candidate/evidence/boundary-evidence.json"
+    ]
+  }
+]

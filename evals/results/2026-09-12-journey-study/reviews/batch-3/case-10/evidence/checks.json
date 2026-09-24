@@ -1,0 +1,860 @@
+{
+  "api_requests_including_preliminary": 90,
+  "checks": 89,
+  "passed": 89,
+  "failed": [],
+  "results": [
+    {
+      "label": "baseline list alice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "baseline list bob",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated None /api/orders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated None /api/orders/A200",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated None /api/orders/A200/refund",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated None /api/orders/A200/address",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated None /api/orders/A200/note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated None /api/services",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated unknown /api/orders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated unknown /api/orders/A200",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated unknown /api/orders/A200/refund",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated unknown /api/orders/A200/address",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated unknown /api/orders/A200/note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "reject unauthenticated unknown /api/services",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "foreign read alice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "foreign refund alice",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "foreign address alice",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "foreign note alice",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "foreign service alice",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "foreign read bob",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "foreign refund bob",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "foreign address bob",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "foreign note bob",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "foreign service bob",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "after authorization list alice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "after authorization list bob",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "authorization attempts preserve all state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "atomic batch ['A100', 'B100']",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "atomic rejection preserves Alice orders ['A100', 'B100']",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "atomic batch ['A100', 'MISSING']",
+      "passed": true,
+      "detail": [
+        404,
+        {
+          "error": "Order not found"
+        }
+      ]
+    },
+    {
+      "label": "atomic rejection preserves Alice orders ['A100', 'MISSING']",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "atomic batch ['B100', 'A100']",
+      "passed": true,
+      "detail": [
+        403,
+        {
+          "error": "Access denied"
+        }
+      ]
+    },
+    {
+      "label": "atomic rejection preserves Alice orders ['B100', 'A100']",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "atomic batch ['MISSING', 'A100']",
+      "passed": true,
+      "detail": [
+        404,
+        {
+          "error": "Order not found"
+        }
+      ]
+    },
+    {
+      "label": "atomic rejection preserves Alice orders ['MISSING', 'A100']",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "valid two-order batch",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "orders": [
+            {
+              "id": "A100",
+              "owner": "alice",
+              "paid": 10000,
+              "refunded": 0,
+              "address": "10 Oak Street",
+              "version": 1,
+              "note": "Leave with reception",
+              "service": "express"
+            },
+            {
+              "id": "A200",
+              "owner": "alice",
+              "paid": 6000,
+              "refunded": 0,
+              "address": "20 Pine Street",
+              "version": 1,
+              "note": "Ring twice",
+              "service": "express"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "batch persisted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "restore service",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "orders": [
+            {
+              "id": "A100",
+              "owner": "alice",
+              "paid": 10000,
+              "refunded": 0,
+              "address": "10 Oak Street",
+              "version": 1,
+              "note": "Leave with reception",
+              "service": "standard"
+            },
+            {
+              "id": "A200",
+              "owner": "alice",
+              "paid": 6000,
+              "refunded": 0,
+              "address": "20 Pine Street",
+              "version": 1,
+              "note": "Ring twice",
+              "service": "standard"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "invalid batch {'ids': [], 'service': 'express'}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Order IDs and a supported service required"
+        }
+      ]
+    },
+    {
+      "label": "invalid batch {'ids': ['A200', 42], 'service': 'express'}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Order IDs and a supported service required"
+        }
+      ]
+    },
+    {
+      "label": "invalid batch {'ids': 'A200', 'service': 'express'}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Order IDs and a supported service required"
+        }
+      ]
+    },
+    {
+      "label": "invalid batch {'ids': ['A200'], 'service': 'overnight'}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Order IDs and a supported service required"
+        }
+      ]
+    },
+    {
+      "label": "invalid refund 0",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Amount must be a positive integer in cents"
+        }
+      ]
+    },
+    {
+      "label": "invalid refund -1",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Amount must be a positive integer in cents"
+        }
+      ]
+    },
+    {
+      "label": "invalid refund True",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Amount must be a positive integer in cents"
+        }
+      ]
+    },
+    {
+      "label": "invalid refund 1.5",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Amount must be a positive integer in cents"
+        }
+      ]
+    },
+    {
+      "label": "invalid refund 100",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Amount must be a positive integer in cents"
+        }
+      ]
+    },
+    {
+      "label": "invalid refund None",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Amount must be a positive integer in cents"
+        }
+      ]
+    },
+    {
+      "label": "partial refund one",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 3000,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    },
+    {
+      "label": "partial refund two",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 5000,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    },
+    {
+      "label": "cumulative excess",
+      "passed": true,
+      "detail": [
+        409,
+        {
+          "error": "Refund exceeds remaining paid amount"
+        }
+      ]
+    },
+    {
+      "label": "excess preserves cumulative total",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "concurrent refund one winner",
+      "passed": true,
+      "detail": [
+        [
+          200,
+          {
+            "id": "A100",
+            "owner": "alice",
+            "paid": 10000,
+            "refunded": 8000,
+            "address": "10 Oak Street",
+            "version": 1,
+            "note": "Leave with reception",
+            "service": "standard"
+          }
+        ],
+        [
+          409,
+          {
+            "error": "Refund exceeds remaining paid amount"
+          }
+        ]
+      ]
+    },
+    {
+      "label": "exact remaining refund",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10000,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    },
+    {
+      "label": "refund exhausted balance",
+      "passed": true,
+      "detail": [
+        409,
+        {
+          "error": "Refund exceeds remaining paid amount"
+        }
+      ]
+    },
+    {
+      "label": "refund final total equals paid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "invalid address {'address': ' ', 'version': 1}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Address and integer version required"
+        }
+      ]
+    },
+    {
+      "label": "invalid address {'address': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'version': 1}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Address and integer version required"
+        }
+      ]
+    },
+    {
+      "label": "invalid address {'address': 7, 'version': 1}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Address and integer version required"
+        }
+      ]
+    },
+    {
+      "label": "invalid address {'address': 'Valid', 'version': True}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Address and integer version required"
+        }
+      ]
+    },
+    {
+      "label": "invalid address {'address': 'Valid', 'version': 1.0}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Address and integer version required"
+        }
+      ]
+    },
+    {
+      "label": "invalid address {'address': 'Valid'}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Address and integer version required"
+        }
+      ]
+    },
+    {
+      "label": "address 120 character boundary",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "version": 2,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    {
+      "label": "stale address",
+      "passed": true,
+      "detail": [
+        409,
+        {
+          "error": "Order changed; reload before saving"
+        }
+      ]
+    },
+    {
+      "label": "stale preserves new address and version",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "concurrent address one winner",
+      "passed": true,
+      "detail": [
+        [
+          409,
+          {
+            "error": "Order changed; reload before saving"
+          }
+        ],
+        [
+          200,
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "Concurrent 1",
+            "version": 3,
+            "note": "Ring twice",
+            "service": "standard"
+          }
+        ]
+      ]
+    },
+    {
+      "label": "concurrent address preserves winning value",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "restore address",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 4,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    {
+      "label": "note maximum boundary",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 4,
+          "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+          "service": "standard"
+        }
+      ]
+    },
+    {
+      "label": "invalid note {'note': ''}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Note must contain 1 to 160 characters"
+        }
+      ]
+    },
+    {
+      "label": "invalid note {'note': '   '}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Note must contain 1 to 160 characters"
+        }
+      ]
+    },
+    {
+      "label": "invalid note {'note': 'nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn'}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Note must contain 1 to 160 characters"
+        }
+      ]
+    },
+    {
+      "label": "invalid note {'note': True}",
+      "passed": true,
+      "detail": [
+        400,
+        {
+          "error": "Note must contain 1 to 160 characters"
+        }
+      ]
+    },
+    {
+      "label": "invalid note {'note': 'LOCKER: 1'}",
+      "passed": true,
+      "detail": [
+        422,
+        {
+          "error": "Locker delivery is unavailable; enter another instruction"
+        }
+      ]
+    },
+    {
+      "label": "invalid note {'note': '  locker: 2'}",
+      "passed": true,
+      "detail": [
+        422,
+        {
+          "error": "Locker delivery is unavailable; enter another instruction"
+        }
+      ]
+    },
+    {
+      "label": "rejected notes preserve previous value",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "restore note",
+      "passed": true,
+      "detail": [
+        200,
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 4,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    {
+      "label": "malformed envelope returns 400 b'{'",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "malformed envelope returns 400 b'[]'",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "malformed envelope returns 400 b'null'",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "malformed envelope returns 400 b'\"text\"'",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "malformed envelope returns 400 b'{\"note\":\"\\xff\"}'",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "malformed envelope returns 400 b'{}                            '",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "missing order refund",
+      "passed": true,
+      "detail": [
+        404,
+        {
+          "error": "Order not found"
+        }
+      ]
+    },
+    {
+      "label": "missing order address",
+      "passed": true,
+      "detail": [
+        404,
+        {
+          "error": "Order not found"
+        }
+      ]
+    },
+    {
+      "label": "missing order note",
+      "passed": true,
+      "detail": [
+        404,
+        {
+          "error": "Order not found"
+        }
+      ]
+    },
+    {
+      "label": "final list alice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "final list bob",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "cleanup matches expected irreversible counters only",
+      "passed": true,
+      "detail": {
+        "A100": {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10000,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        "A200": {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 4,
+          "note": "Ring twice",
+          "service": "standard"
+        },
+        "B100": {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      }
+    }
+  ]
+}

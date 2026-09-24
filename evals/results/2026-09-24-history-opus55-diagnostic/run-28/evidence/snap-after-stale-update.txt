@@ -1,0 +1,6 @@
+                - generic [ref=f2e114]: $49.95 each
+                  - generic [ref=f2e118]: "4"
+                - button "Update" [ref=f2e120] [cursor=pointer]
+                - generic [ref=f2e121]: $149.85
+                  - generic [ref=f2e129]: "3"
+                  - generic [ref=f2e132]: $149.85

@@ -1,0 +1,257 @@
+{
+  "reviews": [
+    {
+      "case_id": "case-13",
+      "seeded": [
+        {
+          "id": "U1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Ordinary overlapping lookups leave A200 selected with A100 details. Browser save changes A200, and the candidate's subsequent list read confirms persistence. High severity is defensible for demonstrated wrong-order editing; regression criteria cover identity and mutation target.",
+          "evidence": [
+            "evidence/browser-results.txt: out-of-order lookup and save after race",
+            "evidence/order-race.png: A200 selector with Order A100 and Oak Street",
+            "evidence/api-results.json: alice list contains the race-proof note on A200",
+            "evidence/report.md: F1"
+          ]
+        },
+        {
+          "id": "U2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 0,
+          "acceptance_point": 1,
+          "reason": "Browser evidence pairs LOCKER rejection with false success; separate retained API checks prove rejected notes preserve saved state. Impact and retest criteria are concrete. High severity is insufficiently justified against the rubric's Medium reference: misleading confirmation is demonstrated, but delivery failure is not.",
+          "evidence": [
+            "evidence/browser-results.txt: rejected note returns 422 with success feedback",
+            "evidence/rejected-note.png",
+            "evidence/api-results.json: note before rejection, invalid note, and note retained after rejections",
+            "evidence/report.md: F2"
+          ]
+        },
+        {
+          "id": "U3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Executed Tab navigation skips express and cycles back to Order; pointer activation succeeds and persists through reload. The blocked keyboard task supports Medium severity, with testable Tab, Enter, Space, and focus criteria.",
+          "evidence": [
+            "evidence/browser-results.txt: keyboard tab order and express DOM properties",
+            "evidence/browser-positive-results.txt: express pointer activation and persistence",
+            "app/static/index.html: express is a div without keyboard focusability",
+            "evidence/report.md: F3"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "Concrete passing browser persistence, pointer and keyboard paths, narrow-layout observations, and API safeguards accompany explicit cross-browser, concurrency, transport, and boundary-testing limits. Retained output reports four passing supplied tests.",
+      "integrity_notes": [
+        "Elapsed 248.85 seconds from cases.json; controller audit confirms 79 API requests. Exact total browser actions and token usage are unavailable; the report claims fewer than 80 actions.",
+        "Source preservation is supplied as true. Cleanup evidence confirms reversible fields restored; A100 retains 3000 refunded cents and version 3, as disclosed.",
+        "All report links resolve. The disabled-div observation is a sound source-only repair consideration, not an additional runtime-confirmed finding.",
+        "Seed discovery and actionable evidence: 3/3. Triage: impact 3/3, severity 2/3, acceptance 3/3.",
+        "For this batch, review used retained artifacts only; no application, reproduction script, or network tool was run. Condition labels were not inferred or scored. Style could reveal guidance use; the rubric exposes mechanisms known to the study author, and independent blind-review status is not established."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/browser-results.txt",
+        "evidence/browser-positive-results.txt",
+        "evidence/browser-assessment.js",
+        "evidence/browser-positive.js",
+        "evidence/browser-requests.txt",
+        "evidence/browser-console.txt",
+        "evidence/order-race.png",
+        "evidence/rejected-note.png",
+        "evidence/narrow.png",
+        "evidence/api-results.json",
+        "evidence/api-assessment.py",
+        "evidence/baseline-alice.json",
+        "evidence/final-alice.json",
+        "evidence/cleanup-verification.json",
+        "evidence/existing-tests.txt",
+        "app/requirements.md",
+        "app/static/app.js",
+        "app/static/index.html",
+        "app/static/style.css",
+        "app/test_domain.py",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-14",
+      "seeded": [],
+      "additional": [
+        {
+          "title": "Whitespace padding bypasses the persisted note length limit",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Requests 99–102 demonstrate acceptance and independent readback of 161- and 1001-character notes. Validation measures trimmed text but stores the original. The brief's 'nonblank characters' wording leaves normalization ambiguous; accepting a normalized value could be reasonable, but persisting an overlength value violates the stated size-limit interpretation. Low severity appropriately limits impact to the saved-data contract, and acceptance criteria address rejection or normalization.",
+          "evidence": [
+            "evidence/boundary-evidence.json: requests 99–102",
+            "evidence/boundary-checks.json: requests 99 and 101 unexpectedly return 200",
+            "app/domain.py: note validates note.strip() and stores note",
+            "app/requirements.md: note length and malformed-input requirements",
+            "evidence/report.md: API-01",
+            "controller-audit.jsonl: matching padded-note writes and reads"
+          ]
+        }
+      ],
+      "coverage_score": 2,
+      "coverage_reason": "Retained requests and state assertions substantiate refund limits, competing updates, stale-address preservation, ownership, batch atomicity, and input boundaries. The report separates the padding defect from passing checks and bounds browser, load, and production coverage.",
+      "integrity_notes": [
+        "The root report is a valid pointer to evidence/report.md; both were reviewed and all links resolve.",
+        "Elapsed 272.22 seconds from cases.json. Audit confirms 110 API requests; all 110 retained response records match corresponding audit observations. Zero browser actions are reported and consistent with the artifacts; token usage is unknown.",
+        "Source preservation is supplied as true. Final state confirms reversible restoration and disclosed residuals: A100 refunded 10000 cents; A200 refunded 4000 cents and version 4; Bob unchanged.",
+        "Four supplied tests, 108 first-pass assertions, and 20/22 supplementary status checks passed. The two supplementary failures represent one defect.",
+        "No expected seeds. Additional-finding triage: impact 1/1, severity 1/1, acceptance 1/1."
+      ],
+      "reviewed_evidence": [
+        "report.md",
+        "evidence/report.md",
+        "evidence/http-evidence.json",
+        "evidence/boundary-evidence.json",
+        "evidence/boundary-checks.json",
+        "evidence/summary.json",
+        "evidence/assess_api.py",
+        "evidence/initial-state.json",
+        "evidence/final-state.json",
+        "evidence/build.json",
+        "evidence/existing-tests.txt",
+        "app/requirements.md",
+        "app/domain.py",
+        "app/app.py",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-15",
+      "seeded": [],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "The 97 retained requests substantiate the reported API safeguards, including rejection readbacks and synchronized refund/address pairs. The 118 passing checks and four supplied tests support a bounded API conclusion; browser coverage, sustained concurrency, restart persistence, and production concerns are explicitly excluded.",
+      "integrity_notes": [
+        "Elapsed 226.09 seconds from cases.json; audit confirms 97 API requests. All 97 candidate response records match corresponding audit observations.",
+        "No browser session is reported or evidenced. Token usage is unknown. Source preservation is supplied as true; all report links resolve.",
+        "Baseline and final snapshots confirm reversible restoration, Bob unchanged, and disclosed residuals: A100 refunded 10000 cents with version 4; A200 refunded 4000 cents.",
+        "Regression suggestions and explicitly untested risks are not additional bug claims. No expected seeds or eligible findings; triage denominators are zero."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/http.jsonl",
+        "evidence/results.json",
+        "evidence/assess_api.py",
+        "evidence/baseline.json",
+        "evidence/final-state.json",
+        "evidence/existing-tests.txt",
+        "app/requirements.md",
+        "app/domain.py",
+        "app/app.py",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-16",
+      "seeded": [
+        {
+          "id": "U1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Desktop and narrow evidence show selected A200 with A100 details after ordinary overlapping lookups. The successful A200 save and independent list read prove wrong-context persistence. High severity is justified without claiming cross-customer effects; acceptance criteria verify response ordering and both orders' state.",
+          "evidence": [
+            "evidence/order-mismatch-desktop.png",
+            "evidence/order-mismatch-narrow.png",
+            "evidence/keyboard-and-retest.log: repeatedRace",
+            "evidence/browser-probes.log: ordinary switch and save sequence",
+            "evidence/mismatch-save-response.txt",
+            "evidence/after-browser-alice.json",
+            "evidence/report.md: UI-01"
+          ]
+        },
+        {
+          "id": "U2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 0,
+          "acceptance_point": 1,
+          "reason": "Retained screenshots, 422 responses, and saved-state reads demonstrate false confirmation while drafts and prior notes survive. Correction and regression criteria are specific. High severity is not adequately distinguished from the rubric's Medium reference; the demonstrated consequence is misleading feedback, not a failed delivery.",
+          "evidence": [
+            "evidence/rejected-save-desktop.png",
+            "evidence/rejected-save-narrow.png",
+            "evidence/rejected-request.txt",
+            "evidence/rejected-response.txt",
+            "evidence/after-browser-alice.json",
+            "evidence/keyboard-and-retest.log: rejectionStatus and visible",
+            "evidence/http-probes.json: saved note after the repeated rejection",
+            "evidence/report.md: UI-02"
+          ]
+        },
+        {
+          "id": "U3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Ordinary Tab navigation reaches standard immediately after Save, skipping express. Pointer-click execution, successful service traffic, and reloaded express state provide the contrasting path. High severity is defensible because an explicitly required choice is blocked for keyboard-only customers; acceptance criteria cover activation, focus, and persistence.",
+          "evidence": [
+            "evidence/keyboard-and-retest.log: tab1–tab4, express properties, and reloaded express state",
+            "evidence/keyboard-focus-desktop.png",
+            "evidence/browser-probes.log: pointer express click and reload",
+            "evidence/browser-network-final.txt: service POST 10 and subsequent reads",
+            "evidence/after-browser-alice.json: A100 service express",
+            "evidence/report.md: UI-03"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "Passing note/service persistence, keyboard contrasts, backing rejection and ownership checks, and inspected desktop/narrow screenshots provide concrete coverage. The report explicitly bounds browser/device, transport, mutation-ordering, and administrative testing; four routine tests are correctly treated as limited evidence.",
+      "integrity_notes": [
+        "Elapsed 286.26 seconds from cases.json; audit confirms 41 API requests. The 13 backing API records match audit responses; three additional probe records concern static-asset comparisons.",
+        "Exact total browser actions and token usage are unavailable. The report claims fewer than 80 actions. The disclosed helper failure is not counted as an application defect or a passing check.",
+        "Source preservation is supplied as true. Cleanup records show Alice and Bob restored exactly, and browser-close.txt records closure of the created session.",
+        "All report links resolve. browser-probes.log retains executed code but omits its console-state output; screenshots, response artifacts, independent readback, and the second browser log supply the decisive observations.",
+        "Seed discovery and actionable evidence: 3/3. Triage: impact 3/3, severity 2/3, acceptance 3/3."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/browser-probes.log",
+        "evidence/keyboard-and-retest.log",
+        "evidence/browser-network-final.txt",
+        "evidence/mismatch-save-request.txt",
+        "evidence/mismatch-save-response.txt",
+        "evidence/rejected-request.txt",
+        "evidence/rejected-response.txt",
+        "evidence/after-browser-alice.json",
+        "evidence/order-mismatch-desktop.png",
+        "evidence/order-mismatch-narrow.png",
+        "evidence/rejected-save-desktop.png",
+        "evidence/rejected-save-narrow.png",
+        "evidence/keyboard-focus-desktop.png",
+        "evidence/http-probes.json",
+        "evidence/http-probes.log",
+        "evidence/source-hashes.json",
+        "evidence/cleanup.json",
+        "evidence/browser-close.txt",
+        "evidence/unit-tests.txt",
+        "app/requirements.md",
+        "app/static/app.js",
+        "app/static/index.html",
+        "controller-audit.jsonl"
+      ]
+    }
+  ]
+}

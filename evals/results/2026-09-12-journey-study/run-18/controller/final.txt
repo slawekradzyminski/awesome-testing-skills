@@ -1,0 +1,5 @@
+Assessment saved in [report.md](report.md), with supporting evidence in [evidence/](evidence/report.md).
+
+Recommend holding release: overlapping service saves can display a service different from the saved order. Also confirmed draft loss during loading and missing recovery after an interrupted save.
+
+Four existing tests and 47 API checks passed. Reversible changes were restored; owner reset is needed for the 2-cent refund and advanced address version. Browser session closed.

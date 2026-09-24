@@ -1,0 +1,410 @@
+[
+  {
+    "check": "list ownership",
+    "passed": true
+  },
+  {
+    "check": "read alice B100",
+    "passed": true
+  },
+  {
+    "check": "write access boundary alice refund status",
+    "passed": true
+  },
+  {
+    "check": "write access boundary alice address status",
+    "passed": true
+  },
+  {
+    "check": "write access boundary alice note status",
+    "passed": true
+  },
+  {
+    "check": "service access boundary alice status",
+    "passed": true
+  },
+  {
+    "check": "read bob A200",
+    "passed": true
+  },
+  {
+    "check": "write access boundary bob refund status",
+    "passed": true
+  },
+  {
+    "check": "write access boundary bob address status",
+    "passed": true
+  },
+  {
+    "check": "write access boundary bob note status",
+    "passed": true
+  },
+  {
+    "check": "service access boundary bob status",
+    "passed": true
+  },
+  {
+    "check": "read None A200",
+    "passed": true
+  },
+  {
+    "check": "write access boundary None refund status",
+    "passed": true
+  },
+  {
+    "check": "write access boundary None address status",
+    "passed": true
+  },
+  {
+    "check": "write access boundary None note status",
+    "passed": true
+  },
+  {
+    "check": "service access boundary None status",
+    "passed": true
+  },
+  {
+    "check": "anonymous list rejected",
+    "passed": true
+  },
+  {
+    "check": "Alice unchanged after access failures",
+    "passed": true
+  },
+  {
+    "check": "Bob unchanged after access failures",
+    "passed": true
+  },
+  {
+    "check": "invalid refund 0 status",
+    "passed": true
+  },
+  {
+    "check": "invalid refund -1 status",
+    "passed": true
+  },
+  {
+    "check": "invalid refund True status",
+    "passed": true
+  },
+  {
+    "check": "invalid refund 1.5 status",
+    "passed": true
+  },
+  {
+    "check": "invalid refund '1' status",
+    "passed": true
+  },
+  {
+    "check": "invalid refund None status",
+    "passed": true
+  },
+  {
+    "check": "missing refund amount status",
+    "passed": true
+  },
+  {
+    "check": "invalid refunds preserve balance",
+    "passed": true
+  },
+  {
+    "check": "partial refund 1 status",
+    "passed": true
+  },
+  {
+    "check": "first partial persisted response",
+    "passed": true
+  },
+  {
+    "check": "partial refund 2 status",
+    "passed": true
+  },
+  {
+    "check": "second partial cumulative",
+    "passed": true
+  },
+  {
+    "check": "cumulative excessive refund status",
+    "passed": true
+  },
+  {
+    "check": "excessive refund no write",
+    "passed": true
+  },
+  {
+    "check": "competing refunds exactly one accepted",
+    "passed": true
+  },
+  {
+    "check": "competing refund final balance",
+    "passed": true
+  },
+  {
+    "check": "exact remaining refund status",
+    "passed": true
+  },
+  {
+    "check": "refund after fully refunded status",
+    "passed": true
+  },
+  {
+    "check": "refund ceiling persisted",
+    "passed": true
+  },
+  {
+    "check": "invalid address status",
+    "passed": true
+  },
+  {
+    "check": "invalid address status",
+    "passed": true
+  },
+  {
+    "check": "invalid address status",
+    "passed": true
+  },
+  {
+    "check": "invalid address status",
+    "passed": true
+  },
+  {
+    "check": "invalid address status",
+    "passed": true
+  },
+  {
+    "check": "invalid address status",
+    "passed": true
+  },
+  {
+    "check": "invalid address preserves all fields",
+    "passed": true
+  },
+  {
+    "check": "120 character address status",
+    "passed": true
+  },
+  {
+    "check": "address increments version",
+    "passed": true
+  },
+  {
+    "check": "stale address status",
+    "passed": true
+  },
+  {
+    "check": "stale address preserves latest",
+    "passed": true
+  },
+  {
+    "check": "competing address exactly one accepted",
+    "passed": true
+  },
+  {
+    "check": "competing address persisted winner",
+    "passed": true
+  },
+  {
+    "check": "valid express batch status",
+    "passed": true
+  },
+  {
+    "check": "invalid service batch A100,missing status",
+    "passed": true
+  },
+  {
+    "check": "failed batch unchanged A100,missing",
+    "passed": true
+  },
+  {
+    "check": "invalid service batch missing,A100 status",
+    "passed": true
+  },
+  {
+    "check": "failed batch unchanged missing,A100",
+    "passed": true
+  },
+  {
+    "check": "invalid service batch A100,B100 status",
+    "passed": true
+  },
+  {
+    "check": "failed batch unchanged A100,B100",
+    "passed": true
+  },
+  {
+    "check": "invalid service batch B100,A100 status",
+    "passed": true
+  },
+  {
+    "check": "failed batch unchanged B100,A100",
+    "passed": true
+  },
+  {
+    "check": "malformed services status",
+    "passed": true
+  },
+  {
+    "check": "malformed services status",
+    "passed": true
+  },
+  {
+    "check": "malformed services status",
+    "passed": true
+  },
+  {
+    "check": "malformed services status",
+    "passed": true
+  },
+  {
+    "check": "malformed services unchanged",
+    "passed": true
+  },
+  {
+    "check": "valid note status",
+    "passed": true
+  },
+  {
+    "check": "valid note read persistence",
+    "passed": true
+  },
+  {
+    "check": "rejected note 'LOCKER: 1' status",
+    "passed": true
+  },
+  {
+    "check": "rejected note retains saved state",
+    "passed": true
+  },
+  {
+    "check": "rejected note '  locker: 2' status",
+    "passed": true
+  },
+  {
+    "check": "rejected note retains saved state",
+    "passed": true
+  },
+  {
+    "check": "rejected note '' status",
+    "passed": true
+  },
+  {
+    "check": "rejected note retains saved state",
+    "passed": true
+  },
+  {
+    "check": "rejected note '  ' status",
+    "passed": true
+  },
+  {
+    "check": "rejected note retains saved state",
+    "passed": true
+  },
+  {
+    "check": "rejected note 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' status",
+    "passed": true
+  },
+  {
+    "check": "rejected note retains saved state",
+    "passed": true
+  },
+  {
+    "check": "rejected note None status",
+    "passed": true
+  },
+  {
+    "check": "rejected note retains saved state",
+    "passed": true
+  },
+  {
+    "check": "160 character note status",
+    "passed": true
+  },
+  {
+    "check": "note max accepted",
+    "passed": true
+  },
+  {
+    "check": "malformed JSON rejected",
+    "passed": true
+  },
+  {
+    "check": "malformed JSON rejected",
+    "passed": true
+  },
+  {
+    "check": "malformed JSON rejected",
+    "passed": true
+  },
+  {
+    "check": "malformed JSON rejected",
+    "passed": true
+  },
+  {
+    "check": "missing order refund status",
+    "passed": true
+  },
+  {
+    "check": "missing order address status",
+    "passed": true
+  },
+  {
+    "check": "missing order note status",
+    "passed": true
+  },
+  {
+    "check": "restore address A100 status",
+    "passed": true
+  },
+  {
+    "check": "restore note A200 status",
+    "passed": true
+  },
+  {
+    "check": "restore services status",
+    "passed": true
+  },
+  {
+    "check": "reversible fields restored",
+    "passed": true
+  },
+  {
+    "check": "Bob valid note with server-owned extras status",
+    "passed": true
+  },
+  {
+    "check": "server-owned extras ignored in response",
+    "passed": true
+  },
+  {
+    "check": "Bob own note persists without unrelated changes",
+    "passed": true
+  },
+  {
+    "check": "restore Bob note status",
+    "passed": true
+  },
+  {
+    "check": "note missing or wrong type status",
+    "passed": true
+  },
+  {
+    "check": "note missing or wrong type status",
+    "passed": true
+  },
+  {
+    "check": "note missing or wrong type status",
+    "passed": true
+  },
+  {
+    "check": "oversized body rejected",
+    "passed": true
+  },
+  {
+    "check": "unknown identity rejected",
+    "passed": true
+  },
+  {
+    "check": "Bob restored and failed writes unchanged",
+    "passed": true
+  }
+]

@@ -1,0 +1,668 @@
+[
+  {
+    "path": "/api/orders",
+    "body": null,
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders",
+    "body": null,
+    "actor": "bob",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders",
+    "body": null,
+    "actor": null,
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    },
+    "expected": 401
+  },
+  {
+    "path": "/api/orders/B100",
+    "body": null,
+    "actor": "alice",
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    },
+    "expected": 403
+  },
+  {
+    "path": "/api/orders/B100/note",
+    "body": {
+      "note": "unauthorized"
+    },
+    "actor": "alice",
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    },
+    "expected": 403
+  },
+  {
+    "path": "/api/orders/B100/address",
+    "body": {
+      "address": "bad",
+      "version": 1
+    },
+    "actor": "alice",
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    },
+    "expected": 403
+  },
+  {
+    "path": "/api/orders/B100/refund",
+    "body": {
+      "amount": 1
+    },
+    "actor": "alice",
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    },
+    "expected": 403
+  },
+  {
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A100",
+        "B100"
+      ],
+      "service": "express"
+    },
+    "actor": "alice",
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    },
+    "expected": 403
+  },
+  {
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A100",
+        "missing"
+      ],
+      "service": "express"
+    },
+    "actor": "alice",
+    "status": 404,
+    "response": {
+      "error": "Order not found"
+    },
+    "expected": 404
+  },
+  {
+    "path": "/api/orders",
+    "body": null,
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders",
+    "body": null,
+    "actor": "bob",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 0
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": -1
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": true
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 1.5
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": "100"
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 3500
+    },
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 3500,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 2501
+    },
+    "actor": "alice",
+    "status": 409,
+    "response": {
+      "error": "Refund exceeds remaining paid amount"
+    },
+    "expected": 409
+  },
+  {
+    "path": "/api/orders/A200",
+    "body": null,
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 3500,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 2500
+    },
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6000,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 1
+    },
+    "actor": "alice",
+    "status": 409,
+    "response": {
+      "error": "Refund exceeds remaining paid amount"
+    },
+    "expected": 409
+  },
+  {
+    "path": "/api/orders/A200",
+    "body": null,
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6000,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Assessment address",
+      "version": 1
+    },
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6000,
+      "address": "Assessment address",
+      "version": 2,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Stale address",
+      "version": 1
+    },
+    "actor": "alice",
+    "status": 409,
+    "response": {
+      "error": "Order changed; reload before saving"
+    },
+    "expected": 409
+  },
+  {
+    "path": "/api/orders/A200",
+    "body": null,
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6000,
+      "address": "Assessment address",
+      "version": 2,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": " ",
+      "version": 2
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "version": 2
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Valid",
+      "version": true
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "20 Pine Street",
+      "version": 2
+    },
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6000,
+      "address": "20 Pine Street",
+      "version": 3,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": " "
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "LOCKER: 1"
+    },
+    "actor": "alice",
+    "status": 422,
+    "response": {
+      "error": "Locker delivery is unavailable; enter another instruction"
+    },
+    "expected": 422
+  },
+  {
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": " locker: 2 "
+    },
+    "actor": "alice",
+    "status": 422,
+    "response": {
+      "error": "Locker delivery is unavailable; enter another instruction"
+    },
+    "expected": 422
+  },
+  {
+    "path": "/api/orders/A200",
+    "body": null,
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6000,
+      "address": "20 Pine Street",
+      "version": 3,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A100",
+        "A200"
+      ],
+      "service": "express"
+    },
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6000,
+          "address": "20 Pine Street",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "express"
+        }
+      ]
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/orders",
+    "body": null,
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6000,
+          "address": "20 Pine Street",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "express"
+        }
+      ]
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A100",
+        "A200"
+      ],
+      "service": "standard"
+    },
+    "actor": "alice",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6000,
+          "address": "20 Pine Street",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "expected": 200
+  },
+  {
+    "path": "/api/services",
+    "body": {
+      "ids": [],
+      "service": "express"
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A100"
+      ],
+      "service": "unknown"
+    },
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    },
+    "expected": 400
+  },
+  {
+    "path": "/api/services",
+    "body": [],
+    "actor": "alice",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    },
+    "expected": 400
+  }
+]

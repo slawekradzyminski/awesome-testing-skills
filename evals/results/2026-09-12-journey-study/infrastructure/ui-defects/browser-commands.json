@@ -1,0 +1,107 @@
+[
+  {
+    "args": [
+      "open",
+      "http://127.0.0.1:55845"
+    ],
+    "stdout": "### Browser `journey-check-ui-defects` opened with pid 22042.\n### Ran Playwright code\n```js\nawait page.goto('http://127.0.0.1:55845');\n```\n### Page\n- Page URL: http://127.0.0.1:55845/\n- Page Title: Dispatch Desk\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T10-54-51-734Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => {\n                      await page.waitForFunction(() => document.getElementById('loading').textContent === '');\n                      await page.locator('#order').selectOption('A200');\n                      await page.waitForFunction(() => document.getElementById('heading').textContent === 'Order A200');\n                      const delayed = page.waitForResponse(r => r.url().endsWith('/api/orders/A100'));\n                      await page.locator('#order').selectOption('A100');\n                      await page.locator('#order').selectOption('A200');\n                      await delayed; await page.waitForLoadState('networkidle');\n                      const actual = await page.locator('#heading').textContent();\n                      if (actual !== 'Order A100') throw new Error(actual);\n                      await page.locator('#save').click();\n                      await page.getByText('Delivery instruction saved', {exact:true}).waitFor();\n                    }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => {\n                      await page.waitForFunction(() => document.getElementById('loading').textContent === '');\n                      await page.locator('#order').selectOption('A200');\n                      await page.waitForFunction(() => document.getElementById('heading').textContent === 'Order A200');\n                      const delayed = page.waitForResponse(r => r.url().endsWith('/api/orders/A100'));\n                      await page.locator('#order').selectOption('A100');\n                      await page.locator('#order').selectOption('A200');\n                      await delayed; await page.waitForLoadState('networkidle');\n                      const actual = await page.locator('#heading').textContent();\n                      if (actual !== 'Order A100') throw new Error(actual);\n                      await page.locator('#save').click();\n                      await page.getByText('Delivery instruction saved', {exact:true}).waitFor();\n                    })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "screenshot",
+      "--filename=stale-order.png"
+    ],
+    "stdout": "### Result\n- [Screenshot of viewport](./stale-order.png)\n### Ran Playwright code\n```js\n// Screenshot viewport and save it as ./stale-order.png\nawait page.screenshot({\n  path: './stale-order.png',\n  scale: 'css',\n  type: 'png'\n});\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "fill",
+      "#note",
+      "LOCKER: 7"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.locator('#note').fill('LOCKER: 7');\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "click",
+      "#save"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.locator('#save').click();\n```\n### Page\n- Page URL: http://127.0.0.1:55845/\n- Page Title: Dispatch Desk\n- Console: 1 errors, 0 warnings\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T10-54-56-188Z.yml)\n### Events\n- New console entries: .playwright-cli/console-2026-09-12T10-54-51-690Z.log#L1\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.waitForLoadState(\"networkidle\"); if (await page.locator(\"#feedback\").textContent() !== \"Delivery instruction saved\") throw new Error(\"feedback\"); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.waitForLoadState(\"networkidle\"); if (await page.locator(\"#feedback\").textContent() !== \"Delivery instruction saved\") throw new Error(\"feedback\"); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "screenshot",
+      "--filename=rejected-note.png"
+    ],
+    "stdout": "### Result\n- [Screenshot of viewport](./rejected-note.png)\n### Ran Playwright code\n```js\n// Screenshot viewport and save it as ./rejected-note.png\nawait page.screenshot({\n  path: './rejected-note.png',\n  scale: 'css',\n  type: 'png'\n});\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "click",
+      "#note"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.locator('#note').click();\n```\n### Page\n- Page URL: http://127.0.0.1:55845/\n- Page Title: Dispatch Desk\n- Console: 1 errors, 0 warnings\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T10-54-57-668Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "press",
+      "Tab"
+    ],
+    "stdout": "### Ran Playwright code\n```js\n// Press Tab\nawait page.keyboard.press('Tab');\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "press",
+      "Tab"
+    ],
+    "stdout": "### Ran Playwright code\n```js\n// Press Tab\nawait page.keyboard.press('Tab');\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { if (await page.evaluate(() => document.activeElement.id) !== \"standard\") throw new Error(\"focus\"); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { if (await page.evaluate(() => document.activeElement.id) !== \"standard\") throw new Error(\"focus\"); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "click",
+      "#express"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait page.locator('#express').click();\n```\n### Page\n- Page URL: http://127.0.0.1:55845/\n- Page Title: Dispatch Desk\n- Console: 1 errors, 0 warnings\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T10-54-59-771Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.waitForFunction(() => document.getElementById(\"service\").textContent === \"express\"); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.waitForFunction(() => document.getElementById(\"service\").textContent === \"express\"); })(page);\n```\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,6 @@
+### Result
+{"note":"Journey 09 reception test","service":"express"}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("textbox", {name:"Delivery instruction"}).fill("Journey 09 reception test"); await page.getByRole("button",{name:"Save instruction"}).click(); await page.getByText("Delivery instruction saved",{exact:true}).waitFor(); await page.getByRole("button",{name:"Use express delivery"}).click(); await page.getByText("Delivery service saved",{exact:true}).waitFor(); await page.reload(); await page.getByRole("heading",{name:"Order A100",exact:true}).waitFor(); return {note:await page.locator("#note").inputValue(), service:await page.locator("#service").innerText()}; })(page);
+```

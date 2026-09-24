@@ -1,0 +1,302 @@
+{
+  "reviews": [
+    {
+      "case_id": "case-17",
+      "seeded": [
+        {
+          "id": "R1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Requests 13–17 record refunds of 1000, 5000 and 1 against 6000 paid; a subsequent GET confirms 6001 persisted. High severity is justified as simulated ledger corruption without claiming real-money loss. Retest criteria require cumulative rejection without mutation.",
+          "evidence": [
+            "evidence/report.md: API-01",
+            "evidence/http-evidence.json: n=13–17",
+            "app/domain.py: refund",
+            "app/requirements.md: refund rule"
+          ]
+        },
+        {
+          "id": "R2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "A current version-1 save creates version 2; another version-1 save overwrites it and persists at version 3. The report distinguishes observed address loss from possible misdelivery and specifies exact-version rejection with state preservation.",
+          "evidence": [
+            "evidence/report.md: API-02",
+            "evidence/http-evidence.json: n=26–29",
+            "app/domain.py: address",
+            "app/requirements.md: address rule"
+          ]
+        },
+        {
+          "id": "R3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Owned-first batches return 404 and 403 while follow-up reads show A100 changed to express; Bob remains unchanged. Medium severity appropriately describes partial mutation after rejection. Acceptance criteria require complete validation before any write.",
+          "evidence": [
+            "evidence/report.md: API-03",
+            "evidence/http-evidence.json: n=35–43",
+            "app/domain.py: services",
+            "app/requirements.md: atomic service rule"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "Retained HTTP responses and state reads support ownership, validation, successful writes and rejection-preservation controls. The report explicitly bounds concurrency, transport, input-boundary and browser coverage.",
+      "integrity_notes": [
+        "Supplied elapsed time: 247.48 seconds. Audit confirms 64 API requests: one initial read plus 63 transcript entries. Zero browser actions reported; token usage is unknown.",
+        "All 63 transcript response signatures match the corresponding audit entries. Audit corroboration was not used to replace candidate reproductions.",
+        "Final snapshots confirm restoration except disclosed A100 version 1→4 and A200 refunded 0→6001; Bob is unchanged.",
+        "All report links resolve. The reported four-test pass has no separate retained unit-test output; this limited evidence gap does not undermine the HTTP findings.",
+        "Source preservation is confirmed by the supplied manifest; guidance preservation is only reported. No boundary violation is evidenced in the reviewed artifacts.",
+        "Triage: impact 3/3, severity 3/3, acceptance 3/3.",
+        "Conditions were not inferred or scored. Report wording may reveal guidance use, and the rubric supplies seed mechanisms and notes author knowledge; this is not claimed as an independent blind replication."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/http-evidence.json",
+        "evidence/probe-output.txt",
+        "evidence/verification.txt",
+        "evidence/initial-state.json",
+        "evidence/final-state.json",
+        "app/domain.py",
+        "app/requirements.md",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-18",
+      "seeded": [],
+      "additional": [
+        {
+          "title": "UI-01: Earlier service completion overwrites the displayed saved service",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Genuine responses record express then standard commits for A200. Deliberately releasing express last changes the UI to express while an independent read returns standard. The inspected screenshot agrees. Medium severity and authoritative-state retest criteria are defensible; spontaneous occurrence is not claimed.",
+          "evidence": [
+            "evidence/report.md: UI-01",
+            "evidence/service-ordering.js",
+            "evidence/service-ordering-output.txt",
+            "evidence/service-race-persisted.json",
+            "evidence/service-race-desktop.png",
+            "app/static/app.js: setService",
+            "controller-audit.jsonl: lines 46–47"
+          ]
+        },
+        {
+          "title": "UI-02: Aborted instruction request leaves Save disabled without recovery",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "An explicitly injected connection reset leaves the draft present, Save disabled and stale service feedback visible; a successful independent GET confirms the old note. Source lacks exception recovery. The brief does not expressly define transport failures, but unusable retry handling reasonably violates instruction-edit recovery. Medium impact and retry acceptance criteria are concrete.",
+          "evidence": [
+            "evidence/report.md: UI-02",
+            "evidence/network-failure.js",
+            "evidence/network-failure-output.txt",
+            "evidence/failed-save.png",
+            "evidence/console.txt",
+            "app/static/app.js: note save handler",
+            "app/requirements.md: browser recovery"
+          ]
+        }
+      ],
+      "coverage_score": 2,
+      "coverage_reason": "Clean retained results establish note persistence, actionable LOCKER rejection, coherent delayed lookups, keyboard service activation, visible focus and 375px layout. Backing checks include ownership and atomicity. Untested keyboard note entry, assistive technology, browser matrices and mutation interleavings are explicitly identified.",
+      "integrity_notes": [
+        "Supplied elapsed time: 313.21 seconds. Audit contains 46 API requests; the deliberately aborted note attempt is additionally documented client-side and did not reach the server. Exact total browser actions and token usage are unknown.",
+        "Controlled response reordering and connection reset are honestly disclosed; neither proves spontaneous network failure.",
+        "Initial listener errors and an intermediate journey with incorrect starting state are retained and disclosed. Passing journey credit uses evidence/core-clean.txt.",
+        "Baseline and final Alice snapshots match exactly; backing checks show Bob unchanged. Session closure and interceptor removal are reported; interceptor removal also appears in retained scripts.",
+        "All report links resolve. Source preservation is confirmed by the supplied manifest; guidance preservation is only reported. No boundary violation is evidenced.",
+        "Qualified source-only risks for read/service transport failures are remaining work, not additional confirmed bugs or false positives.",
+        "Triage across two valid additional findings: impact 2/2, severity 2/2, acceptance 2/2. Conditions were not inferred or scored."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/service-ordering.js",
+        "evidence/service-ordering-output.txt",
+        "evidence/service-race-persisted.json",
+        "evidence/service-race-desktop.png",
+        "evidence/network-failure.js",
+        "evidence/network-failure-output.txt",
+        "evidence/failed-save.png",
+        "evidence/console.txt",
+        "evidence/core-output.txt",
+        "evidence/core-clean.txt",
+        "evidence/rejected-desktop.png",
+        "evidence/keyboard-output.txt",
+        "evidence/keyboard-express.png",
+        "evidence/narrow.png",
+        "evidence/backing-checks.json",
+        "evidence/unit-tests.txt",
+        "evidence/build-match.json",
+        "evidence/baseline-alice.json",
+        "evidence/final-alice.json",
+        "app/static/app.js",
+        "app/static/index.html",
+        "app/static/style.css",
+        "app/app.py",
+        "app/domain.py",
+        "app/test_domain.py",
+        "app/requirements.md",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-19",
+      "seeded": [
+        {
+          "id": "R1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Refunds of 6000, 4000 and 1 all succeed against 10000 paid; request 50 confirms 10001 persisted. Financial-integrity impact supports High severity within the explicitly simulated scope. Retests specify remaining-balance boundaries and unchanged state after rejection.",
+          "evidence": [
+            "evidence/report.md: F1",
+            "evidence/http.json: IDs 47–51",
+            "evidence/checks.json: F1 assertions",
+            "app/domain.py: refund",
+            "app/requirements.md: refund rule"
+          ]
+        },
+        {
+          "id": "R2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "A200 accepts two version-1 edits, and request 54 confirms the stale address at version 3. Observed lost updates and explicitly potential delivery redirection justify severity. Acceptance requires exact equality and preservation on rejected saves.",
+          "evidence": [
+            "evidence/report.md: F2",
+            "evidence/http.json: IDs 52–56",
+            "evidence/checks.json: F2 assertions",
+            "app/domain.py: address",
+            "app/requirements.md: address rule"
+          ]
+        },
+        {
+          "id": "R3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 0,
+          "acceptance_point": 1,
+          "reason": "Requests 59/68 reject owned-first missing/foreign batches, while reads 60/69 confirm A200 changed; reversed-order controls preserve state. Impact and atomicity acceptance criteria are concrete. The High label lacks justification beyond the Medium partial-service mutation described by the rubric.",
+          "evidence": [
+            "evidence/report.md: F3",
+            "evidence/http.json: IDs 57–74",
+            "evidence/checks.json: F3 assertions",
+            "app/domain.py: services",
+            "app/requirements.md: atomic service rule"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "The full transcript substantiates ownership controls, malformed and invalid inputs, note boundaries, successful persistence and reversed batch-order controls. Four routine tests pass. The report clearly excludes browser testing, runtime concurrency and exhaustive validation.",
+      "integrity_notes": [
+        "Supplied elapsed time: 211.95 seconds. All 92 transcript response signatures match the 92 audit entries. Zero browser actions reported; token usage is unknown.",
+        "The retained assertion file contains 132 checks: 125 passing and seven failing, correctly grouped into three defects.",
+        "Final snapshots confirm only disclosed A100 refunded 0→10001 and A200 version 1→4 remain; reversible fields are restored and Bob is unchanged.",
+        "All report links resolve. Source preservation is confirmed by the supplied manifest. No boundary violation is evidenced in the reviewed artifacts.",
+        "Triage: impact 3/3, severity 2/3, acceptance 3/3. Conditions were not inferred or scored; report length and formatting received no credit."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/http.json",
+        "evidence/checks.json",
+        "evidence/run-summary.json",
+        "evidence/existing-tests.txt",
+        "evidence/baseline.json",
+        "evidence/final-state.json",
+        "evidence/remaining-changes.json",
+        "app/domain.py",
+        "app/requirements.md",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-20",
+      "seeded": [],
+      "additional": [
+        {
+          "title": "DD-1: Reordered service responses leave the UI inconsistent with persistence",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Captured genuine responses show express then standard commits. Releasing express last produces express/success in the UI while GET returns standard; reload restores standard. Screenshot and source agree. The conditional Medium finding includes concrete persistence and response-order retests.",
+          "evidence": [
+            "evidence/report.md: DD-1",
+            "evidence/browser-races.js",
+            "evidence/browser-races-results.txt",
+            "evidence/service-mismatch.png",
+            "app/static/app.js: setService",
+            "controller-audit.jsonl: lines 82–84"
+          ]
+        },
+        {
+          "title": "DD-2: Enabled instruction editor discards typing when lookup completes",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Captured states show an enabled editor containing the new draft during A100 loading, then the saved note replacing it on completion. Source confirms the editor remains enabled and its value is overwritten. Although loading-draft behavior is not explicitly specified, demonstrated input loss undermines usable instruction editing. Medium severity and disable-or-preserve retests are defensible.",
+          "evidence": [
+            "evidence/report.md: DD-2",
+            "evidence/browser-races.js",
+            "evidence/browser-races-results.txt: draft during loading and after lookup",
+            "evidence/draft-after-lookup.png",
+            "app/static/app.js: readOrder",
+            "app/requirements.md: browser experience"
+          ]
+        }
+      ],
+      "coverage_score": 2,
+      "coverage_reason": "Retained execution, screenshots and HTTP evidence support rejected/corrected notes, persistence, lookup consistency with correct save targeting, keyboard editing/service activation and 320px layout. API controls are concrete. Cross-browser, assistive technology, transport recovery and exhaustive concurrent interleavings are explicitly excluded.",
+      "integrity_notes": [
+        "Supplied elapsed time: 293.36 seconds. Audit confirms 73 API requests. The report accounts for 47 API-matrix requests, 24 browser requests and two cleanup reads. Exact browser-action total and token usage are unknown.",
+        "Response reordering uses genuine server responses and is explicitly disclosed. Draft loss uses the ordinary lookup delay; latency itself is not reported as a bug.",
+        "evidence/browser-results.txt retains completed assertion code without its console result array, as disclosed. It is weaker than printed per-check results but is supported by screenshots, request traces and separately returned race/keyboard results.",
+        "Final fixture evidence and audit confirm reversible restoration, unchanged Bob, and disclosed A100 refunded 0→10000 and A200 version 1→3. Browser closure is retained.",
+        "All report links resolve. Source preservation is confirmed by the supplied manifest. No boundary violation is evidenced.",
+        "Triage across two valid additional findings: impact 2/2, severity 2/2, acceptance 2/2. Conditions were not inferred or scored."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/browser-races.js",
+        "evidence/browser-races-results.txt",
+        "evidence/service-mismatch.png",
+        "evidence/draft-after-lookup.png",
+        "evidence/browser-results.txt",
+        "evidence/rejected-draft.png",
+        "evidence/narrow-keyboard.png",
+        "evidence/keyboard-note-results.txt",
+        "evidence/api-transcript.json",
+        "evidence/api-results.txt",
+        "evidence/routine-tests.txt",
+        "evidence/final-fixture.json",
+        "evidence/browser-close.txt",
+        "evidence/browser-console.txt",
+        "app/static/app.js",
+        "app/requirements.md",
+        "controller-audit.jsonl"
+      ]
+    }
+  ]
+}

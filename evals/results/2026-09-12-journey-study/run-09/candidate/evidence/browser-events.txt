@@ -1,0 +1,6 @@
+### Result
+{"viewport":{"width":390,"height":844},"dimensions":{"width":390,"scrollWidth":390}}
+### Ran Playwright code
+```js
+await (async page => ({viewport:page.viewportSize(),dimensions:await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth})),events:globalThis.journeyEvents}))(page);
+```

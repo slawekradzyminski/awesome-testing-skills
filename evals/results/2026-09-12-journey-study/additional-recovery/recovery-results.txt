@@ -1,0 +1,23 @@
+### Result
+{"failed":{"draft":"Assessment network failure draft","feedback":"","saveDisabled":true},"recoveredNetwork":{"status":200,"saveDisabled":true,"feedback":""},"afterReload":{"draft":"Ring twice","saveDisabled":false}}
+### Ran Playwright code
+```js
+await (async page => {
+ await page.fill('#note','Assessment network failure draft');
+ await page.route('http://127.0.0.1:57358/api/orders/A200/note',route=>route.abort('failed'));
+ await page.click('#save');
+ await page.waitForTimeout(300);
+ await page.unroute('http://127.0.0.1:57358/api/orders/A200/note');
+ const failed=await page.evaluate(()=>({draft:document.querySelector('#note').value,feedback:document.querySelector('#feedback').textContent,saveDisabled:document.querySelector('#save').disabled}));
+ await page.screenshot({path:'evidence/network-failure.png'});
+ await page.fill('#note','Corrected instruction after network recovery');
+ const recoveredNetwork=await page.evaluate(async()=>({status:(await fetch('/api/orders/A200',{headers:{'X-Test-User':'alice'}})).status,saveDisabled:document.querySelector('#save').disabled,feedback:document.querySelector('#feedback').textContent}));
+ await page.reload();
+ await page.selectOption('#order','A200');
+ await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+ return {failed,recoveredNetwork,afterReload:{draft:await page.locator('#note').inputValue(),saveDisabled:await page.locator('#save').isDisabled()}};
+}
+)(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T11-06-54-258Z.log#L1-L3

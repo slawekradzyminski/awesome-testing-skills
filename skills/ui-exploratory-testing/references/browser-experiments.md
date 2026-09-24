@@ -23,11 +23,21 @@ Use the product's supported viewport/device targets. If unknown and responsive t
 
 Investigate visible concerns with contrasting states, nearby widths, or measurements. Explain user consequences and separate observed impairment from subjective design preferences. Check keyboard behavior and accessible semantics where relevant; support precise contrast or standards claims with measurement and the applicable standard. Do not equate a screenshot or automated accessibility scan with a complete accessibility assessment.
 
+## Accessibility and usability within the journey
+
+Select checks around the controls and states that matter for the user's task. Useful questions include whether keyboard users can reach and activate controls, see focus, move through a dialog and return to the trigger, and recover from validation errors. Inspect accessible names, roles and states alongside visible labels and instructions. Try relevant zoom/reflow states when readability or hidden controls are a risk. Preserve the actual key sequence, focused element and observed result; do not infer successful keyboard use from the presence of a button element.
+
+An accessibility-tree inspection establishes exposed semantics, not what a particular screen reader announced. Report screen-reader behavior only when actually exercised, naming the assistive technology and browser. Verify automated scan findings in context and retain the rule and affected element; report unchecked areas as limits. [W3C WAI's Easy Checks](https://www.w3.org/WAI/test-evaluate/preliminary/) provides starting techniques and explains why a preliminary review cannot establish comprehensive accessibility.
+
+For UX, follow the user's decisions: is the action's consequence understandable, is pending/success/failure feedback consistent with the outcome, and can the user recover without losing work? Preserve the wording, state and action that demonstrate an obstacle. A suggested alternative layout belongs in improvement suggestions unless a requirement or concrete impairment supports a defect. Avoid claiming general user confusion from the agent's own preference.
+
+If help text or linked instructions are in scope, compare the exact instruction with the intended journey and observed behavior. Retain its URL/file and version. Clarify conflicting intent before declaring the document or implementation wrong. A documentation check does not authorize editing the document or expanding exploration beyond the requested scope.
+
 ## Network, console, and timing evidence
 
 Begin collecting relevant network observations before the action being investigated, then actually inspect them. Associate actions and starting state with expected and forbidden effects, request method/path/count/status, and the resulting UI/backend state. Include successful requests and actions expected to make no mutation. If logs are cumulative, compare request identifiers or bounded before/after captures. Observe relevant pending requests through completion/failure; qualify absence claims by the observation window.
 
-Use an available HTTP client for setup, follow-up reads, or cleanup when useful and authorized, while keeping UI behavior under investigation exercised through the browser. Do not replace the tested UI action with a direct API request. If network inspection is unavailable, state the gap and verify side effects by other available evidence without claiming unseen traffic was checked.
+Use an available HTTP client for setup, follow-up reads of journey state, or cleanup when useful and authorized. Keep UI behavior under investigation exercised through the browser, and keep direct requests within the journey's charter and exclusions. Do not replace the tested UI action with a direct API request. If network inspection is unavailable, state the gap and verify side effects by other available evidence without claiming unseen traffic was checked.
 
 Inspect console/page errors around the action and distinguish expected negative responses, injected failures, and tool errors from application defects. For suspicious latency or duplication, repeat a focused measurement and record sample count, cache/network/device conditions, and user consequence. Do not invent an SLA or generalize a local measurement to field performance.
 

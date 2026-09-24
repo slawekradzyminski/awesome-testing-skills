@@ -1,0 +1,112 @@
+[
+  {
+    "path": "/api/orders/A100/note",
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 0,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/services",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "path": "/api/orders/A200/note",
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/services",
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "user": "alice",
+    "equals_baseline": true,
+    "final": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "user": "bob",
+    "equals_baseline": true,
+    "final": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  }
+]

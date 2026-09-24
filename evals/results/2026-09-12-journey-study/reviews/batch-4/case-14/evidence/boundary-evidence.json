@@ -1,0 +1,448 @@
+[
+  {
+    "seq": 89,
+    "label": "owner detail read",
+    "method": "GET",
+    "path": "/api/orders/A100",
+    "actor": "alice",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 10000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 90,
+    "label": "owner detail read",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "actor": "alice",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 4000,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 91,
+    "label": "owner detail read",
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "actor": "bob",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 92,
+    "label": "anonymous detail read",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "actor": null,
+    "body": null,
+    "raw": null,
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "seq": 93,
+    "label": "anonymous bulk update",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": null,
+    "body": {
+      "ids": [
+        "A100"
+      ],
+      "service": "express"
+    },
+    "raw": null,
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "seq": 94,
+    "label": "Bob bulk forbidden second order",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "bob",
+    "body": {
+      "ids": [
+        "B100",
+        "A100"
+      ],
+      "service": "express"
+    },
+    "raw": null,
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "seq": 95,
+    "label": "Bob bulk rejected state",
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "actor": "bob",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 96,
+    "label": "missing operation fields",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {},
+    "raw": null,
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "seq": 97,
+    "label": "missing operation fields",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "actor": "alice",
+    "body": {},
+    "raw": null,
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "seq": 98,
+    "label": "missing operation fields",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {},
+    "raw": null,
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "seq": 99,
+    "label": "161-character padded note",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn "
+    },
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 4000,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn ",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 100,
+    "label": "padded note persisted",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "actor": "alice",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 4000,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn ",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 101,
+    "label": "long padded note",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "
+    },
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 4000,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 102,
+    "label": "long padded note persisted",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "actor": "alice",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 4000,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 103,
+    "label": "one character note",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "n"
+    },
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 4000,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "n",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 104,
+    "label": "restore note",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "Ring twice"
+    },
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 4000,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "seq": 105,
+    "label": "oversized request body",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": null,
+    "raw": "b'{\"note\": \"nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"}'",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    }
+  },
+  {
+    "seq": 106,
+    "label": "Bob valid service",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "bob",
+    "body": {
+      "ids": [
+        "B100"
+      ],
+      "service": "express"
+    },
+    "raw": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "express"
+        }
+      ]
+    }
+  },
+  {
+    "seq": 107,
+    "label": "Bob service persisted",
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "actor": "bob",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "express"
+    }
+  },
+  {
+    "seq": 108,
+    "label": "restore Bob service",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "bob",
+    "body": {
+      "ids": [
+        "B100"
+      ],
+      "service": "standard"
+    },
+    "raw": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "seq": 109,
+    "label": "final Alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10000,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 4000,
+          "address": "20 Pine Street",
+          "version": 4,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "seq": 110,
+    "label": "final Bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "bob",
+    "body": null,
+    "raw": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  }
+]

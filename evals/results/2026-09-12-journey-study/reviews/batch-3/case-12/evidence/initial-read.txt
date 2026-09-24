@@ -1,0 +1,8 @@
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.14.7
+Date: Sat, 12 Sep 2026 11:12:32 GMT
+Content-Type: application/json
+Content-Length: 324
+Cache-Control: no-store
+
+{"orders": [{"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}, {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}]}

@@ -1,0 +1,796 @@
+[
+  {
+    "check": "initial Alice status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "initial Bob status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Alice list isolated",
+    "passed": true,
+    "expected": [
+      "A100",
+      "A200"
+    ],
+    "actual": [
+      "A100",
+      "A200"
+    ]
+  },
+  {
+    "check": "Bob isolation status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Bob list isolated",
+    "passed": true,
+    "expected": [
+      "B100"
+    ],
+    "actual": [
+      "B100"
+    ]
+  },
+  {
+    "check": "unauthorized list None",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "check": "unauthorized mutation",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "check": "unauthorized list mallory",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "check": "unauthorized mutation",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "check": "cross-user read alice",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "cross-user refund",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "cross-user address",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "cross-user note",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "cross-user read bob",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "cross-user refund",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "cross-user address",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "cross-user note",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "Alice after forbidden status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "authorization rejection preserves Alice",
+    "passed": true,
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    }
+  },
+  {
+    "check": "Bob after forbidden status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "authorization rejection preserves Bob",
+    "passed": true,
+    "expected": {
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "actual": {
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    }
+  },
+  {
+    "check": "missing read",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "check": "missing refund",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "check": "missing address",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "check": "missing note",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "check": "refund invalid None",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "refund invalid True",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "refund invalid 0",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "refund invalid -1",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "refund invalid 1.5",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "refund invalid '1'",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "refund invalid []",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "refund invalid {}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "refund above original",
+    "passed": true,
+    "expected": 409,
+    "actual": 409
+  },
+  {
+    "check": "first partial refund",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "cumulative excessive refund",
+    "passed": true,
+    "expected": 409,
+    "actual": 409
+  },
+  {
+    "check": "after excessive refund status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "rejected refund preserves total",
+    "passed": true,
+    "expected": 4000,
+    "actual": 4000
+  },
+  {
+    "check": "exact remaining refund",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "fully refunded rejects more",
+    "passed": true,
+    "expected": 409,
+    "actual": 409
+  },
+  {
+    "check": "concurrent refund status",
+    "passed": true,
+    "expected": [
+      200,
+      409
+    ],
+    "actual": [
+      200,
+      409
+    ]
+  },
+  {
+    "check": "after concurrent refunds status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "concurrent refund total",
+    "passed": true,
+    "expected": 4000,
+    "actual": 4000
+  },
+  {
+    "check": "invalid address {'address': '', 'version': 1}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid address {'address': '   ', 'version': 1}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid address {'address': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'version': 1}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid address {'address': 5, 'version': 1}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid address {'address': 'valid', 'version': True}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid address {'address': 'valid', 'version': '1'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid address {'address': 'valid'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid address {'version': 1}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "valid maximum address",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "stale address conflict",
+    "passed": true,
+    "expected": 409,
+    "actual": 409
+  },
+  {
+    "check": "after stale address status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "stale edit keeps address and version",
+    "passed": true,
+    "expected": [
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      2
+    ],
+    "actual": [
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      2
+    ]
+  },
+  {
+    "check": "concurrent address status",
+    "passed": true,
+    "expected": [
+      200,
+      409
+    ],
+    "actual": [
+      200,
+      409
+    ]
+  },
+  {
+    "check": "after concurrent address status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "concurrent address preserves winner",
+    "passed": true,
+    "expected": [
+      "concurrent 2",
+      3
+    ],
+    "actual": [
+      "concurrent 2",
+      3
+    ]
+  },
+  {
+    "check": "atomic services ['A100', 'MISSING']",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "check": "services after rejection status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "service rollback ['A100', 'MISSING']",
+    "passed": true,
+    "expected": {
+      "A100": "standard",
+      "A200": "standard"
+    },
+    "actual": {
+      "A100": "standard",
+      "A200": "standard"
+    }
+  },
+  {
+    "check": "atomic services ['A100', 'B100']",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "services after rejection status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "service rollback ['A100', 'B100']",
+    "passed": true,
+    "expected": {
+      "A100": "standard",
+      "A200": "standard"
+    },
+    "actual": {
+      "A100": "standard",
+      "A200": "standard"
+    }
+  },
+  {
+    "check": "atomic services ['B100', 'A100']",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "check": "services after rejection status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "service rollback ['B100', 'A100']",
+    "passed": true,
+    "expected": {
+      "A100": "standard",
+      "A200": "standard"
+    },
+    "actual": {
+      "A100": "standard",
+      "A200": "standard"
+    }
+  },
+  {
+    "check": "atomic services ['A100', 'A200', 'MISSING']",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "check": "services after rejection status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "service rollback ['A100', 'A200', 'MISSING']",
+    "passed": true,
+    "expected": {
+      "A100": "standard",
+      "A200": "standard"
+    },
+    "actual": {
+      "A100": "standard",
+      "A200": "standard"
+    }
+  },
+  {
+    "check": "invalid service {'ids': [], 'service': 'express'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid service {'ids': 'A100', 'service': 'express'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid service {'ids': ['A100', 1], 'service': 'express'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid service {'ids': ['A100'], 'service': 'overnight'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid service {'ids': ['A100'], 'service': []}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid service {'service': 'express'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "bulk service success",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "bulk persisted status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "bulk service persisted",
+    "passed": true,
+    "expected": [
+      "express",
+      "express"
+    ],
+    "actual": [
+      "express",
+      "express"
+    ]
+  },
+  {
+    "check": "invalid note ''",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid note '   '",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid note 5",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid note 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "invalid note 'LOCKER: 1'",
+    "passed": true,
+    "expected": 422,
+    "actual": 422
+  },
+  {
+    "check": "invalid note ' locker: 2'",
+    "passed": true,
+    "expected": 422,
+    "actual": 422
+  },
+  {
+    "check": "after note rejections status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "rejected note retains previous",
+    "passed": true,
+    "expected": "Ring twice",
+    "actual": "Ring twice"
+  },
+  {
+    "check": "maximum valid note",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "note persisted status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "valid note persisted",
+    "passed": true,
+    "expected": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "actual": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+  },
+  {
+    "check": "malformed JSON b'{'",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "malformed JSON b'[]'",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "malformed JSON b'null'",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "malformed JSON b''",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "malformed JSON b'{\"note\":\"\\xff\"}'",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "check": "before cleanup status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "restore address",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "restore note",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "restore service",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "final Alice status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "final Bob status",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "check": "Bob unchanged",
+    "passed": true,
+    "expected": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    },
+    "actual": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    }
+  },
+  {
+    "check": "restored A100 address",
+    "passed": true,
+    "expected": "10 Oak Street",
+    "actual": "10 Oak Street"
+  },
+  {
+    "check": "restored A100 note",
+    "passed": true,
+    "expected": "Leave with reception",
+    "actual": "Leave with reception"
+  },
+  {
+    "check": "restored A100 service",
+    "passed": true,
+    "expected": "standard",
+    "actual": "standard"
+  },
+  {
+    "check": "restored A200 address",
+    "passed": true,
+    "expected": "20 Pine Street",
+    "actual": "20 Pine Street"
+  },
+  {
+    "check": "restored A200 note",
+    "passed": true,
+    "expected": "Ring twice",
+    "actual": "Ring twice"
+  },
+  {
+    "check": "restored A200 service",
+    "passed": true,
+    "expected": "standard",
+    "actual": "standard"
+  }
+]

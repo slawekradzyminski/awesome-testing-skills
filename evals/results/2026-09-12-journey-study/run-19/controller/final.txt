@@ -1,0 +1,5 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+**Hold release:** confirmed wrong-order saves, false success feedback for rejected instructions, and keyboard-inaccessible express delivery.
+
+API checks and all four existing tests passed. Reversible fixture changes were restored; the report documents refund and version-counter changes requiring owner reset. The browser session is closed.

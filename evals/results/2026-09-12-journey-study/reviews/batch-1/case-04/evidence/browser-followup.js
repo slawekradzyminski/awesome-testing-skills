@@ -1,0 +1,15 @@
+async page => {
+  const out=[];
+  await page.locator('#order').selectOption('A100'); await page.waitForTimeout(800);
+  await page.locator('#note').fill(''); await page.locator('#save').click(); await page.waitForTimeout(150);
+  out.push({test:'empty note rejection feedback',feedback:await page.locator('#feedback').textContent(),draft:await page.locator('#note').inputValue()});
+  await page.locator('#order').focus(); await page.keyboard.press('Tab'); await page.keyboard.type('Assessment keyboard note'); await page.keyboard.press('Tab'); await page.keyboard.press('Enter'); await page.waitForTimeout(150);
+  out.push({test:'keyboard instruction entry and save',feedback:await page.locator('#feedback').textContent(),draft:await page.locator('#note').inputValue(),focus:await page.evaluate(()=>document.activeElement.id)});
+  await page.reload(); await page.waitForTimeout(800);
+  out.push({test:'keyboard note persists',note:await page.locator('#note').inputValue()});
+  await page.locator('#note').fill('Leave with reception'); await page.locator('#save').click(); await page.waitForTimeout(150);
+  await page.evaluate(()=>window.scrollTo(0,0));
+  await page.screenshot({path:'evidence/narrow-full.png',fullPage:true});
+  await page.setViewportSize({width:1280,height:900}); await page.screenshot({path:'evidence/desktop.png',fullPage:true});
+  return out;
+}

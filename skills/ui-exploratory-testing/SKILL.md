@@ -1,17 +1,21 @@
 ---
 name: ui-exploratory-testing
-description: Explore web interfaces through focused source-code analysis and live browser experiments, identify risky user journeys, and report functional, visual, accessibility, and network findings. Use for exploratory UI testing and code-informed bug hunting; regression-suite implementation is a separate task.
+description: Explore web interfaces through focused source-code analysis and live browser experiments, identify risky user journeys, and report reproducible defects and usability barriers. Use for exploratory UI testing and code-informed bug hunting; regression-suite implementation is a separate task.
 ---
 
 # UI Exploratory Testing
 
 Explore as a tester trying to uncover consequential failures. Use application code to identify risks, then challenge those hypotheses through the real interface. Follow unexpected behavior and user impact rather than executing a fixed inventory of clicks.
 
+**Session deliverable:** unless the project sets another location, create `report.md` and `evidence/` early. Keep a passed/failed/blocked/not-run check ledger tied to ticket criteria, a log of visited routes and significant states, representative screenshots, and sanitized browser HTTP exchanges linked to the checks. Save evidence during experiments; do not defer HTTP capture to closeout. If capture is unavailable, mark the affected check blocked or partially evidenced. Use [the report guide](references/reporting.md) for the complete format and redaction rules.
+
 ## Establish the target and invite source access
 
 Start from the user's request, existing conversation, and applicable repository instructions. If source has not been supplied or located, encourage the user to provide the frontend repository/path and branch or revision, plus backend code or API contracts for relevant flows. Explain that code access reveals hidden states, event handling, permission checks, and integration risks. Prefer relevant files or repository access over a complete code dump; never ask for secrets in chat.
 
 Establish the application URL, intended user outcomes, screens/journeys in scope, available test roles, supported browsers/devices if known, and permissible data changes. Reuse available context. Locate source through supplied project links/configuration without searching unrelated private projects. Ask only for missing details that affect the next step, and do not repeatedly request code the user cannot share.
+
+If a ticket or story is available, translate its acceptance criteria into observable user outcomes and relevant failure/recovery states. If none is available, invite the user once to share it or name the two or three outcomes that matter most; offer concrete candidate outcomes inferred from the journey. In an interactive session, ask this before the first experiment while continuing independent work. In a one-shot session that cannot receive a reply, put two or three proposed outcomes in the report, mark them unconfirmed, and proceed. For a material gap, show a concise proposed criterion or example and ask for confirmation; continue independent exploration while the answer is pending. Label unconfirmed interpretations and link agreed criteria to checks and evidence in the report. Avoid a generic intake questionnaire when the ticket and application already provide the needed context.
 
 - **Source and runtime available:** combine focused code analysis with browser exploration.
 - **Runtime only:** proceed with black-box exploration, naming the missing implementation context.
@@ -41,15 +45,15 @@ Prefer **Playwright CLI** and load its skill if available. Otherwise use the CLI
 
 Use the chosen tool's documented interface and fresh page snapshots/observations to target controls; do not invent element references or assume the UI matches source. A dedicated session is useful when supported. Control and clean up only the session you created, not the user's other browser sessions.
 
-Write a lightweight charter: user outcome, feature boundary, key risks, and stopping condition. Honor user time/action limits; otherwise start with a bounded pass through the highest-priority risks and reassess at meaningful checkpoints. Choose experiments autonomously within the authorized scope. Follow promising anomalies without requesting permission for each click or multiplying every state by every device size.
+Write a lightweight charter: user outcome, feature boundary, explicit exclusions, key risks, and stopping condition. Honor user time/action limits and reserve time to preserve evidence and deliver a usable report; write down important findings as they emerge. Otherwise start with a bounded pass through the highest-priority risks and reassess at meaningful checkpoints. Choose experiments autonomously within the authorized scope. Follow promising anomalies without requesting permission for each click or multiplying every state by every device size.
 
-Before live exploration, read [browser experiments and evidence](references/browser-experiments.md) for choosing discriminating probes, inspecting screenshots, and connecting interactions with network and persisted state. Establish a representative working journey, then vary meaningful combinations of data, role, state, sequence, and timing. Apply only the techniques relevant to the scope.
+For the selected risks, consult the relevant parts of [browser experiments and evidence](references/browser-experiments.md) for discriminating probes, screenshots, network observations, and persisted state. Establish a representative working journey, then vary meaningful combinations of data, role, state, sequence, and timing. Apply only the techniques relevant to the scope.
 
 Read current state after significant actions. Prefer observable readiness over arbitrary sleeps. Validate the business outcome, including state after navigation/refresh and relevant read APIs when available. A toast, correct destination URL, or quiet console is insufficient evidence of successful persistence.
 
 ## Report and finish
 
-Use [the report guide](references/reporting.md) for findings, a prioritized risk summary, and meaningful coverage gaps. Keep one local session report unless the user/project has another convention; link existing findings rather than duplicating them. Preserve essential sanitized evidence with the report so it remains actionable outside the scratch workspace.
+Use [the report guide](references/reporting.md) for the session evidence package, finding template, stable IDs, type labels, severity rationale, retest status, a prioritized risk summary and meaningful coverage gaps. Unless a project convention supplies another location, create `report.md` and `evidence/`. Record the in-scope pages and significant states visited, a check ledger with passed/failed/blocked/not-run outcomes, representative screenshots, and relevant sanitized browser HTTP exchanges linked to the checks. Capture evidence as you go and identify any capture that the browser tool could not provide. Consider functional, visual, accessibility, UX, network, performance and documentation concerns relevant to the journey; honor explicit exclusions. Keep one local session report; link existing findings rather than duplicating them. Preserve essential evidence with the report so it remains actionable outside the scratch workspace.
 
 Separate runtime-confirmed failures, code-evidenced findings, hypotheses, and unresolved design decisions. Reproduce anomalies minimally, test alternative explanations, and assess impact before severity. Preserve the first failure before reducing its steps; a fresh context is a useful contrast but must not erase the session that contains the evidence. Report important findings as they emerge and continue unaffected exploration. Do not invent findings to meet a quota or silently dismiss a concern whose intent remains unresolved.
 

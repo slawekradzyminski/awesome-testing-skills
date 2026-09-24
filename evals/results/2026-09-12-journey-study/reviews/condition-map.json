@@ -1,0 +1,170 @@
+{
+  "case-01": {
+    "id": "run-18",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "normal"
+  },
+  "case-02": {
+    "id": "run-15",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "template"
+  },
+  "case-03": {
+    "id": "run-11",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "skill"
+  },
+  "case-04": {
+    "id": "run-20",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "template"
+  },
+  "case-05": {
+    "id": "run-05",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "skill"
+  },
+  "case-06": {
+    "id": "run-06",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "template"
+  },
+  "case-07": {
+    "id": "run-17",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "template"
+  },
+  "case-08": {
+    "id": "run-23",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "skill"
+  },
+  "case-09": {
+    "id": "run-19",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "normal"
+  },
+  "case-10": {
+    "id": "run-10",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "template"
+  },
+  "case-11": {
+    "id": "run-09",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "skill"
+  },
+  "case-12": {
+    "id": "run-13",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "skill"
+  },
+  "case-13": {
+    "id": "run-08",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "normal"
+  },
+  "case-14": {
+    "id": "run-24",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "template"
+  },
+  "case-15": {
+    "id": "run-12",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "normal"
+  },
+  "case-16": {
+    "id": "run-21",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "skill"
+  },
+  "case-17": {
+    "id": "run-03",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "skill"
+  },
+  "case-18": {
+    "id": "run-16",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "skill"
+  },
+  "case-19": {
+    "id": "run-01",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "normal"
+  },
+  "case-20": {
+    "id": "run-04",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "normal"
+  },
+  "case-21": {
+    "id": "run-07",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "template"
+  },
+  "case-22": {
+    "id": "run-14",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "normal"
+  },
+  "case-23": {
+    "id": "run-22",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "normal"
+  },
+  "case-24": {
+    "id": "run-02",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "template"
+  }
+}

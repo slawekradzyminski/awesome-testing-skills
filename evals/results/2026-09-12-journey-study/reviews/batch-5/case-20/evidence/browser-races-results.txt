@@ -1,0 +1,43 @@
+### Result
+[{"stage":"draft during loading","state":{"order":"A100","heading":"Order A200","note":"Draft typed during loading","service":"standard","feedback":"","loading":"Loading order…","noteDisabled":false}},{"stage":"after lookup","state":{"order":"A100","heading":"Order A100","note":"Leave with reception","service":"standard","feedback":"","loading":"","noteDisabled":false}},{"stage":"reordered genuine service responses","state":{"order":"A100","heading":"Order A100","note":"Leave with reception","service":"express","feedback":"Delivery service saved","loading":"","noteDisabled":false},"server":[{"id":"A100","owner":"alice","paid":10000,"refunded":10000,"address":"10 Oak Street","version":1,"note":"Leave with reception","service":"standard"},{"id":"A200","owner":"alice","paid":6000,"refunded":0,"address":"20 Pine Street","version":3,"note":"Ring twice","service":"standard"}],"responses":[{"request":{"ids":["A100"],"service":"express"},"status":200,"body":{"orders":[{"id":"A100","owner":"alice","paid":10000,"refunded":10000,"address":"10 Oak Street","version":1,"note":"Leave with reception","service":"express"}]}},{"request":{"ids":["A100"],"service":"standard"},"status":200,"body":{"orders":[{"id":"A100","owner":"alice","paid":10000,"refunded":10000,"address":"10 Oak Street","version":1,"note":"Leave with reception","service":"standard"}]}}]},{"stage":"service after reload","state":{"order":"A100","heading":"Order A100","note":"Leave with reception","service":"standard","feedback":"","loading":"","noteDisabled":false}}]
+### Ran Playwright code
+```js
+await (async page => {
+  const results=[];
+  const state=()=>page.evaluate(()=>({order:document.querySelector('#order').value,heading:document.querySelector('#heading').textContent,note:document.querySelector('#note').value,service:document.querySelector('#service').textContent,feedback:document.querySelector('#feedback').textContent,loading:document.querySelector('#loading').textContent,noteDisabled:document.querySelector('#note').disabled}));
+  await page.setViewportSize({width:1280,height:900});
+  await page.selectOption('#order','A200');
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+  await page.selectOption('#order','A100');
+  await page.fill('#note','Draft typed during loading');
+  results.push({stage:'draft during loading',state:await state()});
+  await page.waitForFunction(()=>document.querySelector('#loading').textContent==='');
+  results.push({stage:'after lookup',state:await state()});
+  await page.screenshot({path:'evidence/draft-after-lookup.png'});
+  let release,committed;
+  const held=new Promise(r=>release=r),serverDone=new Promise(r=>committed=r);
+  const responses=[];
+  await page.route('http://127.0.0.1:56415/api/services',async route=>{
+    const body=route.request().postDataJSON();
+    const response=await route.fetch();
+    responses.push({request:body,status:response.status(),body:await response.json()});
+    if(body.service==='express'){committed();await held;}
+    await route.fulfill({response});
+  });
+  await page.click('#express');
+  await serverDone;
+  await page.click('#standard');
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery service saved');
+  release();
+  await page.waitForFunction(()=>document.querySelector('#service').textContent==='express');
+  const rows=await page.evaluate(async()=> (await (await fetch('/api/orders',{headers:{'X-Test-User':'alice'}})).json()).orders);
+  results.push({stage:'reordered genuine service responses',state:await state(),server:rows,responses});
+  await page.screenshot({path:'evidence/service-mismatch.png'});
+  await page.unroute('http://127.0.0.1:56415/api/services');
+  await page.reload();
+  await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+  results.push({stage:'service after reload',state:await state()});
+  return results;
+}
+)(page);
+```

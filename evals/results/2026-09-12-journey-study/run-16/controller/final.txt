@@ -1,0 +1,8 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+Recommend fixing two medium-severity issues before release:
+
+- Delayed service responses can make displayed and persisted choices disagree.
+- Failed instruction requests leave Save disabled without recovery feedback.
+
+Evidence and regression recommendations are included. Fixtures were restored and the browser session closed.

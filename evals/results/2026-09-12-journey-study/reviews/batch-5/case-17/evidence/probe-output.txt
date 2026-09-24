@@ -1,0 +1,64 @@
+01 baseline Alice: 200
+02 baseline Bob: 200
+03 anonymous list: 401
+04 anonymous write: 401
+05 Alice reads Bob: 403
+06 Bob reads Alice: 403
+07 Alice forbidden refund: 403
+08 Alice forbidden address: 403
+09 Alice forbidden note: 403
+10 forbidden service first: 403
+11 Bob unchanged after forbidden writes: 200
+12 Alice unchanged after forbidden-first batch: 200
+13 refund valid partial: 200
+14 refund cumulative exact payment: 200
+15 refund at exact boundary: 200
+16 refund exceeds cumulative by one cent: 200
+17 refund overpayment persisted: 200
+18 refund single amount exceeds original: 409
+19 refund invalid 0: 400
+20 refund invalid -1: 400
+21 refund invalid True: 400
+22 refund invalid 1.5: 400
+23 refund invalid '1': 400
+24 refund invalid None: 400
+25 refund rejects preserve state: 200
+26 address valid current version: 200
+27 address stale version: 200
+28 stale address persisted: 200
+29 address future version: 409
+30 address invalid shape: 400
+31 address invalid shape: 400
+32 address invalid shape: 400
+33 address rejected controls preserve state: 200
+34 restore address: 200
+35 batch before MISSING: 200
+36 batch valid then MISSING: 404
+37 batch after MISSING: 200
+38 restore service after MISSING: 200
+39 batch before B100: 200
+40 batch valid then B100: 403
+41 batch after B100: 200
+42 forbidden order unchanged: 200
+43 restore service after B100: 200
+44 valid two-order service: 200
+45 valid batch persisted: 200
+46 restore both services: 200
+47 service invalid shape: 400
+48 service invalid shape: 400
+49 service invalid shape: 400
+50 note valid: 200
+51 note valid persisted: 200
+52 note unsupported locker: 422
+53 note unsupported preserves previous: 200
+54 note invalid shape: 400
+55 note invalid shape: 400
+56 note invalid shape: 400
+57 note invalid shape: 400
+58 malformed JSON: 400
+59 non-object JSON: 400
+60 note invalid preserves previous: 200
+61 restore note: 200
+62 final Alice: 200
+63 final Bob: 200
+Requests: 63

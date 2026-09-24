@@ -1,0 +1,8 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+Recommendation: hold release pending two Medium defects reproduced under controlled network conditions:
+
+- Service display can contradict the persisted choice.
+- Failed instruction requests leave saving disabled without feedback.
+
+Routine journey and sampled API safeguards passed. Reversible changes were restored and the browser closed. A200’s 6000-cent refund and version increment require the owner’s reset.

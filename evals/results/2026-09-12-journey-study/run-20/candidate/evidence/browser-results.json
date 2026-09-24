@@ -1,0 +1,385 @@
+{
+  "out": [
+    {
+      "test": "baseline",
+      "state": {
+        "selected": "A100",
+        "heading": "Order A100",
+        "address": "10 Oak Street",
+        "note": "Leave with reception",
+        "service": "standard",
+        "feedback": ""
+      }
+    },
+    {
+      "test": "rejected note",
+      "state": {
+        "selected": "A100",
+        "heading": "Order A100",
+        "address": "10 Oak Street",
+        "note": "LOCKER: 1",
+        "service": "standard",
+        "feedback": "Delivery instruction saved"
+      }
+    },
+    {
+      "test": "rejected note persisted state after reload",
+      "state": {
+        "selected": "A100",
+        "heading": "Order A100",
+        "address": "10 Oak Street",
+        "note": "Leave with reception",
+        "service": "standard",
+        "feedback": ""
+      }
+    },
+    {
+      "test": "out of order lookup",
+      "state": {
+        "selected": "A200",
+        "heading": "Order A100",
+        "address": "10 Oak Street",
+        "note": "Leave with reception",
+        "service": "standard",
+        "feedback": ""
+      }
+    },
+    {
+      "test": "save after mismatched lookup",
+      "state": {
+        "selected": "A200",
+        "heading": "Order A100",
+        "address": "10 Oak Street",
+        "note": "Assessment race marker",
+        "service": "standard",
+        "feedback": "Delivery instruction saved"
+      }
+    },
+    {
+      "test": "actual target of race save",
+      "state": {
+        "selected": "A200",
+        "heading": "Order A200",
+        "address": "20 Pine Street",
+        "note": "Assessment race marker",
+        "service": "standard",
+        "feedback": ""
+      }
+    },
+    {
+      "test": "keyboard tab sequence starting at order",
+      "focus": [
+        {
+          "id": "note",
+          "tag": "TEXTAREA",
+          "outline": "rgb(198, 93, 0) solid 3px"
+        },
+        {
+          "id": "save",
+          "tag": "BUTTON",
+          "outline": "rgb(198, 93, 0) solid 3px"
+        },
+        {
+          "id": "standard",
+          "tag": "BUTTON",
+          "outline": "rgb(198, 93, 0) solid 3px"
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "outline": "rgb(24, 35, 51) none 3px"
+        },
+        {
+          "id": "order",
+          "tag": "SELECT",
+          "outline": "rgb(198, 93, 0) solid 3px"
+        }
+      ],
+      "express": {
+        "tag": "DIV",
+        "tabIndex": -1,
+        "role": "button"
+      }
+    },
+    {
+      "test": "successful note and express survive reload",
+      "state": {
+        "selected": "A200",
+        "heading": "Order A200",
+        "address": "20 Pine Street",
+        "note": "Assessment valid note",
+        "service": "express",
+        "feedback": ""
+      }
+    },
+    {
+      "test": "standard via keyboard and restored note",
+      "state": {
+        "selected": "A200",
+        "heading": "Order A200",
+        "address": "20 Pine Street",
+        "note": "Ring twice",
+        "service": "standard",
+        "feedback": "Delivery service saved"
+      }
+    },
+    {
+      "test": "narrow layout",
+      "dimensions": {
+        "viewport": 375,
+        "scrollWidth": 375
+      },
+      "state": {
+        "selected": "A200",
+        "heading": "Order A200",
+        "address": "20 Pine Street",
+        "note": "Ring twice",
+        "service": "standard",
+        "feedback": "Delivery service saved"
+      }
+    }
+  ],
+  "events": [
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A100/note",
+      "method": "POST",
+      "body": "{\"note\":\"LOCKER: 1\"}",
+      "status": 422,
+      "response": {
+        "error": "Locker delivery is unavailable; enter another instruction"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A100",
+      "method": "GET",
+      "body": null,
+      "status": 200,
+      "response": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A200",
+      "method": "GET",
+      "body": null,
+      "status": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A200",
+      "method": "GET",
+      "body": null,
+      "status": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A100",
+      "method": "GET",
+      "body": null,
+      "status": 200,
+      "response": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A200/note",
+      "method": "POST",
+      "body": "{\"note\":\"Assessment race marker\"}",
+      "status": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Assessment race marker",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A100",
+      "method": "GET",
+      "body": null,
+      "status": 200,
+      "response": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A200",
+      "method": "GET",
+      "body": null,
+      "status": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Assessment race marker",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A200/note",
+      "method": "POST",
+      "body": "{\"note\":\"Ring twice\"}",
+      "status": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A200/note",
+      "method": "POST",
+      "body": "{\"note\":\"Assessment valid note\"}",
+      "status": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Assessment valid note",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/services",
+      "method": "POST",
+      "body": "{\"ids\":[\"A200\"],\"service\":\"express\"}",
+      "status": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 1,
+            "note": "Assessment valid note",
+            "service": "express"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A100",
+      "method": "GET",
+      "body": null,
+      "status": 200,
+      "response": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A200",
+      "method": "GET",
+      "body": null,
+      "status": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Assessment valid note",
+        "service": "express"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/orders/A200/note",
+      "method": "POST",
+      "body": "{\"note\":\"Ring twice\"}",
+      "status": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "express"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:59159/api/services",
+      "method": "POST",
+      "body": "{\"ids\":[\"A200\"],\"service\":\"standard\"}",
+      "status": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 1,
+            "note": "Ring twice",
+            "service": "standard"
+          }
+        ]
+      }
+    }
+  ]
+}

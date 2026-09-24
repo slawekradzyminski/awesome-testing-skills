@@ -1,0 +1,111 @@
+[ {
+  "id" : 1,
+  "name" : "iPhone 13 Pro",
+  "description" : "Latest iPhone model with A15 Bionic chip, Pro camera system, and Super Retina XDR display",
+  "price" : 999.99,
+  "stockQuantity" : 50,
+  "category" : "Electronics",
+  "imageUrl" : "http://localhost:8082/images/iphone.png",
+  "createdAt" : "2026-09-24T18:22:09.379933",
+  "updatedAt" : "2026-09-24T18:22:09.379957"
+}, {
+  "id" : 2,
+  "name" : "Samsung Galaxy S21",
+  "description" : "5G smartphone with 8K video, all-day battery, and powerful performance",
+  "price" : 799.99,
+  "stockQuantity" : 75,
+  "category" : "Electronics",
+  "imageUrl" : "http://localhost:8082/images/samsung.png",
+  "createdAt" : "2026-09-24T18:22:09.380934",
+  "updatedAt" : "2026-09-24T18:22:09.38094"
+}, {
+  "id" : 3,
+  "name" : "MacBook Pro 14",
+  "description" : "Apple M1 Pro chip, 16GB RAM, 512GB SSD, Liquid Retina XDR display",
+  "price" : 1999.99,
+  "stockQuantity" : 25,
+  "category" : "Computers",
+  "imageUrl" : "http://localhost:8082/images/mac.png",
+  "createdAt" : "2026-09-24T18:22:09.38123",
+  "updatedAt" : "2026-09-24T18:22:09.381236"
+}, {
+  "id" : 4,
+  "name" : "PlayStation 5",
+  "description" : "Next-gen gaming console with 4K graphics, ray tracing, and ultra-high speed SSD",
+  "price" : 499.99,
+  "stockQuantity" : 30,
+  "category" : "Gaming",
+  "imageUrl" : "http://localhost:8082/images/ps5.png",
+  "createdAt" : "2026-09-24T18:22:09.381509",
+  "updatedAt" : "2026-09-24T18:22:09.381514"
+}, {
+  "id" : 5,
+  "name" : "Ninja Foodi 9-in-1",
+  "description" : "Deluxe XL pressure cooker and air fryer with multiple cooking functions",
+  "price" : 249.99,
+  "stockQuantity" : 100,
+  "category" : "Home & Kitchen",
+  "imageUrl" : "http://localhost:8082/images/ninja.png",
+  "createdAt" : "2026-09-24T18:22:09.381792",
+  "updatedAt" : "2026-09-24T18:22:09.381798"
+}, {
+  "id" : 6,
+  "name" : "Clean Code",
+  "description" : "A Handbook of Agile Software Craftsmanship by Robert C. Martin",
+  "price" : 44.99,
+  "stockQuantity" : 200,
+  "category" : "Books",
+  "imageUrl" : "http://localhost:8082/images/cleancode.png",
+  "createdAt" : "2026-09-24T18:22:09.382078",
+  "updatedAt" : "2026-09-24T18:22:09.382085"
+}, {
+  "id" : 7,
+  "name" : "Apple Watch Series 7",
+  "description" : "Always-On Retina display, health monitoring, and fitness tracking",
+  "price" : 399.99,
+  "stockQuantity" : 60,
+  "category" : "Wearables",
+  "imageUrl" : "http://localhost:8082/images/applewatch.png",
+  "createdAt" : "2026-09-24T18:22:09.38233",
+  "updatedAt" : "2026-09-24T18:22:09.382335"
+}, {
+  "id" : 8,
+  "name" : "Sony WH-1000XM4",
+  "description" : "Industry-leading noise canceling wireless headphones with exceptional sound",
+  "price" : 349.99,
+  "stockQuantity" : 85,
+  "category" : "Audio",
+  "imageUrl" : "http://localhost:8082/images/sony.png",
+  "createdAt" : "2026-09-24T18:22:09.382594",
+  "updatedAt" : "2026-09-24T18:22:09.3826"
+}, {
+  "id" : 9,
+  "name" : "Desk lamp",
+  "description" : "Replacement and everyday catalog supplies.",
+  "price" : 49.95,
+  "stockQuantity" : 20,
+  "category" : "Home",
+  "imageUrl" : "",
+  "createdAt" : "2026-09-24T18:22:10.907121",
+  "updatedAt" : "2026-09-24T18:22:10.907138"
+}, {
+  "id" : 10,
+  "name" : "Travel mug",
+  "description" : "Replacement and everyday catalog supplies.",
+  "price" : 49.95,
+  "stockQuantity" : 20,
+  "category" : "Kitchen",
+  "imageUrl" : "",
+  "createdAt" : "2026-09-24T18:22:10.915817",
+  "updatedAt" : "2026-09-24T18:22:10.915827"
+}, {
+  "id" : 11,
+  "name" : "ReplacementCartridgeSeriesIndustrialCompatibilityEditionABC123456789",
+  "description" : "Replacement and everyday catalog supplies.",
+  "price" : 49.95,
+  "stockQuantity" : 20,
+  "category" : "IndustrialReplacementCartridges",
+  "imageUrl" : "",
+  "createdAt" : "2026-09-24T18:22:10.920544",
+  "updatedAt" : "2026-09-24T18:22:10.920555"
+} ]

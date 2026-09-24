@@ -1,0 +1,9 @@
+### Result
+{"before":{"disabled":true,"draft":"Assessment network draft","feedback":""},"persisted":{"id":"A100","owner":"alice","paid":10000,"refunded":0,"address":"10 Oak Street","version":1,"note":"Leave with reception","service":"standard"},"afterReload":{"draft":"Leave with reception","disabled":false}}
+### Ran Playwright code
+```js
+await (async page => { const before={disabled:await page.getByRole("button",{name:"Save instruction"}).isDisabled(),draft:await page.getByRole("textbox").inputValue(),feedback:await page.locator("#feedback").innerText()}; const persisted=await (await page.request.get("http://127.0.0.1:56450/api/orders/A100",{headers:{"X-Test-User":"alice"}})).json(); await page.reload(); await page.getByRole("heading",{name:"Order A100",exact:true}).waitFor(); return {before,persisted,afterReload:{draft:await page.getByRole("textbox").inputValue(),disabled:await page.getByRole("button",{name:"Save instruction"}).isDisabled()}}; })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:56450/
+- Page Title: Dispatch Desk

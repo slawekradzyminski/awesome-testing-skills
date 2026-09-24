@@ -1,0 +1,41 @@
+async page => {
+  const out = [];
+  const state = () => page.evaluate(() => ({selected: document.querySelector('#order').value, heading: document.querySelector('#heading').textContent, address: document.querySelector('#address').textContent, note: document.querySelector('#note').value, service: document.querySelector('#service').textContent, feedback: document.querySelector('#feedback').textContent}));
+  const events = [];
+  page.on('response', async r => { if(r.url().includes('/api/')) events.push({url:r.url(),method:r.request().method(),body:r.request().postData(),status:r.status(),response:await r.json()}); });
+  await page.waitForTimeout(800);
+  out.push({test:'baseline',state:await state()});
+  await page.locator('#note').fill('LOCKER: 1');
+  await page.locator('#save').click();
+  await page.waitForTimeout(200);
+  out.push({test:'rejected note',state:await state()});
+  await page.screenshot({path:'evidence/rejected-note.png'});
+  await page.reload(); await page.waitForTimeout(800);
+  out.push({test:'rejected note persisted state after reload',state:await state()});
+  await page.locator('#order').selectOption('A200'); await page.waitForTimeout(150);
+  await page.locator('#order').selectOption('A100');
+  await page.locator('#order').selectOption('A200');
+  await page.waitForTimeout(850);
+  out.push({test:'out of order lookup',state:await state()});
+  await page.screenshot({path:'evidence/order-race.png'});
+  await page.locator('#note').fill('Assessment race marker'); await page.locator('#save').click(); await page.waitForTimeout(200);
+  out.push({test:'save after mismatched lookup',state:await state()});
+  await page.reload(); await page.waitForTimeout(800);
+  await page.locator('#order').selectOption('A200'); await page.waitForTimeout(150);
+  out.push({test:'actual target of race save',state:await state()});
+  await page.locator('#note').fill('Ring twice'); await page.locator('#save').click(); await page.waitForTimeout(150);
+  await page.locator('#order').focus();
+  const focus=[];
+  for(let i=0;i<5;i++){ await page.keyboard.press('Tab'); focus.push(await page.evaluate(()=>({id:document.activeElement.id,tag:document.activeElement.tagName,outline:getComputedStyle(document.activeElement).outline}))); }
+  out.push({test:'keyboard tab sequence starting at order',focus,express:await page.locator('#express').evaluate(e=>({tag:e.tagName,tabIndex:e.tabIndex,role:e.getAttribute('role')}))});
+  await page.locator('#note').fill('Assessment valid note'); await page.locator('#save').click(); await page.waitForTimeout(150);
+  await page.locator('#express').click(); await page.waitForTimeout(150);
+  await page.reload(); await page.waitForTimeout(800); await page.locator('#order').selectOption('A200'); await page.waitForTimeout(150);
+  out.push({test:'successful note and express survive reload',state:await state()});
+  await page.locator('#note').fill('Ring twice'); await page.locator('#save').click(); await page.waitForTimeout(150);
+  await page.locator('#standard').focus(); await page.keyboard.press('Enter'); await page.waitForTimeout(150);
+  out.push({test:'standard via keyboard and restored note',state:await state()});
+  await page.setViewportSize({width:375,height:812}); await page.screenshot({path:'evidence/narrow.png'});
+  out.push({test:'narrow layout',dimensions:await page.evaluate(()=>({viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth})),state:await state()});
+  return {out,events};
+}

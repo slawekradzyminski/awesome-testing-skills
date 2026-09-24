@@ -1,0 +1,465 @@
+[
+ {
+  "n": 1,
+  "method": "GET",
+  "path": "/api/orders",
+  "user": "alice",
+  "body": null,
+  "status": 200,
+  "resp": "{\"orders\": [{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Leave with reception\", \"service\": \"standard\"}, {\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 0, \"address\": \"20 Pine Street\", \"version\": 1, \"note\": \"Ring twice\", \"service\": \"standard\"}]}"
+ },
+ {
+  "n": 2,
+  "method": "GET",
+  "path": "/api/orders",
+  "user": "bob",
+  "body": null,
+  "status": 200,
+  "resp": "{\"orders\": [{\"id\": \"B100\", \"owner\": \"bob\", \"paid\": 4000, \"refunded\": 0, \"address\": \"30 Elm Street\", \"version\": 1, \"note\": \"Side entrance\", \"service\": \"standard\"}]}"
+ },
+ {
+  "n": 3,
+  "method": "GET",
+  "path": "/api/orders",
+  "user": null,
+  "body": null,
+  "status": 401,
+  "resp": "{\"error\": \"Choose a fixture user\"}"
+ },
+ {
+  "n": 4,
+  "method": "GET",
+  "path": "/api/orders/B100",
+  "user": "alice",
+  "body": null,
+  "status": 403,
+  "resp": "{\"error\": \"Access denied\"}"
+ },
+ {
+  "n": 5,
+  "method": "POST",
+  "path": "/api/orders/B100/refund",
+  "user": "alice",
+  "body": {
+   "amount": 100
+  },
+  "status": 403,
+  "resp": "{\"error\": \"Access denied\"}"
+ },
+ {
+  "n": 6,
+  "method": "POST",
+  "path": "/api/orders/B100/note",
+  "user": "alice",
+  "body": {
+   "note": "x"
+  },
+  "status": 403,
+  "resp": "{\"error\": \"Access denied\"}"
+ },
+ {
+  "n": 7,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": null,
+  "body": {
+   "note": "x"
+  },
+  "status": 401,
+  "resp": "{\"error\": \"Choose a fixture user\"}"
+ },
+ {
+  "n": 8,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": 4000
+  },
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 4000, \"address\": \"20 Pine Street\", \"version\": 1, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 9,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": 4000
+  },
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 8000, \"address\": \"20 Pine Street\", \"version\": 1, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 10,
+  "method": "GET",
+  "path": "/api/orders/A200",
+  "user": "alice",
+  "body": null,
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 8000, \"address\": \"20 Pine Street\", \"version\": 1, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 11,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": 6001
+  },
+  "status": 409,
+  "resp": "{\"error\": \"Refund exceeds remaining paid amount\"}"
+ },
+ {
+  "n": 12,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": 0
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Amount must be a positive integer in cents\"}"
+ },
+ {
+  "n": 13,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": -5
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Amount must be a positive integer in cents\"}"
+ },
+ {
+  "n": 14,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": "100"
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Amount must be a positive integer in cents\"}"
+ },
+ {
+  "n": 15,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": 1.5
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Amount must be a positive integer in cents\"}"
+ },
+ {
+  "n": 16,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": true
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Amount must be a positive integer in cents\"}"
+ },
+ {
+  "n": 17,
+  "method": "POST",
+  "path": "/api/orders/A200/refund",
+  "user": "alice",
+  "body": {
+   "amount": null
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Amount must be a positive integer in cents\"}"
+ },
+ {
+  "n": 18,
+  "method": "POST",
+  "path": "/api/orders/A200/address",
+  "user": "alice",
+  "body": {
+   "address": "21 Pine Street",
+   "version": 1
+  },
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 8000, \"address\": \"21 Pine Street\", \"version\": 2, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 19,
+  "method": "POST",
+  "path": "/api/orders/A200/address",
+  "user": "alice",
+  "body": {
+   "address": "STALE edit",
+   "version": 1
+  },
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 8000, \"address\": \"STALE edit\", \"version\": 3, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 20,
+  "method": "GET",
+  "path": "/api/orders/A200",
+  "user": "alice",
+  "body": null,
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 8000, \"address\": \"STALE edit\", \"version\": 3, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 21,
+  "method": "POST",
+  "path": "/api/orders/A200/address",
+  "user": "alice",
+  "body": {
+   "address": "x",
+   "version": 99
+  },
+  "status": 409,
+  "resp": "{\"error\": \"Order changed; reload before saving\"}"
+ },
+ {
+  "n": 22,
+  "method": "POST",
+  "path": "/api/orders/A200/address",
+  "user": "alice",
+  "body": {
+   "address": "   ",
+   "version": 3
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Address and integer version required\"}"
+ },
+ {
+  "n": 23,
+  "method": "POST",
+  "path": "/api/orders/A200/address",
+  "user": "alice",
+  "body": {
+   "address": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "version": 3
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Address and integer version required\"}"
+ },
+ {
+  "n": 24,
+  "method": "POST",
+  "path": "/api/orders/A200/address",
+  "user": "alice",
+  "body": {
+   "address": "x",
+   "version": "3"
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Address and integer version required\"}"
+ },
+ {
+  "n": 25,
+  "method": "POST",
+  "path": "/api/services",
+  "user": "alice",
+  "body": {
+   "ids": [
+    "A200",
+    "B100"
+   ],
+   "service": "express"
+  },
+  "status": 403,
+  "resp": "{\"error\": \"Access denied\"}"
+ },
+ {
+  "n": 26,
+  "method": "GET",
+  "path": "/api/orders",
+  "user": "alice",
+  "body": null,
+  "status": 200,
+  "resp": "{\"orders\": [{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Leave with reception\", \"service\": \"standard\"}, {\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 8000, \"address\": \"STALE edit\", \"version\": 3, \"note\": \"Ring twice\", \"service\": \"express\"}]}"
+ },
+ {
+  "n": 27,
+  "method": "GET",
+  "path": "/api/orders/B100",
+  "user": "bob",
+  "body": null,
+  "status": 200,
+  "resp": "{\"id\": \"B100\", \"owner\": \"bob\", \"paid\": 4000, \"refunded\": 0, \"address\": \"30 Elm Street\", \"version\": 1, \"note\": \"Side entrance\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 28,
+  "method": "POST",
+  "path": "/api/services",
+  "user": "alice",
+  "body": {
+   "ids": [
+    "A100",
+    "ZZZ"
+   ],
+   "service": "express"
+  },
+  "status": 404,
+  "resp": "{\"error\": \"Order not found\"}"
+ },
+ {
+  "n": 29,
+  "method": "GET",
+  "path": "/api/orders",
+  "user": "alice",
+  "body": null,
+  "status": 200,
+  "resp": "{\"orders\": [{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Leave with reception\", \"service\": \"express\"}, {\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 8000, \"address\": \"STALE edit\", \"version\": 3, \"note\": \"Ring twice\", \"service\": \"express\"}]}"
+ },
+ {
+  "n": 30,
+  "method": "POST",
+  "path": "/api/services",
+  "user": "alice",
+  "body": {
+   "ids": [
+    "A100"
+   ],
+   "service": "overnight"
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Order IDs and a supported service required\"}"
+ },
+ {
+  "n": 31,
+  "method": "POST",
+  "path": "/api/services",
+  "user": "alice",
+  "body": {
+   "ids": [],
+   "service": "express"
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Order IDs and a supported service required\"}"
+ },
+ {
+  "n": 32,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": {
+   "note": "LOCKER: 12"
+  },
+  "status": 422,
+  "resp": "{\"error\": \"Locker delivery is unavailable; enter another instruction\"}"
+ },
+ {
+  "n": 33,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": {
+   "note": "  locker: 12"
+  },
+  "status": 422,
+  "resp": "{\"error\": \"Locker delivery is unavailable; enter another instruction\"}"
+ },
+ {
+  "n": 34,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": {
+   "note": "   "
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Note must contain 1 to 160 characters\"}"
+ },
+ {
+  "n": 35,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": {
+   "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Note must contain 1 to 160 characters\"}"
+ },
+ {
+  "n": 36,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": {
+   "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+  },
+  "status": 200,
+  "resp": "{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\", \"service\": \"express\"}"
+ },
+ {
+  "n": 37,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": {
+   "note": "  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn  "
+  },
+  "status": 200,
+  "resp": "{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn  \", \"service\": \"express\"}"
+ },
+ {
+  "n": 38,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": {
+   "note": 123
+  },
+  "status": 400,
+  "resp": "{\"error\": \"Note must contain 1 to 160 characters\"}"
+ },
+ {
+  "n": 39,
+  "method": "GET",
+  "path": "/api/orders/A100",
+  "user": "alice",
+  "body": null,
+  "status": 200,
+  "resp": "{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn  \", \"service\": \"express\"}"
+ },
+ {
+  "n": 40,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": "b'{bad'",
+  "status": 400,
+  "resp": "{\"error\": \"Expected a bounded JSON object\"}"
+ },
+ {
+  "n": 41,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": "b'[1]'",
+  "status": 400,
+  "resp": "{\"error\": \"Expected a bounded JSON object\"}"
+ },
+ {
+  "n": 42,
+  "method": "POST",
+  "path": "/api/orders/A100/note",
+  "user": "alice",
+  "body": "b'\\xff\\xfe'",
+  "status": 400,
+  "resp": "{\"error\": \"Expected a bounded JSON object\"}"
+ },
+ {
+  "n": 43,
+  "method": "POST",
+  "path": "/api/orders/A100/refund",
+  "user": "alice",
+  "body": "b'{\"amount\":1e3}'",
+  "status": 400,
+  "resp": "{\"error\": \"Amount must be a positive integer in cents\"}"
+ }
+]

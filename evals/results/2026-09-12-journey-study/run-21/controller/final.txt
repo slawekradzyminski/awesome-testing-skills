@@ -1,0 +1,9 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+Recommend holding release for three confirmed defects:
+
+- Order switching can display one order while saving to another.
+- Rejected instructions falsely report success.
+- Keyboard users cannot select express delivery.
+
+The report includes reproductions, evidence, and acceptance criteria. Fixtures were restored and the created browser session was closed.

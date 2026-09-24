@@ -1,0 +1,54 @@
+[
+  {
+    "case_id": "case-21",
+    "surface": "ui",
+    "report_path": "report.md",
+    "expected_seeds": [
+      "U1",
+      "U2",
+      "U3"
+    ],
+    "runtime_status": "completed",
+    "source_preserved": true,
+    "elapsed_seconds": 282.9,
+    "api_requests": 70
+  },
+  {
+    "case_id": "case-22",
+    "surface": "api",
+    "report_path": "evidence/report.md",
+    "expected_seeds": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "runtime_status": "completed",
+    "source_preserved": true,
+    "elapsed_seconds": 204.85,
+    "api_requests": 76
+  },
+  {
+    "case_id": "case-23",
+    "surface": "api",
+    "report_path": "evidence/report.md",
+    "expected_seeds": [],
+    "runtime_status": "completed",
+    "source_preserved": true,
+    "elapsed_seconds": 287.19,
+    "api_requests": 101
+  },
+  {
+    "case_id": "case-24",
+    "surface": "api",
+    "report_path": "evidence/report.md",
+    "expected_seeds": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "runtime_status": "completed",
+    "source_preserved": true,
+    "elapsed_seconds": 232.62,
+    "api_requests": 89
+  }
+]

@@ -1,0 +1,3 @@
+Captured evidence consistent: three defects confirmed; controls passed.
+Total API requests: 64 (one baseline curl + 63 scripted); browser actions: 0.
+Remaining fixture deltas: [('A100', 'version', 1, 4), ('A200', 'refunded', 0, 6001)]

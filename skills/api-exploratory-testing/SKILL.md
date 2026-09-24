@@ -7,11 +7,15 @@ description: Explore APIs through focused source-code analysis and live HTTP exp
 
 Investigate how an API can fail its users. Combine implementation analysis with experiments against the running system, following evidence and new questions rather than exhausting a checklist. Deliver actionable findings, a prioritized risk assessment, and an honest account of what was explored.
 
+**Session deliverable:** unless the project sets another location, create `report.md` and `evidence/` early. Keep a passed/failed/blocked/not-run check ledger tied to ticket criteria, plus sanitized request/response entries with sequence, method/path, role, status and a follow-up read for persisted-state claims. Save evidence during probes; do not defer the exchange log to closeout. If capture is unavailable, mark the affected check blocked or partially evidenced. Use [the report guide](references/reporting.md) for the complete format and redaction rules.
+
 ## Establish the target and invite source access
 
 Start from the user's request, existing conversation, and applicable repository instructions. If application source has not been supplied or located, encourage the user to provide the backend repository/path and branch or revision, plus related services where relevant. Explain that source access helps identify hidden branches, authorization boundaries, and failure paths that API documentation alone may miss. Prefer access to the relevant code over asking for a whole repository dump; never request secrets in chat.
 
 Also establish the API base URL, intended behavior or contract, feature scope, available test roles, and permissible data changes. Reuse information already available; ask only for missing details that affect the next step. Locate source through provided project links/configuration without searching unrelated private projects. Do not repeatedly ask for code if the user cannot share it.
+
+If there is a ticket or story, extract its acceptance criteria and turn them into observable API outcomes, including relevant error and state-preservation cases. If no ticket or criteria are available, invite the user once to share them or name the two or three outcomes that matter most; offer concrete candidate outcomes inferred from the feature. In an interactive session, ask this before the first experiment while continuing independent work. In a one-shot session that cannot receive a reply, put two or three proposed outcomes in the report, mark them unconfirmed, and proceed. When a material rule is ambiguous, present your best proposed interpretation in one concise question for confirmation. Continue checks that do not depend on an answer, label proposed criteria as unconfirmed, and link agreed criteria to check results in the report. Do not make the user fill in a generic questionnaire when the ticket and code already answer it.
 
 - **Source and runtime available:** perform code-informed exploration and live HTTP verification.
 - **Runtime only:** proceed with black-box exploration using contracts and observed behavior; identify the source-access limitation.
@@ -37,13 +41,13 @@ Prioritize using impact, exposure, complexity/change, weak evidence, and likelih
 
 ## Explore the running API
 
-Choose a short session charter: the question, feature boundary, key risks, and stopping condition. Honor the user's time/request budget. Otherwise start with a bounded pass through the highest-priority risks and reassess at meaningful checkpoints. Routine scope and probe choices do not need a plan-approval ceremony.
+Choose a short session charter: the question, feature boundary, explicit exclusions, key risks, and stopping condition. Honor the user's time/request budget. Reserve time to preserve evidence and deliver a usable report; write down important findings as they emerge. Otherwise start with a bounded pass through the highest-priority risks and reassess at meaningful checkpoints. Routine scope and probe choices do not need a plan-approval ceremony.
 
 Use **curl**, HTTPie, an available language HTTP library, or another HTTP client that exposes the request, status, headers, body, and timing. Prefer available tools and existing authentication helpers; a dedicated testing framework is unnecessary. Check client help when flags are uncertain. Use explicit request timeouts. Preserve error bodies for negative probes; do not mistake an HTTP client's success exit code for a correct API result.
 
 Check a representative read for usable application behavior before launching a probe batch. If it returns a gateway/service-unavailable response, stop the batch and use only a few targeted availability checks within the user's limit. A script must stop on that condition too; do not run planned mutation, cleanup, or validation matrices against repeated outage responses. Report functional testing as blocked, retain the availability evidence, and continue useful source analysis if available. A reachable proxy or a successful health check alone does not prove that the feature is usable.
 
-Before live probes, read [experiment design](references/experiment-design.md): choose techniques for the risks at hand, including relationships between results, state transitions, ownership contrasts, and ambiguous write outcomes. Establish a representative valid request, then vary inputs, identity, and state to test the risk hypotheses. These are testing lenses, not a mandatory case matrix.
+For the selected risks, consult the relevant techniques in [experiment design](references/experiment-design.md), including relationships between results, state transitions, ownership contrasts, and ambiguous write outcomes. Establish a representative valid request, then vary inputs, identity, and state to test the risk hypotheses. These are testing lenses, not a mandatory case matrix.
 
 Inspect the whole observable result. A status code alone is insufficient: check response semantics, relevant headers, follow-up reads, and resulting state. Failed requests may still mutate data; successful ones may fail to persist it. Distinguish ordinary live behavior from injected conditions, mocks, and proxy/gateway behavior. For streaming APIs, inspect event semantics, ordering, completion, and interruption rather than treating every transport chunk as an event.
 
@@ -53,7 +57,7 @@ For suspicious results, capture the smallest reproducible request and check alte
 
 ## Evidence, findings, and completion
 
-Keep concise session notes and sanitized evidence in the user's chosen reporting location or existing project convention. If neither exists, create one local session report with evidence references; do not create a report per endpoint by default. Use [the report guide](references/reporting.md) for the risk summary and individual findings. Read existing relevant findings to avoid duplicates.
+Keep a durable session report and sanitized evidence in the user's chosen reporting location or existing project convention. If neither exists, create `report.md` and an `evidence/` directory. As you test, record meaningful checks with passed/failed/blocked/not-run outcomes and links to HTTP request/response evidence; retain a follow-up state read for claims about persistence. Summarize the operations and states explored, including passing contrasts, so another tester can see what was checked. Use [the report guide](references/reporting.md) for the evidence package, risk summary, finding template, stable IDs, type labels, severity rationale and retest status. Read existing relevant findings to avoid duplicates. Include functional, documentation or performance findings when supported and in scope; keep issue type separate from evidence state and honor explicit exclusions.
 
 Capture method/path, sanitized inputs and role, status, pertinent headers/body, state before/after, environment, and observed reproduction count. Use named placeholders for credentials; keep executable secret-bearing requests and raw responses out of published evidence and Git. Preserve enough sanitized detail to reproduce the finding without relying on an inaccessible scratch file.
 

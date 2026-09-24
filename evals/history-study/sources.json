@@ -1,0 +1,37 @@
+{
+  "api-before": {
+    "repository": "/Users/slawek/IdeaProjects/test-secure-backend",
+    "url": "https://github.com/slawekradzyminski/test-secure-backend",
+    "revision": "8bfa560dbdd309036cf850b1302d8e1fc1806573"
+  },
+  "api-fixed": {
+    "repository": "/Users/slawek/IdeaProjects/test-secure-backend",
+    "url": "https://github.com/slawekradzyminski/test-secure-backend",
+    "revision": "75ca60d8879b8c9b1e7c78031f01429852d1f72c"
+  },
+  "runtime-backend": {
+    "repository": "/Users/slawek/IdeaProjects/test-secure-backend",
+    "url": "https://github.com/slawekradzyminski/test-secure-backend",
+    "revision": "b4973a53b1697f84a479b6aceeb870cd48423091"
+  },
+  "ui-before": {
+    "repository": "/Users/slawek/IdeaProjects/vite-react-frontend",
+    "url": "https://github.com/slawekradzyminski/vite-react-frontend",
+    "revision": "f71a4f63ca7514c0b8109a2d3d3a335406fa10f1"
+  },
+  "mobile-before": {
+    "repository": "/Users/slawek/IdeaProjects/vite-react-frontend",
+    "url": "https://github.com/slawekradzyminski/vite-react-frontend",
+    "revision": "aa90523b8eaa9b1d1e575f125c3f2c83b7dc372e"
+  },
+  "mobile-fixed": {
+    "repository": "/Users/slawek/IdeaProjects/vite-react-frontend",
+    "url": "https://github.com/slawekradzyminski/vite-react-frontend",
+    "revision": "d866c7f4dc18573a46f78a976feb0f2c7e6c9d78"
+  },
+  "cart-before": {
+    "repository": "/Users/slawek/IdeaProjects/vite-react-frontend",
+    "url": "https://github.com/slawekradzyminski/vite-react-frontend",
+    "revision": "b49cf3cb7b1e8ccdbe11b5ec6cb468bb3f723ab7"
+  }
+}

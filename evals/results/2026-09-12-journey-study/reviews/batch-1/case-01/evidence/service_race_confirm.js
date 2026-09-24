@@ -1,0 +1,25 @@
+async page => {
+ const log=[];
+ await page.locator('#order').selectOption('A200');
+ await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+ let releaseExpress, expressCommitted, standardDelivered;
+ const held=new Promise(r=>releaseExpress=r), committed=new Promise(r=>expressCommitted=r), delivered=new Promise(r=>standardDelivered=r);
+ await page.route('**/api/services',async route=>{
+   const response=await route.fetch(); const body=await response.json();
+   const service=route.request().postDataJSON().service;
+   log.push({serverResponseFor:service,status:response.status(),body});
+   if(service==='express'){expressCommitted();await held;}
+   await route.fulfill({response});
+   if(service==='standard') standardDelivered();
+ });
+ await page.locator('#express').click(); await committed;
+ await page.locator('#standard').click(); await delivered;
+ await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery service saved');
+ releaseExpress(); await page.waitForFunction(()=>document.querySelector('#service').textContent==='express');
+ log.push({displayedBeforeReload:await page.locator('#service').textContent()});
+ await page.unroute('**/api/services');
+ await page.reload(); await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+ await page.locator('#order').selectOption('A200'); await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+ log.push({displayedAfterReload:await page.locator('#service').textContent()});
+ return log;
+}

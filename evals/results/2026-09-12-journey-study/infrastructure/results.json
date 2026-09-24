@@ -1,0 +1,26 @@
+[
+  {
+    "surface": "api",
+    "variant": "control",
+    "seeds_checked": 3,
+    "passed": true
+  },
+  {
+    "surface": "api",
+    "variant": "defects",
+    "seeds_checked": 3,
+    "passed": true
+  },
+  {
+    "surface": "ui",
+    "variant": "control",
+    "seeds_checked": 3,
+    "passed": true
+  },
+  {
+    "surface": "ui",
+    "variant": "defects",
+    "seeds_checked": 3,
+    "passed": true
+  }
+]

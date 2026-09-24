@@ -1,0 +1,132 @@
+[
+  {
+    "label": "baseline",
+    "method": "GET",
+    "path": "http://127.0.0.1:59591/api/orders/A200",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "161 character note with trailing space",
+    "method": "POST",
+    "path": "http://127.0.0.1:59591/api/orders/A200/note",
+    "request": {
+      "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn "
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn ",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "read persisted oversized note",
+    "method": "GET",
+    "path": "http://127.0.0.1:59591/api/orders/A200",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn ",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "161 nonspace character control",
+    "method": "POST",
+    "path": "http://127.0.0.1:59591/api/orders/A200/note",
+    "request": {
+      "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "label": "read after rejected length control",
+    "method": "GET",
+    "path": "http://127.0.0.1:59591/api/orders/A200",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn ",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "locker with whitespace and mixed case",
+    "method": "POST",
+    "path": "http://127.0.0.1:59591/api/orders/A200/note",
+    "request": {
+      "note": "  LoCkEr: 12  "
+    },
+    "status": 422,
+    "response": {
+      "error": "Locker delivery is unavailable; enter another instruction"
+    }
+  },
+  {
+    "label": "restore original note",
+    "method": "POST",
+    "path": "http://127.0.0.1:59591/api/orders/A200/note",
+    "request": {
+      "note": "Ring twice"
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "verify restored order",
+    "method": "GET",
+    "path": "http://127.0.0.1:59591/api/orders/A200",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "run-01",
+    "block": 1,
+    "position": 1,
+    "arm": "normal"
+  },
+  {
+    "id": "run-02",
+    "block": 1,
+    "position": 2,
+    "arm": "report-only"
+  },
+  {
+    "id": "run-03",
+    "block": 1,
+    "position": 3,
+    "arm": "full"
+  },
+  {
+    "id": "run-04",
+    "block": 1,
+    "position": 4,
+    "arm": "investigation-only"
+  }
+]

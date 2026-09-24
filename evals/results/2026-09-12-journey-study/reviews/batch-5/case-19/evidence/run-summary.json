@@ -1,0 +1,193 @@
+{
+  "requests": 92,
+  "checks": 132,
+  "failed": [
+    {
+      "name": "F1 cumulative excessive refund must reject",
+      "request_id": 49,
+      "expected": 409,
+      "actual": 200,
+      "pass": false
+    },
+    {
+      "name": "F1 refund total must stay at payment",
+      "request_id": 51,
+      "expected": 10000,
+      "actual": 10001,
+      "pass": false
+    },
+    {
+      "name": "F2 stale version must reject",
+      "request_id": 53,
+      "expected": 409,
+      "actual": 200,
+      "pass": false
+    },
+    {
+      "name": "F2 newer address preserved",
+      "request_id": 55,
+      "expected": "New address from current editor",
+      "actual": "Stale editor overwrite",
+      "pass": false
+    },
+    {
+      "name": "F2 rejected stale edit does not increment version",
+      "request_id": 55,
+      "expected": 2,
+      "actual": 3,
+      "pass": false
+    },
+    {
+      "name": "F3 bulk MISSING failure must preserve every order",
+      "request_id": 61,
+      "expected": {
+        "A100": {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        "A200": {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        },
+        "B100": {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      },
+      "actual": {
+        "A100": {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        "A200": {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "express"
+        },
+        "B100": {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      },
+      "pass": false
+    },
+    {
+      "name": "F3 bulk B100 failure must preserve every order",
+      "request_id": 70,
+      "expected": {
+        "A100": {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        "A200": {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        },
+        "B100": {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      },
+      "actual": {
+        "A100": {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        "A200": {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "express"
+        },
+        "B100": {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      },
+      "pass": false
+    }
+  ],
+  "remaining_changes": {
+    "A100": {
+      "refunded": {
+        "before": 0,
+        "after": 10001
+      }
+    },
+    "A200": {
+      "version": {
+        "before": 1,
+        "after": 4
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+Assessment saved in [evidence/report.md](/private/tmp/awesome-skills-journey-study-20260912/run-17/candidate/evidence/report.md).
+
+Found one confirmed Medium defect: overlapping service saves can display the wrong persisted service. Recommend fixing before release. Routine tests and core journey checks passed.
+
+Reversible changes were restored; the browser session was closed. Bob’s refund total and address version require fixture reset.

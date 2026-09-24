@@ -1,0 +1,90 @@
+[
+  {
+    "label": "exact list isolation alice",
+    "passed": true,
+    "actual": [
+      "A100",
+      "A200"
+    ],
+    "expected": [
+      "A100",
+      "A200"
+    ]
+  },
+  {
+    "label": "exact list isolation bob",
+    "passed": true,
+    "actual": [
+      "B100"
+    ],
+    "expected": [
+      "B100"
+    ]
+  },
+  {
+    "label": "above original payment",
+    "passed": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "label": "owned single order read",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "excessive initial refund preserves whole order",
+    "passed": true,
+    "actual": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 0,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    },
+    "expected": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 0,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "stale address rejection",
+    "passed": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "label": "stale address preserves whole order",
+    "passed": true,
+    "actual": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "expected": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  }
+]

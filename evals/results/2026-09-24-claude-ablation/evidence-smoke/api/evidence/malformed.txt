@@ -1,0 +1,4 @@
+malformed body {bad:
+{"error": "Expected a bounded JSON object"} HTTP 400
+malformed body [1]:
+{"error": "Expected a bounded JSON object"} HTTP 400

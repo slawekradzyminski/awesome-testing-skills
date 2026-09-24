@@ -1,0 +1,78 @@
+{
+  "requests": 76,
+  "checks": 72,
+  "failed": [
+    {
+      "check": "missing bulk is atomic",
+      "passed": false,
+      "detail": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "service": "express"
+      }
+    },
+    {
+      "check": "forbidden bulk is atomic",
+      "passed": false,
+      "detail": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "service": "express"
+      }
+    },
+    {
+      "check": "stale address save",
+      "passed": false,
+      "detail": {
+        "expected_status": 409,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "stale address preserves newer state",
+      "passed": false,
+      "detail": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale overwrite",
+        "version": 3,
+        "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "service": "express"
+      }
+    },
+    {
+      "check": "refund exceeds remaining by one cent",
+      "passed": false,
+      "detail": {
+        "expected_status": 409,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "refund total never exceeds paid",
+      "passed": false,
+      "detail": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      }
+    }
+  ]
+}

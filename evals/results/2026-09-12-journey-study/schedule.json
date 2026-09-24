@@ -1,0 +1,170 @@
+[
+  {
+    "id": "run-01",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "normal"
+  },
+  {
+    "id": "run-02",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "template"
+  },
+  {
+    "id": "run-03",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "skill"
+  },
+  {
+    "id": "run-04",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "normal"
+  },
+  {
+    "id": "run-05",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "skill"
+  },
+  {
+    "id": "run-06",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "template"
+  },
+  {
+    "id": "run-07",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "template"
+  },
+  {
+    "id": "run-08",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "normal"
+  },
+  {
+    "id": "run-09",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 1,
+    "condition": "skill"
+  },
+  {
+    "id": "run-10",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "template"
+  },
+  {
+    "id": "run-11",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "skill"
+  },
+  {
+    "id": "run-12",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 1,
+    "condition": "normal"
+  },
+  {
+    "id": "run-13",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "skill"
+  },
+  {
+    "id": "run-14",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "normal"
+  },
+  {
+    "id": "run-15",
+    "surface": "api",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "template"
+  },
+  {
+    "id": "run-16",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "skill"
+  },
+  {
+    "id": "run-17",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "template"
+  },
+  {
+    "id": "run-18",
+    "surface": "ui",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "normal"
+  },
+  {
+    "id": "run-19",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "normal"
+  },
+  {
+    "id": "run-20",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "template"
+  },
+  {
+    "id": "run-21",
+    "surface": "ui",
+    "variant": "defects",
+    "repeat": 2,
+    "condition": "skill"
+  },
+  {
+    "id": "run-22",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "normal"
+  },
+  {
+    "id": "run-23",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "skill"
+  },
+  {
+    "id": "run-24",
+    "surface": "api",
+    "variant": "control",
+    "repeat": 2,
+    "condition": "template"
+  }
+]

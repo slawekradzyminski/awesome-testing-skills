@@ -1,0 +1,9 @@
+Assessment complete: **hold release** for three confirmed defects:
+
+- Cumulative refunds exceed payment.
+- Stale address edits overwrite newer data.
+- Failed bulk service requests partially apply changes.
+
+[Report and evidence](evidence/report.md) include reproductions and acceptance criteria. Used 89 API requests; all four existing tests passed.
+
+Reversible changes were restored. A200 still requires owner reset for its refund total and version counter.

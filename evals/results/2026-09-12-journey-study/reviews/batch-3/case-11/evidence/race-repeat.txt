@@ -1,0 +1,6 @@
+### Result
+{"ordinary":{"selected":"A200","heading":"Order A200"},"responses":[{"url":"http://127.0.0.1:57088/api/orders/A200","status":200},{"url":"http://127.0.0.1:57088/api/orders/A100","status":200}],"race":{"selected":"A200","heading":"Order A100"}}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("combobox",{name:"Order",exact:true}).selectOption("A200"); await page.getByRole("heading",{name:"Order A200",exact:true}).waitFor(); const ordinary={selected:await page.locator("#order").inputValue(),heading:await page.locator("#heading").innerText()}; const responses=[]; const listener=r=>{if(r.url().includes("/api/orders/"))responses.push({url:r.url(),status:r.status()});}; page.on("response",listener); const slow=page.waitForResponse(r=>r.url().endsWith("/A100")); await page.getByRole("combobox",{name:"Order",exact:true}).selectOption("A100"); await page.getByRole("combobox",{name:"Order",exact:true}).selectOption("A200"); await slow; await page.getByRole("heading",{name:"Order A100",exact:true}).waitFor(); page.removeListener("response",listener); return {ordinary,responses,race:{selected:await page.locator("#order").inputValue(),heading:await page.locator("#heading").innerText()}}; })(page);
+```

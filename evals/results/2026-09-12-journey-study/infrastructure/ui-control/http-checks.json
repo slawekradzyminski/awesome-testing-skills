@@ -1,0 +1,47 @@
+[
+  {
+    "path": "/api/orders/A200",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/orders/A200",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/orders/A200",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "express"
+    }
+  }
+]

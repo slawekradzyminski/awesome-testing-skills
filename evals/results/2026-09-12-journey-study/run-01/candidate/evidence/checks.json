@@ -1,0 +1,1304 @@
+[
+  {
+    "name": "alice list status",
+    "request_id": 1,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 1,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 2,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 2,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "anonymous list rejected",
+    "request_id": 3,
+    "expected": 401,
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "name": "anonymous detail rejected",
+    "request_id": 4,
+    "expected": 401,
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "name": "anonymous refund",
+    "request_id": 5,
+    "expected": 401,
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "name": "anonymous address",
+    "request_id": 6,
+    "expected": 401,
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "name": "anonymous note",
+    "request_id": 7,
+    "expected": 401,
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "name": "anonymous services",
+    "request_id": 8,
+    "expected": 401,
+    "actual": 401,
+    "pass": true
+  },
+  {
+    "name": "alice foreign detail denied",
+    "request_id": 9,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "alice foreign refund",
+    "request_id": 10,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "alice foreign address",
+    "request_id": 11,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "alice foreign note",
+    "request_id": 12,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "alice foreign service",
+    "request_id": 13,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "bob foreign detail denied",
+    "request_id": 14,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "bob foreign refund",
+    "request_id": 15,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "bob foreign address",
+    "request_id": 16,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "bob foreign note",
+    "request_id": 17,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "bob foreign service",
+    "request_id": 18,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 19,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 19,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 20,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 20,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "denied operations preserve all records",
+    "request_id": 20,
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "pass": true
+  },
+  {
+    "name": "malformed JSON object b'{'",
+    "request_id": 21,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "malformed JSON object b'[]'",
+    "request_id": 22,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "malformed JSON object b'null'",
+    "request_id": 23,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "malformed JSON object b''",
+    "request_id": 24,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid refund None",
+    "request_id": 25,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid refund True",
+    "request_id": 26,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid refund 0",
+    "request_id": 27,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid refund -1",
+    "request_id": 28,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid refund 1.5",
+    "request_id": 29,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid refund '100'",
+    "request_id": 30,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "single excessive refund",
+    "request_id": 31,
+    "expected": 409,
+    "actual": 409,
+    "pass": true
+  },
+  {
+    "name": "invalid address {}",
+    "request_id": 32,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid address {'address': ' ', 'version': 1}",
+    "request_id": 33,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid address {'address': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'version': 1}",
+    "request_id": 34,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid address {'address': 'Valid', 'version': True}",
+    "request_id": 35,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid address {'address': 'Valid', 'version': '1'}",
+    "request_id": 36,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid services {}",
+    "request_id": 37,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid services {'ids': [], 'service': 'express'}",
+    "request_id": 38,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid services {'ids': ['A200'], 'service': 'overnight'}",
+    "request_id": 39,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid services {'ids': ['A200', 1], 'service': 'express'}",
+    "request_id": 40,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid note None",
+    "request_id": 41,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid note ''",
+    "request_id": 42,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid note ' '",
+    "request_id": 43,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "invalid note 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+    "request_id": 44,
+    "expected": 400,
+    "actual": 400,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 45,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 45,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 46,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 46,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "invalid inputs preserve all records",
+    "request_id": 46,
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "pass": true
+  },
+  {
+    "name": "first partial refund",
+    "request_id": 47,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "exact remaining refund",
+    "request_id": 48,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "exact full refund total",
+    "request_id": 48,
+    "expected": 10000,
+    "actual": 10000,
+    "pass": true
+  },
+  {
+    "name": "F1 cumulative excessive refund must reject",
+    "request_id": 49,
+    "expected": 409,
+    "actual": 200,
+    "pass": false
+  },
+  {
+    "name": "alice list status",
+    "request_id": 50,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 50,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 51,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 51,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "F1 refund total must stay at payment",
+    "request_id": 51,
+    "expected": 10000,
+    "actual": 10001,
+    "pass": false
+  },
+  {
+    "name": "current version address accepted",
+    "request_id": 52,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "successful address increments version",
+    "request_id": 52,
+    "expected": 2,
+    "actual": 2,
+    "pass": true
+  },
+  {
+    "name": "F2 stale version must reject",
+    "request_id": 53,
+    "expected": 409,
+    "actual": 200,
+    "pass": false
+  },
+  {
+    "name": "alice list status",
+    "request_id": 54,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 54,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 55,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 55,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "F2 newer address preserved",
+    "request_id": 55,
+    "expected": "New address from current editor",
+    "actual": "Stale editor overwrite",
+    "pass": false
+  },
+  {
+    "name": "F2 rejected stale edit does not increment version",
+    "request_id": 55,
+    "expected": 2,
+    "actual": 3,
+    "pass": false
+  },
+  {
+    "name": "future version rejected",
+    "request_id": 56,
+    "expected": 409,
+    "actual": 409,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 57,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 57,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 58,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 58,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bulk MISSING returns proper error",
+    "request_id": 59,
+    "expected": 404,
+    "actual": 404,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 60,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 60,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 61,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 61,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "F3 bulk MISSING failure must preserve every order",
+    "request_id": 61,
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale editor overwrite",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale editor overwrite",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "express"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "pass": false
+  },
+  {
+    "name": "restore service after MISSING",
+    "request_id": 62,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bulk MISSING first returns proper error",
+    "request_id": 63,
+    "expected": 404,
+    "actual": 404,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 64,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 64,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 65,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 65,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bulk invalid-first preserves every order MISSING",
+    "request_id": 65,
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale editor overwrite",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale editor overwrite",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 66,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 66,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 67,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 67,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bulk B100 returns proper error",
+    "request_id": 68,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 69,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 69,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 70,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 70,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "F3 bulk B100 failure must preserve every order",
+    "request_id": 70,
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale editor overwrite",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale editor overwrite",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "express"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "pass": false
+  },
+  {
+    "name": "restore service after B100",
+    "request_id": 71,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bulk B100 first returns proper error",
+    "request_id": 72,
+    "expected": 403,
+    "actual": 403,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 73,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 73,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 74,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 74,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bulk invalid-first preserves every order B100",
+    "request_id": 74,
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale editor overwrite",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale editor overwrite",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "pass": true
+  },
+  {
+    "name": "valid bulk express",
+    "request_id": 75,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 76,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 76,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 77,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 77,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "valid bulk persists both orders",
+    "request_id": 77,
+    "expected": [
+      "express",
+      "express"
+    ],
+    "actual": [
+      "express",
+      "express"
+    ],
+    "pass": true
+  },
+  {
+    "name": "valid note length 1",
+    "request_id": 78,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "valid note persisted length 1",
+    "request_id": 79,
+    "expected": "x",
+    "actual": "x",
+    "pass": true
+  },
+  {
+    "name": "valid note length 160",
+    "request_id": 80,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "valid note persisted length 160",
+    "request_id": 81,
+    "expected": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "actual": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "pass": true
+  },
+  {
+    "name": "locker rejected 'LOCKER: 1'",
+    "request_id": 82,
+    "expected": 422,
+    "actual": 422,
+    "pass": true
+  },
+  {
+    "name": "locker rejected '  locker: 1'",
+    "request_id": 83,
+    "expected": 422,
+    "actual": 422,
+    "pass": true
+  },
+  {
+    "name": "rejected locker preserves previous note",
+    "request_id": 84,
+    "expected": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "actual": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 85,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 85,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 86,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 86,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "cleanup service A100",
+    "request_id": 87,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "cleanup service A200",
+    "request_id": 88,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "cleanup note A200",
+    "request_id": 89,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "cleanup address A200",
+    "request_id": 90,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice list status",
+    "request_id": 91,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "alice ownership filtering",
+    "request_id": 91,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  {
+    "name": "bob list status",
+    "request_id": 92,
+    "expected": 200,
+    "actual": 200,
+    "pass": true
+  },
+  {
+    "name": "bob ownership filtering",
+    "request_id": 92,
+    "expected": true,
+    "actual": true,
+    "pass": true
+  }
+]

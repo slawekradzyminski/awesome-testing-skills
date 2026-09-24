@@ -111,3 +111,36 @@ The [benchmark user guide](../evals/GETTING_STARTED.md) now covers the included 
 Repository visibility was changed to public and verified through an unauthenticated GitHub API request. Current installation and cloning instructions use HTTPS. The public `npx` command passed with a fresh npm cache, Git credential prompts disabled and global Git configuration excluded; both installed skill directories matched the repository files. Earlier private-SSH validation above records the previous setup. This change did not publish a package to the npm registry.
 
 The project was subsequently renamed to **Awesome Testing Skills**, at `slawekradzyminski/awesome-testing-skills`. Current package metadata, clone commands and the installer command use that name. The previous `exploratory-skills` command remains an alias; installed skill names and backup directories retain their existing names. All ten installer tests pass after the rename.
+
+## Reporting and scoped accessibility/UX refinement — September 12, 2026
+
+Both reporting references now make finding IDs, type labels, evidence state, workflow status and acceptance/retest criteria explicit. They preserve the existing impact-first severity assessment, separate repair priority, and provide an optional report filename convention without requiring individual files. The UI reference adds explicit UX and documentation categories. Browser guidance adds concrete keyboard, focus, semantic and recovery investigations, and distinguishes inspected accessibility properties from an actual screen-reader check.
+
+Both skills pass `quick_validate.py` using an isolated `uv` environment with PyYAML. Local skill reference links resolve and `git diff --check` passes. The instructions were manually reviewed for the following decisions:
+
+| Situation | Instruction review |
+| --- | --- |
+| The same checkout failure is both functional and an accessibility barrier | Keep one independently actionable finding with related labels; assess impact for affected users |
+| A layout alternative reflects preference without demonstrated impairment | Keep it as a suggestion or unresolved design question, outside the confirmed-bug count |
+| A schema and runtime response disagree but intended behavior is unknown | Preserve the conflict and request the missing decision; do not automatically declare the documentation wrong |
+| A task explicitly excludes documentation-only findings | Honor the exclusion; taxonomy does not expand the investigation |
+| Only accessible properties were inspected | Report those observations and leave screen-reader behavior untested |
+| A fix is proposed but has not been retested | Retain pending retest status and require build/date/evidence before marking verified |
+
+These are static instruction checks, not fresh agent trials. Existing benchmark reports, scores, case definitions and documentation exclusions remain unchanged; they describe their recorded skill snapshots. The reporting refinements and broader accessibility/UX guidance need fresh behavioral evaluation before claiming an improvement. Future comparisons should use the same outcome criteria for both conditions and distinguish discovery, evidence quality, triage usefulness and unsupported findings.
+
+## Repeated three-condition study — September 12, 2026
+
+The [Dispatch Desk assessment](../evals/results/2026-09-12-journey-study.md) evaluates the reporting/accessibility refinement above using its frozen skill snapshot. Twenty-four fresh candidate sessions compare a normal request, a compact reporting template and the full skill across API/UI defect/control variants, with two repetitions. Six fresh, partially masked AI artifact reviews were followed by explicit author consistency adjudication. Raw reviews and all candidate reports remain available.
+
+Every condition established all 12 seeded opportunities with actionable evidence. Seeded triage scores were 32/36, 35/36 and 34/36 respectively; small severity-calibration differences do not establish a reliable ranking. Full-skill sessions used fewer API calls but took longer and generated more output. The study provides no demonstrated effectiveness advantage for the full skill. It samples keyboard access and recovery behavior, not every accessibility/UX category in the guidance.
+
+Four application unit tests, twelve runtime/browser seed-and-control checks, seventeen existing harness tests and three aggregation checks pass. Source and skill preservation checks passed for all applicable runs; final frozen input/controller hashes matched. The author separately reproduced three additional client-state/recovery mechanisms and reviewed screenshots. An ambiguous note-length observation is consistently unresolved in all conditions, with raw judgments retained. All candidate runs completed within six minutes and 120 API calls; complete browser-action counts were not independently reconstructed.
+
+The [archive](../evals/results/2026-09-12-journey-study/README.md) records model/tool settings, controller traces, audits, tokens, elapsed time, adjudications and fixture evidence. The original root-only report detector missed reports saved under `evidence/`; all 24 reports exist and were reviewed. This is a small self-authored screening study with context-bound isolation, not an independent held-out benchmark or a general performance claim. The previous 18 cases and historical scores remain separate.
+
+## Historical runner closeout and Claude setup — September 12, 2026
+
+The [historical study closeout](../evals/results/2026-09-12-history-study.md) records four independently curated native before/fix pairs, a corrected control and an unavailable API. The 36-session schedule was stopped during closeout: 24 completed, four timed out, two candidates interrupted, one startup interrupted and five unstarted. Twenty-seven reports remain. All terminal source/skill preservation checks passed. No masked artifact review ran, so there are no historical effectiveness scores. Unequal exposure prevents a fair arm comparison.
+
+The reusable runner adds portable builds, actual HEAD forwarding/audit, retained browser-close status and an isolated Claude Code/API path. Six focused integrity tests pass. Sonnet 5 configuration and a real file/browser smoke passed; zero Claude benchmark candidates ran. Final owned-process and legacy-port cleanup checks passed. Raw evidence remains in the local archive identified by the closeout, pending grading and publication review. Prior study results remain unchanged.

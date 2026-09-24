@@ -1,0 +1,28 @@
+async page => {
+  let release, arrived;
+  const gate=new Promise(r=>release=r), firstArrived=new Promise(r=>arrived=r);
+  const events=[];
+  const handler=async route=>{
+    const data=route.request().postDataJSON();
+    const response=await route.fetch();
+    events.push({service:data.service,status:response.status(),body:await response.json()});
+    if(data.service==='express'){arrived();await gate;}
+    await route.fulfill({response});
+  };
+  await page.route('**/api/services',handler);
+  try {
+    await page.getByRole('button',{name:'Use express delivery',exact:true}).click();
+    await firstArrived;
+    await page.getByRole('button',{name:'Use standard delivery',exact:true}).click();
+    await page.waitForResponse(r=>r.url().endsWith('/api/services') && r.request().postDataJSON().service==='standard');
+    const beforeRelease=await page.locator('#service').innerText();
+    release();
+    await page.locator('#service').filter({hasText:/^express$/}).waitFor();
+    const displayed=await page.locator('#service').innerText();
+    const persisted=await (await page.request.get('http://127.0.0.1:56450/api/orders/A100',{headers:{'X-Test-User':'alice'}})).json();
+    await page.screenshot({path:'evidence/service-race.png',fullPage:true});
+    await page.reload();
+    await page.getByRole('heading',{name:'Order A100',exact:true}).waitFor();
+    return {injected:'Held first real response until second real response completed; no response bodies changed',events,beforeRelease,displayed,persisted,afterReload:await page.locator('#service').innerText()};
+  } finally { release();await page.unroute('**/api/services',handler); }
+}

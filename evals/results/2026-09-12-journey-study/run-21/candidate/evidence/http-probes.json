@@ -1,0 +1,256 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Journey assessment: reception pleaseJourney keyboard save",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Journey assessment: wrong target proof",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": null,
+    "body": null,
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "user": "alice",
+    "body": null,
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/B100/note",
+    "user": "alice",
+    "body": {
+      "note": "Forbidden edit"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "body": {
+      "ids": [
+        "A100",
+        "B100"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Journey assessment: reception pleaseJourney keyboard save",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Journey assessment: wrong target proof",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "body": {
+      "ids": [
+        "A100",
+        "MISSING"
+      ],
+      "service": "express"
+    },
+    "status": 404,
+    "response": {
+      "error": "Order not found"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Journey assessment: reception pleaseJourney keyboard save",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Journey assessment: wrong target proof",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "body": {
+      "note": ""
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "body": {
+      "note": "   "
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "body": {
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "body": {
+      "note": 123
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "alice",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Journey assessment: reception pleaseJourney keyboard save",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Journey assessment: wrong target proof",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "asset": "/app.js",
+    "local_file": "app/static/app.js",
+    "sha256": "51fce1f7057a25fa47df991785ff53ebe33431cc871131037ee4d48481091650",
+    "deployed_matches": true
+  },
+  {
+    "asset": "/style.css",
+    "local_file": "app/static/style.css",
+    "sha256": "d3cf90c54c13771f13912d89ff946b56ba0f96184b8312b927c46b4d4b987708",
+    "deployed_matches": true
+  },
+  {
+    "asset": "/",
+    "local_file": "app/static/index.html",
+    "sha256": "eff60ba20e42a98e7c04da8c79a7d982eb682a994e2e03ed4855f7c2adf1fea8",
+    "deployed_matches": true
+  }
+]

@@ -1,0 +1,6 @@
+          - link "4" [ref=f2e26] [cursor=pointer]:
+                - generic [ref=f2e46]: $49.95 each
+                  - generic [ref=f2e50]: "4"
+                - generic [ref=f2e52]: $199.80
+                  - generic [ref=f2e60]: "4"
+                  - generic [ref=f2e63]: $199.80

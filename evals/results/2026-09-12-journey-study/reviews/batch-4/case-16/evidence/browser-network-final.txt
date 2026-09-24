@@ -1,0 +1,21 @@
+### Result
+4. [GET] http://127.0.0.1:59252/api/orders/A100 => [200] OK
+5. [POST] http://127.0.0.1:59252/api/orders/A100/note => [200] OK
+9. [GET] http://127.0.0.1:59252/api/orders/A100 => [200] OK
+10. [POST] http://127.0.0.1:59252/api/services => [200] OK
+14. [GET] http://127.0.0.1:59252/api/orders/A100 => [200] OK
+15. [POST] http://127.0.0.1:59252/api/orders/A100/note => [422] Unprocessable Content
+19. [GET] http://127.0.0.1:59252/api/orders/A100 => [200] OK
+20. [GET] http://127.0.0.1:59252/api/orders/A200 => [200] OK
+21. [GET] http://127.0.0.1:59252/api/orders/A100 => [200] OK
+22. [GET] http://127.0.0.1:59252/api/orders/A200 => [200] OK
+23. [POST] http://127.0.0.1:59252/api/orders/A200/note => [200] OK
+27. [GET] http://127.0.0.1:59252/api/orders/A100 => [200] OK
+28. [POST] http://127.0.0.1:59252/api/orders/A100/note => [200] OK
+29. [POST] http://127.0.0.1:59252/api/services => [200] OK
+30. [POST] http://127.0.0.1:59252/api/orders/A100/note => [422] Unprocessable Content
+31. [GET] http://127.0.0.1:59252/api/orders/A200 => [200] OK
+32. [GET] http://127.0.0.1:59252/api/orders/A100 => [200] OK
+33. [GET] http://127.0.0.1:59252/api/orders/A200 => [200] OK
+
+Note: 15 static requests not shown, run with --static option to see them.

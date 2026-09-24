@@ -1,0 +1,12 @@
+{
+  "input_length": 161,
+  "trimmed_length": 160,
+  "status": 200,
+  "persisted_length": 161,
+  "persisted_exact_input": true,
+  "nonspace_161_status": 400,
+  "rejected_control_retains_previous": true,
+  "normalized_locker_status": 422,
+  "full_order_restored": true,
+  "api_requests": 8
+}

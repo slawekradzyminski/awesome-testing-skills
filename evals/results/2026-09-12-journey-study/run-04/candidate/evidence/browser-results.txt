@@ -1,0 +1,59 @@
+### Ran Playwright code
+```js
+await (async page => {
+  const results=[];
+  const check=(name,ok,details)=>{results.push({name,pass:!!ok,details});if(!ok)throw Error(JSON.stringify(results));};
+  const state=()=>page.evaluate(()=>({order:document.querySelector('#order').value,heading:document.querySelector('#heading').textContent,note:document.querySelector('#note').value,service:document.querySelector('#service').textContent,feedback:document.querySelector('#feedback').textContent,loading:document.querySelector('#loading').textContent}));
+  await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+  check('initial Alice order',(await state()).heading==='Order A100',await state());
+  await page.selectOption('#order','A200');
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+  await page.fill('#note','LOCKER: 1');
+  const rejected=page.waitForResponse(r=>r.url().endsWith('/A200/note'));
+  await page.click('#save');
+  check('locker rejected',(await rejected).status()===422);
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent.includes('unavailable'));
+  check('actionable feedback and draft retained',(await state()).note==='LOCKER: 1' && !(await state()).feedback.includes('saved'),await state());
+  await page.screenshot({path:'evidence/rejected-draft.png'});
+  await page.fill('#note','Assessment: ring once');
+  await page.click('#save');
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+  await page.reload();
+  await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+  await page.selectOption('#order','A200');
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+  check('note survives reload',(await state()).note==='Assessment: ring once',await state());
+  await page.fill('#note','Ring twice');await page.click('#save');
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+  await page.selectOption('#order','A100');
+  await page.selectOption('#order','A200');
+  await page.waitForTimeout(850);
+  check('out of order lookup remains coherent',(await state()).order==='A200' && (await state()).heading==='Order A200' && (await state()).note==='Ring twice',await state());
+  await page.fill('#note','Assessment race target');await page.click('#save');
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+  const rows=await page.evaluate(async()=> (await (await fetch('/api/orders',{headers:{'X-Test-User':'alice'}})).json()).orders);
+  check('save targets selected order',rows[0].note==='Leave with reception'&&rows[1].note==='Assessment race target',rows);
+  await page.fill('#note','Ring twice');await page.click('#save');
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+  await page.reload();await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+  const focus=[];
+  for(let i=0;i<5;i++){await page.keyboard.press('Tab');focus.push(await page.evaluate(()=>({id:document.activeElement.id,outline:getComputedStyle(document.activeElement).outlineStyle,width:getComputedStyle(document.activeElement).outlineWidth})));}
+  check('keyboard tab order and visible focus',JSON.stringify(focus.map(x=>x.id))===JSON.stringify(['order','note','save','express','standard'])&&focus.every(x=>x.outline==='solid'&&x.width==='3px'),focus);
+  await page.keyboard.press('Shift+Tab');await page.keyboard.press('Enter');
+  await page.waitForFunction(()=>document.querySelector('#service').textContent==='express');
+  await page.reload();await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+  check('keyboard express persists',(await state()).service==='express',await state());
+  for(let i=0;i<5;i++)await page.keyboard.press('Tab');
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(()=>document.querySelector('#service').textContent==='standard');
+  check('keyboard standard works',(await state()).service==='standard',await state());
+  await page.setViewportSize({width:320,height:740});
+  const layout=await page.evaluate(()=>({viewport:innerWidth,width:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('select,textarea,button')].map(x=>({id:x.id,left:x.getBoundingClientRect().left,right:x.getBoundingClientRect().right}))}));
+  check('320px no horizontal overflow',layout.width<=layout.viewport&&layout.controls.every(x=>x.left>=0&&x.right<=320),layout);
+  await page.screenshot({path:'evidence/narrow-keyboard.png',fullPage:true});
+  console.log(JSON.stringify(results,null,2));
+}
+)(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T10-59-37-604Z.log#L1

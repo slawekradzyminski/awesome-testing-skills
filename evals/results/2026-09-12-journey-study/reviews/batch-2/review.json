@@ -1,0 +1,257 @@
+{
+  "reviews": [
+    {
+      "case_id": "case-05",
+      "seeded": [],
+      "additional": [
+        {
+          "title": "UI-01 — Late service response contradicts persisted service",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Two retained controlled reproductions show express with success feedback while GET and reload show standard. Customer delivery expectations are concretely affected; Medium severity distinguishes demonstrated misinformation from untested fulfillment consequences. Acceptance criteria cover response ordering and persisted state.",
+          "evidence": [
+            "evidence/report.md: UI-01",
+            "evidence/service-race.txt and evidence/service-race-repeat.txt: displayed=express, persisted.service=standard, afterReload=standard",
+            "evidence/service-race.png: express with Delivery service saved",
+            "evidence/service-race.js: forwards real responses and delays delivery only",
+            "app/static/app.js:38–45",
+            "controller-audit.jsonl:60–69 corroborates both write/read sequences"
+          ]
+        },
+        {
+          "title": "UI-02 — Failed instruction request leaves saving unavailable",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Candidate evidence establishes disabled Save, empty feedback, retained draft and unchanged saved note after an injected abort; reload discards the draft. Medium severity and retry criteria are defensible. Transport recovery reasonably extends the brief's instruction-recovery goal, although offline behavior is not explicitly specified.",
+          "evidence": [
+            "evidence/report.md: UI-02",
+            "evidence/network-failure.txt: disabled=true, feedback empty, Failed to fetch",
+            "evidence/network-recovery.txt: disabled after interception removal; reload restores old note",
+            "evidence/network-failure.png: visible draft, disabled Save, no failure feedback",
+            "evidence/console-history.txt",
+            "app/static/app.js:23–36"
+          ]
+        }
+      ],
+      "coverage_score": 2,
+      "coverage_reason": "Concrete passing evidence covers order switching and save targeting, note persistence/rejection, keyboard service activation, narrow layout and sampled API safeguards. Remaining browser, accessibility, mutation-ordering and transport work is explicitly bounded.",
+      "integrity_notes": [
+        "No expected seeds in cases.json. Additional-finding triage: impact 2/2, severity 2/2, acceptance 2/2.",
+        "Elapsed 327.45 seconds; audit contains 60 API requests, with one additional browser-aborted attempt. Exact total browser actions and token usage are unknown.",
+        "Source preservation is supplied in cases.json; retained served-JavaScript hashes match source. Reversible fixture fields were restored; A200 retains the disclosed 6000-cent refund and version 3.",
+        "Report links resolve. Interceptor removal is retained in reproduction code; browser closure is reported without a separate closure artifact.",
+        "Controlled timing and request abortion establish conditional client failures, not spontaneous network failures.",
+        "Review used only batch artifacts; no application, reproduction script or network tool was run. Condition labels were neither inferred nor scored. Style may reveal guidance; the study author knows seeded mechanisms, and self-review would not constitute independent blind validation."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/service-race.txt",
+        "evidence/service-race-repeat.txt",
+        "evidence/service-race.js",
+        "evidence/service-race.png",
+        "evidence/network-failure.txt",
+        "evidence/network-recovery.txt",
+        "evidence/network-failure.png",
+        "evidence/console-history.txt",
+        "evidence/order-switch.txt",
+        "evidence/browser-note.txt",
+        "evidence/keyboard.txt",
+        "evidence/narrow-keyboard.txt",
+        "evidence/rejected-desktop.png",
+        "evidence/keyboard-express.png",
+        "evidence/narrow.png",
+        "evidence/api-results.json",
+        "evidence/unit-tests.txt",
+        "evidence/browser-requests-final.txt",
+        "evidence/source-match.txt",
+        "evidence/final-fixtures.json",
+        "app/requirements.md",
+        "app/static/app.js",
+        "app/static/index.html",
+        "app/static/style.css",
+        "app/domain.py",
+        "app/app.py",
+        "app/test_domain.py",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-06",
+      "seeded": [],
+      "additional": [
+        {
+          "title": "DD-01 — Older service response overwrites the displayed service",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Retained real response bodies and chronology show express processed before standard but delivered afterward; the UI displays express while GET and reload return standard. Medium severity identifies customer misinformation without alleging money loss. Acceptance criteria require UI/server consistency under either response order.",
+          "evidence": [
+            "report.md: DD-01",
+            "evidence/service-race-results.txt: response chronology, displayed express, saved standard, reload standard",
+            "evidence/service-race.png: express with success feedback",
+            "evidence/service_race.js: unchanged real responses with controlled delay",
+            "app/static/app.js:38–45",
+            "controller-audit.jsonl:80–81 corroborates express then standard writes"
+          ]
+        },
+        {
+          "title": "DD-02 — Failed instruction request strands the editor",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "After an injected abort, Save remains disabled and feedback empty despite further editing and a successful recovery GET; reload replaces the draft with the saved note. Impact, Medium severity and actionable retry criteria are substantiated. Applying instruction-recovery requirements to transport failure is reasonable but interpretive.",
+          "evidence": [
+            "report.md: DD-02",
+            "evidence/network-recovery-results.txt: failed and recoveredNetwork states remain disabled; reload restores Ring twice",
+            "evidence/network_recovery.js",
+            "evidence/network-failure.png: draft visible, Save disabled, feedback absent",
+            "evidence/browser-requests.txt: aborted note POST followed by successful GET",
+            "app/static/app.js:23–36"
+          ]
+        }
+      ],
+      "coverage_score": 2,
+      "coverage_reason": "Retained browser observations support switching, rejection/correction, persistence, keyboard actions and readable 320px layout. API transcripts support sampled ownership, refunds, stale edits and batch safeguards. Meaningful untested concurrency, browser and accessibility limits are stated.",
+      "integrity_notes": [
+        "No expected seeds. Additional-finding triage: impact 2/2, severity 2/2, acceptance 2/2.",
+        "Elapsed 311.69 seconds; audit records 80 API requests, plus one browser-aborted attempt. The report's 40+2+37 accounting omits some server requests; the observed total remains below 120. Exact browser-action and token totals are unknown.",
+        "Source preservation is supplied in cases.json, and retained fingerprints match supplied files. Final candidate reads and audit confirm restored reversible fields; A200 retains the disclosed refund of 6000 cents and version 3.",
+        "Both report locations have working links. evidence/browser-close.txt confirms the named session closed; retained scripts remove interception.",
+        "The empty final console capture is not session-wide evidence of no errors. Controlled failures are honestly disclosed and do not establish spontaneous outages.",
+        "Condition labels were not inferred or scored; review was limited to retained artifacts."
+      ],
+      "reviewed_evidence": [
+        "report.md",
+        "evidence/report.md",
+        "evidence/service-race-results.txt",
+        "evidence/service_race.js",
+        "evidence/service-race.png",
+        "evidence/network-recovery-results.txt",
+        "evidence/network_recovery.js",
+        "evidence/network-failure.png",
+        "evidence/browser-results.txt",
+        "evidence/keyboard-results.txt",
+        "evidence/rejected-note.png",
+        "evidence/narrow.png",
+        "evidence/api-results.json",
+        "evidence/existing-tests.txt",
+        "evidence/browser-requests.txt",
+        "evidence/browser-console.txt",
+        "evidence/build-sha256.json",
+        "evidence/final-fixture-state.json",
+        "evidence/browser-close.txt",
+        "app/requirements.md",
+        "app/static/app.js",
+        "app/domain.py",
+        "app/app.py",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-07",
+      "seeded": [],
+      "additional": [
+        {
+          "title": "DD-001 — Late service-save response displays stale service with success feedback",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Two candidate traces retain real express-then-standard server responses, reversed browser delivery, express with success feedback, and standard after reload. This substantiates customer misinformation under controlled timing. Medium severity excludes unobserved financial consequences; acceptance criteria test ordering, navigation and persisted consistency.",
+          "evidence": [
+            "evidence/report.md: DD-001",
+            "evidence/service-race-results.txt and evidence/service-race-repeat.txt: beforeReload express/success; afterReload standard",
+            "evidence/service-race-before-reload.png",
+            "app/static/app.js:38–45",
+            "controller-audit.jsonl:92–93 and 104–110 corroborates writes and follow-up state"
+          ]
+        }
+      ],
+      "coverage_score": 2,
+      "coverage_reason": "The candidate retains 41 passing HTTP assertions, 14 passing main browser checks, keyboard note editing and inspected narrow/rejection screenshots. Limits explicitly include transport failures, other browser engines, accessibility and untested save permutations; these suggestions are not false-positive findings.",
+      "integrity_notes": [
+        "The root report correctly delegates to evidence/report.md; all report links resolve. No expected seeds. Triage: impact 1/1, severity 1/1, acceptance 1/1.",
+        "Elapsed 300.05 seconds; audit records 76 API requests. The API artifact contains 43 requests and 41 checks, consistent with the detailed report. Exact total browser actions and token usage are unknown.",
+        "Source preservation is supplied in cases.json. Candidate cleanup reads and audit confirm reversible restoration; B100 retains the disclosed 2000-cent refund and version 3.",
+        "The reported initial harness failure is distinguished from a product defect. Two later completed reproductions are retained; natural-timing reproduction is expressly unestablished.",
+        "Route removal appears in retained execution code. Browser closure is reported without a separate closure artifact; the final empty console is correctly qualified.",
+        "Condition labels were not inferred or scored; review was limited to retained artifacts."
+      ],
+      "reviewed_evidence": [
+        "report.md",
+        "evidence/report.md",
+        "evidence/service-race-results.txt",
+        "evidence/service-race-repeat.txt",
+        "evidence/service-race-before-reload.png",
+        "evidence/browser-results.txt",
+        "evidence/keyboard-edit.txt",
+        "evidence/rejected-note.png",
+        "evidence/narrow-keyboard.png",
+        "evidence/api-results.json",
+        "evidence/unit-tests.txt",
+        "evidence/cleanup-results.json",
+        "app/requirements.md",
+        "app/static/app.js",
+        "app/domain.py",
+        "app/app.py",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-08",
+      "seeded": [],
+      "additional": [
+        {
+          "title": "API-01 — Padded notes persist beyond the stated length bound",
+          "classification": "valid",
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "POST/GET pairs prove 161- and 162-character padded notes persist, while 161 nonspace characters are rejected. Accepted as a stored-field bound violation under the reasonable literal-length interpretation; the brief's 'nonblank characters' wording leaves normalization ambiguous, as the report acknowledges. Caller impact is limited but concrete, Low severity avoids speculative downstream harm, and boundary/state acceptance criteria are testable.",
+          "evidence": [
+            "evidence/report.md: API-01",
+            "evidence/API-01-evidence.json: #58 rejects 161 nonspace characters; #64–67 accept and retain padded 161/162-character notes",
+            "evidence/http.jsonl: matching POST and follow-up GET payloads",
+            "app/requirements.md: note length and malformed-input contract",
+            "app/domain.py:70–74 validates stripped length but stores original text",
+            "app/static/index.html: note maxlength=160 corroborates a total field bound",
+            "controller-audit.jsonl:64–67 matches candidate payloads and persisted responses"
+          ]
+        }
+      ],
+      "coverage_score": 2,
+      "coverage_reason": "Candidate transcripts substantiate ownership denial, cumulative/exact-bound refunds, competing refunds and address edits, stale-state preservation, batch atomicity, malformed-input rejection and note boundaries. The 83 passing assertions and two failures represent one defect; build identity, scheduling, Unicode and transport limits are explicit.",
+      "integrity_notes": [
+        "No expected seeds. One deduplicated additional finding; triage: impact 1/1, severity 1/1, acceptance 1/1.",
+        "Elapsed 284.23 seconds; 97 audited API requests match the baseline plus 96 retained transcript entries. All transcript responses have matching audit records. Zero browser actions reported and consistent with the API-only artifacts; token usage is unknown.",
+        "Source preservation is supplied in cases.json; retained fingerprints match supplied files. The unit-test file is explicitly a written execution record rather than raw runner output.",
+        "Final candidate state and audit confirm restoration of reversible fields. Disclosed leftovers are A100 refunded 10000 cents, B100 refunded 2500 cents, and A200 version 6.",
+        "All report links resolve. No screenshot-dependent claims. Deployment/source identity remains explicitly unverified.",
+        "Condition labels were not inferred or scored; review was limited to retained artifacts."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/API-01-evidence.json",
+        "evidence/http.jsonl",
+        "evidence/checks.json",
+        "evidence/followup-checks.json",
+        "evidence/unit-tests.txt",
+        "evidence/integrity.txt",
+        "evidence/environment.json",
+        "evidence/final-state.json",
+        "app/requirements.md",
+        "app/domain.py",
+        "app/app.py",
+        "app/static/index.html",
+        "app/test_domain.py",
+        "controller-audit.jsonl"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+Assessment saved to [evidence/report.md](evidence/report.md).
+
+**Hold release:** three confirmed browser defects:
+
+- Late lookups cause order details and save targets to disagree.
+- Rejected instructions display a success message.
+- Keyboard navigation skips express delivery.
+
+All four existing tests and 57 API checks passed. Reversible changes were restored; A100 requires reset for its 3,000-cent refund and version counter of 3. The browser session is closed.

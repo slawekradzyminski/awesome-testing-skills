@@ -1,0 +1,177 @@
+{
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/orders",
+      "user": "alice",
+      "body": null,
+      "status": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A100",
+            "owner": "alice",
+            "paid": 10000,
+            "refunded": 0,
+            "address": "10 Oak Street",
+            "version": 1,
+            "note": "Keyboard assessment instruction",
+            "service": "standard"
+          },
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 1,
+            "note": "Ring twice",
+            "service": "standard"
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/orders/A100/note",
+      "user": "alice",
+      "body": {
+        "note": "Leave with reception"
+      },
+      "status": 200,
+      "response": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders",
+      "user": "bob",
+      "body": null,
+      "status": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "B100",
+            "owner": "bob",
+            "paid": 4000,
+            "refunded": 2000,
+            "address": "30 Elm Street",
+            "version": 3,
+            "note": "Side entrance",
+            "service": "standard"
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders",
+      "user": "alice",
+      "body": null,
+      "status": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A100",
+            "owner": "alice",
+            "paid": 10000,
+            "refunded": 0,
+            "address": "10 Oak Street",
+            "version": 1,
+            "note": "Leave with reception",
+            "service": "standard"
+          },
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 1,
+            "note": "Ring twice",
+            "service": "standard"
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders",
+      "user": "bob",
+      "body": null,
+      "status": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "B100",
+            "owner": "bob",
+            "paid": 4000,
+            "refunded": 2000,
+            "address": "30 Elm Street",
+            "version": 3,
+            "note": "Side entrance",
+            "service": "standard"
+          }
+        ]
+      }
+    }
+  ],
+  "remaining_differences": [
+    {
+      "order": "B100",
+      "field": "refunded",
+      "initial": 0,
+      "final": 2000
+    },
+    {
+      "order": "B100",
+      "field": "version",
+      "initial": 1,
+      "final": 3
+    }
+  ],
+  "final": {
+    "alice": [
+      {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    ],
+    "bob": [
+      {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 2000,
+        "address": "30 Elm Street",
+        "version": 3,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+Assessment complete: [report.md](report.md).
+
+Recommend holding release for the service-save race. Also confirmed that a network failure disables instruction retries without feedback. Core checks passed.
+
+Evidence is saved under `evidence/`. Browser closed; reversible changes restored. A200 needs owner reset: **6000 cents refunded, version 3**.

@@ -1,0 +1,67 @@
+[
+ {
+  "n": 1,
+  "m": "POST",
+  "p": "/api/services",
+  "user": "alice",
+  "body": {
+   "ids": [
+    "A100",
+    "A200"
+   ],
+   "service": "standard"
+  },
+  "status": 200,
+  "resp": "{\"orders\": [{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Leave with reception\", \"service\": \"standard\"}, {\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 0, \"address\": \"STALE Street\", \"version\": 3, \"note\": \"y              "
+ },
+ {
+  "n": 2,
+  "m": "POST",
+  "p": "/api/orders/A200/note",
+  "user": "alice",
+  "body": {
+   "note": "Ring twice"
+  },
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 0, \"address\": \"STALE Street\", \"version\": 3, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 3,
+  "m": "GET",
+  "p": "/api/orders/A200",
+  "user": "alice",
+  "body": null,
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 0, \"address\": \"STALE Street\", \"version\": 3, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 4,
+  "m": "POST",
+  "p": "/api/orders/A200/address",
+  "user": "alice",
+  "body": {
+   "address": "20 Pine Street",
+   "version": 3
+  },
+  "status": 200,
+  "resp": "{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 0, \"address\": \"20 Pine Street\", \"version\": 4, \"note\": \"Ring twice\", \"service\": \"standard\"}"
+ },
+ {
+  "n": 5,
+  "m": "GET",
+  "p": "/api/orders",
+  "user": "alice",
+  "body": null,
+  "status": 200,
+  "resp": "{\"orders\": [{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Leave with reception\", \"service\": \"standard\"}, {\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 0, \"address\": \"20 Pine Street\", \"version\": 4, \"note\": \"Ring twice\", "
+ },
+ {
+  "n": 6,
+  "m": "GET",
+  "p": "/api/orders",
+  "user": "bob",
+  "body": null,
+  "status": 200,
+  "resp": "{\"orders\": [{\"id\": \"B100\", \"owner\": \"bob\", \"paid\": 4000, \"refunded\": 6000, \"address\": \"30 Elm Street\", \"version\": 1, \"note\": \"Side entrance\", \"service\": \"standard\"}]}"
+ }
+]

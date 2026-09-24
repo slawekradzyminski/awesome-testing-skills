@@ -1,0 +1,3 @@
+Assessment saved in [evidence/report.md](/private/tmp/awesome-skills-journey-study-20260912/run-22/candidate/evidence/report.md).
+
+Core API controls passed across 101 requests. One minor note-length inconsistency needs triage before sign-off. Reversible edits were restored; the report records refund and version-counter changes requiring owner reset.

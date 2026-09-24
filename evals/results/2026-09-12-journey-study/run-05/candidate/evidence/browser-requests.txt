@@ -1,0 +1,7 @@
+### Result
+4. [GET] http://127.0.0.1:56450/api/orders/A100 => [200] OK
+5. [POST] http://127.0.0.1:56450/api/orders/A100/note => [200] OK
+9. [GET] http://127.0.0.1:56450/api/orders/A100 => [200] OK
+10. [POST] http://127.0.0.1:56450/api/orders/A100/note => [422] Unprocessable Content
+
+Note: 6 static requests not shown, run with --static option to see them.

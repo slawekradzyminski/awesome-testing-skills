@@ -1,0 +1,43 @@
+async page => {
+  const results = [];
+  const state = () => page.evaluate(() => ({selected: document.querySelector('#order').value, heading: document.querySelector('#heading').textContent, note: document.querySelector('#note').value, service: document.querySelector('#service').textContent, feedback: document.querySelector('#feedback').textContent}));
+  await page.locator('#order').selectOption('A200');
+  await page.waitForFunction(() => document.querySelector('#heading').textContent === 'Order A200');
+  await page.locator('#note').fill('Assessment valid instruction');
+  const good = page.waitForResponse(r => r.url().endsWith('/note'));
+  await page.locator('#save').click();
+  results.push({test:'valid note',status:(await good).status(),state:await state()});
+  await page.reload();
+  await page.locator('#order').selectOption('A200');
+  await page.waitForTimeout(850);
+  results.push({test:'reload and switch',state:await state()});
+  await page.locator('#order').selectOption('A200');
+  await page.waitForTimeout(100);
+  await page.locator('#note').fill('LOCKER: 1');
+  const bad = page.waitForResponse(r => r.url().endsWith('/note'));
+  await page.locator('#save').click();
+  const badResponse = await bad;
+  await page.waitForTimeout(50);
+  results.push({test:'rejected note',status:badResponse.status(),body:await badResponse.json(),state:await state()});
+  await page.screenshot({path:'evidence/rejected-note.png'});
+  await page.locator('#order').selectOption('A100');
+  await page.locator('#order').selectOption('A200');
+  await page.waitForTimeout(850);
+  results.push({test:'out-of-order lookup',state:await state()});
+  await page.screenshot({path:'evidence/order-race.png'});
+  await page.locator('#note').fill('Race evidence intended for displayed A100');
+  const race = page.waitForResponse(r => r.url().endsWith('/note'));
+  await page.locator('#save').click();
+  const raceResponse = await race;
+  results.push({test:'save after race',url:raceResponse.url(),request:raceResponse.request().postDataJSON(),status:raceResponse.status(),body:await raceResponse.json(),state:await state()});
+  await page.reload();
+  await page.waitForTimeout(850);
+  await page.locator('#order').focus();
+  const focus = [];
+  for(let i=0;i<5;i++) { await page.keyboard.press('Tab'); focus.push(await page.evaluate(() => ({id:document.activeElement.id,tag:document.activeElement.tagName,outline:getComputedStyle(document.activeElement).outline}))); }
+  results.push({test:'keyboard tab order',focus,express:await page.locator('#express').evaluate(e=>({tag:e.tagName,tabIndex:e.tabIndex,role:e.getAttribute('role')}))});
+  await page.setViewportSize({width:375,height:812});
+  results.push({test:'narrow layout',geometry:await page.evaluate(()=>({viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth}))});
+  await page.screenshot({path:'evidence/narrow.png',fullPage:true});
+  return results;
+}

@@ -1,0 +1,64 @@
+{
+  "finished_utc": "2026-09-12T11:16:11.921178+00:00",
+  "api_requests": 83,
+  "checks": 84,
+  "passed": 77,
+  "failed": [
+    {
+      "label": "F01 cumulative refund overrun",
+      "passed": false,
+      "expected": 409,
+      "actual": 200
+    },
+    {
+      "label": "F01 cumulative refund preserved at payment",
+      "passed": false,
+      "expected": 10000,
+      "actual": 10001
+    },
+    {
+      "label": "F02 stale editor saves",
+      "passed": false,
+      "expected": 409,
+      "actual": 200
+    },
+    {
+      "label": "F02 newer address retained",
+      "passed": false,
+      "expected": "Current dispatch address",
+      "actual": "Stale dispatch address"
+    },
+    {
+      "label": "F02 stale edit does not increment version",
+      "passed": false,
+      "expected": 2,
+      "actual": 3
+    },
+    {
+      "label": "F03 missing batch atomicity",
+      "passed": false,
+      "expected": "standard",
+      "actual": "express"
+    },
+    {
+      "label": "F03 forbidden batch atomicity",
+      "passed": false,
+      "expected": "standard",
+      "actual": "express"
+    }
+  ],
+  "fixture_differences": {
+    "A100": {
+      "refunded": {
+        "before": 0,
+        "after": 10001
+      }
+    },
+    "A200": {
+      "version": {
+        "before": 1,
+        "after": 5
+      }
+    }
+  }
+}

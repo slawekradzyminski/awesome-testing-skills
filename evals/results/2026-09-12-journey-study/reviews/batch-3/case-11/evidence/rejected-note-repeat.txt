@@ -1,0 +1,6 @@
+### Result
+{"status":200,"body":{"id":"A100","owner":"alice","paid":10000,"refunded":0,"address":"10 Oak Street","version":1,"note":"Journey 09 reception test","service":"standard"},"draft":"Journey 09 reception test","feedback":"Delivery instruction saved"}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("combobox",{name:"Order",exact:true}).selectOption("A100"); await page.getByRole("heading",{name:"Order A100",exact:true}).waitFor(); await page.getByRole("textbox",{name:"Delivery instruction"}).fill("LOCKER: 09"); const response=page.waitForResponse(r=>r.url().endsWith("/note")&&r.request().method()==="POST"); await page.getByRole("button",{name:"Save instruction"}).click(); const r=await response; await page.getByText("Delivery instruction saved",{exact:true}).waitFor(); return {status:r.status(),body:await r.json(),draft:await page.locator("#note").inputValue(),feedback:await page.locator("#feedback").innerText()}; })(page);
+```

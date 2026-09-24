@@ -1,0 +1,50 @@
+### Result
+[{"environment":{"agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36","width":1280,"height":720},"reloaded":{"selected":"A100","heading":"Order A100","note":"Journey assessment: reception please","feedback":"","service":"express","focus":""}},{"tab1":{"selected":"A100","heading":"Order A100","note":"Journey assessment: reception please","feedback":"","service":"express","focus":"order"}},{"tab2":{"selected":"A100","heading":"Order A100","note":"Journey assessment: reception please","feedback":"","service":"express","focus":"note"}},{"tab3":{"selected":"A100","heading":"Order A100","note":"Journey assessment: reception pleaseJourney keyboard save","feedback":"","service":"express","focus":"save"}},{"tab4":{"selected":"A100","heading":"Order A100","note":"Journey assessment: reception pleaseJourney keyboard save","feedback":"Delivery instruction saved","service":"express","focus":"standard"},"express":{"tag":"DIV","tabIndex":-1,"role":"button"}},{"keyboardStandard":{"selected":"A100","heading":"Order A100","note":"Journey assessment: reception pleaseJourney keyboard save","feedback":"Delivery service saved","service":"standard","focus":"standard"}},{"rejectionStatus":422,"rejectionBody":{"error":"Locker delivery is unavailable; enter another instruction"},"visible":{"selected":"A100","heading":"Order A100","note":"LOCKER: 2","feedback":"Delivery instruction saved","service":"standard","focus":""}},{"narrow":{"width":390,"scrollWidth":390}},{"ordinarySwitch":{"selected":"A200","heading":"Order A200","note":"Journey assessment: wrong target proof","feedback":"","service":"standard","focus":""}},{"repeatedRace":{"selected":"A200","heading":"Order A100","note":"Journey assessment: reception pleaseJourney keyboard save","feedback":"","service":"standard","focus":""}}]
+### Ran Playwright code
+```js
+await (async page => {
+  const records=[];
+  const state=()=>page.evaluate(()=>({selected:document.querySelector('#order').value,heading:document.querySelector('#heading').textContent,note:document.querySelector('#note').value,feedback:document.querySelector('#feedback').textContent,service:document.querySelector('#service').textContent,focus:document.activeElement.id}));
+  await page.reload();
+  await page.waitForFunction(()=>document.querySelector('#loading').textContent==='');
+  records.push({environment:await page.evaluate(()=>({agent:navigator.userAgent,width:innerWidth,height:innerHeight})),reloaded:await state()});
+  await page.keyboard.press('Tab'); records.push({tab1:await state()});
+  await page.keyboard.press('Tab'); records.push({tab2:await state()});
+  await page.keyboard.type('Journey keyboard save');
+  await page.keyboard.press('Tab'); records.push({tab3:await state()});
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+  await page.keyboard.press('Tab'); records.push({tab4:await state(),express:await page.locator('#express').evaluate(e=>({tag:e.tagName,tabIndex:e.tabIndex,role:e.getAttribute('role')}))});
+  await page.screenshot({path:'evidence/keyboard-focus-desktop.png'});
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(()=>document.querySelector('#service').textContent==='standard');
+  records.push({keyboardStandard:await state()});
+  await page.locator('#note').fill('LOCKER: 2');
+  const rejection=page.waitForResponse(r=>r.url().endsWith('/note'));
+  await page.getByRole('button',{name:'Save instruction'}).click();
+  const response=await rejection;
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+  records.push({rejectionStatus:response.status(),rejectionBody:await response.json(),visible:await state()});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:'evidence/rejected-save-narrow.png',fullPage:true});
+  records.push({narrow:await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth}))});
+  await page.locator('#order').selectOption('A200');
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+  records.push({ordinarySwitch:await state()});
+  const late=page.waitForResponse(r=>r.url().endsWith('/A100'));
+  await page.locator('#order').selectOption('A100');
+  await page.locator('#order').selectOption('A200');
+  await late;
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A100');
+  records.push({repeatedRace:await state()});
+  await page.screenshot({path:'evidence/order-mismatch-narrow.png',fullPage:true});
+  return records;
+}
+)(page);
+```
+### Page
+- Page URL: http://127.0.0.1:59252/
+- Page Title: Dispatch Desk
+- Console: 1 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T11-22-56-606Z.log#L2

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "task-01",
+    "surface": "api",
+    "group": "historical",
+    "backend": "api-before",
+    "sources": {
+      "backend": "api-before"
+    },
+    "task": "Test account registration and sign-in, and give the team your assessment.",
+    "known": [
+      {
+        "id": "H1",
+        "description": "Registration with a new username and an existing email returns a server error instead of an actionable conflict rejection.",
+        "actionable": "Show a successful first registration, the duplicate-email/new-username request and actual HTTP500; explain client impact. A nearby duplicate-username or fresh-email contrast strengthens attribution. Do not credit documentation-only status disagreements.",
+        "fixed_revision": "75ca60d8879b8c9b1e7c78031f01429852d1f72c"
+      }
+    ]
+  },
+  {
+    "id": "task-02",
+    "surface": "ui",
+    "group": "historical",
+    "backend": "runtime-backend",
+    "frontend": "ui-before",
+    "sources": {
+      "frontend": "ui-before",
+      "backend": "runtime-backend"
+    },
+    "task": "Test the customer shopping and cart journey, and give the team your assessment.",
+    "known": [
+      {
+        "id": "H3",
+        "description": "A populated cart falsely appears empty while product details are still loading.",
+        "actionable": "Retain ordinary browser evidence of a nonempty cart response and the empty-cart message during pending detail retrieval, followed by loaded items. Honest browser-controlled timing is valid; code suspicion alone is not runtime evidence.",
+        "fixed_revision": "bc2d904fa7906e028248b5122d8024719900de3d"
+      }
+    ]
+  },
+  {
+    "id": "task-03",
+    "surface": "ui",
+    "group": "historical",
+    "backend": "runtime-backend",
+    "frontend": "mobile-before",
+    "sources": {
+      "frontend": "mobile-before",
+      "backend": "runtime-backend"
+    },
+    "task": "Test product browsing and product details for this customer, and give the team your assessment.",
+    "known": [
+      {
+        "id": "H4",
+        "description": "Legitimate long product content overflows narrow viewports and obscures product detail content or controls.",
+        "actionable": "Open the actual product detail via ordinary UI at a recorded narrow viewport; retain and inspect a screenshot plus a concrete overflow/user impairment observation. Forced CSS/DOM changes do not establish this defect.",
+        "fixed_revision": "d866c7f4dc18573a46f78a976feb0f2c7e6c9d78"
+      }
+    ]
+  },
+  {
+    "id": "task-04",
+    "surface": "ui",
+    "group": "historical",
+    "backend": "api-fixed",
+    "frontend": "cart-before",
+    "legacy": true,
+    "sources": {
+      "frontend": "cart-before",
+      "backend": "api-fixed"
+    },
+    "task": "Test how this customer reviews and changes their cart, and give the team your assessment.",
+    "known": [
+      {
+        "id": "H5",
+        "description": "After a real cart refetch the retained quantity editor can disagree with the server quantity and displayed totals.",
+        "actionable": "Retain a real refetch after another ordinary UI edit (for example second tab plus reconnect), show updated quantity/totals in response and stale original-tab editor. Record controlled offline/online precondition. Source suspicion or an app reload that destroys the retained component is not reproduction.",
+        "fixed_revision": "7d78de050c83897ccd77ed8d51ed9fed0c52b9e6"
+      }
+    ]
+  },
+  {
+    "id": "task-05",
+    "surface": "ui",
+    "group": "control",
+    "backend": "runtime-backend",
+    "frontend": "mobile-fixed",
+    "sources": {
+      "frontend": "mobile-fixed",
+      "backend": "runtime-backend"
+    },
+    "task": "Test product browsing and product details for this customer, and give the team your assessment.",
+    "known": []
+  },
+  {
+    "id": "task-06",
+    "surface": "api",
+    "group": "outage",
+    "backend": "api-fixed",
+    "outage": true,
+    "sources": {
+      "backend": "api-fixed"
+    },
+    "task": "Test account registration and sign-in, and give the team your assessment.",
+    "known": []
+  }
+]

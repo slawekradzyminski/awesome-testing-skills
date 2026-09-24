@@ -1,0 +1,46 @@
+== baseline
+1 GET /api/orders alice None -> 200 {"orders": [{"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}, {"id": "A200", "owner": "al
+2 GET /api/orders None None -> 401 {"error": "Choose a fixture user"}
+3 GET /api/orders/B100 alice None -> 403 {"error": "Access denied"}
+4 GET /api/orders/B100 bob None -> 200 {"id": "B100", "owner": "bob", "paid": 4000, "refunded": 0, "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}
+== F1 cumulative refund (B100 paid 4000)
+5 POST /api/orders/B100/refund bob {'amount': 3000} -> 200 {"id": "B100", "owner": "bob", "paid": 4000, "refunded": 3000, "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}
+6 POST /api/orders/B100/refund bob {'amount': 3000} -> 200 {"id": "B100", "owner": "bob", "paid": 4000, "refunded": 6000, "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}
+7 POST /api/orders/B100/refund bob {'amount': 4001} -> 409 {"error": "Refund exceeds remaining paid amount"}
+8 GET /api/orders/B100 bob None -> 200 {"id": "B100", "owner": "bob", "paid": 4000, "refunded": 6000, "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}
+== refund validation
+9 POST /api/orders/A200/refund alice {'amount': 0} -> 400 {"error": "Amount must be a positive integer in cents"}
+10 POST /api/orders/A200/refund alice {'amount': -1} -> 400 {"error": "Amount must be a positive integer in cents"}
+11 POST /api/orders/A200/refund alice {'amount': '100'} -> 400 {"error": "Amount must be a positive integer in cents"}
+12 POST /api/orders/A200/refund alice {'amount': 1.5} -> 400 {"error": "Amount must be a positive integer in cents"}
+13 POST /api/orders/A200/refund alice {'amount': True} -> 400 {"error": "Amount must be a positive integer in cents"}
+14 POST /api/orders/A200/refund alice {'amount': None} -> 400 {"error": "Amount must be a positive integer in cents"}
+15 POST /api/orders/B100/refund alice {'amount': 1} -> 403 {"error": "Access denied"}
+== F2 stale address
+16 GET /api/orders/A200 alice None -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}
+17 POST /api/orders/A200/address alice {'address': 'Newer Street 1', 'version': 1} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "Newer Street 1", "version": 2, "note": "Ring twice", "service": "standard"}
+18 POST /api/orders/A200/address alice {'address': 'STALE Street', 'version': 1} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "STALE Street", "version": 3, "note": "Ring twice", "service": "standard"}
+19 POST /api/orders/A200/address alice {'address': 'Future', 'version': 51} -> 409 {"error": "Order changed; reload before saving"}
+20 GET /api/orders/A200 alice None -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "STALE Street", "version": 3, "note": "Ring twice", "service": "standard"}
+== F3 services atomicity
+21 GET /api/orders/A100 alice None -> 200 {"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}
+22 POST /api/services alice {'ids': ['A100', 'B100'], 'service': 'express'} -> 403 {"error": "Access denied"}
+23 POST /api/services alice {'ids': ['A200', 'NOPE'], 'service': 'express'} -> 404 {"error": "Order not found"}
+24 GET /api/orders/A100 alice None -> 200 {"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "express"}
+25 GET /api/orders/A200 alice None -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "STALE Street", "version": 3, "note": "Ring twice", "service": "express"}
+26 GET /api/orders/B100 bob None -> 200 {"id": "B100", "owner": "bob", "paid": 4000, "refunded": 6000, "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}
+== note
+27 GET /api/orders/A200 alice None -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "STALE Street", "version": 3, "note": "Ring twice", "service": "express"}
+28 POST /api/orders/A200/note alice {'note': '  locker: 5'} -> 422 {"error": "Locker delivery is unavailable; enter another instruction"}
+29 POST /api/orders/A200/note alice {'note': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'} -> 400 {"error": "Note must contain 1 to 160 characters"}
+30 POST /api/orders/A200/note alice {'note': '   '} -> 400 {"error": "Note must contain 1 to 160 characters"}
+31 POST /api/orders/A200/note alice {'note': 'y                                                                                                                                                                                                                                                                                                            '} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "STALE Street", "version": 3, "note": "y                                                                                       
+32 GET /api/orders/A200 alice None -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "STALE Street", "version": 3, "note": "y                                                                                       
+33 POST /api/orders/A200/note bob {'note': 'hi'} -> 403 {"error": "Access denied"}
+== malformed
+34 POST /api/orders/A200/note alice <raw> -> 400 {"error": "Expected a bounded JSON object"}
+35 POST /api/orders/A200/note alice <raw> -> 400 {"error": "Expected a bounded JSON object"}
+36 POST /api/orders/A200/note alice <raw> -> 400 {"error": "Expected a bounded JSON object"}
+37 GET /api/orders alice None -> 200 {"orders": [{"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "express"}, {"id": "A200", "owner": "ali
+38 POST /api/orders/A200/note alice <raw> -> 400 {"error": "Expected a bounded JSON object"}
+requests 38

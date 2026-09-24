@@ -1,0 +1,20 @@
+### Result
+4. [GET] http://127.0.0.1:57088/api/orders/A100 => [200] OK
+5. [POST] http://127.0.0.1:57088/api/orders/A100/note => [200] OK
+6. [POST] http://127.0.0.1:57088/api/services => [200] OK
+10. [GET] http://127.0.0.1:57088/api/orders/A100 => [200] OK
+11. [POST] http://127.0.0.1:57088/api/orders/A100/note => [200] OK
+12. [GET] http://127.0.0.1:57088/api/orders/A200 => [200] OK
+13. [GET] http://127.0.0.1:57088/api/orders/A100 => [200] OK
+14. [GET] http://127.0.0.1:57088/api/orders/A200 => [200] OK
+15. [POST] http://127.0.0.1:57088/api/orders/A200/note => [200] OK
+16. [POST] http://127.0.0.1:57088/api/services => [200] OK
+20. [GET] http://127.0.0.1:57088/api/orders/A100 => [200] OK
+21. [POST] http://127.0.0.1:57088/api/orders/A100/note => [422] Unprocessable Content
+22. [GET] http://127.0.0.1:57088/api/orders/A200 => [200] OK
+23. [GET] http://127.0.0.1:57088/api/orders/A100 => [200] OK
+24. [GET] http://127.0.0.1:57088/api/orders/A200 => [200] OK
+25. [POST] http://127.0.0.1:57088/api/orders/A200/note => [200] OK
+29. [GET] http://127.0.0.1:57088/api/orders/A100 => [200] OK
+
+Note: 12 static requests not shown, run with --static option to see them.

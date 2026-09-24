@@ -1,0 +1,58 @@
+### Result
+{"results":[{"name":"Initial A100 details","passed":true,"actual":"10 Oak Street"},{"name":"Save disabled during lookup","passed":true},{"name":"Out of order lookup keeps selected details","passed":true,"actual":"Order A200\n\n20 Pine Street\n\nDelivery instruction\nSave instruction\n\nDelivery service\n\nstandard\n\nUse express delivery Use standard delivery"},{"name":"Save targets selected A200","passed":true},{"name":"A100 not overwritten","passed":true},{"name":"Successful note persisted","passed":true},{"name":"Rejected draft retained with actionable error","passed":true,"actual":"Locker delivery is unavailable; enter another instruction"},{"name":"Rejected note did not persist","passed":true},{"name":"Keyboard order includes editor and both services","passed":true,"actual":[{"id":"order","outline":"solid","width":"3px"},{"id":"note","outline":"solid","width":"3px"},{"id":"save","outline":"solid","width":"3px"},{"id":"express","outline":"solid","width":"3px"},{"id":"standard","outline":"solid","width":"3px"}]},{"name":"Visible keyboard focus","passed":true},{"name":"Keyboard activates express","passed":true},{"name":"Express persists reload","passed":true},{"name":"Keyboard activates standard","passed":true},{"name":"320px layout has no horizontal overflow","passed":true,"actual":{"width":320,"scroll":320}}],"responses":[{"url":"http://127.0.0.1:58576/api/orders/A200","status":200},{"url":"http://127.0.0.1:58576/api/orders/A200","status":200},{"url":"http://127.0.0.1:58576/api/orders/A100","status":200},{"url":"http://127.0.0.1:58576/api/orders/A200/note","status":200},{"url":"http://127.0.0.1:58576/api/orders/A100","status":200},{"url":"http://127.0.0.1:58576/api/orders/A200","status":200},{"url":"http://127.0.0.1:58576/api/orders/A200/note","status":422},{"url":"http://127.0.0.1:58576/api/orders/A100","status":200},{"url":"http://127.0.0.1:58576/api/orders/A200","status":200},{"url":"http://127.0.0.1:58576/api/orders/A200/note","status":200},{"url":"http://127.0.0.1:58576/api/orders/A100","status":200},{"url":"http://127.0.0.1:58576/api/services","status":200},{"url":"http://127.0.0.1:58576/api/orders/A100","status":200},{"url":"http://127.0.0.1:58576/api/services","status":200}],"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36"}
+### Ran Playwright code
+```js
+await (async page => {
+  const results=[];
+  const responses=[];
+  page.on('response',r=>{if(r.url().includes('/api/'))responses.push({url:r.url(),status:r.status()})});
+  const check=(name,passed,actual)=>results.push({name,passed,actual});
+  const ready=()=>page.waitForFunction(()=>document.querySelector('#loading').textContent===''&&!document.querySelector('#save').disabled);
+  await ready();
+  check('Initial A100 details',await page.locator('#heading').textContent()==='Order A100',await page.locator('#address').textContent());
+  await page.locator('#order').selectOption('A200'); await ready();
+  await page.locator('#order').selectOption('A100');
+  check('Save disabled during lookup',await page.locator('#save').isDisabled());
+  await page.locator('#order').selectOption('A200'); await ready();
+  await page.waitForTimeout(850);
+  check('Out of order lookup keeps selected details',await page.locator('#order').inputValue()==='A200'&&await page.locator('#heading').textContent()==='Order A200'&&await page.locator('#note').inputValue()==='Ring twice',await page.locator('section').innerText());
+  await page.locator('#note').fill('Assessment reception instruction');
+  const saved=page.waitForRequest(r=>r.method()==='POST'&&r.url().endsWith('/note'));
+  await page.locator('#save').click();
+  check('Save targets selected A200',(await saved).url().endsWith('/A200/note'));
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+  await page.reload(); await ready();
+  check('A100 not overwritten',await page.locator('#note').inputValue()==='Leave with reception');
+  await page.locator('#order').selectOption('A200'); await ready();
+  check('Successful note persisted',await page.locator('#note').inputValue()==='Assessment reception instruction');
+  await page.locator('#note').fill('LOCKER: 7');
+  await page.locator('#save').click();
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent.includes('Locker delivery'));
+  check('Rejected draft retained with actionable error',await page.locator('#note').inputValue()==='LOCKER: 7'&&!(await page.locator('#feedback').textContent()).includes('saved'),await page.locator('#feedback').textContent());
+  await page.screenshot({path:'evidence/rejected-note.png'});
+  await page.reload(); await ready(); await page.locator('#order').selectOption('A200'); await ready();
+  check('Rejected note did not persist',await page.locator('#note').inputValue()==='Assessment reception instruction');
+  await page.locator('#note').fill('Ring twice'); await page.locator('#save').click();
+  await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+  await page.reload(); await ready();
+  const focus=[];
+  for(let i=0;i<5;i++) { await page.keyboard.press('Tab'); focus.push(await page.evaluate(()=>({id:document.activeElement.id,outline:getComputedStyle(document.activeElement).outlineStyle,width:getComputedStyle(document.activeElement).outlineWidth}))); }
+  check('Keyboard order includes editor and both services',focus.map(x=>x.id).join(',')==='order,note,save,express,standard',focus);
+  check('Visible keyboard focus',focus.every(x=>x.outline==='solid'&&x.width==='3px'));
+  await page.keyboard.press('Shift+Tab'); await page.keyboard.press('Enter');
+  await page.waitForFunction(()=>document.querySelector('#service').textContent==='express');
+  check('Keyboard activates express',true);
+  await page.reload(); await ready();
+  check('Express persists reload',await page.locator('#service').textContent()==='express');
+  for(let i=0;i<5;i++)await page.keyboard.press('Tab');
+  await page.keyboard.press('Enter'); await page.waitForFunction(()=>document.querySelector('#service').textContent==='standard');
+  check('Keyboard activates standard',true);
+  await page.setViewportSize({width:320,height:720});
+  await page.screenshot({path:'evidence/narrow-keyboard.png',fullPage:true});
+  check('320px layout has no horizontal overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth})));
+  return {results,responses,userAgent:await page.evaluate(()=>navigator.userAgent)};
+}
+)(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T11-16-55-181Z.log#L1

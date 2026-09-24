@@ -1,0 +1,24 @@
+async page => {
+ const events=[];
+ await page.setViewportSize({width:1100,height:850});
+ await page.route('http://127.0.0.1:57005/api/services',async route=>{
+  const body=route.request().postDataJSON();
+  const response=await route.fetch();
+  events.push({stage:'server response',body,status:response.status(),response:await response.json()});
+  if(body.service==='express') await page.waitForTimeout(1000);
+  await route.fulfill({response});
+  events.push({stage:'delivered to browser',service:body.service});
+ });
+ await page.click('#express');
+ await page.waitForTimeout(100);
+ await page.click('#standard');
+ await page.waitForTimeout(1200);
+ const displayed=await page.locator('#service').textContent();
+ const saved=await page.evaluate(async()=>await(await fetch('/api/orders/A200',{headers:{'X-Test-User':'alice'}})).json());
+ await page.screenshot({path:'evidence/service-race.png'});
+ await page.unroute('http://127.0.0.1:57005/api/services');
+ await page.reload();
+ await page.selectOption('#order','A200');
+ await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+ return {events,displayed,saved,afterReload:await page.locator('#service').textContent()};
+}

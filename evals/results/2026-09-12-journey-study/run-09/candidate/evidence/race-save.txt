@@ -1,0 +1,6 @@
+### Result
+{"url":"http://127.0.0.1:57088/api/orders/A200/note","status":200,"request":"{\"note\":\"Journey 09 reception test\"}","body":{"id":"A200","owner":"alice","paid":6000,"refunded":0,"address":"20 Pine Street","version":1,"note":"Journey 09 reception test","service":"express"}}
+### Ran Playwright code
+```js
+await (async page => { const response=page.waitForResponse(r=>r.url().endsWith("/note")&&r.request().method()==="POST"); await page.getByRole("button",{name:"Save instruction"}).click(); const r=await response; return {url:r.url(),status:r.status(),request:r.request().postData(),body:await r.json()}; })(page);
+```

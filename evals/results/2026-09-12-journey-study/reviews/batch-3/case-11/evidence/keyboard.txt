@@ -1,0 +1,9 @@
+### Result
+{"focus":[{"id":"note","tag":"TEXTAREA","text":"","outline":"solid"},{"id":"save","tag":"BUTTON","text":"Save instruction","outline":"solid"},{"id":"standard","tag":"BUTTON","text":"Use standard delivery","outline":"solid"},{"id":"","tag":"BODY","text":"Dispatch DeskReview delivery instructions and choose a delivery service.\nOrderA100 — Oak StreetA200 — Pine Street\nOrder A10010 Oak Street\nDelivery instruction\nSave instruction\nDelivery serviceexpressUse express delivery\nUse standard delivery\nThis desk uses Alice's disposable orders. Refund and address administration are API-only.\n\n","outline":"none"},{"id":"order","tag":"SELECT","text":"A100 — Oak StreetA200 — Pine Street","outline":"solid"}],"express":{"tag":"DIV","role":"button","tabindex":null}}
+### Ran Playwright code
+```js
+await (async page => { await page.reload(); await page.getByRole("heading",{name:"Order A100",exact:true}).waitFor(); await page.getByRole("combobox",{name:"Order",exact:true}).click(); await page.keyboard.press("Escape"); const focus=[]; for(let i=0;i<5;i++){await page.keyboard.press("Tab"); focus.push(await page.evaluate(()=>({id:document.activeElement.id,tag:document.activeElement.tagName,text:document.activeElement.textContent,outline:getComputedStyle(document.activeElement).outlineStyle})));} return {focus,express:await page.locator("#express").evaluate(e=>({tag:e.tagName,role:e.getAttribute("role"),tabindex:e.getAttribute("tabindex")}))}; })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:57088/
+- Page Title: Dispatch Desk

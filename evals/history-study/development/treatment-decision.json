@@ -1,0 +1,12 @@
+{
+  "recorded_at": 1789214273.904135,
+  "decision": "retain current skills; no historical-case-specific tuning",
+  "files": {
+    "skills/api-exploratory-testing/SKILL.md": "1ff1ca0dac84f9fd2a41e733f7186816a753739b06b9675fc8a6382e690decdc",
+    "skills/api-exploratory-testing/references/experiment-design.md": "e2dba068da5b803d35a665d922ffe9cdb317c54ad9733dd16392856acf702010",
+    "skills/api-exploratory-testing/references/reporting.md": "3fdb5f442d79f6c78b79f7195e3558d183fcf665ddd9dc5dd5b3a2bfbbabbfcf",
+    "skills/ui-exploratory-testing/SKILL.md": "b9c65db60ab7f37cf473ded24e8b5c1b96dbc5467ac872ea9d66a247d30dcd52",
+    "skills/ui-exploratory-testing/references/browser-experiments.md": "66d2f12695d491925d8e51e11806f165a9452c530cc24db0b1e26c2e561a442c",
+    "skills/ui-exploratory-testing/references/reporting.md": "e5e18167ffb061ec034a959cdd1e7bc4b273b0f1845215bb25c87ae8ca081c19"
+  }
+}

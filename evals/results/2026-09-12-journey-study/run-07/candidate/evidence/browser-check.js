@@ -1,0 +1,58 @@
+async page => {
+  const log = [];
+  const state = () => page.evaluate(() => ({selected: document.querySelector('#order').value, heading: document.querySelector('#heading').textContent, note: document.querySelector('#note').value, service: document.querySelector('#service').textContent, feedback: document.querySelector('#feedback').textContent, loading: document.querySelector('#loading').textContent}));
+  await page.waitForFunction(() => document.querySelector('#loading').textContent === '');
+  log.push({step:'initial', state: await state()});
+  await page.locator('#note').fill('Assessment delivery note');
+  const ok = page.waitForResponse(r => r.url().endsWith('/note'));
+  await page.locator('#save').click();
+  log.push({step:'valid note',status:(await ok).status()});
+  await page.reload();
+  await page.waitForFunction(() => document.querySelector('#loading').textContent === '');
+  log.push({step:'valid note persists',state:await state()});
+  await page.locator('#note').fill('LOCKER: 1');
+  const rejected = page.waitForResponse(r => r.url().endsWith('/note'));
+  await page.locator('#save').click();
+  const response = await rejected;
+  await page.waitForFunction(() => !document.querySelector('#save').disabled);
+  log.push({step:'rejected note',status:response.status(),body:await response.json(),state:await state()});
+  await page.screenshot({path:'evidence/rejected-note.png'});
+  await page.reload();
+  await page.waitForFunction(() => document.querySelector('#loading').textContent === '');
+  log.push({step:'rejected note not persisted',state:await state()});
+  await page.locator('#order').selectOption('A200');
+  await page.waitForFunction(() => document.querySelector('#heading').textContent === 'Order A200');
+  const slow = page.waitForResponse(r => r.url().endsWith('/api/orders/A100'));
+  await page.locator('#order').selectOption('A100');
+  await page.locator('#order').selectOption('A200');
+  await slow;
+  await page.waitForFunction(() => document.querySelector('#heading').textContent === 'Order A100');
+  log.push({step:'out of order response',state:await state()});
+  await page.screenshot({path:'evidence/wrong-order.png'});
+  const wrong = page.waitForResponse(r => r.url().endsWith('/note'));
+  await page.locator('#save').click();
+  const wrongResponse = await wrong;
+  log.push({step:'save mismatched displayed note',url:wrongResponse.url(),status:wrongResponse.status(),body:await wrongResponse.json()});
+  await page.reload();
+  await page.waitForFunction(() => document.querySelector('#loading').textContent === '');
+  await page.locator('#order').focus();
+  const focus=[];
+  for(let i=0;i<5;i++) {
+    focus.push(await page.evaluate(() => ({id:document.activeElement.id,tag:document.activeElement.tagName,outline:getComputedStyle(document.activeElement).outlineStyle})));
+    await page.keyboard.press('Tab');
+  }
+  log.push({step:'keyboard tab traversal from order',focus,express:await page.locator('#express').evaluate(e=>({tag:e.tagName,tabIndex:e.tabIndex,role:e.getAttribute('role')}))});
+  await page.locator('#express').click();
+  await page.waitForFunction(() => document.querySelector('#service').textContent === 'express');
+  await page.reload();
+  await page.waitForFunction(() => document.querySelector('#loading').textContent === '');
+  log.push({step:'pointer express persists',state:await state()});
+  await page.locator('#standard').focus();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => document.querySelector('#service').textContent === 'standard');
+  log.push({step:'keyboard standard works',state:await state()});
+  await page.setViewportSize({width:375,height:812});
+  log.push({step:'narrow layout',dimensions:await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth}))});
+  await page.screenshot({path:'evidence/narrow.png',fullPage:true});
+  return log;
+}

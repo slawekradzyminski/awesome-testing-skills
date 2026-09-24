@@ -1,0 +1,45 @@
+### Ran Playwright code
+```js
+await (async page => {
+  const events = [];
+  page.on('response', async r => { if (r.url().includes('/api/')) events.push({method:r.request().method(),url:r.url(),request:r.request().postData(),status:r.status(),body:await r.text()}); });
+  page.on('pageerror', e => events.push({pageerror:e.message}));
+  const state = () => page.evaluate(() => ({order:document.querySelector('#order').value,heading:document.querySelector('#heading').textContent,note:document.querySelector('#note').value,service:document.querySelector('#service').textContent,feedback:document.querySelector('#feedback').textContent}));
+  await page.locator('#save').waitFor({state:'visible'});
+  console.log('environment',await page.evaluate(() => ({agent:navigator.userAgent,width:innerWidth,height:innerHeight})));
+  await page.locator('#note').fill('Journey assessment: reception please');
+  await Promise.all([page.waitForResponse(r=>r.url().endsWith('/note')),page.getByRole('button',{name:'Save instruction'}).click()]);
+  await page.reload();
+  await page.waitForFunction(()=>document.querySelector('#loading').textContent==='');
+  console.log('successful note after reload',await state());
+  await page.getByRole('button',{name:'Use express delivery'}).click();
+  await page.waitForFunction(()=>document.querySelector('#service').textContent==='express');
+  await page.reload();
+  await page.waitForFunction(()=>document.querySelector('#loading').textContent==='');
+  console.log('successful service after reload',await state());
+  await page.locator('#note').fill('LOCKER: 1');
+  await Promise.all([page.waitForResponse(r=>r.url().endsWith('/note')),page.getByRole('button',{name:'Save instruction'}).click()]);
+  console.log('rejected note visible state',await state());
+  await page.screenshot({path:'evidence/rejected-save-desktop.png'});
+  await page.reload();
+  await page.waitForFunction(()=>document.querySelector('#loading').textContent==='');
+  console.log('rejected note after reload',await state());
+  await page.locator('#order').selectOption('A200');
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+  console.log('ordinary A200',await state());
+  const late = page.waitForResponse(r=>r.url().endsWith('/A100'));
+  await page.locator('#order').selectOption('A100');
+  await page.locator('#order').selectOption('A200');
+  await late;
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A100');
+  console.log('out of order lookup',await state());
+  await page.screenshot({path:'evidence/order-mismatch-desktop.png'});
+  await page.locator('#note').fill('Journey assessment: wrong target proof');
+  await Promise.all([page.waitForResponse(r=>r.url().endsWith('/note')),page.getByRole('button',{name:'Save instruction'}).click()]);
+  console.log('save while mismatched',await state());
+  console.log('network',events);
+}
+)(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T11-22-56-606Z.log#L1

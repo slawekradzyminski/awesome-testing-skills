@@ -1,0 +1,14 @@
+{
+  "A100": {
+    "refunded": {
+      "before": 0,
+      "after": 3000
+    },
+    "version": {
+      "before": 1,
+      "after": 3
+    }
+  },
+  "A200": {},
+  "B100": {}
+}

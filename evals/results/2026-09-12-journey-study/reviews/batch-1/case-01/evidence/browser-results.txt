@@ -1,0 +1,38 @@
+### Result
+[{"initial":{"order":"A100","heading":"Order A100","address":"10 Oak Street","note":"Leave with reception","service":"standard","feedback":"","loading":""}},{"rejected":{"order":"A100","heading":"Order A100","address":"10 Oak Street","note":"LOCKER: 1","service":"standard","feedback":"Locker delivery is unavailable; enter another instruction","loading":""}},{"persisted":{"order":"A100","heading":"Order A100","address":"10 Oak Street","note":"Assessment: ring three times","service":"standard","feedback":"","loading":""}},{"duringLoad":{"selected":"A100","heading":"Order A200","saveDisabled":true,"expressDisabled":true}},{"outOfOrder":{"order":"A200","heading":"Order A200","address":"20 Pine Street","note":"Ring twice","service":"standard","feedback":"","loading":""}},{"targetPersisted":{"order":"A200","heading":"Order A200","address":"20 Pine Street","note":"Assessment target A200","service":"standard","feedback":"","loading":""}},{"keyboard":[{"id":"note","outline":"rgb(198, 93, 0) solid 3px"},{"id":"save","outline":"rgb(198, 93, 0) solid 3px"},{"id":"express","outline":"rgb(198, 93, 0) solid 3px"},{"id":"standard","outline":"rgb(198, 93, 0) solid 3px"}],"final":{"order":"A200","heading":"Order A200","address":"20 Pine Street","note":"Ring twice","service":"standard","feedback":"Delivery service saved","loading":""},"calls":[{"method":"POST","url":"http://127.0.0.1:58780/api/orders/A100/note","body":"{\"note\":\"LOCKER: 1\"}"},{"method":"POST","url":"http://127.0.0.1:58780/api/orders/A100/note","body":"{\"note\":\"Assessment: ring three times\"}"},{"method":"GET","url":"http://127.0.0.1:58780/api/orders/A100","body":null},{"method":"POST","url":"http://127.0.0.1:58780/api/orders/A100/note","body":"{\"note\":\"Leave with reception\"}"},{"method":"GET","url":"http://127.0.0.1:58780/api/orders/A200","body":null},{"method":"GET","url":"http://127.0.0.1:58780/api/orders/A100","body":null},{"method":"GET","url":"http://127.0.0.1:58780/api/orders/A200","body":null},{"method":"POST","url":"http://127.0.0.1:58780/api/orders/A200/note","body":"{\"note\":\"Assessment target A200\"}"},{"method":"GET","url":"http://127.0.0.1:58780/api/orders/A100","body":null},{"method":"GET","url":"http://127.0.0.1:58780/api/orders/A200","body":null},{"method":"POST","url":"http://127.0.0.1:58780/api/orders/A200/note","body":"{\"note\":\"Ring twice\"}"},{"method":"POST","url":"http://127.0.0.1:58780/api/services","body":"{\"ids\":[\"A200\"],\"service\":\"express\"}"},{"method":"POST","url":"http://127.0.0.1:58780/api/services","body":"{\"ids\":[\"A200\"],\"service\":\"standard\"}"}]},{"narrow":{"width":320,"scrollWidth":320,"controls":[{"id":"order","left":20,"right":219},{"id":"note","left":16,"right":295.59375},{"id":"save","left":20,"right":168.59375},{"id":"express","left":20,"right":205.96875},{"id":"standard","left":20,"right":214.515625}]}}]
+### Ran Playwright code
+```js
+await (async page => {
+ const log=[]; const state=()=>page.evaluate(()=>Object.fromEntries(['order','heading','address','note','service','feedback','loading'].map(id=>[id,document.getElementById(id).value??document.getElementById(id).textContent])));
+ const ready=()=>page.waitForFunction(()=>!document.getElementById('save').disabled);
+ const calls=[]; page.on('request',r=>{if(r.url().includes('/api/'))calls.push({method:r.method(),url:r.url(),body:r.postData()})});
+ await ready(); log.push({initial:await state()});
+ await page.locator('#note').fill('LOCKER: 1');
+ await page.locator('#save').click();
+ await page.waitForFunction(()=>document.getElementById('feedback').textContent.includes('unavailable'));
+ log.push({rejected:await state()});
+ await page.locator('#note').fill('Assessment: ring three times');
+ await page.locator('#save').click();
+ await page.waitForFunction(()=>document.getElementById('feedback').textContent.includes('instruction saved'));
+ await page.reload(); await ready(); log.push({persisted:await state()});
+ await page.locator('#note').fill('Leave with reception'); await page.locator('#save').click(); await ready();
+ await page.locator('#order').selectOption('A200'); await ready();
+ await page.locator('#order').selectOption('A100');
+ log.push({duringLoad:await page.evaluate(()=>({selected:document.querySelector('#order').value,heading:document.querySelector('#heading').textContent,saveDisabled:document.querySelector('#save').disabled,expressDisabled:document.querySelector('#express').disabled}))});
+ await page.locator('#order').selectOption('A200'); await ready();
+ await page.waitForTimeout(850); log.push({outOfOrder:await state()});
+ await page.locator('#note').fill('Assessment target A200'); await page.locator('#save').click(); await ready();
+ await page.reload(); await ready(); await page.locator('#order').selectOption('A200'); await ready(); log.push({targetPersisted:await state()});
+ await page.locator('#note').fill('Ring twice'); await page.locator('#save').click(); await ready();
+ await page.locator('#order').focus(); const focus=[];
+ for(let i=0;i<4;i++){await page.keyboard.press('Tab'); focus.push(await page.evaluate(()=>({id:document.activeElement.id,outline:getComputedStyle(document.activeElement).outline}))); if(i===2){await page.keyboard.press('Enter');await page.waitForFunction(()=>document.getElementById('service').textContent==='express')} if(i===3){await page.keyboard.press('Enter');await page.waitForFunction(()=>document.getElementById('service').textContent==='standard')}}
+ log.push({keyboard:focus,final:await state(),calls});
+ await page.setViewportSize({width:320,height:720});
+ log.push({narrow:await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('select,textarea,button')].map(e=>({id:e.id,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right}))}))});
+ await page.screenshot({path:'evidence/narrow.png',fullPage:true});
+ return log;
+}
+)(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T11-18-38-098Z.log#L1

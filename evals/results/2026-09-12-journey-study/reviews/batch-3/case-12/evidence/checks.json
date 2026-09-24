@@ -1,0 +1,615 @@
+{
+  "api_requests_including_initial_curl": 80,
+  "checks": [
+    {
+      "check": "Alice list ownership",
+      "passed": true,
+      "actual": [
+        "A100",
+        "A200"
+      ],
+      "expected": [
+        "A100",
+        "A200"
+      ]
+    },
+    {
+      "check": "Bob list ownership",
+      "passed": true,
+      "actual": [
+        "B100"
+      ],
+      "expected": [
+        "B100"
+      ]
+    },
+    {
+      "check": "read access None",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "refund access None",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "address access None",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "note access None",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "services access None",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "read access unknown",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "refund access unknown",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "address access unknown",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "note access unknown",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "services access unknown",
+      "passed": true,
+      "actual": 401,
+      "expected": 401
+    },
+    {
+      "check": "read access bob",
+      "passed": true,
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "check": "refund access bob",
+      "passed": true,
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "check": "address access bob",
+      "passed": true,
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "check": "note access bob",
+      "passed": true,
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "check": "services access bob",
+      "passed": true,
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "check": "Denied writes preserve Alice order",
+      "passed": true,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Alice cannot read Bob",
+      "passed": true,
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "check": "Valid bulk service",
+      "passed": true,
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "check": "Valid service persists",
+      "passed": true,
+      "actual": "express",
+      "expected": "express"
+    },
+    {
+      "check": "Bulk reject MISSING",
+      "passed": true,
+      "actual": 404,
+      "expected": 404
+    },
+    {
+      "check": "Bulk atomicity MISSING",
+      "passed": false,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "express"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Bulk reverse rejection MISSING",
+      "passed": true,
+      "actual": 404,
+      "expected": 404
+    },
+    {
+      "check": "Bulk reverse unchanged MISSING",
+      "passed": true,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Bulk reject B100",
+      "passed": true,
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "check": "Bulk atomicity B100",
+      "passed": false,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "express"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Bulk reverse rejection B100",
+      "passed": true,
+      "actual": 403,
+      "expected": 403
+    },
+    {
+      "check": "Bulk reverse unchanged B100",
+      "passed": true,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Bob order unchanged",
+      "passed": true,
+      "actual": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Valid address accepted",
+      "passed": true,
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "check": "Version increments",
+      "passed": true,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "check": "Valid address persists",
+      "passed": true,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Assessment newer address",
+        "version": 2,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Assessment newer address",
+        "version": 2,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Stale version rejected",
+      "passed": false,
+      "actual": 200,
+      "expected": 409
+    },
+    {
+      "check": "Stale save preserves newer state",
+      "passed": false,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Assessment stale address",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Assessment newer address",
+        "version": 2,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Future version rejected",
+      "passed": true,
+      "actual": 409,
+      "expected": 409
+    },
+    {
+      "check": "Future rejection unchanged",
+      "passed": true,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Assessment stale address",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Assessment stale address",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Refund partial",
+      "passed": true,
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "check": "Refund exact-balance",
+      "passed": true,
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "check": "Refund over-cumulative",
+      "passed": false,
+      "actual": 200,
+      "expected": 409
+    },
+    {
+      "check": "Refund over-original",
+      "passed": true,
+      "actual": 409,
+      "expected": 409
+    },
+    {
+      "check": "Cumulative refund bounded",
+      "passed": false,
+      "actual": 10001,
+      "expected": 10000
+    },
+    {
+      "check": "refund malformed 0",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "refund malformed 1",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "refund malformed 2",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "refund malformed 3",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "refund malformed 4",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "refund malformed 5",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "address malformed 0",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "address malformed 1",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "address malformed 2",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "address malformed 3",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "note malformed 0",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "note malformed 1",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "note malformed 2",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "note malformed 3",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "Service malformed 0",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "Service malformed 1",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "Service malformed 2",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "Malformed JSON b'{'",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "Malformed JSON b'[]'",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "Malformed JSON b'null'",
+      "passed": true,
+      "actual": 400,
+      "expected": 400
+    },
+    {
+      "check": "Malformed writes preserve state",
+      "passed": true,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 4,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 4,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "Valid note accepted",
+      "passed": true,
+      "actual": 200,
+      "expected": 200
+    },
+    {
+      "check": "Valid note persists",
+      "passed": true,
+      "actual": "Assessment ring three times",
+      "expected": "Assessment ring three times"
+    },
+    {
+      "check": "Locker rejected",
+      "passed": true,
+      "actual": 422,
+      "expected": 422
+    },
+    {
+      "check": "Locker preserves prior note",
+      "passed": true,
+      "actual": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 4,
+        "note": "Assessment ring three times",
+        "service": "standard"
+      },
+      "expected": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 4,
+        "note": "Assessment ring three times",
+        "service": "standard"
+      }
+    }
+  ]
+}

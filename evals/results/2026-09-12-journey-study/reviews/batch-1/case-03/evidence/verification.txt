@@ -1,0 +1,4 @@
+Supplied tests executed: python3 -m unittest discover -s app -v
+4 tests passed.
+Evidence consistency: 105 API requests (1 baseline curl plus 104 recorded HTTP calls), 102 passing assertions.
+Assessed source, requirements and test SHA-256 fingerprints unchanged.

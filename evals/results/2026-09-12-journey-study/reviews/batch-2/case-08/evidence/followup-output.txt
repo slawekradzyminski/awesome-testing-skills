@@ -1,0 +1,20 @@
+PASS missing required fields /api/orders/A200/refund status 400
+PASS missing required fields /api/orders/A200/address status 400
+PASS missing required fields /api/orders/A200/note status 400
+PASS missing required fields /api/services status 400
+PASS oversized JSON body status 400
+PASS Bob forbidden write /api/orders/A200/refund status 403
+PASS Bob forbidden write /api/orders/A200/address status 403
+PASS Bob forbidden write /api/orders/A200/note status 403
+PASS Bob forbidden write /api/services status 403
+PASS unknown fixture rejected
+PASS followup rejected mutations preserve all state
+PASS one character note status 200
+PASS one character note persists
+PASS restore one character note status 200
+PASS padded 120 character address status 200
+PASS address stores bounded normalized value
+PASS normalized address persisted
+PASS restore padded address status 200
+PASS followup reversible fields restored
+TOTAL REQUESTS 97

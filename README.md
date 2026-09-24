@@ -13,6 +13,8 @@ The experiment guides add practical techniques for selecting useful probes: chal
 
 Detailed guidance loads through references at the point of use. Each skill remains independently copyable, supports available tools, and avoids fixed test counts, mandatory full matrices, and extra approval steps for routine authorized work.
 
+Both [API](skills/api-exploratory-testing/references/reporting.md) and [UI](skills/ui-exploratory-testing/references/reporting.md) reporting guides provide reusable finding templates with stable IDs, issue type, evidence state, status, reproduction, expected/actual results, impact-based severity and acceptance/retest criteria. UI exploration includes scoped accessibility and UX checks; both skills can report documentation defects when requested or relevant to the agreed scope. Categories help triage findings without turning every observation into a confirmed bug. Adapt the templates and severity scale to your team; external issue filing requires a request that includes it. Documentation-only defects remain excluded from the benchmark below.
+
 ## Install
 
 Requires **Node.js 20+**, npm/npx and Git. From the project where you want to use the skills:
@@ -60,7 +62,7 @@ The package uses the portable `SKILL.md` format with `references/`. It does not 
 
 Paths were checked against official documentation on September 12, 2026. Codex's `.agents/skills/` discovery directory is different from optional `agents/openai.yaml` metadata inside a skill. Cursor and Copilot also recognize some shared/compatible directories, so a copy installed for one client can be visible in another; avoid duplicate copies in multiple directories the same client scans. Global installation applies locally; remote/cloud sessions need skills available in their own environment.
 
-Open a new agent session if the skills are not listed yet. Ask the agent to use the skill by name; Codex supports `$api-exploratory-testing`, and Claude Code/Cursor expose skill names through their slash-command selectors. Skill discovery and available tools depend on the client/version. Installation paths and file integrity were tested; the behavioral evaluations below were run in Codex, not independently repeated in all four products.
+Open a new agent session if the skills are not listed yet. Ask the agent to use the skill by name; Codex supports `$api-exploratory-testing`, and Claude Code/Cursor expose skill names through their slash-command selectors. Skill discovery and available tools depend on the client/version. Installation paths and file integrity were tested; behavioral evaluations below include Codex and a small Claude Code pilot, not independent repetitions in all four products.
 
 The installer has no runtime dependencies or lifecycle install scripts. Its distributable contains the installer and skill files; benchmark fixtures and archived reports stay in the Git repository. No browser runtime, HTTP tool, account or credentials are configured for you. The UI skill prefers Playwright CLI when available and permits another browser agent.
 
@@ -95,6 +97,9 @@ Report findings, supporting evidence, and meaningful coverage gaps.
 - Findings that distinguish observed failures, code evidence, hypotheses, and ambiguous requirements.
 - Explicit limits: build mismatch, missing source/runtime, untested states, and cleanup still needed.
 - Suggested regression coverage at a suitable test level.
+- A check ledger linked to sanitized HTTP evidence; UI sessions also record visited pages/states and relevant screenshots.
+
+When a ticket is available, the skills turn its acceptance criteria into observable checks. If material criteria are missing, they ask one focused question with candidate outcomes and continue independent testing. Unconfirmed interpretations stay labeled in the report.
 
 Exploration does not automatically include product fixes, a new regression suite, external issue filing, or publication. Those actions can be included in the user's task explicitly. Routine authorized testing continues without repeated approval requests.
 
@@ -129,6 +134,9 @@ The **[benchmark user guide](evals/GETTING_STARTED.md)** provides source links, 
 
 | Evidence | Result | Interpretation |
 | --- | --- | --- |
+| [24-run three-condition study](evals/results/2026-09-12-journey-study.md) | Normal request, report template and full skill each established **12/12 seeded opportunities with actionable evidence** | No demonstrated effectiveness advantage for the full skill; fewer API calls accompanied longer runs and more output |
+| [Claude Opus 5.5 four-arm pilot](evals/results/2026-09-24-claude-ablation.md) | Normal, report-only, investigation-only and full-skill arms each produced **3/3 audit-observed API faults** in one run | Known ceiling again; no discovery advantage demonstrated. Separate API/UI smoke checks produced linked check ledgers, HTTP evidence and UI screenshots |
+| [Claude Opus 5.5 historical cart diagnostic](evals/results/2026-09-24-history-opus55-diagnostic.md) | Two runs per condition found a related direct-update UI defect, but **0/2 per condition** reproduced the prespecified two-tab H5 path | Full skill produced check ledgers in both runs; no condition saved a correlated HTTP exchange log. This is one ticket, not a full historical result |
 | [16-run paired pilot](evals/results/2026-09-12-retry.md) | Primary source-backed artifact scores: **11.75/12 with skills, 10.0/12 without**; both groups found both seeded defects | Stronger evidence in this small sample; no established discovery-rate advantage |
 | [Ten practical trials](evals/results/2026-09-12-usability.md) | Six of eight initial cases met the desired useful outcome; two weaknesses were corrected and passed targeted reruns | Tests exposed excessive outage probing and an incomplete missing-source handoff; unsuccessful runs remain archived |
 | Input-validation defect/control pairs | Both defect cases identified; corrected controls produced evidence-backed passing reports | Finding a bug is not the only successful outcome |
@@ -137,6 +145,10 @@ The **[benchmark user guide](evals/GETTING_STARTED.md)** provides source links, 
 The four newly integrated orders/profile cases have fixture/API/browser validation; they have not yet received fresh agent trials and are not included in the historical scores above.
 
 The unavailable-API correction reduced observed requests from **35 to 2** in its targeted rerun. The source-handoff correction made the report explain which frontend/backend code and deployed revision could improve a later assessment. Neither one-off rerun establishes a reliability rate.
+
+### Historical tasks and Claude support
+
+A [separate historical runner](evals/history-study/README.md) compares unchanged real Java/React revisions using a normal request, a report template and the full skill. Its [September 12 closeout](evals/results/2026-09-12-history-study.md) is explicitly incomplete and ungraded: 24 completed sessions, four timeouts, and eight interrupted/unstarted entries. It supplies no new effectiveness ranking. The September 24 [Opus 5.5 diagnostic](evals/results/2026-09-24-history-opus55-diagnostic.md) used one rebuilt historical cart ticket with two runs per condition. It is separate from both that closeout and the [Dispatch Desk pilot](evals/results/2026-09-24-claude-ablation.md); the full 36-run historical matrix remains unrun.
 
 ### How grading works
 
@@ -173,6 +185,6 @@ python3 -m unittest discover -s evals/sample-app -v
 
 ### Limits
 
-These are development cases, with one initial trial per condition/case, a small set of defect mechanisms, and guidance that already contains some relevant examples. They are not a held-out benchmark. Tool choices varied; exact model versions, full action traces, token costs and automatically enforced wall-clock budgets were unavailable. Fresh contexts are not OS sandboxes. We have not demonstrated equal behavioral performance across Claude Code, Codex, Cursor and Copilot.
+The original pilot used development cases, with one initial trial per condition/case, a small set of defect mechanisms, and guidance that already contains some relevant examples. They are not a held-out benchmark. Tool choices varied; exact model versions, full action traces, token costs and automatically enforced wall-clock budgets were unavailable. The separate Dispatch Desk study records model/tool settings, traces, token usage and elapsed time, with two repetitions per cell. Its six seeded mechanisms all reached a discovery ceiling; it is still a self-authored screening study, not an independently curated benchmark. Fresh contexts are not OS sandboxes. We have not demonstrated equal behavioral performance across Claude Code, Codex, Cursor and Copilot.
 
 The evidence supports an initial practical release with explicit limitations. Repeated held-out source-backed runs, fixed model/tool versions and natural skill-triggering tests are needed before making general performance claims. [Validation notes](docs/validation.md) and the archived assessments retain what was actually checked, including earlier failures. Removing optional display metadata does not retroactively change those evaluated snapshots or their hashes.

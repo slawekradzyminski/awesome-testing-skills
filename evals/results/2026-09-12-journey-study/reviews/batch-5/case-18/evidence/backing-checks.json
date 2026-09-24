@@ -1,0 +1,213 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": null,
+    "request": null,
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "actor": "alice",
+    "request": null,
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/B100",
+    "actor": "alice",
+    "request": {
+      "note": "Journey forbidden"
+    },
+    "status": 404,
+    "response": {
+      "error": "Not found"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/B100/note",
+    "actor": "alice",
+    "request": {
+      "note": "Journey forbidden"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "request": {
+      "ids": [
+        "A100",
+        "B100"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "actor": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "actor": "alice",
+    "request": {
+      "note": "   "
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "actor": "alice",
+    "request": {
+      "note": "LOCKER: persisted probe"
+    },
+    "status": 422,
+    "response": {
+      "error": "Locker delivery is unavailable; enter another instruction"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  }
+]

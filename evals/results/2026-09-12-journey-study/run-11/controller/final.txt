@@ -1,0 +1,5 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+No release-blocking defect observed: 102 exploratory checks passed across 105 API requests; all four supplied tests passed. The report includes evidence, coverage limits, and prioritized regression recommendations.
+
+Reversible changes were restored. Owner reset is needed for A200’s 6,000-cent refund and A100’s version increase to 4.

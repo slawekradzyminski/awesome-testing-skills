@@ -1,0 +1,9 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+**Recommendation: hold release.** Three confirmed defects:
+
+- Order-switch races can save instructions to the wrong order.
+- Rejected instructions display success.
+- Keyboard users cannot select express delivery.
+
+All four existing tests pass. Supporting evidence and retest criteria are included. Fixtures were restored and the assessment browser session closed.

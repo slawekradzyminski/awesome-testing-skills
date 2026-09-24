@@ -1,0 +1,798 @@
+[
+  {
+    "label": "baseline list alice",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "baseline list bob",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "Alice sees only own orders",
+    "passed": true,
+    "actual": [
+      "A100",
+      "A200"
+    ],
+    "expected": [
+      "A100",
+      "A200"
+    ]
+  },
+  {
+    "label": "Bob sees only own orders",
+    "passed": true,
+    "actual": [
+      "B100"
+    ],
+    "expected": [
+      "B100"
+    ]
+  },
+  {
+    "label": "unauthorized None /api/orders GET",
+    "passed": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "label": "unauthorized None /api/orders/A200 GET",
+    "passed": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "label": "unauthorized None /api/orders/A200/refund POST",
+    "passed": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "label": "unauthorized None /api/services POST",
+    "passed": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "label": "unauthorized mallory /api/orders GET",
+    "passed": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "label": "unauthorized mallory /api/orders/A200 GET",
+    "passed": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "label": "unauthorized mallory /api/orders/A200/refund POST",
+    "passed": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "label": "unauthorized mallory /api/services POST",
+    "passed": true,
+    "actual": 401,
+    "expected": 401
+  },
+  {
+    "label": "cross owner read alice",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner alice refund",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner alice address",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner alice note",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner alice service",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner read bob",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner bob refund",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner bob address",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner bob note",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "cross owner bob service",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "missing refund",
+    "passed": true,
+    "actual": 404,
+    "expected": 404
+  },
+  {
+    "label": "missing address",
+    "passed": true,
+    "actual": 404,
+    "expected": 404
+  },
+  {
+    "label": "missing note",
+    "passed": true,
+    "actual": 404,
+    "expected": 404
+  },
+  {
+    "label": "missing read",
+    "passed": true,
+    "actual": 404,
+    "expected": 404
+  },
+  {
+    "label": "malformed object 1",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "malformed object 2",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "malformed object 4",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "malformed object 1",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "malformed object 3",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "malformed object 0",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "malformed object 8211",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund None",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund True",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund False",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund 0",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund -1",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund 1.5",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund '1'",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund []",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid refund {}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid address {}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid address {'address': '', 'version': 1}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid address {'address': ' \\n ', 'version': 1}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid address {'address': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'version': 1}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid address {'address': 22, 'version': 1}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid address {'address': 'x', 'version': True}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid address {'address': 'x', 'version': 1.0}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid address {'address': 'x', 'version': '1'}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid note None",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid note ''",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid note '  '",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid note 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid note 22",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid services {}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid services {'ids': [], 'service': 'express'}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid services {'ids': 'A200', 'service': 'express'}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid services {'ids': [1], 'service': 'express'}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid services {'ids': ['A200'], 'service': 'overnight'}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "invalid services {'ids': ['A200'], 'service': None}",
+    "passed": true,
+    "actual": 400,
+    "expected": 400
+  },
+  {
+    "label": "after rejection checks list alice",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "after rejection checks list bob",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "all rejection probes preserve all state",
+    "passed": true,
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    }
+  },
+  {
+    "label": "batch atomicity NO_SUCH_ORDER",
+    "passed": true,
+    "actual": 404,
+    "expected": 404
+  },
+  {
+    "label": "batch atomicity B100",
+    "passed": true,
+    "actual": 403,
+    "expected": 403
+  },
+  {
+    "label": "after rejected batches list alice",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "after rejected batches list bob",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "failed batches preserve every order",
+    "passed": true,
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    }
+  },
+  {
+    "label": "valid two order batch",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "after successful batch list alice",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "after successful batch list bob",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "both requested services persisted",
+    "passed": true,
+    "actual": [
+      "express",
+      "express"
+    ],
+    "expected": [
+      "express",
+      "express"
+    ]
+  },
+  {
+    "label": "Bob untouched by Alice batch",
+    "passed": true,
+    "actual": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    },
+    "expected": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "valid 160 character note",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "locker business rejection",
+    "passed": true,
+    "actual": 422,
+    "expected": 422
+  },
+  {
+    "label": "rejected note retains previous note",
+    "passed": true,
+    "actual": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "expected": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+  },
+  {
+    "label": "valid 1 character note",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "concurrent address: one success and one conflict",
+    "passed": true,
+    "actual": [
+      200,
+      409
+    ],
+    "expected": [
+      200,
+      409
+    ]
+  },
+  {
+    "label": "address winner persists",
+    "passed": true,
+    "actual": "Address one",
+    "expected": "Address one"
+  },
+  {
+    "label": "address increments once",
+    "passed": true,
+    "actual": 2,
+    "expected": 2
+  },
+  {
+    "label": "sequential stale address",
+    "passed": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "label": "valid address length 120",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "concurrent refunds: one success and one conflict",
+    "passed": true,
+    "actual": [
+      200,
+      409
+    ],
+    "expected": [
+      200,
+      409
+    ]
+  },
+  {
+    "label": "refund exact remaining balance",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "refund after exhausted balance",
+    "passed": true,
+    "actual": 409,
+    "expected": 409
+  },
+  {
+    "label": "refund cumulative total capped at paid",
+    "passed": true,
+    "actual": 4000,
+    "expected": 4000
+  },
+  {
+    "label": "restore service A100",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "restore service A200",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "restore note",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "restore address",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "final list alice",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "final list bob",
+    "passed": true,
+    "actual": 200,
+    "expected": 200
+  },
+  {
+    "label": "final state restored except disclosed refund and version",
+    "passed": true,
+    "actual": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 4,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 4000,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    },
+    "expected": {
+      "A100": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "A200": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 4,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "B100": {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 4000,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    }
+  }
+]

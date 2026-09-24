@@ -1,0 +1,76 @@
+     1	"""Dispatch Desk domain. Amounts use integer cents; state is disposable."""
+     2	from copy import deepcopy
+     3	
+     4	
+     5	class Desk:
+     6	    def __init__(self):
+     7	        self.orders = {
+     8	            "A100": {"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0,
+     9	                     "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"},
+    10	            "A200": {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0,
+    11	                     "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"},
+    12	            "B100": {"id": "B100", "owner": "bob", "paid": 4000, "refunded": 0,
+    13	                     "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}}
+    14	
+    15	    def visible(self, actor):
+    16	        return [deepcopy(o) for o in self.orders.values() if o["owner"] == actor]
+    17	
+    18	    def order(self, actor, order_id):
+    19	        row = self.orders.get(order_id)
+    20	        if row is None:
+    21	            return 404, {"error": "Order not found"}
+    22	        if row["owner"] != actor:
+    23	            return 403, {"error": "Access denied"}
+    24	        return 200, row
+    25	
+    26	    def refund(self, actor, order_id, body):
+    27	        status, row = self.order(actor, order_id)
+    28	        if status != 200:
+    29	            return status, row
+    30	        amount = body.get("amount")
+    31	        if type(amount) is not int or amount <= 0:
+    32	            return 400, {"error": "Amount must be a positive integer in cents"}
+    33	        if amount > row["paid"]:
+    34	            return 409, {"error": "Refund exceeds remaining paid amount"}
+    35	        row["refunded"] += amount
+    36	        return 200, deepcopy(row)
+    37	
+    38	    def address(self, actor, order_id, body):
+    39	        status, row = self.order(actor, order_id)
+    40	        if status != 200:
+    41	            return status, row
+    42	        address, version = body.get("address"), body.get("version")
+    43	        if not isinstance(address, str) or not 1 <= len(address.strip()) <= 120 or type(version) is not int:
+    44	            return 400, {"error": "Address and integer version required"}
+    45	        if version > row["version"]:
+    46	            return 409, {"error": "Order changed; reload before saving"}
+    47	        row["address"] = address.strip()
+    48	        row["version"] += 1
+    49	        return 200, deepcopy(row)
+    50	
+    51	    def services(self, actor, body):
+    52	        ids, service = body.get("ids"), body.get("service")
+    53	        if not isinstance(ids, list) or not ids or any(not isinstance(i, str) for i in ids) or service not in ("standard", "express"):
+    54	            return 400, {"error": "Order IDs and a supported service required"}
+    55	        selected = []
+    56	        for order_id in ids:
+    57	            status, row = self.order(actor, order_id)
+    58	            if status != 200:
+    59	                return status, row
+    60	            row["service"] = service
+    61	            selected.append(row)
+    62	        for row in selected:
+    63	            row["service"] = service
+    64	        return 200, {"orders": deepcopy(selected)}
+    65	
+    66	    def note(self, actor, order_id, body):
+    67	        status, row = self.order(actor, order_id)
+    68	        if status != 200:
+    69	            return status, row
+    70	        note = body.get("note")
+    71	        if not isinstance(note, str) or not 1 <= len(note.strip()) <= 160:
+    72	            return 400, {"error": "Note must contain 1 to 160 characters"}
+    73	        if note.strip().upper().startswith("LOCKER:"):
+    74	            return 422, {"error": "Locker delivery is unavailable; enter another instruction"}
+    75	        row["note"] = note
+    76	        return 200, deepcopy(row)

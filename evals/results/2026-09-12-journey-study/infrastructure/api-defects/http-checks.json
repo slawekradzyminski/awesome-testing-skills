@@ -1,0 +1,131 @@
+[
+  {
+    "path": "/api/orders/A100/refund",
+    "body": {
+      "amount": 6000
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 6000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/orders/A100/refund",
+    "body": {
+      "amount": 5000
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 11000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/orders/A100",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 11000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/orders/A100/address",
+    "body": {
+      "address": "Newer",
+      "version": 1
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 11000,
+      "address": "Newer",
+      "version": 2,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/orders/A100/address",
+    "body": {
+      "address": "Stale",
+      "version": 1
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 11000,
+      "address": "Stale",
+      "version": 3,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/orders/A100",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 11000,
+      "address": "Stale",
+      "version": 3,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A100",
+        "B100"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "path": "/api/orders/A100",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 11000,
+      "address": "Stale",
+      "version": 3,
+      "note": "Leave with reception",
+      "service": "express"
+    }
+  }
+]

@@ -1,0 +1,970 @@
+{
+  "api_requests": 97,
+  "checks": 118,
+  "passed": 118,
+  "failed": [],
+  "results": [
+    {
+      "check": "baseline alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 1
+      }
+    },
+    {
+      "check": "baseline bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 2
+      }
+    },
+    {
+      "check": "Alice list is isolated",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Bob list is isolated",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "alice actual list contains only own orders",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "bob actual list contains only own orders",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "owner detail: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 3
+      }
+    },
+    {
+      "check": "other owner detail: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 4
+      }
+    },
+    {
+      "check": "unauthenticated list None: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 5
+      }
+    },
+    {
+      "check": "unauthenticated detail None: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 6
+      }
+    },
+    {
+      "check": "unauthenticated refund None: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 7
+      }
+    },
+    {
+      "check": "unauthenticated address None: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 8
+      }
+    },
+    {
+      "check": "unauthenticated note None: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 9
+      }
+    },
+    {
+      "check": "unauthenticated services None: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 10
+      }
+    },
+    {
+      "check": "unauthenticated list unknown: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 11
+      }
+    },
+    {
+      "check": "unauthenticated detail unknown: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 12
+      }
+    },
+    {
+      "check": "unauthenticated refund unknown: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 13
+      }
+    },
+    {
+      "check": "unauthenticated address unknown: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 14
+      }
+    },
+    {
+      "check": "unauthenticated note unknown: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 15
+      }
+    },
+    {
+      "check": "unauthenticated services unknown: status",
+      "pass": true,
+      "detail": {
+        "expected": 401,
+        "actual": 401,
+        "request": 16
+      }
+    },
+    {
+      "check": "foreign detail alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 17
+      }
+    },
+    {
+      "check": "foreign refund alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 18
+      }
+    },
+    {
+      "check": "foreign address alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 19
+      }
+    },
+    {
+      "check": "foreign note alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 20
+      }
+    },
+    {
+      "check": "foreign service alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 21
+      }
+    },
+    {
+      "check": "foreign detail bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 22
+      }
+    },
+    {
+      "check": "foreign refund bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 23
+      }
+    },
+    {
+      "check": "foreign address bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 24
+      }
+    },
+    {
+      "check": "foreign note bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 25
+      }
+    },
+    {
+      "check": "foreign service bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 26
+      }
+    },
+    {
+      "check": "missing detail: status",
+      "pass": true,
+      "detail": {
+        "expected": 404,
+        "actual": 404,
+        "request": 27
+      }
+    },
+    {
+      "check": "missing refund: status",
+      "pass": true,
+      "detail": {
+        "expected": 404,
+        "actual": 404,
+        "request": 28
+      }
+    },
+    {
+      "check": "missing address: status",
+      "pass": true,
+      "detail": {
+        "expected": 404,
+        "actual": 404,
+        "request": 29
+      }
+    },
+    {
+      "check": "missing note: status",
+      "pass": true,
+      "detail": {
+        "expected": 404,
+        "actual": 404,
+        "request": 30
+      }
+    },
+    {
+      "check": "after access failures alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 31
+      }
+    },
+    {
+      "check": "after access failures bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 32
+      }
+    },
+    {
+      "check": "Access failures preserve all fixture state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "invalid refund 0: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 33
+      }
+    },
+    {
+      "check": "invalid refund -1: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 34
+      }
+    },
+    {
+      "check": "invalid refund 1.5: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 35
+      }
+    },
+    {
+      "check": "invalid refund True: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 36
+      }
+    },
+    {
+      "check": "invalid refund '100': status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 37
+      }
+    },
+    {
+      "check": "invalid refund None: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 38
+      }
+    },
+    {
+      "check": "invalid address {}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 39
+      }
+    },
+    {
+      "check": "invalid address {'address': '   ', 'version': 1}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 40
+      }
+    },
+    {
+      "check": "invalid address {'address': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'version': 1}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 41
+      }
+    },
+    {
+      "check": "invalid address {'address': 5, 'version': 1}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 42
+      }
+    },
+    {
+      "check": "invalid address {'address': 'Valid', 'version': True}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 43
+      }
+    },
+    {
+      "check": "invalid address {'address': 'Valid', 'version': '1'}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 44
+      }
+    },
+    {
+      "check": "invalid address {'address': 'Valid', 'version': 1.0}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 45
+      }
+    },
+    {
+      "check": "invalid note {'note': ''}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 46
+      }
+    },
+    {
+      "check": "invalid note {'note': ' \\t\\n'}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 47
+      }
+    },
+    {
+      "check": "invalid note {'note': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 48
+      }
+    },
+    {
+      "check": "invalid note {'note': True}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 49
+      }
+    },
+    {
+      "check": "invalid note {}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 50
+      }
+    },
+    {
+      "check": "invalid services {'ids': [], 'service': 'express'}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 51
+      }
+    },
+    {
+      "check": "invalid services {'ids': 'A100', 'service': 'express'}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 52
+      }
+    },
+    {
+      "check": "invalid services {'ids': ['A100', 3], 'service': 'express'}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 53
+      }
+    },
+    {
+      "check": "invalid services {'ids': ['A100'], 'service': 'overnight'}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 54
+      }
+    },
+    {
+      "check": "invalid services {}: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 55
+      }
+    },
+    {
+      "check": "invalid JSON envelope 1 bytes 7b: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 56
+      }
+    },
+    {
+      "check": "invalid JSON envelope 2 bytes 5b5d: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 57
+      }
+    },
+    {
+      "check": "invalid JSON envelope 4 bytes 6e756c6c: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 58
+      }
+    },
+    {
+      "check": "invalid JSON envelope 2 bytes 3432: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 59
+      }
+    },
+    {
+      "check": "invalid JSON envelope 0 bytes : status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 60
+      }
+    },
+    {
+      "check": "invalid JSON envelope 12 bytes 7b226e6f7465223a22ff227d: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 61
+      }
+    },
+    {
+      "check": "invalid JSON envelope 8193 bytes 202020202020202020202020202020: status",
+      "pass": true,
+      "detail": {
+        "expected": 400,
+        "actual": 400,
+        "request": 62
+      }
+    },
+    {
+      "check": "after invalid inputs alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 63
+      }
+    },
+    {
+      "check": "after invalid inputs bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 64
+      }
+    },
+    {
+      "check": "Malformed input preserves all state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "mixed forbidden batch A100: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 65
+      }
+    },
+    {
+      "check": "mixed forbidden batch A200: status",
+      "pass": true,
+      "detail": {
+        "expected": 403,
+        "actual": 403,
+        "request": 66
+      }
+    },
+    {
+      "check": "mixed missing batch: status",
+      "pass": true,
+      "detail": {
+        "expected": 404,
+        "actual": 404,
+        "request": 67
+      }
+    },
+    {
+      "check": "after failed batches alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 68
+      }
+    },
+    {
+      "check": "after failed batches bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 69
+      }
+    },
+    {
+      "check": "Failed batches are atomic",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "valid batch: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 70
+      }
+    },
+    {
+      "check": "Both service changes returned",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "persisted service batch: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 71
+      }
+    },
+    {
+      "check": "Both service changes persist",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "note boundary 1: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 72
+      }
+    },
+    {
+      "check": "note boundary saved 1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "note boundary 160: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 73
+      }
+    },
+    {
+      "check": "note boundary saved 160",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unsupported note LOCKER: 1: status",
+      "pass": true,
+      "detail": {
+        "expected": 422,
+        "actual": 422,
+        "request": 74
+      }
+    },
+    {
+      "check": "unsupported note   locker: 2: status",
+      "pass": true,
+      "detail": {
+        "expected": 422,
+        "actual": 422,
+        "request": 75
+      }
+    },
+    {
+      "check": "note after rejections: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 76
+      }
+    },
+    {
+      "check": "Rejected notes preserve prior saved note",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "address max length: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 77
+      }
+    },
+    {
+      "check": "Address save increments version",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "stale address: status",
+      "pass": true,
+      "detail": {
+        "expected": 409,
+        "actual": 409,
+        "request": 78
+      }
+    },
+    {
+      "check": "address after stale save: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 79
+      }
+    },
+    {
+      "check": "Stale address preserves newer value",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Exactly one competing address accepted",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "address after race: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 82
+      }
+    },
+    {
+      "check": "Concurrent winning address persists with single increment",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "partial refund 1000: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 83
+      }
+    },
+    {
+      "check": "partial refund 2000: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 84
+      }
+    },
+    {
+      "check": "Partial refunds accumulate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "excess cumulative refund: status",
+      "pass": true,
+      "detail": {
+        "expected": 409,
+        "actual": 409,
+        "request": 85
+      }
+    },
+    {
+      "check": "refund after excessive request: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 86
+      }
+    },
+    {
+      "check": "Excessive refund records nothing",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact remaining refund: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 87
+      }
+    },
+    {
+      "check": "Exact remaining refund reaches payment",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "refund after exhaustion: status",
+      "pass": true,
+      "detail": {
+        "expected": 409,
+        "actual": 409,
+        "request": 88
+      }
+    },
+    {
+      "check": "Exactly one competing refund accepted",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "refund after race: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 91
+      }
+    },
+    {
+      "check": "Concurrent refunds cannot exceed payment",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "restore original note: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 92
+      }
+    },
+    {
+      "check": "restore original address: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 93
+      }
+    },
+    {
+      "check": "restore service A100: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 94
+      }
+    },
+    {
+      "check": "restore service A200: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 95
+      }
+    },
+    {
+      "check": "final state alice: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 96
+      }
+    },
+    {
+      "check": "final state bob: status",
+      "pass": true,
+      "detail": {
+        "expected": 200,
+        "actual": 200,
+        "request": 97
+      }
+    },
+    {
+      "check": "Restored reversible fields A100",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Restored reversible fields A200",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Restored reversible fields B100",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Bob remains completely unchanged",
+      "pass": true,
+      "detail": null
+    }
+  ]
+}

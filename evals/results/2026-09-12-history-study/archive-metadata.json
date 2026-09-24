@@ -1,0 +1,13 @@
+{
+  "path": "/Users/slawek/benchmark-archives/awesome-testing-skills/history-20260912-closeout.tar.gz",
+  "sha256": "8c276b5dc0df938179bbd424a680481ffb0425217a2c8bd0f057f712e8442808",
+  "bytes": 38702241,
+  "entries": 24681,
+  "readback_verified": true,
+  "candidate_result_records": 28,
+  "credential_scan": {
+    "known_anthropic_key_present": false,
+    "files_checked": 19563
+  },
+  "publication_status": "Private local retention; ungraded raw traces have not been cleared for publication."
+}

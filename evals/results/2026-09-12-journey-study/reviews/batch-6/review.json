@@ -1,0 +1,299 @@
+{
+  "reviews": [
+    {
+      "case_id": "case-21",
+      "seeded": [
+        {
+          "id": "U1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Screenshot shows A200 selected with A100 details. Ordinary Save writes A100's note to A200; the candidate's subsequent API list confirms persistence. High severity is justified by demonstrated wrong-order corruption, with concrete retest criteria.",
+          "evidence": [
+            "report.md: DD-01",
+            "evidence/wrong-order.png",
+            "evidence/browser-results.txt: out of order response; save mismatched displayed note",
+            "evidence/browser-check.js",
+            "evidence/api-results.json: first GET /api/orders",
+            "app/static/app.js: readOrder and save handler"
+          ]
+        },
+        {
+          "id": "U2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 0,
+          "acceptance_point": 1,
+          "reason": "Browser submission returns 422 while displaying success; reload retains the previous saved note. Impact and correction/retest criteria are concrete. The High rating is insufficiently justified beyond the rubric's Medium false-confirmation impact; incorrect delivery remains hypothetical.",
+          "evidence": [
+            "report.md: DD-02",
+            "evidence/rejected-note.png",
+            "evidence/browser-results.txt: rejected note; rejected note not persisted",
+            "app/static/app.js: save handler",
+            "app/requirements.md: rejected-instruction feedback"
+          ]
+        },
+        {
+          "id": "U3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Recorded Tab traversal skips express, while pointer activation succeeds and survives reload. Source confirms a nonfocusable div with only a click handler. Medium severity, affected keyboard users, and Tab/Enter/Space acceptance criteria are supported.",
+          "evidence": [
+            "report.md: DD-03",
+            "evidence/browser-results.txt: keyboard traversal; pointer express persists; keyboard standard works",
+            "evidence/browser-check.js",
+            "evidence/narrow.png",
+            "app/static/index.html: express control",
+            "app/static/app.js: service handlers"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "Retained evidence supports successful note persistence, rejected-note preservation, pointer and keyboard service controls, and a bounded narrow-layout check. API checks and four existing tests also passed. The keyboard-correction timeout and remaining browser/transport coverage are explicitly disclosed.",
+      "integrity_notes": [
+        "Elapsed time: 282.9 seconds from cases.json. Controller audit confirms 70 API requests. Exact browser-action and token telemetry are unavailable; the retained scripts support substantial activity below the claimed action cap.",
+        "Source preservation is supplied as true. Closure evidence records the assigned browser session closing. Final state confirms reversible cleanup and disclosed A200 refunded=6000, version=3.",
+        "Root report links resolve. The evidence/report.md copy differs only in relative link prefixes. The ancillary console log referenced by browser output is not retained; decisive finding evidence is present.",
+        "The keyboard-recovery timeout is correctly treated as inconclusive, not a functional pass or additional defect.",
+        "Triage: impact 3/3, severity 2/3, acceptance 3/3 eligible findings.",
+        "Review was confined to retained batch artifacts; no application, reproduction script, or network verification was run. Condition labels were not inferred or scored. Wording may reveal guidance use; the study author knows the seeded mechanisms, so this is not independent blind validation."
+      ],
+      "reviewed_evidence": [
+        "report.md",
+        "evidence/report.md",
+        "evidence/browser-results.txt",
+        "evidence/browser-check.js",
+        "evidence/browser-requests.txt",
+        "evidence/wrong-order.png",
+        "evidence/rejected-note.png",
+        "evidence/narrow.png",
+        "evidence/keyboard-recovery.js",
+        "evidence/keyboard-recovery.txt",
+        "evidence/api-check.py",
+        "evidence/api-results.json",
+        "evidence/api-summary.txt",
+        "evidence/alice-before.json",
+        "evidence/bob-before.json",
+        "evidence/fixture-after.json",
+        "evidence/unit-tests.txt",
+        "evidence/browser-close.txt",
+        "app/requirements.md",
+        "app/static/app.js",
+        "app/static/index.html",
+        "app/static/style.css",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-22",
+      "seeded": [
+        {
+          "id": "R1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Requests 65–68 accept 6000, 4000, then 1 cent and read back refunded=10001 against paid=10000. This substantiates cumulative over-refunding. High severity is bounded to the fixture ledger, and regression criteria cover remaining-balance boundaries and unchanged rejection state.",
+          "evidence": [
+            "evidence/report.md: finding 1",
+            "evidence/http.jsonl: requests 65–69",
+            "evidence/assessment-output.json",
+            "app/domain.py: refund",
+            "app/requirements.md: cumulative refund ceiling"
+          ]
+        },
+        {
+          "id": "R2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "A version-1 save produces version 2; another version-1 save overwrites it with Stale overwrite, confirmed by GET at version 3. Customer address loss supports High severity, with misdelivery correctly framed as risk. Acceptance criteria are testable.",
+          "evidence": [
+            "evidence/report.md: finding 2",
+            "evidence/http.jsonl: requests 61–64",
+            "app/domain.py: address",
+            "app/requirements.md: stale-address protection"
+          ]
+        },
+        {
+          "id": "R3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 0,
+          "acceptance_point": 1,
+          "reason": "Missing and forbidden trailing IDs return 404/403 while subsequent GETs show A200 changed from standard to express. Impact and atomicity retests are concrete. High severity lacks justification beyond the rubric's Medium partial-service-change consequence; Bob remains unchanged.",
+          "evidence": [
+            "evidence/report.md: finding 3",
+            "evidence/http.jsonl: requests 54–60",
+            "app/domain.py: services",
+            "app/requirements.md: all-or-nothing service updates"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "The transcript and assertions support concrete authorization, validation, boundary, successful-update, and state-preservation observations. Four routine tests passed. Simultaneous requests, browser journeys, and broader testing are clearly excluded or identified as remaining work.",
+      "integrity_notes": [
+        "Elapsed time: 204.85 seconds from cases.json. All 76 candidate HTTP observations match the supplied server audit; no browser requests appear. Token telemetry is unavailable.",
+        "Source preservation is supplied as true. Baseline and final snapshots confirm reversible cleanup, A100 refunded=10001, A200 version=4, and unchanged Bob state.",
+        "All report evidence links resolve. Six failed assertions correctly represent three unique defects.",
+        "Triage: impact 3/3, severity 2/3, acceptance 3/3 eligible findings. Condition labels were not inferred or scored."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/http.jsonl",
+        "evidence/checks.json",
+        "evidence/assessment-output.json",
+        "evidence/existing-tests.txt",
+        "evidence/baseline.json",
+        "evidence/final-state.json",
+        "app/domain.py",
+        "app/requirements.md",
+        "app/app.py",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-23",
+      "seeded": [],
+      "additional": [
+        {
+          "title": "Note validation permits a persisted 161-character value with trailing whitespace",
+          "classification": "unresolved",
+          "impact_point": 0,
+          "severity_point": 0,
+          "acceptance_point": 0,
+          "reason": "Candidate POST/GET evidence proves that 160 nonspace characters plus a space persist, while 161 nonspace characters are rejected. However, '1–160 nonblank characters' does not clearly establish whether surrounding whitespace counts toward the limit. The report explicitly acknowledges this ambiguity. Runtime behavior is substantiated, but defect status requires a product decision.",
+          "evidence": [
+            "evidence/report.md: API-01",
+            "evidence/note-boundary-http.json: oversized submission, persisted read, and rejected control",
+            "evidence/note-boundary-summary.json",
+            "evidence/note_boundary.py",
+            "app/domain.py: note validates stripped length but stores original input",
+            "app/requirements.md: note-length requirement"
+          ]
+        }
+      ],
+      "coverage_score": 2,
+      "coverage_reason": "Concrete passing observations cover isolation, malformed inputs, note boundaries, rejected-batch state preservation, and competing refund/address requests with readback. The report limits concurrency conclusions to sampled pairs and excludes browser and production claims. The ambiguous note behavior is disclosed rather than hidden in the passing assertion total.",
+      "integrity_notes": [
+        "Elapsed time: 287.19 seconds from cases.json. Audit confirms 101 API requests: 89 main, eight boundary, and four supplemental. Main and supplemental checks total 101 passing assertions; the boundary investigation is separate. Zero browser requests appear; token telemetry is unavailable.",
+        "All main and boundary HTTP observations match the audit. Supplemental records omit method fields, but their script establishes methods and all four observations match the audit.",
+        "Source preservation is supplied as true. Final snapshots and boundary cleanup confirm restored reversible fields, A200 version=4, and B100 refunded=4000.",
+        "All report evidence links resolve. The qualified note-length claim is unresolved, not a confirmed unsupported claim. There are no substantiated findings eligible for triage points.",
+        "Condition labels were not inferred or scored; absence of expected seeds was not treated as proof that additional defects cannot exist."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/http.jsonl",
+        "evidence/checks.json",
+        "evidence/summary.json",
+        "evidence/assess_api.py",
+        "evidence/additional-http.json",
+        "evidence/additional-checks.json",
+        "evidence/additional_checks.py",
+        "evidence/note-boundary-http.json",
+        "evidence/note-boundary-summary.json",
+        "evidence/note_boundary.py",
+        "evidence/existing-tests.txt",
+        "evidence/initial-state.json",
+        "evidence/final-state.json",
+        "app/domain.py",
+        "app/app.py",
+        "app/test_domain.py",
+        "app/requirements.md",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-24",
+      "seeded": [
+        {
+          "id": "R1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Accepted partial refunds of 5000, 1000, and 1 cent produce refunded=6001 against paid=6000, confirmed by GET. The report identifies affected refund operators, distinguishes fixture-ledger impact from real money, and supplies precise boundary and rejection-state criteria.",
+          "evidence": [
+            "evidence/report.md: F-01",
+            "evidence/F-01-refund.md",
+            "evidence/http-transcript.jsonl: requests 62–66",
+            "app/domain.py: refund",
+            "app/requirements.md: cumulative refund ceiling"
+          ]
+        },
+        {
+          "id": "R2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "The newer address is saved at version 2, then overwritten by a version-1 request; GET confirms the stale value at version 3. High severity is justified by demonstrated destination loss, with downstream misdelivery explicitly hypothetical. Retest criteria cover matching, stale, future, and competing versions.",
+          "evidence": [
+            "evidence/report.md: F-02",
+            "evidence/F-02-address.md",
+            "evidence/http-transcript.jsonl: requests 67–70",
+            "app/domain.py: address",
+            "app/requirements.md: stale-address protection"
+          ]
+        },
+        {
+          "id": "R3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Both rejected batches begin with owned A100 and end with missing/forbidden IDs. Readbacks show A100 changed to express despite 404/403. Medium severity matches demonstrated partial mutation, acknowledges unchanged foreign state, and includes concrete atomicity acceptance criteria.",
+          "evidence": [
+            "evidence/report.md: F-03",
+            "evidence/F-03-services.md",
+            "evidence/http-transcript.jsonl: requests 74–79",
+            "evidence/final-state.json",
+            "app/domain.py: services",
+            "app/requirements.md: all-or-nothing service updates"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "Retained transcript and assertions support authorization isolation, invalid-input state preservation, accepted boundaries, successful updates, and all three failure readbacks. Four supplied tests passed. Concurrency, transport boundaries, browser behavior, and untested batch positions are explicitly bounded.",
+      "integrity_notes": [
+        "Elapsed time: 232.62 seconds from cases.json. All 89 candidate HTTP observations match the server audit; no browser requests appear. Token telemetry is unavailable.",
+        "Source preservation is supplied as true; retained build hashes corroborate inspected source identities. Initial/final snapshots confirm restored reversible fields, unchanged A100/B100, and disclosed A200 refunded=6001, version=5.",
+        "All report links resolve. Finding extracts agree with the full transcript. Seven failed assertions correctly represent three unique defects.",
+        "Triage: impact 3/3, severity 3/3, acceptance 3/3 eligible findings. Condition labels were not inferred or scored."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/F-01-refund.md",
+        "evidence/F-02-address.md",
+        "evidence/F-03-services.md",
+        "evidence/http-transcript.jsonl",
+        "evidence/results.json",
+        "evidence/existing-tests.txt",
+        "evidence/build-context.json",
+        "evidence/initial-state.json",
+        "evidence/final-state.json",
+        "app/domain.py",
+        "app/app.py",
+        "app/requirements.md",
+        "controller-audit.jsonl"
+      ]
+    }
+  ]
+}

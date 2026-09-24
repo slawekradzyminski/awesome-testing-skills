@@ -1,0 +1,11 @@
+{
+  "id" : 9,
+  "name" : "Desk lamp",
+  "description" : "Replacement and everyday catalog supplies.",
+  "price" : 49.95,
+  "stockQuantity" : 20,
+  "category" : "Home",
+  "imageUrl" : "",
+  "createdAt" : "2026-09-24T18:32:09.255302",
+  "updatedAt" : "2026-09-24T18:32:09.255317"
+}

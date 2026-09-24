@@ -1,0 +1,64 @@
+- generic [ref=f1e2]:
+  - generic [ref=f1e4]:
+    - navigation [ref=f1e5]:
+      - generic [ref=f1e7]:
+        - generic [ref=f1e8]:
+          - link "E-Commerce" [ref=f1e10] [cursor=pointer]:
+            - /url: /
+          - generic [ref=f1e18]:
+            - link "Home" [ref=f1e19] [cursor=pointer]:
+              - /url: /
+            - link "Products" [ref=f1e20] [cursor=pointer]:
+              - /url: /products
+            - link "Orders" [ref=f1e21] [cursor=pointer]:
+              - /url: /orders
+            - link "Profile" [ref=f1e22] [cursor=pointer]:
+              - /url: /profile
+            - link "Send Email" [ref=f1e23] [cursor=pointer]:
+              - /url: /email
+            - link "QR Code" [ref=f1e24] [cursor=pointer]:
+              - /url: /qr
+            - link "LLM" [ref=f1e25] [cursor=pointer]:
+              - /url: /llm
+        - generic [ref=f1e11]:
+          - link "2" [ref=f1e26] [cursor=pointer]:
+            - /url: /cart
+          - generic [ref=f1e32]:
+            - generic [ref=f1e33]: Taylor Jones
+            - button "Logout" [ref=f1e34] [cursor=pointer]
+    - main [ref=f1e15]:
+      - generic [ref=f1e36]:
+        - heading "Your Cart" [level=1] [ref=f1e37]
+        - generic [ref=f1e38]:
+          - generic [ref=f1e40]:
+            - heading "Cart Items" [level=2] [ref=f1e41]
+            - generic [ref=f1e43]:
+              - generic [ref=f1e44]:
+                - link "Desk lamp" [ref=f1e45] [cursor=pointer]:
+                  - /url: /products/9
+                - generic [ref=f1e46]: $49.95 each
+              - generic [ref=f1e47]:
+                - generic [ref=f1e48]:
+                  - button "-" [ref=f1e49] [cursor=pointer]
+                  - generic [ref=f1e50]: "3"
+                  - button "+" [active] [ref=f1e51] [cursor=pointer]
+                - button "Update" [ref=f1e69] [cursor=pointer]
+                - generic [ref=f1e52]: $99.90
+                - button "Remove" [ref=f1e53] [cursor=pointer]
+          - generic [ref=f1e54]:
+            - generic [ref=f1e55]:
+              - heading "Cart Summary" [level=2] [ref=f1e56]
+              - generic [ref=f1e57]:
+                - generic [ref=f1e58]:
+                  - generic [ref=f1e59]: "Items:"
+                  - generic [ref=f1e60]: "2"
+                - generic [ref=f1e61]:
+                  - generic [ref=f1e62]: "Total:"
+                  - generic [ref=f1e63]: $99.90
+              - generic [ref=f1e64]:
+                - button "Proceed to Checkout" [ref=f1e65] [cursor=pointer]
+                - button "Clear Cart" [ref=f1e66] [cursor=pointer]
+            - link "Continue Shopping" [ref=f1e68] [cursor=pointer]:
+              - /url: /products
+  - region "Notifications (F8)":
+    - list

@@ -1,0 +1,1865 @@
+[
+  {
+    "id": 1,
+    "at": "2026-09-12T10:57:44.461476+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "at": "2026-09-12T10:57:44.462553+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "at": "2026-09-12T10:57:44.463948+00:00",
+    "actor": null,
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "id": 4,
+    "at": "2026-09-12T10:57:44.464479+00:00",
+    "actor": null,
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "body": null,
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "id": 5,
+    "at": "2026-09-12T10:57:44.464963+00:00",
+    "actor": null,
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 1
+    },
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "id": 6,
+    "at": "2026-09-12T10:57:44.465387+00:00",
+    "actor": null,
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Unauthorized",
+      "version": 1
+    },
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "id": 7,
+    "at": "2026-09-12T10:57:44.465871+00:00",
+    "actor": null,
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "Unauthorized"
+    },
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "id": 8,
+    "at": "2026-09-12T10:57:44.466322+00:00",
+    "actor": null,
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200"
+      ],
+      "service": "express"
+    },
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "id": 9,
+    "at": "2026-09-12T10:57:44.466760+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "body": null,
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 10,
+    "at": "2026-09-12T10:57:44.467210+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/B100/refund",
+    "body": {
+      "amount": 1
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 11,
+    "at": "2026-09-12T10:57:44.467668+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/B100/address",
+    "body": {
+      "address": "Unauthorized",
+      "version": 1
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 12,
+    "at": "2026-09-12T10:57:44.468100+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/B100/note",
+    "body": {
+      "note": "Unauthorized"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 13,
+    "at": "2026-09-12T10:57:44.468497+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "B100"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 14,
+    "at": "2026-09-12T10:57:44.468925+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "body": null,
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 15,
+    "at": "2026-09-12T10:57:44.469377+00:00",
+    "actor": "bob",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 1
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 16,
+    "at": "2026-09-12T10:57:44.469862+00:00",
+    "actor": "bob",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Unauthorized",
+      "version": 1
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 17,
+    "at": "2026-09-12T10:57:44.470510+00:00",
+    "actor": "bob",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "Unauthorized"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 18,
+    "at": "2026-09-12T10:57:44.471548+00:00",
+    "actor": "bob",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 19,
+    "at": "2026-09-12T10:57:44.472142+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "at": "2026-09-12T10:57:44.472696+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 21,
+    "at": "2026-09-12T10:57:44.473399+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": "{",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    }
+  },
+  {
+    "id": 22,
+    "at": "2026-09-12T10:57:44.473937+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": "[]",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    }
+  },
+  {
+    "id": 23,
+    "at": "2026-09-12T10:57:44.474484+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": "null",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    }
+  },
+  {
+    "id": 24,
+    "at": "2026-09-12T10:57:44.474979+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": "",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    }
+  },
+  {
+    "id": 25,
+    "at": "2026-09-12T10:57:44.475516+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": null
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "id": 26,
+    "at": "2026-09-12T10:57:44.476012+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": true
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "id": 27,
+    "at": "2026-09-12T10:57:44.476511+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 0
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "id": 28,
+    "at": "2026-09-12T10:57:44.477039+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": -1
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "id": 29,
+    "at": "2026-09-12T10:57:44.477510+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 1.5
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "id": 30,
+    "at": "2026-09-12T10:57:44.478012+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": "100"
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "id": 31,
+    "at": "2026-09-12T10:57:44.478786+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "body": {
+      "amount": 6001
+    },
+    "status": 409,
+    "response": {
+      "error": "Refund exceeds remaining paid amount"
+    }
+  },
+  {
+    "id": 32,
+    "at": "2026-09-12T10:57:44.479669+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {},
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "id": 33,
+    "at": "2026-09-12T10:57:44.480268+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": " ",
+      "version": 1
+    },
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "id": 34,
+    "at": "2026-09-12T10:57:44.480883+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "version": 1
+    },
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "id": 35,
+    "at": "2026-09-12T10:57:44.481470+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Valid",
+      "version": true
+    },
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "id": 36,
+    "at": "2026-09-12T10:57:44.482247+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Valid",
+      "version": "1"
+    },
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "id": 37,
+    "at": "2026-09-12T10:57:44.482796+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {},
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    }
+  },
+  {
+    "id": 38,
+    "at": "2026-09-12T10:57:44.483279+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [],
+      "service": "express"
+    },
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    }
+  },
+  {
+    "id": 39,
+    "at": "2026-09-12T10:57:44.483781+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200"
+      ],
+      "service": "overnight"
+    },
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    }
+  },
+  {
+    "id": 40,
+    "at": "2026-09-12T10:57:44.484270+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200",
+        1
+      ],
+      "service": "express"
+    },
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    }
+  },
+  {
+    "id": 41,
+    "at": "2026-09-12T10:57:44.484759+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": null
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "id": 42,
+    "at": "2026-09-12T10:57:44.485430+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": ""
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "id": 43,
+    "at": "2026-09-12T10:57:44.485895+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": " "
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "id": 44,
+    "at": "2026-09-12T10:57:44.486405+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "id": 45,
+    "at": "2026-09-12T10:57:44.487007+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 46,
+    "at": "2026-09-12T10:57:44.488101+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 47,
+    "at": "2026-09-12T10:57:44.488790+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "body": {
+      "amount": 6000
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 6000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "id": 48,
+    "at": "2026-09-12T10:57:44.489261+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "body": {
+      "amount": 4000
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 10000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "id": 49,
+    "at": "2026-09-12T10:57:44.489778+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "body": {
+      "amount": 1
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 10001,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "id": 50,
+    "at": "2026-09-12T10:57:44.490273+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 51,
+    "at": "2026-09-12T10:57:44.490846+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 52,
+    "at": "2026-09-12T10:57:44.491532+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "New address from current editor",
+      "version": 1
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "New address from current editor",
+      "version": 2,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "id": 53,
+    "at": "2026-09-12T10:57:44.492103+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Stale editor overwrite",
+      "version": 1
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Stale editor overwrite",
+      "version": 3,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "id": 54,
+    "at": "2026-09-12T10:57:44.492569+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 55,
+    "at": "2026-09-12T10:57:44.493109+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 56,
+    "at": "2026-09-12T10:57:44.493881+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "Future editor",
+      "version": 4
+    },
+    "status": 409,
+    "response": {
+      "error": "Order changed; reload before saving"
+    }
+  },
+  {
+    "id": 57,
+    "at": "2026-09-12T10:57:44.494358+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 58,
+    "at": "2026-09-12T10:57:44.495139+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 59,
+    "at": "2026-09-12T10:57:44.496023+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200",
+        "MISSING"
+      ],
+      "service": "express"
+    },
+    "status": 404,
+    "response": {
+      "error": "Order not found"
+    }
+  },
+  {
+    "id": 60,
+    "at": "2026-09-12T10:57:44.496492+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "express"
+        }
+      ]
+    }
+  },
+  {
+    "id": 61,
+    "at": "2026-09-12T10:57:44.497094+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 62,
+    "at": "2026-09-12T10:57:44.497776+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200"
+      ],
+      "service": "standard"
+    },
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 63,
+    "at": "2026-09-12T10:57:44.498238+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "MISSING",
+        "A200"
+      ],
+      "service": "express"
+    },
+    "status": 404,
+    "response": {
+      "error": "Order not found"
+    }
+  },
+  {
+    "id": 64,
+    "at": "2026-09-12T10:57:44.498814+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 65,
+    "at": "2026-09-12T10:57:44.500320+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 66,
+    "at": "2026-09-12T10:57:44.501151+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 67,
+    "at": "2026-09-12T10:57:44.501757+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 68,
+    "at": "2026-09-12T10:57:44.502474+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200",
+        "B100"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 69,
+    "at": "2026-09-12T10:57:44.503000+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "express"
+        }
+      ]
+    }
+  },
+  {
+    "id": 70,
+    "at": "2026-09-12T10:57:44.503725+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 71,
+    "at": "2026-09-12T10:57:44.504756+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200"
+      ],
+      "service": "standard"
+    },
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 72,
+    "at": "2026-09-12T10:57:44.505310+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "B100",
+        "A200"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "id": 73,
+    "at": "2026-09-12T10:57:44.505787+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 74,
+    "at": "2026-09-12T10:57:44.506371+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 75,
+    "at": "2026-09-12T10:57:44.507085+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A100",
+        "A200"
+      ],
+      "service": "express"
+    },
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "express"
+        }
+      ]
+    }
+  },
+  {
+    "id": 76,
+    "at": "2026-09-12T10:57:44.507581+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "express"
+        }
+      ]
+    }
+  },
+  {
+    "id": 77,
+    "at": "2026-09-12T10:57:44.508146+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 78,
+    "at": "2026-09-12T10:57:44.508840+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "x"
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Stale editor overwrite",
+      "version": 3,
+      "note": "x",
+      "service": "express"
+    }
+  },
+  {
+    "id": 79,
+    "at": "2026-09-12T10:57:44.509314+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Stale editor overwrite",
+      "version": 3,
+      "note": "x",
+      "service": "express"
+    }
+  },
+  {
+    "id": 80,
+    "at": "2026-09-12T10:57:44.509794+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Stale editor overwrite",
+      "version": 3,
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "service": "express"
+    }
+  },
+  {
+    "id": 81,
+    "at": "2026-09-12T10:57:44.510291+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Stale editor overwrite",
+      "version": 3,
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "service": "express"
+    }
+  },
+  {
+    "id": 82,
+    "at": "2026-09-12T10:57:44.510795+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "LOCKER: 1"
+    },
+    "status": 422,
+    "response": {
+      "error": "Locker delivery is unavailable; enter another instruction"
+    }
+  },
+  {
+    "id": 83,
+    "at": "2026-09-12T10:57:44.511316+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "  locker: 1"
+    },
+    "status": 422,
+    "response": {
+      "error": "Locker delivery is unavailable; enter another instruction"
+    }
+  },
+  {
+    "id": 84,
+    "at": "2026-09-12T10:57:44.512047+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "body": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Stale editor overwrite",
+      "version": 3,
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "service": "express"
+    }
+  },
+  {
+    "id": 85,
+    "at": "2026-09-12T10:57:44.513044+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "service": "express"
+        }
+      ]
+    }
+  },
+  {
+    "id": 86,
+    "at": "2026-09-12T10:57:44.513759+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 87,
+    "at": "2026-09-12T10:57:44.514403+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A100"
+      ],
+      "service": "standard"
+    },
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 88,
+    "at": "2026-09-12T10:57:44.514938+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/services",
+    "body": {
+      "ids": [
+        "A200"
+      ],
+      "service": "standard"
+    },
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "Stale editor overwrite",
+          "version": 3,
+          "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 89,
+    "at": "2026-09-12T10:57:44.515473+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "body": {
+      "note": "Ring twice"
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Stale editor overwrite",
+      "version": 3,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "id": 90,
+    "at": "2026-09-12T10:57:44.516017+00:00",
+    "actor": "alice",
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "body": {
+      "address": "20 Pine Street",
+      "version": 3
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  },
+  {
+    "id": 91,
+    "at": "2026-09-12T10:57:44.516520+00:00",
+    "actor": "alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 10001,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 4,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "id": 92,
+    "at": "2026-09-12T10:57:44.517183+00:00",
+    "actor": "bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "body": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,6 @@
+### Result
+{"editor":"note","feedback":"Delivery instruction saved","draft":"Keyboard assessment instruction"}
+### Ran Playwright code
+```js
+await (async page => { await page.setViewportSize({width:320,height:720}); await page.keyboard.press('Tab'); await page.keyboard.press('Tab'); const editor = await page.evaluate(()=>document.activeElement.id); await page.keyboard.press('ControlOrMeta+A'); await page.keyboard.type('Keyboard assessment instruction'); await page.keyboard.press('Tab'); await page.keyboard.press('Enter'); await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved'); return {editor,feedback:await page.locator('#feedback').textContent(),draft:await page.locator('#note').inputValue()}; })(page);
+```

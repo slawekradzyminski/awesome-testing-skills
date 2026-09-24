@@ -1,0 +1,26 @@
+[
+  {
+    "args": [
+      "open",
+      "http://127.0.0.1:57005"
+    ],
+    "stdout": "### Browser `journey-adjudicate-service` opened with pid 35022.\n### Ran Playwright code\n```js\nawait page.goto('http://127.0.0.1:57005');\n```\n### Page\n- Page URL: http://127.0.0.1:57005/\n- Page Title: Dispatch Desk\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T11-04-23-830Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.locator('#order').selectOption('A200'); await page.waitForFunction(() => document.getElementById('heading').textContent === 'Order A200'); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.locator('#order').selectOption('A200'); await page.waitForFunction(() => document.getElementById('heading').textContent === 'Order A200'); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "--filename=reproduce.js"
+    ],
+    "stdout": "### Result\n{\"events\":[{\"stage\":\"server response\",\"body\":{\"ids\":[\"A200\"],\"service\":\"express\"},\"status\":200,\"response\":{\"orders\":[{\"id\":\"A200\",\"owner\":\"alice\",\"paid\":6000,\"refunded\":0,\"address\":\"20 Pine Street\",\"version\":1,\"note\":\"Ring twice\",\"service\":\"express\"}]}},{\"stage\":\"server response\",\"body\":{\"ids\":[\"A200\"],\"service\":\"standard\"},\"status\":200,\"response\":{\"orders\":[{\"id\":\"A200\",\"owner\":\"alice\",\"paid\":6000,\"refunded\":0,\"address\":\"20 Pine Street\",\"version\":1,\"note\":\"Ring twice\",\"service\":\"standard\"}]}},{\"stage\":\"delivered to browser\",\"service\":\"standard\"},{\"stage\":\"delivered to browser\",\"service\":\"express\"}],\"displayed\":\"express\",\"saved\":{\"id\":\"A200\",\"owner\":\"alice\",\"paid\":6000,\"refunded\":0,\"address\":\"20 Pine Street\",\"version\":1,\"note\":\"Ring twice\",\"service\":\"standard\"},\"afterReload\":\"standard\"}\n### Ran Playwright code\n```js\nawait (async page => {\n const events=[];\n await page.setViewportSize({width:1100,height:850});\n await page.route('http://127.0.0.1:57005/api/services',async route=>{\n  const body=route.request().postDataJSON();\n  const response=await route.fetch();\n  events.push({stage:'server response',body,status:response.status(),response:await response.json()});\n  if(body.service==='express') await page.waitForTimeout(1000);\n  await route.fulfill({response});\n  events.push({stage:'delivered to browser',service:body.service});\n });\n await page.click('#express');\n await page.waitForTimeout(100);\n await page.click('#standard');\n await page.waitForTimeout(1200);\n const displayed=await page.locator('#service').textContent();\n const saved=await page.evaluate(async()=>await(await fetch('/api/orders/A200',{headers:{'X-Test-User':'alice'}})).json());\n await page.screenshot({path:'evidence/service-race.png'});\n await page.unroute('http://127.0.0.1:57005/api/services');\n await page.reload();\n await page.selectOption('#order','A200');\n await page.waitForFunction(()=>!document.querySelector('#save').disabled);\n return {events,displayed,saved,afterReload:await page.locator('#service').textContent()};\n}\n)(page);\n```\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,792 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": null,
+    "request": null,
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": null,
+    "request": {
+      "note": "denied"
+    },
+    "status": 401,
+    "response": {
+      "error": "Choose a fixture user"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "user": "alice",
+    "request": null,
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/B100/note",
+    "user": "alice",
+    "request": {
+      "note": "denied"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/B100/refund",
+    "user": "alice",
+    "request": {
+      "amount": 1
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/B100/address",
+    "user": "alice",
+    "request": {
+      "address": "denied",
+      "version": 1
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/A100",
+    "user": "bob",
+    "request": null,
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": {
+      "ids": [
+        "A100",
+        "B100"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "response": {
+      "error": "Access denied"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": {
+      "ids": [
+        "A100",
+        "MISSING"
+      ],
+      "service": "express"
+    },
+    "status": 404,
+    "response": {
+      "error": "Order not found"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": {
+      "ids": [
+        "A100",
+        "A200"
+      ],
+      "service": "express"
+    },
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "express"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": {
+      "ids": [
+        "A100",
+        "A200"
+      ],
+      "service": "standard"
+    },
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": true
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": 0
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": -1
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": 1.5
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": "1"
+    },
+    "status": 400,
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "user": "alice",
+    "request": {
+      "address": " ",
+      "version": 1
+    },
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "user": "alice",
+    "request": {
+      "address": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "version": 1
+    },
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "user": "alice",
+    "request": {
+      "address": "X",
+      "version": true
+    },
+    "status": 400,
+    "response": {
+      "error": "Address and integer version required"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "user": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "user": "alice",
+    "request": {
+      "address": "Assessment temporary street",
+      "version": 1
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Assessment temporary street",
+      "version": 2,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "user": "alice",
+    "request": {
+      "address": "Stale edit",
+      "version": 1
+    },
+    "status": 409,
+    "response": {
+      "error": "Order changed; reload before saving"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "user": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "Assessment temporary street",
+      "version": 2,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A200/address",
+    "user": "alice",
+    "request": {
+      "address": "20 Pine Street",
+      "version": 2
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 3,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "request": {
+      "note": ""
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "request": {
+      "note": " "
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "request": {
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "request": {
+      "note": false
+    },
+    "status": 400,
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/note",
+    "user": "alice",
+    "request": {
+      "note": "LOCKER: 1"
+    },
+    "status": 422,
+    "response": {
+      "error": "Locker delivery is unavailable; enter another instruction"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/A100",
+    "user": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 0,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": "{",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": "[]",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": "null",
+    "status": 400,
+    "response": {
+      "error": "Expected a bounded JSON object"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": {
+      "ids": [],
+      "service": "express"
+    },
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": {
+      "ids": [
+        "A100"
+      ],
+      "service": "invalid"
+    },
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/services",
+    "user": "alice",
+    "request": {
+      "ids": [
+        1
+      ],
+      "service": "express"
+    },
+    "status": 400,
+    "response": {
+      "error": "Order IDs and a supported service required"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": 6000
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 6000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": 3000
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 9000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": 1001
+    },
+    "status": 409,
+    "response": {
+      "error": "Refund exceeds remaining paid amount"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/A100",
+    "user": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 9000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": 1000
+    },
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 10000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A100/refund",
+    "user": "alice",
+    "request": {
+      "amount": 1
+    },
+    "status": 409,
+    "response": {
+      "error": "Refund exceeds remaining paid amount"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/A100",
+    "user": "alice",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 10000,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "user": "bob",
+    "request": null,
+    "status": 200,
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "user": "alice",
+    "request": {
+      "note": "Ring twice"
+    },
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 3,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  }
+]

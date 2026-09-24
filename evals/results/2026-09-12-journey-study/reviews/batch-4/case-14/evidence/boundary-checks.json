@@ -1,0 +1,156 @@
+[
+  {
+    "seq": 89,
+    "label": "owner detail read",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 90,
+    "label": "owner detail read",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 91,
+    "label": "owner detail read",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 92,
+    "label": "anonymous detail read",
+    "expected_status": 401,
+    "actual_status": 401,
+    "passed": true
+  },
+  {
+    "seq": 93,
+    "label": "anonymous bulk update",
+    "expected_status": 401,
+    "actual_status": 401,
+    "passed": true
+  },
+  {
+    "seq": 94,
+    "label": "Bob bulk forbidden second order",
+    "expected_status": 403,
+    "actual_status": 403,
+    "passed": true
+  },
+  {
+    "seq": 95,
+    "label": "Bob bulk rejected state",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 96,
+    "label": "missing operation fields",
+    "expected_status": 400,
+    "actual_status": 400,
+    "passed": true
+  },
+  {
+    "seq": 97,
+    "label": "missing operation fields",
+    "expected_status": 400,
+    "actual_status": 400,
+    "passed": true
+  },
+  {
+    "seq": 98,
+    "label": "missing operation fields",
+    "expected_status": 400,
+    "actual_status": 400,
+    "passed": true
+  },
+  {
+    "seq": 99,
+    "label": "161-character padded note",
+    "expected_status": 400,
+    "actual_status": 200,
+    "passed": false
+  },
+  {
+    "seq": 100,
+    "label": "padded note persisted",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 101,
+    "label": "long padded note",
+    "expected_status": 400,
+    "actual_status": 200,
+    "passed": false
+  },
+  {
+    "seq": 102,
+    "label": "long padded note persisted",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 103,
+    "label": "one character note",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 104,
+    "label": "restore note",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 105,
+    "label": "oversized request body",
+    "expected_status": 400,
+    "actual_status": 400,
+    "passed": true
+  },
+  {
+    "seq": 106,
+    "label": "Bob valid service",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 107,
+    "label": "Bob service persisted",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 108,
+    "label": "restore Bob service",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 109,
+    "label": "final Alice",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  },
+  {
+    "seq": 110,
+    "label": "final Bob",
+    "expected_status": 200,
+    "actual_status": 200,
+    "passed": true
+  }
+]

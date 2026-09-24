@@ -1,0 +1,76 @@
+{
+  "created_at": 1790265302.413804,
+  "purpose": "development/calibration pilot; cannot establish skill superiority",
+  "surface": "api",
+  "variant": "defects",
+  "model_requested": "claude-opus-5-5",
+  "effort": "high",
+  "tools": "Bash,Read,Write,Edit,Glob,Grep",
+  "max_budget_usd": "1.5",
+  "time_budget_seconds": 360,
+  "hard_stop_seconds": 390,
+  "api_request_budget": 120,
+  "stdin_prompt_sha256": "748c95f5eb3331b74c9c93258403e5f9914841b59e46e49be00c93ed3bb01b18",
+  "claude_code": "2.1.281 (Claude Code)",
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "git": {
+    "revision": "8489192405d78cbd005d0c9a7a58fe3e4856f66b",
+    "uncommitted": [
+      " M skills/api-exploratory-testing/SKILL.md",
+      " M skills/api-exploratory-testing/references/reporting.md",
+      "?? evals/journey-study/"
+    ]
+  },
+  "arms": {
+    "normal": {
+      "task_template_sha256": "89705e1e48306f9e3b1f78aba382e3eb0555206feaf735560616c9e507ff82ad",
+      "guidance": {}
+    },
+    "report-only": {
+      "task_template_sha256": "4e2fe154db02e9e4fafb02d2970c6b78afc54571ffa0f2da9d8c09d1336fdde9",
+      "guidance": {
+        "SKILL.md": "9d5ddfe781768248ac90ea3f5ad45f42c32a4c6047d15bf82ea0a088078c3169",
+        "references/reporting.md": "0f5df3dce2558414d87d989ca171c508137ec8d709315261f3141075c34660fe"
+      }
+    },
+    "investigation-only": {
+      "task_template_sha256": "4e2fe154db02e9e4fafb02d2970c6b78afc54571ffa0f2da9d8c09d1336fdde9",
+      "guidance": {
+        "SKILL.md": "93c576acf2384ff55ee728dde1220f5ad30747757591763e644b335afacbc4f7",
+        "references/experiment-design.md": "e2dba068da5b803d35a665d922ffe9cdb317c54ad9733dd16392856acf702010"
+      }
+    },
+    "full": {
+      "task_template_sha256": "4e2fe154db02e9e4fafb02d2970c6b78afc54571ffa0f2da9d8c09d1336fdde9",
+      "guidance": {
+        "SKILL.md": "50bf7986e0a5c69e1e5bf6502e326efb30601e890812d8c8cd0640f2b58a2dd4",
+        "references/experiment-design.md": "e2dba068da5b803d35a665d922ffe9cdb317c54ad9733dd16392856acf702010",
+        "references/reporting.md": "0f5df3dce2558414d87d989ca171c508137ec8d709315261f3141075c34660fe"
+      }
+    }
+  },
+  "controller_sha256": "4bac095f00a17db7aa53e6ecb00796f7a39bfef14fe350a4a5e415c0218c85e2",
+  "study_py_sha256": "0f3ce77aa5bfa8ea4da9b4e1f3222daf8a2175b749a7e53b1acf6f9f7d4ea2b8",
+  "inputs": {
+    "arms/full/TASK.template.md": "4e2fe154db02e9e4fafb02d2970c6b78afc54571ffa0f2da9d8c09d1336fdde9",
+    "arms/full/guidance/SKILL.md": "50bf7986e0a5c69e1e5bf6502e326efb30601e890812d8c8cd0640f2b58a2dd4",
+    "arms/full/guidance/references/experiment-design.md": "e2dba068da5b803d35a665d922ffe9cdb317c54ad9733dd16392856acf702010",
+    "arms/full/guidance/references/reporting.md": "0f5df3dce2558414d87d989ca171c508137ec8d709315261f3141075c34660fe",
+    "arms/investigation-only/TASK.template.md": "4e2fe154db02e9e4fafb02d2970c6b78afc54571ffa0f2da9d8c09d1336fdde9",
+    "arms/investigation-only/guidance/SKILL.md": "93c576acf2384ff55ee728dde1220f5ad30747757591763e644b335afacbc4f7",
+    "arms/investigation-only/guidance/references/experiment-design.md": "e2dba068da5b803d35a665d922ffe9cdb317c54ad9733dd16392856acf702010",
+    "arms/normal/TASK.template.md": "89705e1e48306f9e3b1f78aba382e3eb0555206feaf735560616c9e507ff82ad",
+    "arms/report-only/TASK.template.md": "4e2fe154db02e9e4fafb02d2970c6b78afc54571ffa0f2da9d8c09d1336fdde9",
+    "arms/report-only/guidance/SKILL.md": "9d5ddfe781768248ac90ea3f5ad45f42c32a4c6047d15bf82ea0a088078c3169",
+    "arms/report-only/guidance/references/reporting.md": "0f5df3dce2558414d87d989ca171c508137ec8d709315261f3141075c34660fe",
+    "claude-ablation.md": "9abdf152637014e43015c372c5321583112983aa83a841d24a2791ca7317db39",
+    "frozen-app/app.py": "36ecc41acd5ac3972c0015baf52f9290612fe2463d3adc10d5dea0507bbd1a11",
+    "frozen-app/domain.py": "c3120b6ac8807fbb1f7171347d2dd8a7eb9518af8fdc275697c635ff8f5ad9f9",
+    "frozen-app/requirements.md": "c25b0d63b0d1d7e7bdbab63fabf63815b8380a416a86e89429fc3117049bcdb5",
+    "frozen-app/static/app.js": "6d9bb3d9918d1b7b4483b7678fe7f11b93df1d9ab19159d4180170c5c9a2b6d0",
+    "frozen-app/static/index.html": "a5ded52c3f210a6b385e8dabd102ec9917473507ab3c6666a6d389cdd934de88",
+    "frozen-app/static/style.css": "d3cf90c54c13771f13912d89ff946b56ba0f96184b8312b927c46b4d4b987708",
+    "frozen-app/test_domain.py": "bd98535901a31c0fafc62a45f24d343e3e83117c56e18b115f0d8d79411ad3c2",
+    "schedule.json": "76acb4d3e9a9c4f221b024251f97b23640a1251432e0cf0e4debcc8c8dfcff9a"
+  }
+}

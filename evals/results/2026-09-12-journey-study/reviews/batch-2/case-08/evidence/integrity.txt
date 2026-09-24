@@ -1,0 +1,2 @@
+All supplied app source, static assets, requirements and test SHA256 fingerprints unchanged after assessment.
+97 API requests: one baseline plus 96 requests in http.jsonl. No browser session or browser actions.

@@ -1,0 +1,12 @@
+### Result
+{"persisted":"Assessment: reception please","draft":"LOCKER: 12","feedback":"Locker delivery is unavailable; enter another instruction"}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("textbox").fill("Assessment: reception please"); await page.getByRole("button",{name:"Save instruction"}).click(); await page.getByRole("status").filter({hasText:"Delivery instruction saved"}).waitFor(); await page.reload(); await page.getByRole("heading",{name:"Order A100",exact:true}).waitFor(); const persisted=await page.getByRole("textbox").inputValue(); await page.getByRole("textbox").fill("LOCKER: 12"); await page.getByRole("button",{name:"Save instruction"}).click(); await page.getByRole("status").filter({hasText:"Locker delivery is unavailable"}).waitFor(); return {persisted,draft:await page.getByRole("textbox").inputValue(),feedback:await page.locator("#feedback").innerText(),events:globalThis.journeyEvents}; })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:56450/
+- Page Title: Dispatch Desk
+- Console: 1 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T10-59-56-796Z.log#L1

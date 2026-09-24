@@ -1,0 +1,287 @@
+{
+  "reviews": [
+    {
+      "case_id": "case-09",
+      "seeded": [
+        {
+          "id": "U1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Selected A200 displays A100 details; ordinary Save posts A100's note to A200. Candidate state reads establish persistence. High severity is justified by wrong-order instruction corruption, and regression criteria check display, target and persisted state.",
+          "evidence": [
+            "evidence/report.md, finding 1",
+            "evidence/browser-check.txt: A200 selection, A100 heading and POST /api/orders/A200/note",
+            "evidence/api-start-state.json: A200 contains Leave with reception",
+            "evidence/race.png",
+            "app/static/app.js: readOrder renders without checking generation"
+          ]
+        },
+        {
+          "id": "U2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 0,
+          "acceptance_point": 1,
+          "reason": "The isolated browser probe records 422, success feedback, retained LOCKER draft and unchanged persisted note. Impact and correction/retest criteria are concrete. High severity is not justified beyond the rubric's Medium consequence of hiding required customer correction.",
+          "evidence": [
+            "evidence/report.md, finding 2",
+            "evidence/persistence-layout.txt: isolated rejection with equal savedBefore and savedAfter",
+            "evidence/rejected-note-isolated.png",
+            "app/static/app.js: note handler unconditionally announces success"
+          ]
+        },
+        {
+          "id": "U3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Actual Tab navigation skips express; pointer activation succeeds and persists after reload. Standard keyboard activation supplies a positive contrast. The blocked keyboard task supports Medium severity, with explicit Tab, Enter, Space and persistence acceptance checks.",
+          "evidence": [
+            "evidence/report.md, finding 3",
+            "evidence/browser-check.txt: recorded Tab sequence",
+            "evidence/persistence-layout.txt: express pointer activation, reload persistence and standard Enter activation",
+            "evidence/narrow.png",
+            "app/static/index.html: express div lacks a tab stop"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "Retained successful note/service persistence, keyboard contrast, narrow-layout measurements, four passing routine tests and 49 API requests support bounded conclusions. Transport recovery, concurrency, assistive technology and other engines are explicitly untested.",
+      "integrity_notes": [
+        "Discovery 3/3; actionable evidence 3/3. Triage: impact 3/3, severity 2/3, acceptance 3/3; total 8/9 available points across three eligible findings.",
+        "cases.json reports 250.71 seconds and preserved source; controller-audit.jsonl confirms 74 API requests. Exact total browser actions and token usage are unknown; the report claims fewer than 80 browser actions.",
+        "Final candidate state and audit agree: reversible fields restored, Bob unchanged, A100 refunded remains 10000 cents and A200 version remains 3. These residual changes are disclosed.",
+        "Refund/address exploration extends beyond the browser and its backing-call focus, although fixture mutation was authorized. It earns no extra discovery credit.",
+        "Report links resolve. The disabled-div observation is a sound source diagnosis attached to U3, not a separately runtime-confirmed defect. Untested recovery suggestions are not false positives.",
+        "Review used retained artifacts only; no application, reproduction script or network check was run. Condition labels were not inferred or scored. Report wording can reveal guidance use; the reviewer and study author know the seeded mechanisms, so this is not evidence of an independent blind study."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/browser-check.txt",
+        "evidence/persistence-layout.txt",
+        "evidence/race.png",
+        "evidence/rejected-note-isolated.png",
+        "evidence/narrow.png",
+        "evidence/api-check.py",
+        "evidence/api-check.json",
+        "evidence/api-start-state.json",
+        "evidence/api-result.txt",
+        "evidence/final-state.json",
+        "evidence/unit-tests.txt",
+        "app/requirements.md",
+        "app/static/app.js",
+        "app/static/index.html",
+        "app/static/style.css",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-10",
+      "seeded": [],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "The bounded no-defect conclusion is supported by 89 passing checks, retained HTTP responses and state reads covering cumulative/concurrent refunds, stale/competing addresses, batch atomicity, ownership, validation and rejection preservation. Four routine tests pass. Concurrency repetition, deployment provenance and excluded browser coverage are clearly limited.",
+      "integrity_notes": [
+        "No expected seeds or additional confirmed bug claims; triage has zero eligible findings. Recommendations are explicitly future coverage work.",
+        "cases.json reports 196.96 seconds and preserved source. The audit confirms 90 API requests; candidate http.jsonl retains requests 2–90, with the preliminary request corroborated by the audit. Zero browser actions are reported and consistent with retained activity; token usage is unknown.",
+        "Candidate baseline/final snapshots and audit agree: reversible fields restored, Bob unchanged, A100 refunded remains 10000 cents and A200 version remains 4. Owner reset is explicitly required.",
+        "Reviewed the designated root report.md; its evidence links resolve. The report appropriately leaves source/runtime identity unestablished.",
+        "No application or reproduction script was executed during review. No condition was inferred or scored."
+      ],
+      "reviewed_evidence": [
+        "report.md",
+        "evidence/assess_api.py",
+        "evidence/http.jsonl",
+        "evidence/checks.json",
+        "evidence/run-output.txt",
+        "evidence/existing-tests.txt",
+        "evidence/baseline.json",
+        "evidence/final-state.json",
+        "evidence/source-manifest.json",
+        "app/requirements.md",
+        "app/domain.py",
+        "app/app.py",
+        "app/test_domain.py",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-11",
+      "seeded": [
+        {
+          "id": "U1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Candidate browser evidence shows A200 selected with A100 details, followed by ordinary Save to A200 and a fresh persisted-orders read containing A100's note. High severity is supported by demonstrated same-account corruption; cross-customer impact is explicitly excluded. Acceptance checks cover response ordering and mutation consistency.",
+          "evidence": [
+            "evidence/report.md, UI-01",
+            "evidence/race-state.txt",
+            "evidence/race-state.png",
+            "evidence/race-save.txt",
+            "evidence/race-persisted.json",
+            "evidence/race-repeat.txt"
+          ]
+        },
+        {
+          "id": "U2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 0,
+          "acceptance_point": 1,
+          "reason": "Ready-state browser probes establish 422 with success feedback and retained draft; the fresh-session state read confirms the previous saved note remains. Impact and retest criteria are explicit. High severity exceeds the rubric's Medium reference without evidence of greater harm.",
+          "evidence": [
+            "evidence/report.md, UI-02",
+            "evidence/rejected-note.txt",
+            "evidence/rejected-note.png",
+            "evidence/rejected-note-fresh-session.txt",
+            "evidence/rejected-note-fresh-persisted.json",
+            "evidence/rejected-note-repeat.txt: inconclusive 200 attempt correctly excluded"
+          ]
+        },
+        {
+          "id": "U3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Ordinary Tab navigation skips express, while mouse activation persists and standard keyboard activation succeeds. High severity has a defensible rationale: a required operation is completely blocked for keyboard-only customers. Acceptance requires focus, Enter/Space activation and exactly one mutation.",
+          "evidence": [
+            "evidence/report.md, UI-03",
+            "evidence/keyboard.txt",
+            "evidence/keyboard-standard.txt",
+            "evidence/happy-path.txt",
+            "evidence/narrow.png",
+            "app/static/index.html",
+            "app/static/app.js"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "Executed note/service persistence, ordinary selection contrast, keyboard activation, ownership/batch checks, narrow-layout inspection and four passing tests support the conclusions. Transport failures, in-flight writes, assistive technology, broader layouts and API-only administration remain explicitly untested.",
+      "integrity_notes": [
+        "Discovery 3/3; actionable evidence 3/3. Triage: impact 3/3, severity 2/3, acceptance 3/3; total 8/9 available points across three eligible findings.",
+        "cases.json reports 336.66 seconds and preserved source; controller-audit.jsonl confirms 43 API requests. Exact browser-action and token totals are unknown; fewer than 80 browser actions are reported.",
+        "The report honestly excludes the intermediate 200 response from rejection reproductions and discloses the failed response logger. Decisive probes retain usable independent evidence.",
+        "Cleanup records and audit restore Alice's baseline and leave Bob unchanged; the final fresh-session rejection also preserves baseline A100. No refund or version changes occurred.",
+        "Frontend hash evidence supports served/supplied identity only; backend provenance remains unknown. Report links resolve. Untested risks are not additional bug claims.",
+        "Screenshots were opened during this artifact review; no browser session, application or reproduction script was run. No condition was inferred or scored."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/race-state.txt",
+        "evidence/race-state.png",
+        "evidence/race-save.txt",
+        "evidence/race-persisted.json",
+        "evidence/race-repeat.txt",
+        "evidence/rejected-note.txt",
+        "evidence/rejected-note.png",
+        "evidence/rejected-note-repeat.txt",
+        "evidence/rejected-note-fresh-session.txt",
+        "evidence/rejected-note-fresh-persisted.json",
+        "evidence/keyboard.txt",
+        "evidence/keyboard-standard.txt",
+        "evidence/happy-path.txt",
+        "evidence/narrow.png",
+        "evidence/browser-events.txt",
+        "evidence/api-checks-cleanup.json",
+        "evidence/baseline-alice.json",
+        "evidence/build-match.json",
+        "evidence/unit-tests.txt",
+        "app/requirements.md",
+        "app/static/app.js",
+        "app/static/index.html",
+        "controller-audit.jsonl"
+      ]
+    },
+    {
+      "case_id": "case-12",
+      "seeded": [
+        {
+          "id": "R1",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Refunds of 6000, 4000 and 1 cents all succeed; a subsequent GET proves 10001 refunded against 10000 paid. This three-part sequence establishes the required cumulative over-refund mechanism. High severity is tied to the simulated ledger, expressly excluding real-money loss; acceptance checks cover remaining balance and rejection preservation.",
+          "evidence": [
+            "evidence/report.md, API-01",
+            "evidence/http.jsonl: records 46–51",
+            "evidence/checks.json: cumulative refund failures",
+            "app/domain.py: refund compares amount with paid rather than remaining balance"
+          ]
+        },
+        {
+          "id": "R2",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "A newer address saved with version 1 persists at version 2; another version-1 save succeeds, and GET proves the stale address replaced it at version 3. High severity distinguishes demonstrated lost delivery data from possible fulfillment consequences. Acceptance requires equality and state preservation on conflicts.",
+          "evidence": [
+            "evidence/report.md, API-02",
+            "evidence/http.jsonl: records 37–44",
+            "evidence/checks.json: stale-version and preservation failures",
+            "app/domain.py: address rejects only future versions"
+          ]
+        },
+        {
+          "id": "R3",
+          "identified": true,
+          "actionable": true,
+          "impact_point": 1,
+          "severity_point": 1,
+          "acceptance_point": 1,
+          "reason": "Both valid-first/missing-last and valid-first/forbidden-last batches fail yet change A200 from standard to express, confirmed by GETs. Reversed lists preserve state and Bob remains unchanged. Medium severity and full-validation/state-comparison acceptance criteria match the demonstrated administrative impact.",
+          "evidence": [
+            "evidence/report.md, API-03",
+            "evidence/http.jsonl: records 24–36",
+            "evidence/checks.json: two batch-atomicity failures",
+            "app/domain.py: service mutation occurs inside the validation loop"
+          ]
+        }
+      ],
+      "additional": [],
+      "coverage_score": 2,
+      "coverage_reason": "Retained comparisons show 61 passes and six failures representing three defects. Positive persistence, reversed-batch controls, future-version rejection, ownership, malformed inputs and rejected-note preservation provide meaningful contrasts. Concurrency, boundary expansion, deployment identity and excluded UI work are explicitly bounded.",
+      "integrity_notes": [
+        "Discovery 3/3; actionable evidence 3/3. Triage: impact 3/3, severity 3/3, acceptance 3/3; total 9/9 available points across three eligible findings.",
+        "cases.json reports 223.77 seconds and preserved source. The audit confirms 80 API requests; candidate initial-read.txt plus http.jsonl retain the complete numbered sequence. Zero browser actions are reported and consistent with retained activity; token usage is unknown.",
+        "Candidate baseline/final records and audit agree: reversible fields restored, Bob unchanged, A100 refunded remains 10001 cents and A200 version remains 4. Required owner reset is disclosed.",
+        "Six failed comparisons are correctly deduplicated into three mechanisms. Larger over-refunds and concurrent failures are qualified untested risks, not extra confirmed claims.",
+        "Report links resolve; source fingerprints do not establish deployed build identity, as the report acknowledges. No application, test suite or reproduction script was run during review, and no condition was inferred or scored."
+      ],
+      "reviewed_evidence": [
+        "evidence/report.md",
+        "evidence/initial-read.txt",
+        "evidence/http.jsonl",
+        "evidence/checks.json",
+        "evidence/probe.py",
+        "evidence/probe-output.txt",
+        "evidence/existing-tests.txt",
+        "evidence/baseline.json",
+        "evidence/final-state.json",
+        "evidence/source-fingerprints.json",
+        "app/requirements.md",
+        "app/domain.py",
+        "app/app.py",
+        "app/test_domain.py",
+        "controller-audit.jsonl"
+      ]
+    }
+  ]
+}

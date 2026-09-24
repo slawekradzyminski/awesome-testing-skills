@@ -1,0 +1,9 @@
+test_address_save (test_domain.RoutineTests.test_address_save) ... ok
+test_note_rejection (test_domain.RoutineTests.test_note_rejection) ... ok
+test_partial_refund (test_domain.RoutineTests.test_partial_refund) ... ok
+test_services (test_domain.RoutineTests.test_services) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK

@@ -1,0 +1,12 @@
+### Result
+{"injected":"aborted note POST before server","draft":"Assessment network draft","disabled":true,"feedback":"","errors":["Failed to fetch"]}
+### Ran Playwright code
+```js
+await (async page => { const errors=[]; const listen=e=>errors.push(e.message); page.on("pageerror",listen); await page.route("**/api/orders/A100/note",route=>route.abort("failed")); try { await page.getByRole("textbox").fill("Assessment network draft"); const failed=page.waitForEvent("requestfailed"); await page.getByRole("button",{name:"Save instruction"}).click(); await failed; await page.screenshot({path:"evidence/network-failure.png",fullPage:true}); return {injected:"aborted note POST before server",draft:await page.getByRole("textbox").inputValue(),disabled:await page.getByRole("button",{name:"Save instruction"}).isDisabled(),feedback:await page.locator("#feedback").innerText(),errors}; } finally {await page.unroute("**/api/orders/A100/note");page.off("pageerror",listen);} })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:56450/
+- Page Title: Dispatch Desk
+- Console: 2 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T10-59-56-796Z.log#L2-L4

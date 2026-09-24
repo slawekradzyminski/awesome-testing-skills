@@ -1,0 +1,27 @@
+{
+  "created_at": 1789210488.918863,
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "codex": "codex-cli 0.153.4",
+  "playwright_cli": "0.1.19",
+  "inputs": {
+    "frozen-app/app.py": "36ecc41acd5ac3972c0015baf52f9290612fe2463d3adc10d5dea0507bbd1a11",
+    "frozen-app/domain.py": "c3120b6ac8807fbb1f7171347d2dd8a7eb9518af8fdc275697c635ff8f5ad9f9",
+    "frozen-app/requirements.md": "c25b0d63b0d1d7e7bdbab63fabf63815b8380a416a86e89429fc3117049bcdb5",
+    "frozen-app/static/app.js": "6d9bb3d9918d1b7b4483b7678fe7f11b93df1d9ab19159d4180170c5c9a2b6d0",
+    "frozen-app/static/index.html": "a5ded52c3f210a6b385e8dabd102ec9917473507ab3c6666a6d389cdd934de88",
+    "frozen-app/static/style.css": "d3cf90c54c13771f13912d89ff946b56ba0f96184b8312b927c46b4d4b987708",
+    "frozen-app/test_domain.py": "bd98535901a31c0fafc62a45f24d343e3e83117c56e18b115f0d8d79411ad3c2",
+    "frozen-skills/api-exploratory-testing/SKILL.md": "1ff1ca0dac84f9fd2a41e733f7186816a753739b06b9675fc8a6382e690decdc",
+    "frozen-skills/api-exploratory-testing/references/experiment-design.md": "e2dba068da5b803d35a665d922ffe9cdb317c54ad9733dd16392856acf702010",
+    "frozen-skills/api-exploratory-testing/references/reporting.md": "3fdb5f442d79f6c78b79f7195e3558d183fcf665ddd9dc5dd5b3a2bfbbabbfcf",
+    "frozen-skills/ui-exploratory-testing/SKILL.md": "b9c65db60ab7f37cf473ded24e8b5c1b96dbc5467ac872ea9d66a247d30dcd52",
+    "frozen-skills/ui-exploratory-testing/references/browser-experiments.md": "66d2f12695d491925d8e51e11806f165a9452c530cc24db0b1e26c2e561a442c",
+    "frozen-skills/ui-exploratory-testing/references/reporting.md": "e5e18167ffb061ec034a959cdd1e7bc4b273b0f1845215bb25c87ae8ca081c19",
+    "protocol.md": "ecb663532a7468f685bd8d1772b5ef04e6cceebe8aa379ed7917f80b1d503ace",
+    "schedule.json": "b5456387ddecb638b598c2a20d03c4a2362086d3767631c06c0d845d49f05bfd",
+    "skill-overrides.txt": "afba904ebec462e17de057915dafa7e32d0a385674a57a7e291a576774975bc4",
+    "template.md": "b7112343f209ca4b31beca1767fd3d5e322f0f6fa67e84dacf8cc94682f01b24"
+  },
+  "controller_sha256": "0f3ce77aa5bfa8ea4da9b4e1f3222daf8a2175b749a7e53b1acf6f9f7d4ea2b8"
+}

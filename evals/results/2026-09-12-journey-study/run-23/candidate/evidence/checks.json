@@ -1,0 +1,269 @@
+{
+  "api_requests_including_baseline": 75,
+  "checks": [
+    {
+      "check": "fixture ownership lists",
+      "passed": true
+    },
+    {
+      "check": "access None GET /api/orders",
+      "passed": true
+    },
+    {
+      "check": "access None POST /api/orders/A100/refund",
+      "passed": true
+    },
+    {
+      "check": "access alice GET /api/orders/B100",
+      "passed": true
+    },
+    {
+      "check": "access bob GET /api/orders/A200",
+      "passed": true
+    },
+    {
+      "check": "access alice POST /api/orders/B100/refund",
+      "passed": true
+    },
+    {
+      "check": "access alice POST /api/orders/B100/address",
+      "passed": true
+    },
+    {
+      "check": "access alice POST /api/orders/B100/note",
+      "passed": true
+    },
+    {
+      "check": "access alice GET /api/orders/MISSING",
+      "passed": true
+    },
+    {
+      "check": "access alice POST /api/orders/MISSING/refund",
+      "passed": true
+    },
+    {
+      "check": "access denials preserve state",
+      "passed": true
+    },
+    {
+      "check": "malformed JSON b'{'",
+      "passed": true
+    },
+    {
+      "check": "malformed JSON b'[]'",
+      "passed": true
+    },
+    {
+      "check": "malformed JSON b'null'",
+      "passed": true
+    },
+    {
+      "check": "malformed JSON b''",
+      "passed": true
+    },
+    {
+      "check": "invalid refund 0 status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid refund -1 status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid refund True status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid refund 1.5 status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid refund '100' status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid refund None status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid refunds preserve state",
+      "passed": true
+    },
+    {
+      "check": "first partial refund status 200",
+      "passed": true
+    },
+    {
+      "check": "cumulative excess refund status 409",
+      "passed": true
+    },
+    {
+      "check": "excess leaves cumulative refund unchanged",
+      "passed": true
+    },
+    {
+      "check": "exact remaining refund status 200",
+      "passed": true
+    },
+    {
+      "check": "exhausted refund status 409",
+      "passed": true
+    },
+    {
+      "check": "concurrent refund one success one conflict",
+      "passed": true
+    },
+    {
+      "check": "concurrent refunds cannot exceed paid",
+      "passed": true
+    },
+    {
+      "check": "invalid address '' version 1 status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid address '   ' version 1 status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid address 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx version 1 status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid address 'Valid' version True status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid address 'Valid' version '1' status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid address None version 1 status 400",
+      "passed": true
+    },
+    {
+      "check": "address at length 120 status 200",
+      "passed": true
+    },
+    {
+      "check": "stale address status 409",
+      "passed": true
+    },
+    {
+      "check": "stale address preserves newer state",
+      "passed": true
+    },
+    {
+      "check": "same-version concurrent address one winner",
+      "passed": true
+    },
+    {
+      "check": "concurrent address persists winner",
+      "passed": true
+    },
+    {
+      "check": "batch ['A100', 'MISSING'] express status 404",
+      "passed": true
+    },
+    {
+      "check": "batch ['A100', 'B100'] express status 403",
+      "passed": true
+    },
+    {
+      "check": "batch ['B100', 'A100'] express status 403",
+      "passed": true
+    },
+    {
+      "check": "batch [] express status 400",
+      "passed": true
+    },
+    {
+      "check": "batch ['A100', 1] express status 400",
+      "passed": true
+    },
+    {
+      "check": "batch ['A100'] overnight status 400",
+      "passed": true
+    },
+    {
+      "check": "failed batches leave all services unchanged",
+      "passed": true
+    },
+    {
+      "check": "valid batch status 200",
+      "passed": true
+    },
+    {
+      "check": "valid batch persists",
+      "passed": true
+    },
+    {
+      "check": "invalid note '' status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid note '   ' status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid note 'nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn status 400",
+      "passed": true
+    },
+    {
+      "check": "invalid note None status 400",
+      "passed": true
+    },
+    {
+      "check": "valid note at length 160 status 200",
+      "passed": true
+    },
+    {
+      "check": "unsupported locker note status 422",
+      "passed": true
+    },
+    {
+      "check": "unsupported locker note status 422",
+      "passed": true
+    },
+    {
+      "check": "rejected notes preserve previous note",
+      "passed": true
+    },
+    {
+      "check": "raw note length bound 0",
+      "passed": false
+    },
+    {
+      "check": "padded note persists as returned 0",
+      "passed": true
+    },
+    {
+      "check": "raw note length bound 1",
+      "passed": false
+    },
+    {
+      "check": "padded note persists as returned 1",
+      "passed": true
+    },
+    {
+      "check": "restore service A100 status 200",
+      "passed": true
+    },
+    {
+      "check": "restore address A200 status 200",
+      "passed": true
+    },
+    {
+      "check": "restore note A200 status 200",
+      "passed": true
+    },
+    {
+      "check": "restore service A200 status 200",
+      "passed": true
+    },
+    {
+      "check": "all reversible fields restored",
+      "passed": true
+    }
+  ]
+}

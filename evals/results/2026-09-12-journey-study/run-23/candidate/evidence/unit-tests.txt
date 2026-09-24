@@ -1,0 +1,5 @@
+Executed: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s app -v
+
+All four supplied tests passed: test_address_save, test_note_rejection, test_partial_refund, test_services.
+Ran 4 tests in 0.000s; OK.
+This is a record of the observed execution, not a second test run.

@@ -1,0 +1,23 @@
+[
+  {
+    "source": "app/static/app.js",
+    "url": "http://127.0.0.1:58432/app.js",
+    "source_sha256": "6d9bb3d9918d1b7b4483b7678fe7f11b93df1d9ab19159d4180170c5c9a2b6d0",
+    "deployed_sha256": "6d9bb3d9918d1b7b4483b7678fe7f11b93df1d9ab19159d4180170c5c9a2b6d0",
+    "matches": true
+  },
+  {
+    "source": "app/static/index.html",
+    "url": "http://127.0.0.1:58432/",
+    "source_sha256": "a5ded52c3f210a6b385e8dabd102ec9917473507ab3c6666a6d389cdd934de88",
+    "deployed_sha256": "a5ded52c3f210a6b385e8dabd102ec9917473507ab3c6666a6d389cdd934de88",
+    "matches": true
+  },
+  {
+    "source": "app/static/style.css",
+    "url": "http://127.0.0.1:58432/style.css",
+    "source_sha256": "d3cf90c54c13771f13912d89ff946b56ba0f96184b8312b927c46b4d4b987708",
+    "deployed_sha256": "d3cf90c54c13771f13912d89ff946b56ba0f96184b8312b927c46b4d4b987708",
+    "matches": true
+  }
+]

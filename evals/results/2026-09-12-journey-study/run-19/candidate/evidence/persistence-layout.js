@@ -1,0 +1,37 @@
+async page => {
+  const out=[];
+  const read=async id => { const r=await page.request.get('http://127.0.0.1:59088/api/orders/'+id,{headers:{'X-Test-User':'alice'}});return r.json();};
+  await page.reload();
+  await page.waitForFunction(() => document.querySelector('#heading').textContent==='Order A100' && !document.querySelector('#save').disabled);
+  await page.locator('#order').selectOption('A200');
+  await page.waitForFunction(() => document.querySelector('#heading').textContent==='Order A200');
+  const prior=await read('A200');
+  await page.locator('#note').fill('LOCKER: 1');
+  const rejection=page.waitForResponse(r=>r.url().endsWith('/A200/note')&&r.request().method()==='POST');
+  await page.locator('#save').click();
+  const rejected=await rejection;
+  await page.waitForTimeout(50);
+  out.push({test:'isolated rejection on consistent selection',status:rejected.status(),feedback:await page.locator('#feedback').textContent(),draft:await page.locator('#note').inputValue(),savedBefore:prior.note,savedAfter:(await read('A200')).note});
+  await page.screenshot({path:'evidence/rejected-note-isolated.png'});
+  await page.locator('#note').fill('Assessment: ring at side door');
+  await page.locator('#note').press('Tab');
+  const noteSave=page.waitForResponse(r=>r.url().endsWith('/A200/note')&&r.request().method()==='POST');
+  await page.keyboard.press('Enter');
+  await noteSave;
+  const expressSave=page.waitForResponse(r=>r.url().endsWith('/api/services')&&r.request().method()==='POST');
+  await page.locator('#express').click();
+  await expressSave;
+  await page.reload();
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A100'&&!document.querySelector('#save').disabled);
+  await page.locator('#order').selectOption('A200');
+  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+  out.push({test:'reload persistence',note:await page.locator('#note').inputValue(),service:await page.locator('#service').textContent()});
+  await page.setViewportSize({width:375,height:812});
+  await page.locator('#standard').focus();
+  const standardSave=page.waitForResponse(r=>r.url().endsWith('/api/services')&&r.request().method()==='POST');
+  await page.keyboard.press('Enter');
+  await standardSave;
+  out.push({test:'narrow layout and standard keyboard activation',layout:await page.evaluate(()=>({viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth,focus:document.activeElement.id,outline:getComputedStyle(document.activeElement).outline,expressTabIndex:document.querySelector('#express').tabIndex})),service:(await read('A200')).service});
+  await page.screenshot({path:'evidence/narrow.png',fullPage:true});
+  return out;
+}

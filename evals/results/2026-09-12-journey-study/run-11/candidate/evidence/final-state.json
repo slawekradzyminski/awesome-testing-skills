@@ -1,0 +1,32 @@
+{
+  "A100": {
+    "id": "A100",
+    "owner": "alice",
+    "paid": 10000,
+    "refunded": 0,
+    "address": "10 Oak Street",
+    "version": 4,
+    "note": "Leave with reception",
+    "service": "standard"
+  },
+  "A200": {
+    "id": "A200",
+    "owner": "alice",
+    "paid": 6000,
+    "refunded": 6000,
+    "address": "20 Pine Street",
+    "version": 1,
+    "note": "Ring twice",
+    "service": "standard"
+  },
+  "B100": {
+    "id": "B100",
+    "owner": "bob",
+    "paid": 4000,
+    "refunded": 0,
+    "address": "30 Elm Street",
+    "version": 1,
+    "note": "Side entrance",
+    "service": "standard"
+  }
+}

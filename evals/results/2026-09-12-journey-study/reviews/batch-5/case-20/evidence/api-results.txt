@@ -1,0 +1,48 @@
+PASS Alice list ownership
+PASS Bob list ownership
+PASS anonymous list
+PASS anonymous mutation
+PASS foreign read
+PASS foreign note
+PASS foreign address
+PASS foreign refund
+PASS batch invalid member
+PASS batch atomicity
+PASS batch invalid member
+PASS batch atomicity
+PASS batch success
+PASS batch persisted
+PASS batch restore
+PASS invalid services
+PASS invalid services
+PASS invalid services
+PASS malformed JSON/body
+PASS malformed JSON/body
+PASS malformed JSON/body
+PASS invalid refund 0
+PASS invalid refund -1
+PASS invalid refund True
+PASS invalid refund 1.5
+PASS invalid refund '1'
+PASS invalid refund None
+PASS partial refund
+PASS partial refund
+PASS cumulative refund cap
+PASS refund unchanged after rejection
+PASS invalid address
+PASS invalid address
+PASS invalid address
+PASS address write
+PASS stale address
+PASS newer address retained
+PASS address restore
+PASS invalid note ' '
+PASS invalid note 'xxxxxxxxxxxxxxxxxxxxxxx
+PASS invalid note 'LOCKER: 1'
+PASS invalid note ' locker: 1 '
+PASS invalid note 123
+PASS note preserved
+PASS 160 character note
+PASS note restore
+PASS foreign order unchanged
+API requests: 47

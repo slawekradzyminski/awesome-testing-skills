@@ -1,0 +1,12 @@
+  1 <!doctype html>
+  2 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  3 <title>Dispatch Desk</title><link rel="stylesheet" href="/style.css"></head>
+  4 <body><main><h1>Dispatch Desk</h1><p>Review delivery instructions and choose a delivery service.</p>
+  5 <label for="order">Order</label><select id="order"><option value="A100">A100 — Oak Street</option><option value="A200">A200 — Pine Street</option></select>
+  6 <p id="loading" role="status"></p><section aria-label="Order details"><h2 id="heading">Order</h2><p id="address"></p>
+  7 <label for="note">Delivery instruction</label><textarea id="note" maxlength="160"></textarea>
+  8 <button id="save" type="button" disabled>Save instruction</button><p id="feedback" role="status"></p>
+  9 <h2>Delivery service</h2><p id="service"></p><div id="express" role="button">Use express delivery</div>
+ 10 <button id="standard" type="button" disabled>Use standard delivery</button></section>
+ 11 <p>This desk uses Alice's disposable orders. Refund and address administration are API-only.</p>
+ 12 </main><script src="/app.js"></script></body></html>

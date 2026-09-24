@@ -1,0 +1,1880 @@
+[
+  {
+    "n": 1,
+    "label": "baseline Alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "324",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 10.3
+  },
+  {
+    "n": 2,
+    "label": "baseline Bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "163",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 3,
+    "label": "anonymous list",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": null,
+    "body": null,
+    "status": 401,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "34",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Choose a fixture user"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 4,
+    "label": "anonymous write",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": null,
+    "body": {
+      "note": "unauthorized"
+    },
+    "status": 401,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "34",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Choose a fixture user"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 5,
+    "label": "Alice reads Bob",
+    "method": "GET",
+    "path": "/api/orders/B100",
+    "actor": "alice",
+    "body": null,
+    "status": 403,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "26",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Access denied"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 6,
+    "label": "Bob reads Alice",
+    "method": "GET",
+    "path": "/api/orders/A200",
+    "actor": "bob",
+    "body": null,
+    "status": 403,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "26",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Access denied"
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 7,
+    "label": "Alice forbidden refund",
+    "method": "POST",
+    "path": "/api/orders/B100/refund",
+    "actor": "alice",
+    "body": {
+      "amount": 1
+    },
+    "status": 403,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "26",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Access denied"
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 8,
+    "label": "Alice forbidden address",
+    "method": "POST",
+    "path": "/api/orders/B100/address",
+    "actor": "alice",
+    "body": {
+      "address": "Unauthorized",
+      "version": 1
+    },
+    "status": 403,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "26",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Access denied"
+    },
+    "elapsed_ms": 0.5
+  },
+  {
+    "n": 9,
+    "label": "Alice forbidden note",
+    "method": "POST",
+    "path": "/api/orders/B100/note",
+    "actor": "alice",
+    "body": {
+      "note": "Unauthorized"
+    },
+    "status": 403,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "26",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Access denied"
+    },
+    "elapsed_ms": 0.7
+  },
+  {
+    "n": 10,
+    "label": "forbidden service first",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "B100",
+        "A200"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "26",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Access denied"
+    },
+    "elapsed_ms": 0.5
+  },
+  {
+    "n": 11,
+    "label": "Bob unchanged after forbidden writes",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "163",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 12,
+    "label": "Alice unchanged after forbidden-first batch",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "324",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 13,
+    "label": "refund valid partial",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": 1000
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "152",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 1000,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 14,
+    "label": "refund cumulative exact payment",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": 5000
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "152",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6000,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 15,
+    "label": "refund at exact boundary",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "327",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6000,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 16,
+    "label": "refund exceeds cumulative by one cent",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": 1
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "152",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6001,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 17,
+    "label": "refund overpayment persisted",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "327",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 18,
+    "label": "refund single amount exceeds original",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": 6001
+    },
+    "status": 409,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Refund exceeds remaining paid amount"
+    },
+    "elapsed_ms": 0.5
+  },
+  {
+    "n": 19,
+    "label": "refund invalid 0",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": 0
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 20,
+    "label": "refund invalid -1",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": -1
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 21,
+    "label": "refund invalid True",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": true
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 22,
+    "label": "refund invalid 1.5",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": 1.5
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "elapsed_ms": 0.7
+  },
+  {
+    "n": 23,
+    "label": "refund invalid '1'",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": "1"
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 24,
+    "label": "refund invalid None",
+    "method": "POST",
+    "path": "/api/orders/A200/refund",
+    "actor": "alice",
+    "body": {
+      "amount": null
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Amount must be a positive integer in cents"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 25,
+    "label": "refund rejects preserve state",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "327",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 26,
+    "label": "address valid current version",
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "actor": "alice",
+    "body": {
+      "address": "Current session address",
+      "version": 1
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "169",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 0,
+      "address": "Current session address",
+      "version": 2,
+      "note": "Leave with reception",
+      "service": "standard"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 27,
+    "label": "address stale version",
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "actor": "alice",
+    "body": {
+      "address": "Stale session overwrote newer",
+      "version": 1
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "175",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 0,
+      "address": "Stale session overwrote newer",
+      "version": 3,
+      "note": "Leave with reception",
+      "service": "standard"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 28,
+    "label": "stale address persisted",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "343",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "Stale session overwrote newer",
+          "version": 3,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 29,
+    "label": "address future version",
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "actor": "alice",
+    "body": {
+      "address": "Future version",
+      "version": 4
+    },
+    "status": 409,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "48",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Order changed; reload before saving"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 30,
+    "label": "address invalid shape",
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "actor": "alice",
+    "body": {
+      "address": "   ",
+      "version": 3
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Address and integer version required"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 31,
+    "label": "address invalid shape",
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "actor": "alice",
+    "body": {
+      "address": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "version": 3
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Address and integer version required"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 32,
+    "label": "address invalid shape",
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "actor": "alice",
+    "body": {
+      "address": "Valid",
+      "version": true
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "49",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Address and integer version required"
+    },
+    "elapsed_ms": 0.2
+  },
+  {
+    "n": 33,
+    "label": "address rejected controls preserve state",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "343",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "Stale session overwrote newer",
+          "version": 3,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 34,
+    "label": "restore address",
+    "method": "POST",
+    "path": "/api/orders/A100/address",
+    "actor": "alice",
+    "body": {
+      "address": "10 Oak Street",
+      "version": 3
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "159",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 0,
+      "address": "10 Oak Street",
+      "version": 4,
+      "note": "Leave with reception",
+      "service": "standard"
+    },
+    "elapsed_ms": 0.2
+  },
+  {
+    "n": 35,
+    "label": "batch before MISSING",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "327",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 36,
+    "label": "batch valid then MISSING",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "A100",
+        "MISSING"
+      ],
+      "service": "express"
+    },
+    "status": 404,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "28",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Order not found"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 37,
+    "label": "batch after MISSING",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "326",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 38,
+    "label": "restore service after MISSING",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "A100"
+      ],
+      "service": "standard"
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "173",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.9
+  },
+  {
+    "n": 39,
+    "label": "batch before B100",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "327",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 40,
+    "label": "batch valid then B100",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "A100",
+        "B100"
+      ],
+      "service": "express"
+    },
+    "status": 403,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "26",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Access denied"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 41,
+    "label": "batch after B100",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "326",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 42,
+    "label": "forbidden order unchanged",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "163",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.2
+  },
+  {
+    "n": 43,
+    "label": "restore service after B100",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "A100"
+      ],
+      "service": "standard"
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "173",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 44,
+    "label": "valid two-order service",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "A100",
+        "A200"
+      ],
+      "service": "express"
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "325",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "express"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 45,
+    "label": "valid batch persisted",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "325",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "express"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "express"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 46,
+    "label": "restore both services",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "A100",
+        "A200"
+      ],
+      "service": "standard"
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "327",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 47,
+    "label": "service invalid shape",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [],
+      "service": "express"
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Order IDs and a supported service required"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 48,
+    "label": "service invalid shape",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "A100"
+      ],
+      "service": "premium"
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Order IDs and a supported service required"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 49,
+    "label": "service invalid shape",
+    "method": "POST",
+    "path": "/api/services",
+    "actor": "alice",
+    "body": {
+      "ids": [
+        "A100",
+        2
+      ],
+      "service": "express"
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "55",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Order IDs and a supported service required"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 50,
+    "label": "note valid",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "Assessment note"
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "157",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6001,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Assessment note",
+      "service": "standard"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 51,
+    "label": "note valid persisted",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "332",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Assessment note",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.2
+  },
+  {
+    "n": 52,
+    "label": "note unsupported locker",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "LOCKER: 1"
+    },
+    "status": 422,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "70",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Locker delivery is unavailable; enter another instruction"
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 53,
+    "label": "note unsupported preserves previous",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "332",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Assessment note",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 54,
+    "label": "note invalid shape",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": ""
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 55,
+    "label": "note invalid shape",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "   "
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    },
+    "elapsed_ms": 0.6
+  },
+  {
+    "n": 56,
+    "label": "note invalid shape",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 57,
+    "label": "note invalid shape",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": null
+    },
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "50",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Note must contain 1 to 160 characters"
+    },
+    "elapsed_ms": 0.5
+  },
+  {
+    "n": 58,
+    "label": "malformed JSON",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": "{",
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "43",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Expected a bounded JSON object"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 59,
+    "label": "non-object JSON",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": "[]",
+    "status": 400,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "43",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "error": "Expected a bounded JSON object"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 60,
+    "label": "note invalid preserves previous",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "332",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Assessment note",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 61,
+    "label": "restore note",
+    "method": "POST",
+    "path": "/api/orders/A200/note",
+    "actor": "alice",
+    "body": {
+      "note": "Ring twice"
+    },
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "152",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 6001,
+      "address": "20 Pine Street",
+      "version": 1,
+      "note": "Ring twice",
+      "service": "standard"
+    },
+    "elapsed_ms": 0.3
+  },
+  {
+    "n": 62,
+    "label": "final Alice",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "alice",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "327",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 4,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 6001,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.4
+  },
+  {
+    "n": 63,
+    "label": "final Bob",
+    "method": "GET",
+    "path": "/api/orders",
+    "actor": "bob",
+    "body": null,
+    "status": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.14.7",
+      "Date": "Sat, 12 Sep 2026 10:57:03 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "163",
+      "Cache-Control": "no-store"
+    },
+    "response": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    },
+    "elapsed_ms": 0.3
+  }
+]

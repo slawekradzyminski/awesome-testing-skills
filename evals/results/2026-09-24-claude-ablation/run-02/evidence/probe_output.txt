@@ -1,0 +1,44 @@
+1 GET /api/orders alice None -> 200 {"orders": [{"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}, {"id": "A200", "owner": "al
+2 GET /api/orders bob None -> 200 {"orders": [{"id": "B100", "owner": "bob", "paid": 4000, "refunded": 0, "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}]}
+3 GET /api/orders None None -> 401 {"error": "Choose a fixture user"}
+4 GET /api/orders/B100 alice None -> 403 {"error": "Access denied"}
+5 POST /api/orders/B100/refund alice {'amount': 100} -> 403 {"error": "Access denied"}
+6 POST /api/orders/B100/note alice {'note': 'x'} -> 403 {"error": "Access denied"}
+7 POST /api/orders/A100/note None {'note': 'x'} -> 401 {"error": "Choose a fixture user"}
+8 POST /api/orders/A200/refund alice {'amount': 4000} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 4000, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}
+9 POST /api/orders/A200/refund alice {'amount': 4000} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 8000, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}
+10 GET /api/orders/A200 alice None -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 8000, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}
+11 POST /api/orders/A200/refund alice {'amount': 6001} -> 409 {"error": "Refund exceeds remaining paid amount"}
+12 POST /api/orders/A200/refund alice {'amount': 0} -> 400 {"error": "Amount must be a positive integer in cents"}
+13 POST /api/orders/A200/refund alice {'amount': -5} -> 400 {"error": "Amount must be a positive integer in cents"}
+14 POST /api/orders/A200/refund alice {'amount': '100'} -> 400 {"error": "Amount must be a positive integer in cents"}
+15 POST /api/orders/A200/refund alice {'amount': 1.5} -> 400 {"error": "Amount must be a positive integer in cents"}
+16 POST /api/orders/A200/refund alice {'amount': True} -> 400 {"error": "Amount must be a positive integer in cents"}
+17 POST /api/orders/A200/refund alice {'amount': None} -> 400 {"error": "Amount must be a positive integer in cents"}
+18 POST /api/orders/A200/address alice {'address': '21 Pine Street', 'version': 1} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 8000, "address": "21 Pine Street", "version": 2, "note": "Ring twice", "service": "standard"}
+19 POST /api/orders/A200/address alice {'address': 'STALE edit', 'version': 1} -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 8000, "address": "STALE edit", "version": 3, "note": "Ring twice", "service": "standard"}
+20 GET /api/orders/A200 alice None -> 200 {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 8000, "address": "STALE edit", "version": 3, "note": "Ring twice", "service": "standard"}
+21 POST /api/orders/A200/address alice {'address': 'x', 'version': 99} -> 409 {"error": "Order changed; reload before saving"}
+22 POST /api/orders/A200/address alice {'address': '   ', 'version': 3} -> 400 {"error": "Address and integer version required"}
+23 POST /api/orders/A200/address alice {'address': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'version': 3} -> 400 {"error": "Address and integer version required"}
+24 POST /api/orders/A200/address alice {'address': 'x', 'version': '3'} -> 400 {"error": "Address and integer version required"}
+25 POST /api/services alice {'ids': ['A200', 'B100'], 'service': 'express'} -> 403 {"error": "Access denied"}
+26 GET /api/orders alice None -> 200 {"orders": [{"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}, {"id": "A200", "owner": "al
+27 GET /api/orders/B100 bob None -> 200 {"id": "B100", "owner": "bob", "paid": 4000, "refunded": 0, "address": "30 Elm Street", "version": 1, "note": "Side entrance", "service": "standard"}
+28 POST /api/services alice {'ids': ['A100', 'ZZZ'], 'service': 'express'} -> 404 {"error": "Order not found"}
+29 GET /api/orders alice None -> 200 {"orders": [{"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "express"}, {"id": "A200", "owner": "ali
+30 POST /api/services alice {'ids': ['A100'], 'service': 'overnight'} -> 400 {"error": "Order IDs and a supported service required"}
+31 POST /api/services alice {'ids': [], 'service': 'express'} -> 400 {"error": "Order IDs and a supported service required"}
+32 POST /api/orders/A100/note alice {'note': 'LOCKER: 12'} -> 422 {"error": "Locker delivery is unavailable; enter another instruction"}
+33 POST /api/orders/A100/note alice {'note': '  locker: 12'} -> 422 {"error": "Locker delivery is unavailable; enter another instruction"}
+34 POST /api/orders/A100/note alice {'note': '   '} -> 400 {"error": "Note must contain 1 to 160 characters"}
+35 POST /api/orders/A100/note alice {'note': 'nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn'} -> 400 {"error": "Note must contain 1 to 160 characters"}
+36 POST /api/orders/A100/note alice {'note': 'nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn'} -> 200 {"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+37 POST /api/orders/A100/note alice {'note': '  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn  '} -> 200 {"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+38 POST /api/orders/A100/note alice {'note': 123} -> 400 {"error": "Note must contain 1 to 160 characters"}
+39 GET /api/orders/A100 alice None -> 200 {"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+40 POST /api/orders/A100/note alice b'{bad' -> 400 {"error": "Expected a bounded JSON object"}
+41 POST /api/orders/A100/note alice b'[1]' -> 400 {"error": "Expected a bounded JSON object"}
+42 POST /api/orders/A100/note alice b'\xff\xfe' -> 400 {"error": "Expected a bounded JSON object"}
+43 POST /api/orders/A100/refund alice b'{"amount":1e3}' -> 400 {"error": "Amount must be a positive integer in cents"}
+requests 43

@@ -1,0 +1,38 @@
+### Result
+{"persisted":"Journey 16: reception after 5","rejected":{"draft":"LOCKER: 16","feedback":"Locker delivery is unavailable; enter another instruction"},"race":{"selected":"A200","heading":"Order A200","note":"Ring twice"},"logs":[{"method":"POST","path":"/api/orders/A100/note","status":200,"request":"{\"note\":\"Journey 16: reception after 5\"}","body":"{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Journey 16: reception after 5\", \"service\": \"standard\"}"},{"method":"GET","path":"/api/orders/A100","status":200,"request":null,"body":"{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Journey 16: reception after 5\", \"service\": \"standard\"}"},{"method":"POST","path":"/api/orders/A100/note","status":422,"request":"{\"note\":\"LOCKER: 16\"}","body":"{\"error\": \"Locker delivery is unavailable; enter another instruction\"}"},{"method":"POST","path":"/api/orders/A100/note","status":200,"request":"{\"note\":\"Leave with reception\"}","body":"{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Leave with reception\", \"service\": \"standard\"}"},{"method":"GET","path":"/api/orders/A200","status":200,"request":null,"body":"{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 0, \"address\": \"20 Pine Street\", \"version\": 1, \"note\": \"Ring twice\", \"service\": \"standard\"}"},{"method":"GET","path":"/api/orders/A200","status":200,"request":null,"body":"{\"id\": \"A200\", \"owner\": \"alice\", \"paid\": 6000, \"refunded\": 0, \"address\": \"20 Pine Street\", \"version\": 1, \"note\": \"Ring twice\", \"service\": \"standard\"}"},{"method":"GET","path":"/api/orders/A100","status":200,"request":null,"body":"{\"id\": \"A100\", \"owner\": \"alice\", \"paid\": 10000, \"refunded\": 0, \"address\": \"10 Oak Street\", \"version\": 1, \"note\": \"Leave with reception\", \"service\": \"standard\"}"}],"environment":{"ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36","width":1280,"height":720,"devicePixelRatio":1}}
+### Ran Playwright code
+```js
+await (async page => {
+ page.removeAllListeners('response');
+ const logs=[];
+ page.on('response', async r=> {if(r.url().includes('/api/')) logs.push({method:r.request().method(),path:r.url().replace('http://127.0.0.1:58432',''),status:r.status(),request:r.request().postData(),body:await r.text()});});
+ await page.getByRole('textbox',{name:'Delivery instruction'}).fill('Journey 16: reception after 5');
+ await page.getByRole('button',{name:'Save instruction'}).click();
+ await page.waitForFunction(()=>document.querySelector('#feedback').textContent==='Delivery instruction saved');
+ await page.reload();
+ await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+ const persisted=await page.locator('#note').inputValue();
+ await page.locator('#note').fill('LOCKER: 16');
+ await page.locator('#save').click();
+ await page.waitForFunction(()=>document.querySelector('#feedback').textContent.includes('Locker'));
+ const rejected={draft:await page.locator('#note').inputValue(),feedback:await page.locator('#feedback').textContent()};
+ await page.screenshot({path:'evidence/rejected-desktop.png'});
+ await page.locator('#note').fill('Leave with reception');
+ await page.locator('#save').click();
+ await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+ await page.locator('#order').selectOption('A200');
+ await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+ await page.locator('#order').selectOption('A100');
+ await page.locator('#order').selectOption('A200');
+ await page.waitForLoadState('networkidle');
+ const race=await page.evaluate(()=>({selected:document.querySelector('#order').value,heading:document.querySelector('#heading').textContent,note:document.querySelector('#note').value}));
+ return {persisted,rejected,race,logs,environment:await page.evaluate(()=>({ua:navigator.userAgent,width:innerWidth,height:innerHeight,devicePixelRatio}))};
+}
+)(page);
+```
+### Page
+- Page URL: http://127.0.0.1:58432/
+- Page Title: Dispatch Desk
+- Console: 1 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T11-17-17-038Z.log#L1

@@ -1,0 +1,142 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "reviews"
+  ],
+  "properties": {
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "seeded",
+          "additional",
+          "coverage_score",
+          "coverage_reason",
+          "integrity_notes",
+          "reviewed_evidence"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "seeded": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "identified",
+                "actionable",
+                "impact_point",
+                "severity_point",
+                "acceptance_point",
+                "reason",
+                "evidence"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "identified": {
+                  "type": "boolean"
+                },
+                "actionable": {
+                  "type": "boolean"
+                },
+                "impact_point": {
+                  "type": "integer"
+                },
+                "severity_point": {
+                  "type": "integer"
+                },
+                "acceptance_point": {
+                  "type": "integer"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "additional": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "title",
+                "classification",
+                "impact_point",
+                "severity_point",
+                "acceptance_point",
+                "reason",
+                "evidence"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "classification": {
+                  "type": "string",
+                  "enum": [
+                    "valid",
+                    "unsupported",
+                    "unresolved",
+                    "out-of-scope"
+                  ]
+                },
+                "impact_point": {
+                  "type": "integer"
+                },
+                "severity_point": {
+                  "type": "integer"
+                },
+                "acceptance_point": {
+                  "type": "integer"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "coverage_score": {
+            "type": "integer"
+          },
+          "coverage_reason": {
+            "type": "string"
+          },
+          "integrity_notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reviewed_evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

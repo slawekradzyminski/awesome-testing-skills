@@ -1,0 +1,12 @@
+### Result
+{"status":422,"body":{"error":"Locker delivery is unavailable; enter another instruction"},"feedback":"Delivery instruction saved","draft":"LOCKER: 09"}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("textbox",{name:"Delivery instruction"}).fill("LOCKER: 09"); const response = page.waitForResponse(r => r.url().endsWith("/note") && r.request().method()==="POST"); await page.getByRole("button",{name:"Save instruction"}).click(); const r = await response; await page.getByText("Delivery instruction saved",{exact:true}).waitFor(); return {status:r.status(),body:await r.json(),feedback:await page.locator("#feedback").innerText(),draft:await page.locator("#note").inputValue()}; })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:57088/
+- Page Title: Dispatch Desk
+- Console: 1 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-09-12T11-05-24-162Z.log#L1

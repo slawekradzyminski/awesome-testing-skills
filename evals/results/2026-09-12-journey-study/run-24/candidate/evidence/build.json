@@ -1,0 +1,12 @@
+{
+  "runtime": "http://127.0.0.1:59820",
+  "python_for_local_checks": "3.14.7",
+  "source_sha256": {
+    "app/app.py": "36ecc41acd5ac3972c0015baf52f9290612fe2463d3adc10d5dea0507bbd1a11",
+    "app/domain.py": "c3120b6ac8807fbb1f7171347d2dd8a7eb9518af8fdc275697c635ff8f5ad9f9",
+    "app/test_domain.py": "bd98535901a31c0fafc62a45f24d343e3e83117c56e18b115f0d8d79411ad3c2",
+    "app/requirements.md": "c25b0d63b0d1d7e7bdbab63fabf63815b8380a416a86e89429fc3117049bcdb5"
+  },
+  "api_requests": 110,
+  "browser_actions": 0
+}

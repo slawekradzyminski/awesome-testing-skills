@@ -1,0 +1,20 @@
+- main [ref=e2]:
+  - heading "Dispatch Desk" [level=1] [ref=e3]
+  - paragraph [ref=e4]: Review delivery instructions and choose a delivery service.
+  - generic [ref=e5]: Order
+  - combobox "Order" [ref=e6]:
+    - option "A100 — Oak Street" [selected]
+    - option "A200 — Pine Street"
+  - status [ref=e7]
+  - region "Order details" [ref=e8]:
+    - heading "Order A100" [level=2] [ref=e18]
+    - paragraph [ref=e19]: 10 Oak Street
+    - generic [ref=e10]: Delivery instruction
+    - textbox "Delivery instruction" [ref=e11]: Leave with reception
+    - button "Save instruction" [ref=e12] [cursor=pointer]
+    - status [ref=e13]
+    - heading "Delivery service" [level=2] [ref=e14]
+    - paragraph [ref=e20]: standard
+    - button "Use express delivery" [ref=e15] [cursor=pointer]
+    - button "Use standard delivery" [ref=e16] [cursor=pointer]
+  - paragraph [ref=e17]: This desk uses Alice's disposable orders. Refund and address administration are API-only.

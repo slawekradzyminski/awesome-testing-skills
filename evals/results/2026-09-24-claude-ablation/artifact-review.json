@@ -1,0 +1,112 @@
+{
+  "citation_note": "Logs in A and B are unnumbered, so their citations use 1-based entry order (#n). C and D cite their own `n` fields. Severity is judged for a disposable simulated ledger: over-refunds mean ledger-integrity and business-rule breaches, not real-money loss. Severity and discoverability ratings are my assessments, not the reporters' labels.",
+  "cases": {
+    "A": {
+      "R1_cumulative_over_refund": {
+        "status": "actionable",
+        "evidence": "#1 shows A200 refunded=0. #4 refunds 5000 (200, refunded 5000). #5 repeats it (200, refunded 10000). #6 GET confirms 10000 against paid 6000.",
+        "severity": "High (ledger-integrity rule broken; the report's 'money loss' framing overstates a simulated ledger)",
+        "discoverability": "High: two identical partial refunds, deterministic"
+      },
+      "R2_stale_address_overwrite": {
+        "status": "actionable",
+        "evidence": "#6 shows v1. #7 saves 'Newer Addr' at v1 (200, v2). #8 saves 'Stale Addr' at v1 (200, v3). #9 GET shows the stale value.",
+        "severity": "High (silent lost update)",
+        "discoverability": "High: reuse a previously read version"
+      },
+      "R3_partial_batch_change": {
+        "status": "actionable (defect shown), but the per-path claim is incomplete",
+        "evidence": "#1 shows A100 standard. #10 [A100,B100] returned 403. #11 [A100,ZZZ] returned 404. A100 was read only after both calls (#12: express). B100 unchanged (#13).",
+        "gap": "Both failing calls targeted A100 with no read in between. The log proves at least one rejected call mutated A100, but not which one (403 path or 404 path).",
+        "severity": "Medium-High (a rejected call leaves the caller's own orders changed; no cross-user write)",
+        "discoverability": "Moderate: needs a mixed batch with the owned ID listed before the bad ID"
+      },
+      "extra_claims": [
+        "Unsupported: DD-03 'confirmed at runtime 2/2'. The two calls are not isolated (#10-#12).",
+        "Unsupported: 'After both rejections the stored note was unchanged'. There is no read between the rejections (#18-#19) and the overwrite at #20.",
+        "Unresolved product interpretation: DD-04. The padded 200-character note was stored (#20-#21), but whether '1-160 nonblank characters' counts padding is undecided. The report correctly flags this as needing a product decision.",
+        "Speculative impact statements: 'customer can be charged' for service changes and downstream truncation. The brief defines no service pricing."
+      ],
+      "fixture_disclosure": "Matches the log. A200 refunded=10000 and version=4. Services and note restored (#27-#31)."
+    },
+    "B": {
+      "R1_cumulative_over_refund": {
+        "status": "actionable",
+        "evidence": "#8 refunds 4000 on A200 (200, refunded 4000). #9 repeats it (200, 8000). #10 GET confirms. #17 shows a single 4001 refund on B100 correctly returns 409.",
+        "severity": "High (simulated-ledger integrity)",
+        "discoverability": "High"
+      },
+      "R2_stale_address_overwrite": {
+        "status": "actionable",
+        "evidence": "#19 shows v1. #20 saves at v1 (200, v2). #21 saves stale at v1 (200, v3). #22 GET shows the stale value. #23 shows a future version returns 409.",
+        "severity": "High",
+        "discoverability": "High"
+      },
+      "R3_partial_batch_change": {
+        "status": "actionable",
+        "evidence": "403 path: #28 returned 403, then #29 shows A100 express. B100 unchanged (#30). 404 path: #31 [A200,NOPE] returned 404, then #32 shows A200 express. A200 was standard beforehand (#27). Each path is isolated.",
+        "severity": "Medium-High",
+        "discoverability": "Moderate (depends on order in the batch)"
+      },
+      "extra_claims": [
+        "Unresolved product interpretation: O1, note trimming. Acceptance at #40 is shown, but the report calls it 'worth fixing' without flagging the '1-160 nonblank' ambiguity. The exact 210-character count cannot be verified precisely from the log.",
+        "Unresolved product interpretation: O2, LOCKER case-insensitivity (#35-#36). The report appropriately asks product to confirm.",
+        "'Traced to a specific line' gives no line numbers. This is minor and not runtime evidence."
+      ],
+      "fixture_disclosure": "Matches the log. A200 refunded=8000 and version=4. Everything else restored (#41-#43)."
+    },
+    "C": {
+      "R1_cumulative_over_refund": {
+        "status": "actionable",
+        "evidence": "#4 shows B100 refunded=0. #5 refunds 3000 as bob (200, 3000). #6 repeats it (200, 6000). #8 GET confirms 6000 against paid 4000. #7 shows 4001 returns 409 even after the over-refund (per-call cap only).",
+        "severity": "High (simulated-ledger integrity)",
+        "discoverability": "High"
+      },
+      "R2_stale_address_overwrite": {
+        "status": "actionable",
+        "evidence": "#16 shows v1. #17 saves at v1 (200, v2). #18 saves stale at v1 (200, v3). #20 GET shows the stale value. #19 shows v51 returns 409.",
+        "severity": "High",
+        "discoverability": "High"
+      },
+      "R3_partial_batch_change": {
+        "status": "actionable",
+        "evidence": "#21 shows A100 standard and #20 shows A200 standard. #22 [A100,B100] returned 403. #23 [A200,NOPE] returned 404. #24 shows A100 express and #25 shows A200 express. Distinct targets make each path attributable. B100 unchanged (#26).",
+        "severity": "Medium-High",
+        "discoverability": "Moderate (depends on order in the batch)"
+      },
+      "extra_claims": [
+        "Unresolved and partly unsupported: finding 4 treats padded notes as a defect ('limit can be bypassed') without resolving the '1-160 nonblank' interpretation. The retained responses at #31-#32 are truncated, so the 'full 301-character string is stored' claim cannot be verified from the log.",
+        "Unsupported citation: 'Alice gets 403 ... by GET, refund or note' cites #33, but #33 is Bob writing a note on Alice's A200. No Alice-to-B100 note probe exists. It also cites #2, which is the anonymous 401.",
+        "Not evidenced by the log: the '8 KB nested array' at #36 (the logged body is short) and 'invalid UTF-8' at #38 (the log shows an escaped \\u00ff in JSON). #37 is a GET, not a malformed-input probe."
+      ],
+      "fixture_disclosure": "Matches restore_log. B100 refunded=6000 is irreversible and falls on Bob's fixture; it is disclosed. A200 version=4. Other fields restored (restore #5-#6)."
+    },
+    "D": {
+      "R1_cumulative_over_refund": {
+        "status": "actionable",
+        "evidence": "#8 refunds 4000 on A200 (200, 4000). #9 repeats it (200, 8000). #10 GET confirms. #11 shows 6001 returns 409.",
+        "severity": "High. The report's 'Critical, directly loses money' conflates a simulated ledger with real funds.",
+        "discoverability": "High"
+      },
+      "R2_stale_address_overwrite": {
+        "status": "actionable",
+        "evidence": "#18 saves at v1 (200, v2). #19 saves stale at v1 (200, v3). #20 GET shows the stale value. #21 shows v99 returns 409.",
+        "severity": "High",
+        "discoverability": "High"
+      },
+      "R3_partial_batch_change": {
+        "status": "actionable",
+        "evidence": "403 path: #25 [A200,B100] returned 403, then #26 shows A200 express; A200 was standard at #20. B100 unchanged (#27). 404 path: #28 [A100,ZZZ] returned 404, then #29 shows A100 express; A100 was standard at #26. Each path is isolated.",
+        "severity": "Medium-High",
+        "discoverability": "Moderate (depends on order in the batch)"
+      },
+      "extra_claims": [
+        "Unresolved product interpretation: the padded 164-character note (#37, #39). It is correctly labelled 'not a defect' and referred to the product owner.",
+        "Supported: 'note kept after a rejection'. #38 returned 400 and #39 still shows the prior note.",
+        "Unverifiable restoration: the report claims 49 requests, including 3 wrong-header restore attempts and 3 restores. restore.txt is not retained here. The log ends at #43 with A200 at 'STALE edit' v3, both services express, and A100's note padded. The claimed end state (A200 v4, address and services restored) cannot be confirmed."
+      ],
+      "fixture_disclosure": "Irreversible A200 refunded=8000 is disclosed and matches #10. The claimed version=4 and restorations are not shown in the retained log."
+    }
+  },
+  "limitations": "The assessment uses only each report and its retained logs. Source code, probe scripts, outputs and D's restore file were not available, so code-cause claims and test-coverage claims are unverified. A's and C's logs are partly truncated. A and B have no probe numbers. No case tested R3 with the bad ID listed first, so its order dependence is inferred from the reports' code reading. The severity and discoverability ratings are judgements, not measurements."
+}

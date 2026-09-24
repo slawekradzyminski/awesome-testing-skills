@@ -1,0 +1,8 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+Recommend holding release for two confirmed defects:
+
+- Order lookups silently discard typing.
+- Reordered service responses display a service different from the saved value.
+
+API checks and existing tests passed. Evidence and reproductions are included. Reversible fixture changes were restored; refund totals and version counters require owner reset. The browser session is closed.

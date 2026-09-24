@@ -1,0 +1,33 @@
+{
+  "id": "run-22",
+  "surface": "api",
+  "variant": "control",
+  "repeat": 2,
+  "condition": "normal",
+  "status": "completed",
+  "exit_code": 0,
+  "elapsed_seconds": 287.19,
+  "report_exists": false,
+  "api_requests": 101,
+  "usage": [
+    {
+      "input_tokens": 228518,
+      "cached_input_tokens": 208896,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8139,
+      "reasoning_output_tokens": 1901
+    }
+  ],
+  "app_preserved": true,
+  "skill_preserved": null,
+  "source_hashes": {
+    "app.py": "36ecc41acd5ac3972c0015baf52f9290612fe2463d3adc10d5dea0507bbd1a11",
+    "domain.py": "c3120b6ac8807fbb1f7171347d2dd8a7eb9518af8fdc275697c635ff8f5ad9f9",
+    "requirements.md": "c25b0d63b0d1d7e7bdbab63fabf63815b8380a416a86e89429fc3117049bcdb5",
+    "static/app.js": "6d9bb3d9918d1b7b4483b7678fe7f11b93df1d9ab19159d4180170c5c9a2b6d0",
+    "static/index.html": "a5ded52c3f210a6b385e8dabd102ec9917473507ab3c6666a6d389cdd934de88",
+    "static/style.css": "d3cf90c54c13771f13912d89ff946b56ba0f96184b8312b927c46b4d4b987708",
+    "test_domain.py": "bd98535901a31c0fafc62a45f24d343e3e83117c56e18b115f0d8d79411ad3c2"
+  },
+  "task_sha256": "31dc615361522c14fbf360304cb5a1c1263e6a18d7ba589c335dbf00591b410a"
+}

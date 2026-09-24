@@ -1,0 +1,95 @@
+PASS baseline list alice
+PASS baseline list bob
+PASS reject unauthenticated None /api/orders
+PASS reject unauthenticated None /api/orders/A200
+PASS reject unauthenticated None /api/orders/A200/refund
+PASS reject unauthenticated None /api/orders/A200/address
+PASS reject unauthenticated None /api/orders/A200/note
+PASS reject unauthenticated None /api/services
+PASS reject unauthenticated unknown /api/orders
+PASS reject unauthenticated unknown /api/orders/A200
+PASS reject unauthenticated unknown /api/orders/A200/refund
+PASS reject unauthenticated unknown /api/orders/A200/address
+PASS reject unauthenticated unknown /api/orders/A200/note
+PASS reject unauthenticated unknown /api/services
+PASS foreign read alice
+PASS foreign refund alice
+PASS foreign address alice
+PASS foreign note alice
+PASS foreign service alice
+PASS foreign read bob
+PASS foreign refund bob
+PASS foreign address bob
+PASS foreign note bob
+PASS foreign service bob
+PASS after authorization list alice
+PASS after authorization list bob
+PASS authorization attempts preserve all state
+PASS atomic batch ['A100', 'B100']
+PASS atomic rejection preserves Alice orders ['A100', 'B100']
+PASS atomic batch ['A100', 'MISSING']
+PASS atomic rejection preserves Alice orders ['A100', 'MISSING']
+PASS atomic batch ['B100', 'A100']
+PASS atomic rejection preserves Alice orders ['B100', 'A100']
+PASS atomic batch ['MISSING', 'A100']
+PASS atomic rejection preserves Alice orders ['MISSING', 'A100']
+PASS valid two-order batch
+PASS batch persisted
+PASS restore service
+PASS invalid batch {'ids': [], 'service': 'express'}
+PASS invalid batch {'ids': ['A200', 42], 'service': 'express'}
+PASS invalid batch {'ids': 'A200', 'service': 'express'}
+PASS invalid batch {'ids': ['A200'], 'service': 'overnight'}
+PASS invalid refund 0
+PASS invalid refund -1
+PASS invalid refund True
+PASS invalid refund 1.5
+PASS invalid refund 100
+PASS invalid refund None
+PASS partial refund one
+PASS partial refund two
+PASS cumulative excess
+PASS excess preserves cumulative total
+PASS concurrent refund one winner
+PASS exact remaining refund
+PASS refund exhausted balance
+PASS refund final total equals paid
+PASS invalid address {'address': ' ', 'version': 1}
+PASS invalid address {'address': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'version': 1}
+PASS invalid address {'address': 7, 'version': 1}
+PASS invalid address {'address': 'Valid', 'version': True}
+PASS invalid address {'address': 'Valid', 'version': 1.0}
+PASS invalid address {'address': 'Valid'}
+PASS address 120 character boundary
+PASS stale address
+PASS stale preserves new address and version
+PASS concurrent address one winner
+PASS concurrent address preserves winning value
+PASS restore address
+PASS note maximum boundary
+PASS invalid note {'note': ''}
+PASS invalid note {'note': '   '}
+PASS invalid note {'note': 'nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn'}
+PASS invalid note {'note': True}
+PASS invalid note {'note': 'LOCKER: 1'}
+PASS invalid note {'note': '  locker: 2'}
+PASS rejected notes preserve previous value
+PASS restore note
+PASS malformed envelope returns 400 b'{'
+PASS malformed envelope returns 400 b'[]'
+PASS malformed envelope returns 400 b'null'
+PASS malformed envelope returns 400 b'"text"'
+PASS malformed envelope returns 400 b'{"note":"\xff"}'
+PASS malformed envelope returns 400 b'{}                            '
+PASS missing order refund
+PASS missing order address
+PASS missing order note
+PASS final list alice
+PASS final list bob
+PASS cleanup matches expected irreversible counters only
+{
+  "api_requests_including_preliminary": 90,
+  "checks": 89,
+  "passed": 89,
+  "failed": []
+}

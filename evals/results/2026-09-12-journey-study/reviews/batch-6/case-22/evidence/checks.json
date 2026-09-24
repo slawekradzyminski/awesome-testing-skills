@@ -1,0 +1,563 @@
+{
+  "requests": 76,
+  "checks": [
+    {
+      "check": "list isolation alice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "list isolation bob",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unauthorized list None",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unauthorized mutation None",
+      "passed": true,
+      "detail": {
+        "expected_status": 401,
+        "actual_status": 401
+      }
+    },
+    {
+      "check": "unauthorized list mallory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unauthorized mutation mallory",
+      "passed": true,
+      "detail": {
+        "expected_status": 401,
+        "actual_status": 401
+      }
+    },
+    {
+      "check": "foreign read alice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "foreign refund alice",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "foreign address alice",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "foreign note alice",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "foreign service alice",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "foreign read bob",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "foreign refund bob",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "foreign address bob",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "foreign note bob",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "foreign service bob",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "missing order refund",
+      "passed": true,
+      "detail": {
+        "expected_status": 404,
+        "actual_status": 404
+      }
+    },
+    {
+      "check": "missing order address",
+      "passed": true,
+      "detail": {
+        "expected_status": 404,
+        "actual_status": 404
+      }
+    },
+    {
+      "check": "missing order note",
+      "passed": true,
+      "detail": {
+        "expected_status": 404,
+        "actual_status": 404
+      }
+    },
+    {
+      "check": "malformed body b'{'",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "malformed body b'[]'",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "malformed body b'null'",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "malformed body b''",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "invalid refund 0",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid refund -1",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid refund True",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid refund 1.5",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid refund '1'",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid refund None",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid address",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid address",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid address",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid address",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid address",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid address",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid address",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid services",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid services",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid services",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid services",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid services",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid note",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid note",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid note",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid note",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "invalid note",
+      "passed": true,
+      "detail": {
+        "expected_status": 400,
+        "actual_status": 400
+      }
+    },
+    {
+      "check": "rejected edits preserve Alice orders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "rejected edits preserve Bob order",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "note maximum length accepted",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "unsupported locker note",
+      "passed": true,
+      "detail": {
+        "expected_status": 422,
+        "actual_status": 422
+      }
+    },
+    {
+      "check": "normalized unsupported locker note",
+      "passed": true,
+      "detail": {
+        "expected_status": 422,
+        "actual_status": 422
+      }
+    },
+    {
+      "check": "locker rejection retains saved note",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "valid bulk service",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "prepare services baseline",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "bulk missing second order",
+      "passed": true,
+      "detail": {
+        "expected_status": 404,
+        "actual_status": 404
+      }
+    },
+    {
+      "check": "missing bulk is atomic",
+      "passed": false,
+      "detail": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "service": "express"
+      }
+    },
+    {
+      "check": "restore service after missing bulk",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "bulk forbidden second order",
+      "passed": true,
+      "detail": {
+        "expected_status": 403,
+        "actual_status": 403
+      }
+    },
+    {
+      "check": "forbidden bulk is atomic",
+      "passed": false,
+      "detail": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "service": "express"
+      }
+    },
+    {
+      "check": "bulk preserves foreign order",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "current address version save",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "stale address save",
+      "passed": false,
+      "detail": {
+        "expected_status": 409,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "stale address preserves newer state",
+      "passed": false,
+      "detail": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Stale overwrite",
+        "version": 3,
+        "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "service": "express"
+      }
+    },
+    {
+      "check": "future address version",
+      "passed": true,
+      "detail": {
+        "expected_status": 409,
+        "actual_status": 409
+      }
+    },
+    {
+      "check": "first partial refund",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "exact remaining refund",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "refund exceeds remaining by one cent",
+      "passed": false,
+      "detail": {
+        "expected_status": 409,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "refund total never exceeds paid",
+      "passed": false,
+      "detail": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10001,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      }
+    },
+    {
+      "check": "refund exceeds original payment",
+      "passed": true,
+      "detail": {
+        "expected_status": 409,
+        "actual_status": 409
+      }
+    },
+    {
+      "check": "restore note",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "restore service",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    },
+    {
+      "check": "restore address",
+      "passed": true,
+      "detail": {
+        "expected_status": 200,
+        "actual_status": 200
+      }
+    }
+  ]
+}

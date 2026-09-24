@@ -1,0 +1,57 @@
+[
+  {
+    "label": "reject above original payment",
+    "path": "/api/orders/A100/refund",
+    "request": {
+      "amount": 10001
+    },
+    "status": 409,
+    "response": {
+      "error": "Refund exceeds remaining paid amount"
+    }
+  },
+  {
+    "label": "read after excessive refund",
+    "path": "/api/orders/A100",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A100",
+      "owner": "alice",
+      "paid": 10000,
+      "refunded": 0,
+      "address": "10 Oak Street",
+      "version": 1,
+      "note": "Leave with reception",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "stale address after restore",
+    "path": "/api/orders/A200/address",
+    "request": {
+      "address": "Stale attempt",
+      "version": 1
+    },
+    "status": 409,
+    "response": {
+      "error": "Order changed; reload before saving"
+    }
+  },
+  {
+    "label": "read after stale address",
+    "path": "/api/orders/A200",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "A200",
+      "owner": "alice",
+      "paid": 6000,
+      "refunded": 0,
+      "address": "20 Pine Street",
+      "version": 4,
+      "note": "Ring twice",
+      "service": "standard"
+    }
+  }
+]

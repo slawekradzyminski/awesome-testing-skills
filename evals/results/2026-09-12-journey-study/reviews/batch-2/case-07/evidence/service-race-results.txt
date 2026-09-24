@@ -1,0 +1,31 @@
+### Result
+{"method":"Forwarded real local server responses; delayed only express response delivery by 900ms; no fabricated response bodies.","events":[{"event":"request","service":"express","at":1789211947986},{"event":"server_response","service":"express","status":200,"body":{"orders":[{"id":"A100","owner":"alice","paid":10000,"refunded":0,"address":"10 Oak Street","version":1,"note":"Leave with reception","service":"express"}]},"at":1789211947988},{"event":"request","service":"standard","at":1789211948104},{"event":"server_response","service":"standard","status":200,"body":{"orders":[{"id":"A100","owner":"alice","paid":10000,"refunded":0,"address":"10 Oak Street","version":1,"note":"Leave with reception","service":"standard"}]},"at":1789211948107},{"event":"browser_response","service":"standard","at":1789211948108},{"event":"browser_response","service":"express","at":1789211948892}],"beforeReload":{"selected":"A100","heading":"Order A100","service":"express","feedback":"Delivery service saved"},"afterReload":{"service":"standard","selected":"A100"}}
+### Ran Playwright code
+```js
+await (async page => {
+  await page.unroute('http://127.0.0.1:58576/api/services');
+  await page.reload(); await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+  await page.setViewportSize({width:1280,height:900});
+  const events=[];
+  await page.route('http://127.0.0.1:58576/api/services',async route=>{
+    const service=route.request().postDataJSON().service;
+    events.push({event:'request',service,at:Date.now()});
+    const response=await route.fetch();
+    events.push({event:'server_response',service,status:response.status(),body:await response.json(),at:Date.now()});
+    if(service==='express')await page.waitForTimeout(900);
+    await route.fulfill({response});
+    events.push({event:'browser_response',service,at:Date.now()});
+  });
+  await page.locator('#express').click();
+  await page.waitForTimeout(100);
+  await page.locator('#standard').click();
+  await page.waitForTimeout(1100);
+  const beforeReload={selected:await page.locator('#order').inputValue(),heading:await page.locator('#heading').textContent(),service:await page.locator('#service').textContent(),feedback:await page.locator('#feedback').textContent()};
+  await page.screenshot({path:'evidence/service-race-before-reload.png'});
+  await page.unroute('http://127.0.0.1:58576/api/services');
+  await page.reload(); await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+  const afterReload={service:await page.locator('#service').textContent(),selected:await page.locator('#order').inputValue()};
+  return {method:'Forwarded real local server responses; delayed only express response delivery by 900ms; no fabricated response bodies.',events,beforeReload,afterReload};
+}
+)(page);
+```

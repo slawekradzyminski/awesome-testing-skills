@@ -1,0 +1,43 @@
+  1 const el = id => document.getElementById(id);
+  2 const headers = {'Content-Type': 'application/json', 'X-Test-User': 'alice'};
+  3 let selected = 'A100';
+  4 let generation = 0;
+  5 async function readOrder(id) {
+  6   const token = ++generation;
+  7   selected = id;
+  8   el('loading').textContent = 'Loading order…';
+  9   ['save', 'express', 'standard'].forEach(id => el(id).disabled = true);
+ 10   el('feedback').textContent = '';
+ 11   const response = await fetch('/api/orders/' + id, {headers});
+ 12   const row = await response.json();
+ 13   if (!response.ok) { el('loading').textContent = row.error; return; }
+ 14   el('heading').textContent = 'Order ' + row.id;
+ 15   el('address').textContent = row.address;
+ 16   el('note').value = row.note;
+ 17   el('service').textContent = row.service;
+ 18   el('loading').textContent = '';
+ 19   ['save', 'express', 'standard'].forEach(id => el(id).disabled = false);
+ 20 }
+ 21 el('order').addEventListener('change', event => readOrder(event.target.value));
+ 22 el('save').addEventListener('click', async () => {
+ 23   const id = selected;
+ 24   el('save').disabled = true;
+ 25   const response = await fetch('/api/orders/' + id + '/note', {
+ 26     method: 'POST', headers, body: JSON.stringify({note: el('note').value})});
+ 27   const row = await response.json();
+ 28   if (id !== selected) return;
+ 29   el('feedback').textContent = 'Delivery instruction saved';
+ 30   el('save').disabled = false;
+ 31 });
+ 32 async function setService(service) {
+ 33   const id = selected;
+ 34   const response = await fetch('/api/services', {method: 'POST', headers,
+ 35     body: JSON.stringify({ids: [id], service})});
+ 36   const body = await response.json();
+ 37   if (id !== selected) return;
+ 38   el('feedback').textContent = response.ok ? 'Delivery service saved' : body.error;
+ 39   if (response.ok) el('service').textContent = service;
+ 40 }
+ 41 el('express').addEventListener('click', () => setService('express'));
+ 42 el('standard').addEventListener('click', () => setService('standard'));
+ 43 readOrder(selected);

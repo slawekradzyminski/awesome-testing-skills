@@ -1,0 +1,30 @@
+async page => {
+ const out=[];
+ await page.reload();
+ await page.waitForFunction(()=>document.querySelector('#loading').textContent==='');
+ await page.locator('#order').focus();
+ await page.keyboard.press('ArrowDown');
+ await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+ await page.keyboard.press('Tab');
+ out.push({step:'keyboard order switch and editor focus',selected:await page.locator('#order').inputValue(),focus:await page.evaluate(()=>document.activeElement.id)});
+ await page.keyboard.press('ControlOrMeta+A');
+ await page.keyboard.type('LOCKER: keyboard');
+ await page.keyboard.press('Tab');
+ const rejected=page.waitForResponse(r=>r.url().endsWith('/note'));
+ await page.keyboard.press('Enter');
+ out.push({step:'keyboard reject',status:(await rejected).status(),draft:await page.locator('#note').inputValue()});
+ await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+ await page.keyboard.press('Shift+Tab');
+ await page.keyboard.press('ControlOrMeta+A');
+ await page.keyboard.type('Ring twice');
+ await page.keyboard.press('Tab');
+ const accepted=page.waitForResponse(r=>r.url().endsWith('/note'));
+ await page.keyboard.press('Space');
+ out.push({step:'keyboard correction',status:(await accepted).status()});
+ await page.reload();
+ await page.waitForFunction(()=>document.querySelector('#loading').textContent==='');
+ await page.locator('#order').selectOption('A200');
+ await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');
+ out.push({step:'corrected note after reload',note:await page.locator('#note').inputValue()});
+ return out;
+}

@@ -1,0 +1,923 @@
+{
+  "request_count": 47,
+  "checks": [
+    {
+      "label": "initial alice",
+      "path": "/api/orders",
+      "user": "alice",
+      "body": null,
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A100",
+            "owner": "alice",
+            "paid": 10000,
+            "refunded": 0,
+            "address": "10 Oak Street",
+            "version": 1,
+            "note": "Leave with reception",
+            "service": "standard"
+          },
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 1,
+            "note": "Ring twice",
+            "service": "standard"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "label": "initial bob",
+      "path": "/api/orders",
+      "user": "bob",
+      "body": null,
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "B100",
+            "owner": "bob",
+            "paid": 4000,
+            "refunded": 0,
+            "address": "30 Elm Street",
+            "version": 1,
+            "note": "Side entrance",
+            "service": "standard"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "label": "anonymous list",
+      "path": "/api/orders",
+      "user": null,
+      "body": null,
+      "status": 401,
+      "expected": 401,
+      "response": {
+        "error": "Choose a fixture user"
+      },
+      "passed": true
+    },
+    {
+      "label": "foreign read",
+      "path": "/api/orders/B100",
+      "user": "alice",
+      "body": null,
+      "status": 403,
+      "expected": 403,
+      "response": {
+        "error": "Access denied"
+      },
+      "passed": true
+    },
+    {
+      "label": "missing read",
+      "path": "/api/orders/MISSING",
+      "user": "alice",
+      "body": null,
+      "status": 404,
+      "expected": 404,
+      "response": {
+        "error": "Order not found"
+      },
+      "passed": true
+    },
+    {
+      "label": "foreign refund",
+      "path": "/api/orders/B100/refund",
+      "user": "alice",
+      "body": {
+        "amount": 1
+      },
+      "status": 403,
+      "expected": 403,
+      "response": {
+        "error": "Access denied"
+      },
+      "passed": true
+    },
+    {
+      "label": "anonymous refund",
+      "path": "/api/orders/A100/refund",
+      "user": null,
+      "body": {
+        "amount": 1
+      },
+      "status": 401,
+      "expected": 401,
+      "response": {
+        "error": "Choose a fixture user"
+      },
+      "passed": true
+    },
+    {
+      "label": "foreign address",
+      "path": "/api/orders/B100/address",
+      "user": "alice",
+      "body": {
+        "address": "Unauthorized",
+        "version": 1
+      },
+      "status": 403,
+      "expected": 403,
+      "response": {
+        "error": "Access denied"
+      },
+      "passed": true
+    },
+    {
+      "label": "anonymous address",
+      "path": "/api/orders/A100/address",
+      "user": null,
+      "body": {
+        "address": "Unauthorized",
+        "version": 1
+      },
+      "status": 401,
+      "expected": 401,
+      "response": {
+        "error": "Choose a fixture user"
+      },
+      "passed": true
+    },
+    {
+      "label": "foreign note",
+      "path": "/api/orders/B100/note",
+      "user": "alice",
+      "body": {
+        "note": "Unauthorized"
+      },
+      "status": 403,
+      "expected": 403,
+      "response": {
+        "error": "Access denied"
+      },
+      "passed": true
+    },
+    {
+      "label": "anonymous note",
+      "path": "/api/orders/A100/note",
+      "user": null,
+      "body": {
+        "note": "Unauthorized"
+      },
+      "status": 401,
+      "expected": 401,
+      "response": {
+        "error": "Choose a fixture user"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid refund 0",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": 0
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Amount must be a positive integer in cents"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid refund -1",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": -1
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Amount must be a positive integer in cents"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid refund True",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": true
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Amount must be a positive integer in cents"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid refund 1.5",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": 1.5
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Amount must be a positive integer in cents"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid refund '1'",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": "1"
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Amount must be a positive integer in cents"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid refund None",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": null
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Amount must be a positive integer in cents"
+      },
+      "passed": true
+    },
+    {
+      "label": "partial refund 1",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": 1
+      },
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 1,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "passed": true
+    },
+    {
+      "label": "partial refund 2",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": 1
+      },
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 2,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "passed": true
+    },
+    {
+      "label": "cumulative over-refund",
+      "path": "/api/orders/A100/refund",
+      "user": "alice",
+      "body": {
+        "amount": 9999
+      },
+      "status": 409,
+      "expected": 409,
+      "response": {
+        "error": "Refund exceeds remaining paid amount"
+      },
+      "passed": true
+    },
+    {
+      "label": "refund unchanged after rejection",
+      "path": "/api/orders/A100",
+      "user": "alice",
+      "body": null,
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 2,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid address",
+      "path": "/api/orders/A200/address",
+      "user": "alice",
+      "body": {
+        "address": " ",
+        "version": 1
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Address and integer version required"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid address",
+      "path": "/api/orders/A200/address",
+      "user": "alice",
+      "body": {
+        "address": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "version": 1
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Address and integer version required"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid address",
+      "path": "/api/orders/A200/address",
+      "user": "alice",
+      "body": {
+        "address": "Valid",
+        "version": true
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Address and integer version required"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid address",
+      "path": "/api/orders/A200/address",
+      "user": "alice",
+      "body": {
+        "address": "Valid",
+        "version": "1"
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Address and integer version required"
+      },
+      "passed": true
+    },
+    {
+      "label": "address save",
+      "path": "/api/orders/A200/address",
+      "user": "alice",
+      "body": {
+        "address": "Assessment Street",
+        "version": 1
+      },
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Assessment Street",
+        "version": 2,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "passed": true
+    },
+    {
+      "label": "stale address",
+      "path": "/api/orders/A200/address",
+      "user": "alice",
+      "body": {
+        "address": "Stale Street",
+        "version": 1
+      },
+      "status": 409,
+      "expected": 409,
+      "response": {
+        "error": "Order changed; reload before saving"
+      },
+      "passed": true
+    },
+    {
+      "label": "verify newer address",
+      "path": "/api/orders/A200",
+      "user": "alice",
+      "body": null,
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "Assessment Street",
+        "version": 2,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "passed": true
+    },
+    {
+      "label": "restore address",
+      "path": "/api/orders/A200/address",
+      "user": "alice",
+      "body": {
+        "address": "20 Pine Street",
+        "version": 2
+      },
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "passed": true
+    },
+    {
+      "label": "mixed forbidden service atomicity",
+      "path": "/api/services",
+      "user": "alice",
+      "body": {
+        "ids": [
+          "A100",
+          "B100"
+        ],
+        "service": "express"
+      },
+      "status": 403,
+      "expected": 403,
+      "response": {
+        "error": "Access denied"
+      },
+      "passed": true
+    },
+    {
+      "label": "mixed missing service atomicity",
+      "path": "/api/services",
+      "user": "alice",
+      "body": {
+        "ids": [
+          "A100",
+          "MISSING"
+        ],
+        "service": "express"
+      },
+      "status": 404,
+      "expected": 404,
+      "response": {
+        "error": "Order not found"
+      },
+      "passed": true
+    },
+    {
+      "label": "verify no partial service mutation",
+      "path": "/api/orders",
+      "user": "alice",
+      "body": null,
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A100",
+            "owner": "alice",
+            "paid": 10000,
+            "refunded": 2,
+            "address": "10 Oak Street",
+            "version": 1,
+            "note": "Leave with reception",
+            "service": "standard"
+          },
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 3,
+            "note": "Ring twice",
+            "service": "standard"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid service",
+      "path": "/api/services",
+      "user": "alice",
+      "body": {
+        "ids": [],
+        "service": "express"
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Order IDs and a supported service required"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid service",
+      "path": "/api/services",
+      "user": "alice",
+      "body": {
+        "ids": [
+          "A100"
+        ],
+        "service": "premium"
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Order IDs and a supported service required"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid service",
+      "path": "/api/services",
+      "user": "alice",
+      "body": {
+        "ids": [
+          true
+        ],
+        "service": "express"
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Order IDs and a supported service required"
+      },
+      "passed": true
+    },
+    {
+      "label": "bulk service",
+      "path": "/api/services",
+      "user": "alice",
+      "body": {
+        "ids": [
+          "A100",
+          "A200"
+        ],
+        "service": "express"
+      },
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A100",
+            "owner": "alice",
+            "paid": 10000,
+            "refunded": 2,
+            "address": "10 Oak Street",
+            "version": 1,
+            "note": "Leave with reception",
+            "service": "express"
+          },
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 3,
+            "note": "Ring twice",
+            "service": "express"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "label": "restore service",
+      "path": "/api/services",
+      "user": "alice",
+      "body": {
+        "ids": [
+          "A100",
+          "A200"
+        ],
+        "service": "standard"
+      },
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A100",
+            "owner": "alice",
+            "paid": 10000,
+            "refunded": 2,
+            "address": "10 Oak Street",
+            "version": 1,
+            "note": "Leave with reception",
+            "service": "standard"
+          },
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 3,
+            "note": "Ring twice",
+            "service": "standard"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid note",
+      "path": "/api/orders/A200/note",
+      "user": "alice",
+      "body": {
+        "note": " "
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Note must contain 1 to 160 characters"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid note",
+      "path": "/api/orders/A200/note",
+      "user": "alice",
+      "body": {
+        "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Note must contain 1 to 160 characters"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid note",
+      "path": "/api/orders/A200/note",
+      "user": "alice",
+      "body": {
+        "note": "LOCKER: 1"
+      },
+      "status": 422,
+      "expected": 422,
+      "response": {
+        "error": "Locker delivery is unavailable; enter another instruction"
+      },
+      "passed": true
+    },
+    {
+      "label": "invalid note",
+      "path": "/api/orders/A200/note",
+      "user": "alice",
+      "body": {
+        "note": " locker: 2"
+      },
+      "status": 422,
+      "expected": 422,
+      "response": {
+        "error": "Locker delivery is unavailable; enter another instruction"
+      },
+      "passed": true
+    },
+    {
+      "label": "verify rejected notes unchanged",
+      "path": "/api/orders/A200",
+      "user": "alice",
+      "body": null,
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      },
+      "passed": true
+    },
+    {
+      "label": "malformed body",
+      "path": "/api/orders/A200/note",
+      "user": "alice",
+      "body": null,
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Expected a bounded JSON object"
+      },
+      "passed": true
+    },
+    {
+      "label": "malformed body",
+      "path": "/api/orders/A200/note",
+      "user": "alice",
+      "body": null,
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Expected a bounded JSON object"
+      },
+      "passed": true
+    },
+    {
+      "label": "malformed body",
+      "path": "/api/orders/A200/note",
+      "user": "alice",
+      "body": null,
+      "status": 400,
+      "expected": 400,
+      "response": {
+        "error": "Expected a bounded JSON object"
+      },
+      "passed": true
+    },
+    {
+      "label": "final alice",
+      "path": "/api/orders",
+      "user": "alice",
+      "body": null,
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "A100",
+            "owner": "alice",
+            "paid": 10000,
+            "refunded": 2,
+            "address": "10 Oak Street",
+            "version": 1,
+            "note": "Leave with reception",
+            "service": "standard"
+          },
+          {
+            "id": "A200",
+            "owner": "alice",
+            "paid": 6000,
+            "refunded": 0,
+            "address": "20 Pine Street",
+            "version": 3,
+            "note": "Ring twice",
+            "service": "standard"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "label": "final bob",
+      "path": "/api/orders",
+      "user": "bob",
+      "body": null,
+      "status": 200,
+      "expected": 200,
+      "response": {
+        "orders": [
+          {
+            "id": "B100",
+            "owner": "bob",
+            "paid": 4000,
+            "refunded": 0,
+            "address": "30 Elm Street",
+            "version": 1,
+            "note": "Side entrance",
+            "service": "standard"
+          }
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "initial": {
+    "alice": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 0,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 1,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "bob": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  },
+  "final": {
+    "alice": {
+      "orders": [
+        {
+          "id": "A100",
+          "owner": "alice",
+          "paid": 10000,
+          "refunded": 2,
+          "address": "10 Oak Street",
+          "version": 1,
+          "note": "Leave with reception",
+          "service": "standard"
+        },
+        {
+          "id": "A200",
+          "owner": "alice",
+          "paid": 6000,
+          "refunded": 0,
+          "address": "20 Pine Street",
+          "version": 3,
+          "note": "Ring twice",
+          "service": "standard"
+        }
+      ]
+    },
+    "bob": {
+      "orders": [
+        {
+          "id": "B100",
+          "owner": "bob",
+          "paid": 4000,
+          "refunded": 0,
+          "address": "30 Elm Street",
+          "version": 1,
+          "note": "Side entrance",
+          "service": "standard"
+        }
+      ]
+    }
+  }
+}

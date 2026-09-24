@@ -1,0 +1,21 @@
+PUT qty=0
+{
+  "quantity" : "must be greater than or equal to 1"
+}
+HTTP 400
+PUT qty=-1
+{
+  "quantity" : "must be greater than or equal to 1"
+}
+HTTP 400
+PUT qty=21
+{
+  "username" : "history_customer",
+  "items" : [ {
+    "productId" : 9,
+    "quantity" : 21
+  } ],
+  "totalPrice" : 1048.95,
+  "totalItems" : 21
+}
+HTTP 200

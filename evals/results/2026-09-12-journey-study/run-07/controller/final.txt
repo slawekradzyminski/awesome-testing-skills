@@ -1,0 +1,9 @@
+Assessment saved in [report.md](evidence/report.md), with reproduction steps and supporting evidence.
+
+**Recommendation: hold release.** Three confirmed defects:
+
+- Order-switch race can overwrite another order’s instructions.
+- Rejected instructions falsely display success.
+- Express delivery is inaccessible by keyboard.
+
+API checks and existing tests passed. Browser session closed. A200 requires an owner reset for test refunds and version changes.

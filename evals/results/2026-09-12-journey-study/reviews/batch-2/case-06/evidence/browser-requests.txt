@@ -1,0 +1,40 @@
+### Result
+4. [GET] http://127.0.0.1:56486/api/orders/A100 => [200] OK
+5. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+6. [GET] http://127.0.0.1:56486/api/orders/A100 => [200] OK
+7. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+8. [POST] http://127.0.0.1:56486/api/orders/A200/note => [422] Unprocessable Content
+9. [POST] http://127.0.0.1:56486/api/orders/A200/note => [200] OK
+13. [GET] http://127.0.0.1:56486/api/orders/A100 => [200] OK
+14. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+15. [POST] http://127.0.0.1:56486/api/orders/A200/note => [200] OK
+16. [POST] http://127.0.0.1:56486/api/services => [200] OK
+17. [POST] http://127.0.0.1:56486/api/services => [200] OK
+18. [POST] http://127.0.0.1:56486/api/services => [200] OK
+19. [POST] http://127.0.0.1:56486/api/services => [200] OK
+20. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+24. [GET] http://127.0.0.1:56486/api/orders/A100 => [200] OK
+25. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+26. [POST] http://127.0.0.1:56486/api/services => [200] OK
+27. [POST] http://127.0.0.1:56486/api/services => [200] OK
+28. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+32. [GET] http://127.0.0.1:56486/api/orders/A100 => [200] OK
+33. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+34. [POST] http://127.0.0.1:56486/api/services => [200] OK
+35. [POST] http://127.0.0.1:56486/api/services => [200] OK
+36. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+40. [GET] http://127.0.0.1:56486/api/orders/A100 => [200] OK
+41. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+42. [POST] http://127.0.0.1:56486/api/orders/A200/note => [FAILED] net::ERR_FAILED
+43. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+47. [GET] http://127.0.0.1:56486/api/orders/A100 => [200] OK
+48. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+49. [POST] http://127.0.0.1:56486/api/orders/A200/note => [200] OK
+50. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+51. [POST] http://127.0.0.1:56486/api/services => [200] OK
+55. [GET] http://127.0.0.1:56486/api/orders/A100 => [200] OK
+56. [GET] http://127.0.0.1:56486/api/orders/A200 => [200] OK
+57. [POST] http://127.0.0.1:56486/api/orders/A200/note => [200] OK
+58. [POST] http://127.0.0.1:56486/api/services => [200] OK
+
+Note: 21 static requests not shown, run with --static option to see them.

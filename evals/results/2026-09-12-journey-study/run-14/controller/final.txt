@@ -1,0 +1,9 @@
+Assessment saved to [evidence/report.md](evidence/report.md), with reproduction steps and supporting evidence.
+
+**Recommendation: hold release.** Three confirmed defects:
+
+- Cumulative refunds exceed payment.
+- Stale address edits overwrite newer data.
+- Failed bulk service requests partially apply changes.
+
+Completed 76 API requests; all four existing tests pass. Reversible fixture changes were restored. Owner reset is needed for A100’s refund total and A200’s version counter.

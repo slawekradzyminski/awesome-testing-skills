@@ -1,0 +1,15 @@
+{"at": 1789211063.786817, "method": "GET", "path": "/", "actor": null, "request": null, "status": 200, "response": null}
+{"at": 1789211063.7949388, "method": "GET", "path": "/style.css", "actor": null, "request": null, "status": 200, "response": null}
+{"at": 1789211063.795302, "method": "GET", "path": "/app.js", "actor": null, "request": null, "status": 200, "response": null}
+{"at": 1789211063.806475, "method": "GET", "path": "/favicon.ico", "actor": null, "request": null, "status": 204, "response": null}
+{"at": 1789211064.0106611, "method": "GET", "path": "/api/orders/A200", "actor": "alice", "request": null, "status": 200, "response": {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}}
+{"at": 1789211064.49724, "method": "GET", "path": "/api/orders/A100", "actor": "alice", "request": null, "status": 200, "response": {"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}}
+{"at": 1789211065.236785, "method": "POST", "path": "/api/services", "actor": "alice", "request": {"ids": ["A200"], "service": "express"}, "status": 200, "response": {"orders": [{"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "express"}]}}
+{"at": 1789211065.3495831, "method": "POST", "path": "/api/services", "actor": "alice", "request": {"ids": ["A200"], "service": "standard"}, "status": 200, "response": {"orders": [{"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}]}}
+{"at": 1789211066.555669, "method": "GET", "path": "/api/orders/A200", "actor": "alice", "request": null, "status": 200, "response": {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}}
+{"at": 1789211066.577915, "method": "GET", "path": "/", "actor": null, "request": null, "status": 200, "response": null}
+{"at": 1789211066.581374, "method": "GET", "path": "/style.css", "actor": null, "request": null, "status": 200, "response": null}
+{"at": 1789211066.581606, "method": "GET", "path": "/app.js", "actor": null, "request": null, "status": 200, "response": null}
+{"at": 1789211066.588052, "method": "GET", "path": "/favicon.ico", "actor": null, "request": null, "status": 204, "response": null}
+{"at": 1789211066.598305, "method": "GET", "path": "/api/orders/A200", "actor": "alice", "request": null, "status": 200, "response": {"id": "A200", "owner": "alice", "paid": 6000, "refunded": 0, "address": "20 Pine Street", "version": 1, "note": "Ring twice", "service": "standard"}}
+{"at": 1789211067.289056, "method": "GET", "path": "/api/orders/A100", "actor": "alice", "request": null, "status": 200, "response": {"id": "A100", "owner": "alice", "paid": 10000, "refunded": 0, "address": "10 Oak Street", "version": 1, "note": "Leave with reception", "service": "standard"}}

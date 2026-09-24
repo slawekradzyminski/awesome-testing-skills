@@ -1,0 +1,6 @@
+### Result
+{"focused":"save","viewport":{"width":375,"height":812},"width":{"client":375,"scroll":375},"feedback":"Delivery instruction saved"}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("textbox").click(); await page.keyboard.press("ControlOrMeta+A"); await page.keyboard.type("Leave with reception"); await page.keyboard.press("Tab"); const focused=await page.evaluate(()=>document.activeElement.id); await page.keyboard.press("Enter"); await page.getByRole("status").filter({hasText:"Delivery instruction saved"}).waitFor(); await page.screenshot({path:"evidence/narrow.png",fullPage:true}); return {focused,viewport:page.viewportSize(),width:await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth})),feedback:await page.locator("#feedback").innerText()}; })(page);
+```

@@ -1,0 +1,9 @@
+### Result
+{"focus":[{"id":"order","outline":"rgb(198, 93, 0) solid 3px"},{"id":"note","outline":"rgb(198, 93, 0) solid 3px"},{"id":"save","outline":"rgb(198, 93, 0) solid 3px"},{"id":"express","outline":"rgb(198, 93, 0) solid 3px"},{"id":"standard","outline":"rgb(198, 93, 0) solid 3px"}],"service":"standard"}
+### Ran Playwright code
+```js
+await (async page => { await page.reload(); await page.getByRole("heading",{name:"Order A100",exact:true}).waitFor(); const focus=[]; for(let i=0;i<4;i++){await page.keyboard.press("Tab"); focus.push(await page.evaluate(()=>({id:document.activeElement.id,outline:getComputedStyle(document.activeElement).outline})));} await page.keyboard.press("Enter"); await page.locator("#service").filter({hasText:/^express$/}).waitFor(); await page.screenshot({path:"evidence/keyboard-express.png",fullPage:true}); await page.keyboard.press("Tab"); focus.push(await page.evaluate(()=>({id:document.activeElement.id,outline:getComputedStyle(document.activeElement).outline}))); await page.keyboard.press("Space"); await page.locator("#service").filter({hasText:/^standard$/}).waitFor(); return {focus,service:await page.locator("#service").innerText()}; })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:56450/
+- Page Title: Dispatch Desk

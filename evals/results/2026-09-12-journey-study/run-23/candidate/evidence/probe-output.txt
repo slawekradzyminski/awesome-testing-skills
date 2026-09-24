@@ -1,0 +1,67 @@
+PASS fixture ownership lists
+PASS access None GET /api/orders
+PASS access None POST /api/orders/A100/refund
+PASS access alice GET /api/orders/B100
+PASS access bob GET /api/orders/A200
+PASS access alice POST /api/orders/B100/refund
+PASS access alice POST /api/orders/B100/address
+PASS access alice POST /api/orders/B100/note
+PASS access alice GET /api/orders/MISSING
+PASS access alice POST /api/orders/MISSING/refund
+PASS access denials preserve state
+PASS malformed JSON b'{'
+PASS malformed JSON b'[]'
+PASS malformed JSON b'null'
+PASS malformed JSON b''
+PASS invalid refund 0 status 400
+PASS invalid refund -1 status 400
+PASS invalid refund True status 400
+PASS invalid refund 1.5 status 400
+PASS invalid refund '100' status 400
+PASS invalid refund None status 400
+PASS invalid refunds preserve state
+PASS first partial refund status 200
+PASS cumulative excess refund status 409
+PASS excess leaves cumulative refund unchanged
+PASS exact remaining refund status 200
+PASS exhausted refund status 409
+PASS concurrent refund one success one conflict
+PASS concurrent refunds cannot exceed paid
+PASS invalid address '' version 1 status 400
+PASS invalid address '   ' version 1 status 400
+PASS invalid address 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx version 1 status 400
+PASS invalid address 'Valid' version True status 400
+PASS invalid address 'Valid' version '1' status 400
+PASS invalid address None version 1 status 400
+PASS address at length 120 status 200
+PASS stale address status 409
+PASS stale address preserves newer state
+PASS same-version concurrent address one winner
+PASS concurrent address persists winner
+PASS batch ['A100', 'MISSING'] express status 404
+PASS batch ['A100', 'B100'] express status 403
+PASS batch ['B100', 'A100'] express status 403
+PASS batch [] express status 400
+PASS batch ['A100', 1] express status 400
+PASS batch ['A100'] overnight status 400
+PASS failed batches leave all services unchanged
+PASS valid batch status 200
+PASS valid batch persists
+PASS invalid note '' status 400
+PASS invalid note '   ' status 400
+PASS invalid note 'nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn status 400
+PASS invalid note None status 400
+PASS valid note at length 160 status 200
+PASS unsupported locker note status 422
+PASS unsupported locker note status 422
+PASS rejected notes preserve previous note
+FAIL raw note length bound 0
+PASS padded note persists as returned 0
+FAIL raw note length bound 1
+PASS padded note persists as returned 1
+PASS restore service A100 status 200
+PASS restore address A200 status 200
+PASS restore note A200 status 200
+PASS restore service A200 status 200
+PASS all reversible fields restored
+TOTAL REQUESTS 75

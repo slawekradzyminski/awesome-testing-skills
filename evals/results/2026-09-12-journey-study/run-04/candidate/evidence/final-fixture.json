@@ -1,0 +1,52 @@
+{
+  "final": {
+    "alice": [
+      {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 10000,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 3,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    ],
+    "bob": [
+      {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "order": "A100",
+      "field": "refunded",
+      "before": 0,
+      "after": 10000
+    },
+    {
+      "order": "A200",
+      "field": "version",
+      "before": 1,
+      "after": 3
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "username" : "history_customer",
+  "items" : [ {
+    "productId" : 9,
+    "quantity" : 3
+  }, {
+    "productId" : 11,
+    "quantity" : 1
+  } ],
+  "totalPrice" : 199.80,
+  "totalItems" : 4
+}

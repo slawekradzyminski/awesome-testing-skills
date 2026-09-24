@@ -1,0 +1,43 @@
+[ {
+  "id" : 1,
+  "name" : "iPhone 13 Pro",
+  "description" : "Latest iPhone model with A15 Bionic chip, Pro camera system, and Super Retina XDR display",
+  "price" : 999.99,
+  "stockQuantity" : 50,
+  "category" : "Electronics",
+  "imageUrl" : "http://localhost:8082/images/iphone.png",
+  "createdAt" : "2026-09-24T18:30:00.965376",
+  "updatedAt" : "2026-09-24T18:30:00.965409"
+}, {
+  "id" : 2,
+  "name" : "Samsung Galaxy S21",
+  "description" : "5G smartphone with 8K video, all-day battery, and powerful performance",
+  "price" : 799.99,
+  "stockQuantity" : 75,
+  "category" : "Electronics",
+  "imageUrl" : "http://localhost:8082/images/samsung.png",
+  "createdAt" : "2026-09-24T18:30:00.966966",
+  "updatedAt" : "2026-09-24T18:30:00.966974"
+}, {
+  "id" : 3,
+  "name" : "MacBook Pro 14",
+  "description" : "Apple M1 Pro chip, 16GB RAM, 512GB SSD, Liquid Retina XDR display",
+  "price" : 1999.99,
+  "stockQuantity" : 25,
+  "category" : "Computers",
+  "imageUrl" : "http://localhost:8082/images/mac.png",
+  "createdAt" : "2026-09-24T18:30:00.967301",
+  "updatedAt" : "2026-09-24T18:30:00.967307"
+}, {
+  "id" : 4,
+  "name" : "PlayStation 5",
+  "description" : "Next-gen gaming console with 4K graphics, ray tracing, and ultra-high speed SSD",
+  "price" : 499.99,
+  "stockQuantity" : 30,
+  "category" : "Gaming",
+  "imageUrl" : "http://localhost:8082/images/ps5.png",
+  "createdAt" : "2026-09-24T18:30:00.967598",
+  "updatedAt" : "2026-09-24T18:30:00.967603"
+}, {
+  "id" : 5,
+  "name" : "Ninja Foodi 9-

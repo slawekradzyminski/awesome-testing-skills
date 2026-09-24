@@ -1,0 +1,646 @@
+[
+  {
+    "label": "alice lists only own orders",
+    "passed": true,
+    "expected": [
+      "A100",
+      "A200"
+    ],
+    "actual": [
+      "A100",
+      "A200"
+    ]
+  },
+  {
+    "label": "bob lists only own orders",
+    "passed": true,
+    "expected": [
+      "B100"
+    ],
+    "actual": [
+      "B100"
+    ]
+  },
+  {
+    "label": "unauthorized list None",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "label": "unauthorized mutation None",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "label": "unauthorized list unknown",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "label": "unauthorized mutation unknown",
+    "passed": true,
+    "expected": 401,
+    "actual": 401
+  },
+  {
+    "label": "foreign read alice",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign refund alice",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign address alice",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign note alice",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign service alice",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign read bob",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign refund bob",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign address bob",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign note bob",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "foreign service bob",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "denied calls preserve state alice",
+    "passed": true,
+    "expected": [
+      {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    ],
+    "actual": [
+      {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    ]
+  },
+  {
+    "label": "denied calls preserve state bob",
+    "passed": true,
+    "expected": [
+      {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    ],
+    "actual": [
+      {
+        "id": "B100",
+        "owner": "bob",
+        "paid": 4000,
+        "refunded": 0,
+        "address": "30 Elm Street",
+        "version": 1,
+        "note": "Side entrance",
+        "service": "standard"
+      }
+    ]
+  },
+  {
+    "label": "malformed JSON/envelope 1",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "malformed JSON/envelope 2",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "malformed JSON/envelope 4",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "malformed JSON/envelope 0",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "malformed JSON/envelope 8211",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid refund None",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid refund True",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid refund 0",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid refund -1",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid refund 1.5",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid refund '100'",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "refund above original payment",
+    "passed": true,
+    "expected": 409,
+    "actual": 409
+  },
+  {
+    "label": "invalid address {'address': ' ', 'version': 1}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid address {'address': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'version': 1}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid address {'address': 42, 'version': 1}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid address {'address': 'Valid', 'version': True}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid address {'address': 'Valid', 'version': '1'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid address {'address': 'Valid'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid services {'ids': [], 'service': 'express'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid services {'ids': 'A200', 'service': 'express'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid services {'ids': ['A200', 42], 'service': 'express'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid services {'ids': ['A200'], 'service': 'overnight'}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid services {}",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid note None",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid note True",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid note ' '",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "invalid note 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+    "passed": true,
+    "expected": 400,
+    "actual": 400
+  },
+  {
+    "label": "unsupported locker LOCKER: 1",
+    "passed": true,
+    "expected": 422,
+    "actual": 422
+  },
+  {
+    "label": "unsupported locker   locker: 2",
+    "passed": true,
+    "expected": 422,
+    "actual": 422
+  },
+  {
+    "label": "invalid inputs preserve Alice state",
+    "passed": true,
+    "expected": [
+      {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    ],
+    "actual": [
+      {
+        "id": "A100",
+        "owner": "alice",
+        "paid": 10000,
+        "refunded": 0,
+        "address": "10 Oak Street",
+        "version": 1,
+        "note": "Leave with reception",
+        "service": "standard"
+      },
+      {
+        "id": "A200",
+        "owner": "alice",
+        "paid": 6000,
+        "refunded": 0,
+        "address": "20 Pine Street",
+        "version": 1,
+        "note": "Ring twice",
+        "service": "standard"
+      }
+    ]
+  },
+  {
+    "label": "missing order refund",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "label": "missing order address",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "label": "missing order note",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "label": "refund first partial",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "refund remaining payment",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "F01 cumulative refund overrun",
+    "passed": false,
+    "expected": 409,
+    "actual": 200
+  },
+  {
+    "label": "F01 cumulative refund preserved at payment",
+    "passed": false,
+    "expected": 10000,
+    "actual": 10001
+  },
+  {
+    "label": "address editor one saves",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "F02 stale editor saves",
+    "passed": false,
+    "expected": 409,
+    "actual": 200
+  },
+  {
+    "label": "F02 newer address retained",
+    "passed": false,
+    "expected": "Current dispatch address",
+    "actual": "Stale dispatch address"
+  },
+  {
+    "label": "F02 stale edit does not increment version",
+    "passed": false,
+    "expected": 2,
+    "actual": 3
+  },
+  {
+    "label": "future address version rejected",
+    "passed": true,
+    "expected": 409,
+    "actual": 409
+  },
+  {
+    "label": "F03 mixed batch missing",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "label": "F03 missing batch atomicity",
+    "passed": false,
+    "expected": "standard",
+    "actual": "express"
+  },
+  {
+    "label": "restore service after missing",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "bad ID first missing",
+    "passed": true,
+    "expected": 404,
+    "actual": 404
+  },
+  {
+    "label": "bad ID first preserves service missing",
+    "passed": true,
+    "expected": "standard",
+    "actual": "standard"
+  },
+  {
+    "label": "F03 mixed batch forbidden",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "F03 forbidden batch atomicity",
+    "passed": false,
+    "expected": "standard",
+    "actual": "express"
+  },
+  {
+    "label": "restore service after forbidden",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "bad ID first forbidden",
+    "passed": true,
+    "expected": 403,
+    "actual": 403
+  },
+  {
+    "label": "bad ID first preserves service forbidden",
+    "passed": true,
+    "expected": "standard",
+    "actual": "standard"
+  },
+  {
+    "label": "Bob fully unchanged",
+    "passed": true,
+    "expected": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    },
+    "actual": {
+      "id": "B100",
+      "owner": "bob",
+      "paid": 4000,
+      "refunded": 0,
+      "address": "30 Elm Street",
+      "version": 1,
+      "note": "Side entrance",
+      "service": "standard"
+    }
+  },
+  {
+    "label": "note max length accepted",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "locker rejection after saved note",
+    "passed": true,
+    "expected": 422,
+    "actual": 422
+  },
+  {
+    "label": "saved note retained after 422",
+    "passed": true,
+    "expected": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "actual": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+  },
+  {
+    "label": "note one char accepted",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "address max length accepted",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "valid multi-order service",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "both valid services persisted",
+    "passed": true,
+    "expected": [
+      "express",
+      "express"
+    ],
+    "actual": [
+      "express",
+      "express"
+    ]
+  },
+  {
+    "label": "address boundary persisted",
+    "passed": true,
+    "expected": 120,
+    "actual": 120
+  },
+  {
+    "label": "note boundary persisted",
+    "passed": true,
+    "expected": "N",
+    "actual": "N"
+  },
+  {
+    "label": "cleanup service A100",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "cleanup service A200",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "cleanup note A200",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  },
+  {
+    "label": "cleanup address A200",
+    "passed": true,
+    "expected": 200,
+    "actual": 200
+  }
+]

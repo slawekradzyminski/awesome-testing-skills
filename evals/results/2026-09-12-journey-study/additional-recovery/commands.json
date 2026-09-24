@@ -1,0 +1,34 @@
+[
+  {
+    "args": [
+      "open",
+      "http://127.0.0.1:57358"
+    ],
+    "stdout": "### Browser `journey-adjudicate-recovery` opened with pid 38706.\n### Ran Playwright code\n```js\nawait page.goto('http://127.0.0.1:57358');\n```\n### Page\n- Page URL: http://127.0.0.1:57358/\n- Page Title: Dispatch Desk\n### Snapshot\n- [Snapshot](.playwright-cli/page-2026-09-12T11-06-54-357Z.yml)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "--filename=draft.js"
+    ],
+    "stdout": "### Result\n[{\"stage\":\"draft during loading\",\"state\":{\"order\":\"A100\",\"heading\":\"Order A200\",\"note\":\"Draft typed during loading\",\"service\":\"standard\",\"feedback\":\"\",\"loading\":\"Loading order\u2026\",\"noteDisabled\":false}},{\"stage\":\"after lookup\",\"state\":{\"order\":\"A100\",\"heading\":\"Order A100\",\"note\":\"Leave with reception\",\"service\":\"standard\",\"feedback\":\"\",\"loading\":\"\",\"noteDisabled\":false}}]\n### Ran Playwright code\n```js\nawait (async page => {\n  const results=[];\n  const state=()=>page.evaluate(()=>({order:document.querySelector('#order').value,heading:document.querySelector('#heading').textContent,note:document.querySelector('#note').value,service:document.querySelector('#service').textContent,feedback:document.querySelector('#feedback').textContent,loading:document.querySelector('#loading').textContent,noteDisabled:document.querySelector('#note').disabled}));\n  await page.setViewportSize({width:1280,height:900});\n  await page.selectOption('#order','A200');\n  await page.waitForFunction(()=>document.querySelector('#heading').textContent==='Order A200');\n  await page.selectOption('#order','A100');\n  await page.fill('#note','Draft typed during loading');\n  results.push({stage:'draft during loading',state:await state()});\n  await page.waitForFunction(()=>document.querySelector('#loading').textContent==='');\n  results.push({stage:'after lookup',state:await state()});\n  await page.screenshot({path:'evidence/draft-after-lookup.png'});\n  return results;\n})(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "async page => { await page.selectOption('#order','A200'); await page.waitForFunction(() => document.querySelector('#heading').textContent === 'Order A200'); }"
+    ],
+    "stdout": "### Ran Playwright code\n```js\nawait (async page => { await page.selectOption('#order','A200'); await page.waitForFunction(() => document.querySelector('#heading').textContent === 'Order A200'); })(page);\n```\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "run-code",
+      "--filename=recovery.js"
+    ],
+    "stdout": "### Result\n{\"failed\":{\"draft\":\"Assessment network failure draft\",\"feedback\":\"\",\"saveDisabled\":true},\"recoveredNetwork\":{\"status\":200,\"saveDisabled\":true,\"feedback\":\"\"},\"afterReload\":{\"draft\":\"Ring twice\",\"saveDisabled\":false}}\n### Ran Playwright code\n```js\nawait (async page => {\n await page.fill('#note','Assessment network failure draft');\n await page.route('http://127.0.0.1:57358/api/orders/A200/note',route=>route.abort('failed'));\n await page.click('#save');\n await page.waitForTimeout(300);\n await page.unroute('http://127.0.0.1:57358/api/orders/A200/note');\n const failed=await page.evaluate(()=>({draft:document.querySelector('#note').value,feedback:document.querySelector('#feedback').textContent,saveDisabled:document.querySelector('#save').disabled}));\n await page.screenshot({path:'evidence/network-failure.png'});\n await page.fill('#note','Corrected instruction after network recovery');\n const recoveredNetwork=await page.evaluate(async()=>({status:(await fetch('/api/orders/A200',{headers:{'X-Test-User':'alice'}})).status,saveDisabled:document.querySelector('#save').disabled,feedback:document.querySelector('#feedback').textContent}));\n await page.reload();\n await page.selectOption('#order','A200');\n await page.waitForFunction(()=>!document.querySelector('#save').disabled);\n return {failed,recoveredNetwork,afterReload:{draft:await page.locator('#note').inputValue(),saveDisabled:await page.locator('#save').isDisabled()}};\n}\n)(page);\n```\n### Events\n- New console entries: .playwright-cli/console-2026-09-12T11-06-54-258Z.log#L1-L3\n",
+    "stderr": ""
+  }
+]

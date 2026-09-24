@@ -1,0 +1,9 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+**Recommend holding release** for three confirmed defects:
+
+- Cumulative refunds exceed payment.
+- Stale address edits overwrite newer changes.
+- Failed bulk service requests partially persist.
+
+Completed 80 API requests; all four existing tests pass. Reversible changes were restored. A100’s refund total and A200’s version counter require the controller reset.

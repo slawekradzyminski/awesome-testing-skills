@@ -1,0 +1,27 @@
+### Result
+#23 [POST] http://127.0.0.1:59252/api/orders/A200/note
+
+  General
+    status:    [200] OK
+    duration:  1ms
+    type:      fetch
+    mimeType:  application/json
+
+  Request headers
+    sec-ch-ua-platform: "macOS"
+    x-test-user: alice
+    referer: http://127.0.0.1:59252/
+    user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36
+    sec-ch-ua: "Chromium";v="152", "Not?A_Brand";v="24", "Google Chrome";v="152"
+    content-type: application/json
+    sec-ch-ua-mobile: ?0
+
+  Response headers
+    cache-control: no-store
+    content-length: 177
+    date: Sat, 12 Sep 2026 11:23:37 GMT
+    content-type: application/json
+    server: BaseHTTP/0.6 Python/3.14.7
+
+Run `request-body 23` to read the request body.
+Run `response-body 23` to read the response body.

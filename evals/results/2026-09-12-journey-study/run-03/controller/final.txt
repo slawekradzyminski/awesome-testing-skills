@@ -1,0 +1,7 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+**Recommend holding release:** live probes confirmed excessive cumulative refunds, stale address overwrites, and partial changes from failed service batches.
+
+Completed 64 API requests; all four existing tests passed. Supporting evidence and repair criteria are included.
+
+Reversible changes were restored. Owner reset remains necessary for A200’s refund balance and A100’s version counter.

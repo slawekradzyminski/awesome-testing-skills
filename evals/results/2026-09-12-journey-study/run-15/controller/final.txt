@@ -1,0 +1,11 @@
+Assessment saved in [evidence/report.md](evidence/report.md).
+
+**Recommend holding release** for three confirmed defects:
+
+- Refunds can exceed the original payment.
+- Stale address edits overwrite newer changes.
+- Failed service batches partially update orders.
+
+Completed 83 API requests; all four existing tests passed. The report includes reproductions, evidence and acceptance criteria.
+
+Reversible changes were restored. Owner reset remains necessary for A100’s refund total and A200’s version counter.
